@@ -1,0 +1,119 @@
+public class UserController {
+
+}
+
+public class UserSet {
+
+}
+
+public class User {
+
+}
+
+
+public class SongController {
+
+}
+
+public class Song {
+
+}
+
+
+public class SongListController {
+
+}
+
+public class SongListSet {
+	
+}
+
+public class SongList {
+
+}
+
+public class Playback {
+
+}
+
+-----------------------------------------------------
+
+public class RelationController {
+
+	public RelationController();
+	public Relation stringToRelation(String relation);
+
+}
+
+public abstract class Relation {
+
+	public abstract boolean evaluate(Song song1, Song song2);
+
+}
+
+public class SimpleRelation extends Relation {
+	String atribute;
+	String value;
+
+	public SimpleRelation(String atribute, String value);
+	public boolean evaluate(Song song1, Song song2);
+}
+
+public abstract class ComplexRelation extends Relation {
+	Relation r1;
+	Relation r2;
+}
+
+public class ANDRelation extends ComplexRelation {
+
+	public boolean evaluate(Song song1, Song song2);
+
+}
+
+public class ORRelation extends ComplexRelation {
+
+	public boolean evaluate(Song song1, Song song2);
+
+}
+
+public class NOTRelation extends ComplexRelation {
+
+	public boolean evaluate(Song song1, Song song2);
+
+}
+
+-----------------------------------------------------
+
+public class InputController {
+
+	public Graph makeGraph(ArrayList<Relation> relations);
+	private void relationToEdges(Relation relation, Graph graph);
+
+}
+
+public class Graph <T> {
+	/* Ha de permetre tenir múltiples arestes entre un parell de vèrtexs,
+	   i cada aresta ha de tenir un pes */
+
+	private ArrayList< ArrayList<T> > graph;
+
+	public Graph(ArrayList<T> vertices);
+	public void addEdge(T v1, T v2);
+	public void addEdge(T v1, T v2, double weight);
+	public void addDirectedEdge(T v1, T v2);
+	public void addDirectedEdge(T v1, T v2, double weight);
+	public boolean addVertex(T v);
+	public ArrayList<T> getAdjacentVertices(T v);
+	public double getWeight(T v1, T v2);
+	public boolean checkVertex(T v);
+}
+
+public class CommunitiesGraph<T> extends Graph {
+	/* Cada comunitat s'identifica pel seu index en el vector communities */
+	private ArrayList< ArrayList<T> > communities;
+
+	public int getNumCommunities();
+	public ArrayList<T> getCommunity(int i);
+	/* densitat = (numArestesComunitat / numVertexsComunitat) */
+	public double getDensity(int i);
+}
