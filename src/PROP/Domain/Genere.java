@@ -1,4 +1,4 @@
-package PROP.application;
+package PROP.Domain;
 
 /**
  * Enum Genere
