@@ -1,0 +1,85 @@
+Llegiu-vos la documentació de Javadoc per entendreu-ho millor:
+http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
+IntelliJ javadoc support:
+https://www.jetbrains.com/idea/features/javadoc.html
+
+--------------------------
+Convenis que farem servir:
+--------------------------
+
+Els comentari de javadoc comencen per /**
+/**
+ * Descripció de la classe. Es poden fer servir tags de html. Per exemple:
+ * <ul>
+ * <li>The Component to draw on
+ * <li>A translation origin for rendering and clipping coordinates
+ * <li>The current clip
+ * <li>The current color
+ * <li>The current fontD
+ * <li>The current logical pixel operation function (XOR or Paint)
+ * <li>The current XOR alternation coloru 
+ *     (see <a href="#setXORMode">setXORMode</a>)
+ * </ul>
+ * Utilitzeu <p> per fer un paragraf
+ * <p> Paragraf blah blah blah blah blah blah blah 
+ * blah blah blah blah blah blah blah blah blah 
+ *
+ * Autor de la classe
+ * @author      Carles Garcia Cabot
+ */
+public abstract class Graphics {
+    IMPORTANT: un cop hagueu declarat un mètode, si escriviu /** i doneu a enter, l'IntelliJ autocompleta el comentari
+    El @see es opcional, per si voleu que a la documentacio surti un link a una classe o mètode relacionat 
+    /** 
+     * Draws as much of the specified image as is currently available
+     * with its northwest corner at the specified coordinate (x, y).
+     * This method will return immediately in all cases, even if the
+     * entire image has not yet been scaled, dithered and converted
+     * for the current output device.
+     *
+     * @param img       the image to be drawn
+     * @param x         the x-coordinate of the northwest corner
+     *                  of the destination rectangle in pixels
+     * @param y         the y-coordinate of the northwest corner
+     *                  of the destination rectangle in pixels
+     * @param observer  the image observer to be notified as more
+     *                  of the image is converted.  May be 
+     *                  <code>null</code>
+     * @return          <code>true</code> if the image is completely 
+     *                  loaded and was painted successfully; 
+     *                  <code>false</code> otherwise.
+     * @see             Image
+     * @see             ImageObserver
+     *
+     */ 
+    public abstract boolean drawImage(Image img, int x, int y, 
+                                      ImageObserver observer);
+}
+
+Si voleu fer un comentari d'una variable local, feu servir comentaris normals
+Per definir precondicions, ho farem en el mateix tag @param
+Per definir postconditions, en el tag @return
+Exemple
+*
+*
+* @param x	the x contains a value.
+*		(precondition: x > 0)
+* @return	integer that contains the value
+*		(postcondition: the returned value != 0)
+
+----------------------------------
+Important per mètodes sobreescrits
+----------------------------------
+
+Automatic re-use of method comments
+You can avoid re-typing doc comments by being aware of how the Javadoc tool duplicates (inherits) comments for methods that override or implement other methods. This occurs in three cases:
+
+    When a method in a class overrides a method in a superclass
+    When a method in an interface overrides a method in a superinterface
+    When a method in a class implements a method in an interface
+
+In the first two cases, if a method m() overrides another method, The Javadoc tool will generate a subheading "Overrides" in the documentation for m(), with a link to the method it is overriding.
+
+In the third case, if a method m() in a given class implements a method in an interface, the Javadoc tool will generate a subheading "Specified by" in the documentation for m(), with a link to the method it is implementing.
+
+In all three of these cases, if the method m() contains no doc comments or tags, the Javadoc tool will also copy the text of the method it is overriding or implementing to the generated documentation for m(). So if the documentation of the overridden or implemented method is sufficient, you do not need to add documentation for m(). If you add any documentation comment or tag to m(), the "Overrides" or "Specified by" subheading and link will still appear, but no text will be copied.
