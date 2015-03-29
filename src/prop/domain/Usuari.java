@@ -1,6 +1,5 @@
-package PROP.application;
+package prop.domain;
 
-import Genere
 
 /**
  *
