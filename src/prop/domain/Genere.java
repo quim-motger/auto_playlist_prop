@@ -1,4 +1,4 @@
-package PROP.Domain;
+package prop.domain;
 
 /**
  * Enum Genere

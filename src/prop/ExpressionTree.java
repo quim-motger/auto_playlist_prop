@@ -1,10 +1,10 @@
-package PROP;
+package prop;
 
 import java.util.Stack;
 
 /**
  * Binary expression tree
- * @author Oscar Mañas Sanchez
+ * @author Oscar Maï¿½as Sanchez
  */
 public class ExpressionTree {
 
@@ -142,7 +142,7 @@ public class ExpressionTree {
 
     /**
      * Expression tree node
-     * @author Oscar Mañas Sanchez
+     * @author Oscar Maï¿½as Sanchez
      */
     private abstract class ExpNode {
 
@@ -158,7 +158,7 @@ public class ExpressionTree {
 
     /**
      * Expression tree number node
-     * @author Oscar Mañas Sanchez
+     * @author Oscar Maï¿½as Sanchez
      */
     private class ExpNumNode extends ExpNode {
 
@@ -177,7 +177,7 @@ public class ExpressionTree {
 
     /**
      * Expression tree operator node
-     * @author Oscar Mañas Sanchez
+     * @author Oscar Maï¿½as Sanchez
      */
     private class ExpOpNode extends ExpNode {
 

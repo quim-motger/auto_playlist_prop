@@ -1,4 +1,4 @@
-package PROP;
+package prop;
 
 public class Main {
 
