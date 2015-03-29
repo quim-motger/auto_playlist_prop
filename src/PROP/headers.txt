@@ -62,6 +62,8 @@ public class SimpleRelation extends Relation {
 public abstract class ComplexRelation extends Relation {
 	Relation r1;
 	Relation r2;
+
+	public ComplexRelation(Relation r1, Relation r2);
 }
 
 public class ANDRelation extends ComplexRelation {
