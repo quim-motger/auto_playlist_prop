@@ -17,6 +17,16 @@ public class Canco {
     private String subgenre;
     private int duration;
 
+    /**
+     * Constructor specifying a value for all attributes
+     * @param title     song title
+     * @param artist    song artist
+     * @param album     song album
+     * @param year      year of release
+     * @param genre     song genre
+     * @param subgenre  song subgenre
+     * @param duration  song duration in seconds
+     */
     public Canco(String title, String artist, String album, int year, String genre, String subgenre, int duration) {
         this.title = title;
         this.artist = artist;
