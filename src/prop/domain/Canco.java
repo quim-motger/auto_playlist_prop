@@ -16,7 +16,6 @@ public class Canco {
     private String genre;
     private String subgenre;
     private int duration;
-    private ArrayList<Reproduccio> playbacks;
 
     public Canco(String title, String artist, String album, int year, String genre, String subgenre, int duration) {
         this.title = title;
@@ -26,7 +25,6 @@ public class Canco {
         this.genre = genre;
         this.subgenre = subgenre;
         this.duration = duration;
-        playbacks = new ArrayList<Reproduccio>();
     }
 
     public String consultaTitol() {
@@ -83,11 +81,6 @@ public class Canco {
 
     public void modificaDurada(int duration) {
         this.duration = duration;
-    }
-
-    public void addPlayback(Usuari user, Calendar date) {
-        Reproduccio playback = new Reproduccio(user,this,date);
-        playbacks.add(playback);
     }
 
 }
