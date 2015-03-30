@@ -6,6 +6,7 @@ package prop.domain;
  */
 public class Canco {
 
+    private int id;
     private String title;
     private String artist;
     private String album;
@@ -16,6 +17,7 @@ public class Canco {
 
     /**
      * Constructor specifying a value for all attributes
+     * @param id        song ID
      * @param title     song title
      * @param artist    song artist
      * @param album     song album
@@ -24,7 +26,8 @@ public class Canco {
      * @param subgenre  song subgenre
      * @param duration  song duration in seconds
      */
-    public Canco(String title, String artist, String album, int year, String genre, String subgenre, int duration) {
+    public Canco(int id, String title, String artist, String album, int year, String genre, String subgenre, int duration) {
+        this.id = id;
         this.title = title;
         this.artist = artist;
         this.album = album;
@@ -32,6 +35,10 @@ public class Canco {
         this.genre = genre;
         this.subgenre = subgenre;
         this.duration = duration;
+    }
+
+    public int consultaId(){
+        return id;
     }
 
     public String consultaTitol() {
@@ -60,6 +67,10 @@ public class Canco {
 
     public int consultaDurada() {
         return duration;
+    }
+
+    public void modificaId(int id) {
+        this.id = id;
     }
 
     public void modificaTitol(String title) {

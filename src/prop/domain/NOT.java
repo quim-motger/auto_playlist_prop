@@ -5,7 +5,7 @@ package prop.domain;
  *
  * @author gerard.casas.saez
  * @version 1.0
- * @see prop.domain.Relacio
+ * @see prop.domain.RelacioComplexa
  */
 public class NOT extends RelacioComplexa {
 

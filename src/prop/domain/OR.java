@@ -5,7 +5,7 @@ package prop.domain;
  * Creation Date: 30/03/15.
  * @author gerard.casas.saez
  * @version 1.0
- * @see prop.domain.Relacio
+ * @see prop.domain.RelacioComplexa
  */
 public class OR extends RelacioComplexa {
 
