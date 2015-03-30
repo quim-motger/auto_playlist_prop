@@ -1,5 +1,7 @@
 package prop.domain;
 
+import java.util.ArrayList;
+
 /**
  * Conjunt d'usuaris
  * @author joaquim.motger
@@ -8,6 +10,11 @@ package prop.domain;
 
 public class ConjuntUsuaris {
 
-    
+    ArrayList<Usuari> usuaris;
+
+    /**
+     * Creadora de la classe <code>ConjuntUsuaris</code>
+     * @param
+     */
 
 }
