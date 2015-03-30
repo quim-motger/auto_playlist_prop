@@ -33,7 +33,7 @@ public class ConjuntUsuaris {
      * Consultora de <code>mida</code>
      * @return      <code>mida</code>
      */
-    public ArrayList<Usuari> consultaMida() {
+    public int consultaMida() {
         return mida;
     }
 
@@ -41,7 +41,7 @@ public class ConjuntUsuaris {
      * Afegeix usuari a <code>cjtUsuaris</code>
      * @params  usuari  usuari a afegir
      */
-    public afegeixUsuari(Usuari usuari) {
+    public void afegeixUsuari(Usuari usuari) {
         cjtUsuaris.add(usuari);
         ++mida;
     }
@@ -50,7 +50,7 @@ public class ConjuntUsuaris {
      * Elimina l'usuari <code>i</code> de <code>cjtUsuaris</code>
      * @params  i   posicio de l'usuari a cjtUsuaris
      */
-    public eliminaUsuari (int i) {
+    public void eliminaUsuari (int i) {
         if (i >= 0 && i < mida) {
             cjtUsuaris.remove(i);
             --mida;
