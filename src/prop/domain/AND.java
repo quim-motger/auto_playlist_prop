@@ -10,9 +10,9 @@ import java.lang.Override;
 
 public class AND extends RelacioComplexa {
 
-    public AND(Relacio r1, Relacio r2) {
-        this.r1 = r1;
-        this.r2 = r2;
+    public AND(Relacio R1, Relacio R2) {
+        r1 = R1;
+        r2 = R2;
     }
 
     @Override
