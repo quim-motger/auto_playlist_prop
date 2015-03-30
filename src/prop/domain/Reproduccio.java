@@ -1,5 +1,7 @@
 package prop.domain;
 
+import java.util.Calendar;
+
 /**
  * Una reproduccio d'una canco en una data i hora determinades
  * @author joaquim.motger
