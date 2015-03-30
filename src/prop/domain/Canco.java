@@ -1,11 +1,8 @@
 package prop.domain;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-
 /**
  * A song
- * @author Oscar Mañas Sanchez
+ * @author Oscar Manas Sanchez
  */
 public class Canco {
 

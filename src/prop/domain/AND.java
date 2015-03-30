@@ -8,7 +8,7 @@ import java.lang.Override;
  * @version 1.0
  */
 
-public class AND extends Complexa {
+public class AND extends Complexe {
 
     public AND(Relacio r1, Relacio r2) {
         R1 = r1;

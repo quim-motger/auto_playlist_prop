@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Conjunt de cancons ordenades
- * @author casassg 
+ * @author gerard.casas.saez
  * @version 1.0
  */
 public class Llista {
