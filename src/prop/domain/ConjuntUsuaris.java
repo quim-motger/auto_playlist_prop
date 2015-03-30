@@ -38,12 +38,34 @@ public class ConjuntUsuaris {
     }
 
     /**
+     * Consultora de la posicio del <code>Usuari</code> amb nom <code>nom</code>
+     * @params nom  nom de l'usuari a cercar
+     * @return posicio  posicio de l'usuari al cjtUsuaris; -1 si no es troba
+     */
+    public int consultaPosUsuari(String nom) {
+        int i = 0;
+        boolean trobat = false;
+        while(!trobat && i < mida) {
+            Usuari usuari = cjtUsuaris.get(i);
+            if (usuari.consultaNom().equals(nom)) trobat = true;
+            else ++i;
+        }
+        if (trobat) return i;
+        else return -1;
+    }
+
+    /**
      * Afegeix usuari a <code>cjtUsuaris</code>
      * @params  usuari  usuari a afegir
+     * @return  i   posicio de l'usuari amb nom en us; -1 si esta disponible
      */
-    public void afegeixUsuari(Usuari usuari) {
-        cjtUsuaris.add(usuari);
-        ++mida;
+    public int afegeixUsuari(Usuari usuari) {
+        int i = consultaPosUsuari(usuari.consultaNom());
+        if (i == -1) {
+            cjtUsuaris.add(usuari);
+            ++mida;
+        }
+        return i;
     }
 
     /**
