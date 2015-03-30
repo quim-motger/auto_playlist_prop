@@ -9,14 +9,14 @@ package prop.domain;
 public class Reproduccio {
 
     private Canco canco;
-    private Data data;
+    private Calendar data;
 
     /**
      * Creadora de la classe <code>Reproduccio</code>
      * @param canco     nom de la canco reproduida
      * @param data      data de la reproduccio
      */
-    public Reproduccio (Canco canco, Data data) {
+    public Reproduccio (Canco canco, Calendar data) {
         this.canco = canco;
         this.data = data;
     }
@@ -33,7 +33,7 @@ public class Reproduccio {
      * Consultora de la data de <code>Reproduccio</code>
      * @return      <code>Data</code> de la reproduccio
      */
-    public Data consultaData () {
+    public Calendar consultaData () {
         return data;
     }
 }
