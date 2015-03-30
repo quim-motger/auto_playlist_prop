@@ -7,7 +7,7 @@ package prop.domain;
  * @version 1.0
  * @see prop.domain.Relacio
  */
-public class OR extends Complexe{
+public class OR extends RelacioComplexa {
 
     /**
      * Creadora Classe OR <code>relacio1 or relacio2</code>
@@ -15,8 +15,8 @@ public class OR extends Complexe{
      * @param relacio2 Segona relació del OR
      */
     public OR(Relacio relacio1, Relacio relacio2) {
-        R1 = relacio1;
-        R2 = relacio2;
+        r1 = relacio1;
+        r2 = relacio2;
     }
 
     /**
@@ -27,6 +27,6 @@ public class OR extends Complexe{
      */
     @Override
     public boolean avalua(Canco c1, Canco c2) {
-        return R1.avalua(c1, c2) || R2.avalua(c1, c2);
+        return r1.avalua(c1, c2) || r2.avalua(c1, c2);
     }
 }

@@ -7,14 +7,14 @@ package prop.domain;
  * @version 1.0
  * @see prop.domain.Relacio
  */
-public class NOT extends Complexe {
+public class NOT extends RelacioComplexa {
 
     /**
      * Creadora de la classe NOT subclasse de Complexe
      * @param relacio   Relacio a evaluar
      */
     public NOT(Relacio relacio) {
-        R1 = relacio;
+        r1 = relacio;
     }
 
     /**
@@ -25,6 +25,6 @@ public class NOT extends Complexe {
      */
     @Override
     public boolean avalua(Canco c1, Canco c2) {
-        return !R1.avalua(c1, c2);
+        return !r1.avalua(c1, c2);
     }
 }

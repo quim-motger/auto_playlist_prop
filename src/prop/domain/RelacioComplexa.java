@@ -8,5 +8,5 @@ public abstract class RelacioComplexa extends Relacio {
 
     protected Relacio r1;
     protected Relacio r2;
-
+    
 }
