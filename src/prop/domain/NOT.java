@@ -6,14 +6,14 @@ package prop.domain;
  * @author casassg
  * @version 1.0
  */
-public class NOT extends Complexe {
+public class NOT extends RelacioComplexa {
     
     public NOT(Relacio relacio) {
-        R1 = relacio;
+        r1 = relacio;
     }
 
     @Override
     public boolean avalua(Canco c1, Canco c2) {
-        return !R1.avalua(c1, c2);
+        return !r1.avalua(c1, c2);
     }
 }

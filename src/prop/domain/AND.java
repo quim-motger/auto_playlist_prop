@@ -1,4 +1,4 @@
-import prop.domain;
+package prop.domain;
 
 /**
  * Relacio complexa AND
@@ -6,6 +6,6 @@ import prop.domain;
  * @version 1.0
  */
 
-public class AND {
+public class AND extends RelacioComplexa {
 
 }
