@@ -1,9 +1,8 @@
 package prop.domain;
 
-
 /**
  * A song
- * @author Oscar Mañas Sanchez
+ * @author Oscar Manas Sanchez
  */
 public class Canco {
 

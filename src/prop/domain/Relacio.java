@@ -2,7 +2,7 @@ package prop.domain;
 
 /**
  * Relació abstracte - 30/3/2015
- * @author casassg
+ * @author gerard.casas.saez
  * @version 1.0
  */
 public abstract class Relacio {
