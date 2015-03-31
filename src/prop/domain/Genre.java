@@ -151,10 +151,18 @@ public enum Genre {
         this.name = name;
     }
 
+    /**
+     * Get the genre name
+     * @return  the genre name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get the genre ID
+     * @return  the genre ID
+     */
     public int getId() {
         return id;
     }
@@ -168,10 +176,20 @@ public enum Genre {
         }
     }
 
+    /**
+     * Get the genre by name
+     * @param name  the genre name
+     * @return      the genre
+     */
     public static Genre getGenreByName(String name) {
         return genres.get(name);
     }
 
+    /**
+     * Get the genre by ID
+     * @param id    the genre ID
+     * @return      the genre
+     */
     public static Genre getGenreById(int id) {
         if (id < 0 || id >= values().length) {
             return null;
