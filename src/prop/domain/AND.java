@@ -14,8 +14,8 @@ public class AND extends ComplexRelation {
      * @param R2    second <b>Relation</b>
      */
     public AND(Relation R1, Relation R2) {
-        this.r1 = R1;
-        this.r2 = R2;
+        r1 = R1;
+        r2 = R2;
     }
 
     /**
