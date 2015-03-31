@@ -1,8 +1,5 @@
 package prop.domain;
 
-import javax.management.relation.Relation;
-import java.lang.Override;
-
 /**
  * AND complex relation
  * @author joaquim.motger
@@ -17,8 +14,8 @@ public class AND extends ComplexRelation {
      * @param R2    second <b>Relation</b>
      */
     public AND(Relation R1, Relation R2) {
-        r1 = R1;
-        r2 = R2;
+        this.r1 = R1;
+        this.r2 = R2;
     }
 
     /**
@@ -29,6 +26,6 @@ public class AND extends ComplexRelation {
      */
     @Override
     public boolean evaluate(Song s1, Song s2) {
-        return r1.evaluates(s1, s2) && r2.evaluates(s1, s2);
+        return r1.evaluate(s1, s2) && r2.evaluate(s1, s2);
     }
 }

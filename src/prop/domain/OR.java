@@ -5,9 +5,9 @@ package prop.domain;
  * Creation Date: 30/03/15.
  * @author gerard.casas.saez
  * @version 1.0
- * @see prop.domain.RelacioComplexa
+ * @see ComplexRelation
  */
-public class OR extends RelacioComplexa {
+public class OR extends ComplexRelation {
 
     /**
      * OR class creator
@@ -26,7 +26,7 @@ public class OR extends RelacioComplexa {
      * @return      <code>true</code> if s1 and s2 are related in R1 or R2
      */
     @Override
-    public boolean evaluate(Canco s1, Canco s2) {
+    public boolean evaluate(Song s1, Song s2) {
         return r1.evaluate(s1, s2) || r2.evaluate(s1, s2);
     }
 }

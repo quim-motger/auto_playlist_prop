@@ -6,12 +6,12 @@ import java.util.ArrayList;
  * Conjunt de songs ordenades
  * @author gerard.casas.saez
  * @version 1.0
- * @see prop.domain.Canco
+ * @see Song
  */
 public class List {
     
     String title;
-    ArrayList<Canco> songs;
+    ArrayList<Song> songs;
 
     /**
      * <code>List</code> creator method
@@ -30,7 +30,7 @@ public class List {
      * @param pos   <code>pos</code> is smaller than <code>obtainListSize()</code> and bigger than 0
      * @return      <code>Song/code> of the list in the position <code>pos</code>
      */
-    public Canco obtainSong(int pos) {
+    public Song obtainSong(int pos) {
         return songs.get(pos);
     }
 
@@ -47,7 +47,7 @@ public class List {
     public int obtainTotalTime() {
         int total=0;
         for (int i=0; i < obtainListSize();++i) {
-            total += songs.get(i).consultaDurada();
+            total += songs.get(i).getDuration();
         }
         return total;
     }
@@ -63,9 +63,9 @@ public class List {
     /**
      *  Modifier that adds song at the end of the <code>List</code>
      *  <code>song</code> has an index of <code>obtainListSize()</code> - 1
-     *  @see prop.domain.Canco
+     *  @see Song
      */
-    public void addSong(Canco song) {
+    public void addSong(Song song) {
         songs.add(song);
     }
 
@@ -85,7 +85,7 @@ public class List {
      * @param index2    0 < <code>index2</code> < <code>obtainListSize()</code>
      */
     public void swapSongs(int index1, int index2) {
-        Canco song= songs.get(index1);
+        Song song= songs.get(index1);
         songs.set(index1, songs.get(index2));
         songs.set(index2, song);
     }

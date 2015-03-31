@@ -4,32 +4,32 @@ import java.util.ArrayList;
 
 /**
  * A set of songs
- * @author Oscar Mañas Sanchez
+ * @author oscar.manas
  */
-public class ConjuntCancons {
+public class SongSet {
 
-    private ArrayList<Canco> songSet;
+    private ArrayList<Song> songSet;
 
-    public ConjuntCancons() {
-        songSet = new ArrayList<Canco>();
+    public SongSet() {
+        songSet = new ArrayList<Song>();
     }
 
     /**
      * @return  the size of the set
      */
-    public int mida() {
+    public int size() {
         return songSet.size();
     }
 
     /**
      * Add a song to the set
-     * @param canco the song to add
+     * @param song  the song to add
      * @return      true if the song was added
      *              false if the song was present, and thus not added
      */
-    public boolean afegirCanco(Canco canco) {
-        if (cercaCanco(canco.consultaId()) == null) {
-            songSet.add(canco);
+    public boolean addSong(Song song) {
+        if (searchSong(song.getId()) == null) {
+            songSet.add(song);
             return true;
         }
         else
@@ -42,8 +42,8 @@ public class ConjuntCancons {
      * @return      the song if present
      *              null if not present
      */
-    public Canco eliminaCanco(int id) {
-        int i = cercaPosCanco(id);
+    public Song removeSong(int id) {
+        int i = searchSongIndex(id);
         if (i != -1)
             return songSet.remove(i);
         else
@@ -55,10 +55,10 @@ public class ConjuntCancons {
      * @param ids    list of identifications of the songs to search
      * @return      list of present songs
      */
-    public ArrayList<Canco> cercaCancons(int[] ids) {
-        ArrayList<Canco> songList = new ArrayList<Canco>();
+    public ArrayList<Song> searchSongs(int[] ids) {
+        ArrayList<Song> songList = new ArrayList<Song>();
         for (int i = 0; i < ids.length; ++i) {
-            Canco c = cercaCanco(ids[i]);
+            Song c = searchSong(ids[i]);
             if (c != null)
                 songList.add(c);
         }
@@ -71,9 +71,9 @@ public class ConjuntCancons {
      * @return      the song if present
      *              null if not present
      */
-    public Canco cercaCanco(int id) {
+    public Song searchSong(int id) {
         for (int i = 0; i < songSet.size(); ++i) {
-            if (songSet.get(i).consultaId() == id)
+            if (songSet.get(i).getId() == id)
                 return songSet.get(i);
         }
         return null;
@@ -85,9 +85,9 @@ public class ConjuntCancons {
      * @return      the index of the song in the set if present
      *              -1 if not present
      */
-    private int cercaPosCanco(int id) {
+    private int searchSongIndex(int id) {
         for (int i = 0; i < songSet.size(); ++i) {
-            if (songSet.get(i).consultaId() == id)
+            if (songSet.get(i).getId() == id)
                 return i;
         }
         return -1;

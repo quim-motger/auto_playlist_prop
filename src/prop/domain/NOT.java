@@ -5,9 +5,9 @@ package prop.domain;
  *
  * @author gerard.casas.saez
  * @version 1.0
- * @see prop.domain.RelacioComplexa
+ * @see ComplexRelation
  */
-public class NOT extends RelacioComplexa {
+public class NOT extends ComplexRelation {
 
     /**
      * Class NOT creator
@@ -24,7 +24,7 @@ public class NOT extends RelacioComplexa {
      * @return      <code>true</code> if <code>s1</code> and <code>s2</code> are not related
      */
     @Override
-    public boolean evaluate(Canco s1, Canco s2) {
+    public boolean evaluate(Song s1, Song s2) {
         return !r1.evaluate(s1, s2);
     }
 }

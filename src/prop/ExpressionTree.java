@@ -4,7 +4,7 @@ import java.util.Stack;
 
 /**
  * Binary expression tree
- * @author Oscar Ma�as Sanchez
+ * @author oscar.manas
  */
 public class ExpressionTree {
 
@@ -142,7 +142,7 @@ public class ExpressionTree {
 
     /**
      * Expression tree node
-     * @author Oscar Ma�as Sanchez
+     * @author oscar.manas
      */
     private abstract class ExpNode {
 
@@ -158,7 +158,7 @@ public class ExpressionTree {
 
     /**
      * Expression tree number node
-     * @author Oscar Ma�as Sanchez
+     * @author oscar.manas
      */
     private class ExpNumNode extends ExpNode {
 
@@ -177,7 +177,7 @@ public class ExpressionTree {
 
     /**
      * Expression tree operator node
-     * @author Oscar Ma�as Sanchez
+     * @author oscar.manas
      */
     private class ExpOpNode extends ExpNode {
 

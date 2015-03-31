@@ -2,9 +2,9 @@ package prop.domain;
 
 /**
  * A song
- * @author Oscar Manas Sanchez
+ * @author oscar.manas
  */
-public class Canco {
+public class Song {
 
     private int id;
     private String title;
@@ -26,7 +26,7 @@ public class Canco {
      * @param subgenre  song subgenre
      * @param duration  song duration in seconds
      */
-    public Canco(int id, String title, String artist, String album, int year, String genre, String subgenre, int duration) {
+    public Song(int id, String title, String artist, String album, int year, String genre, String subgenre, int duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
@@ -37,67 +37,67 @@ public class Canco {
         this.duration = duration;
     }
 
-    public int consultaId(){
+    public int getId(){
         return id;
     }
 
-    public String consultaTitol() {
+    public String getTitle() {
         return title;
     }
 
-    public String consultaArtista() {
+    public String getArtist() {
         return artist;
     }
 
-    public int consultaAny() {
+    public int getYear() {
         return year;
     }
 
-    public String consultaAlbum() {
+    public String getAlbum() {
         return album;
     }
 
-    public String consultaGenere() {
+    public String getGenre() {
         return genre;
     }
 
-    public String consultaSubgenere() {
+    public String getSubgenre() {
         return subgenre;
     }
 
-    public int consultaDurada() {
+    public int getDuration() {
         return duration;
     }
 
-    public void modificaId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void modificaTitol(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public void modificaArtista(String artist) {
+    public void setArtist(String artist) {
         this.artist = artist;
     }
 
-    public void modificaAlbum(String album) {
+    public void setAlbum(String album) {
         this.album = album;
     }
 
-    public void modificaAny(int year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
-    public void modificaGenere(String genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
-    public void modificaSubgenere(String subgenre) {
+    public void setSubgenre(String subgenre) {
         this.subgenre = subgenre;
     }
 
-    public void modificaDurada(int duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

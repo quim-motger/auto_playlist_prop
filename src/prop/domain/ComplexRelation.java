@@ -2,10 +2,10 @@ package prop.domain;
 
 /**
  * A complex relation between songs, composed of simple or complex relations
- * @author Oscar Ma�as Sanchez
+ * @author oscar.manas
  * @see Relation
  */
-public abstract class RelacioComplexa extends Relation {
+public abstract class ComplexRelation extends Relation {
 
     protected Relation r1;
     protected Relation r2;
