@@ -1,9 +1,9 @@
 package prop.domain;
 
 /**
- * Enum Genere
+ * Enum Gender
  * @author Carles Garcia Cabot
  */
-public enum Genere {
-    DONA, HOME, ALTRE
+public enum Gender {
+    FEMALE, MALE, OTHER
 }
