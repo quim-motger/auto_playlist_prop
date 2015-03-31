@@ -1,7 +1,7 @@
 package prop.domain;
 
 /**
- * OR class, relacio Complexe
+ * OR class, ComplexRelation
  * Creation Date: 30/03/15.
  * @author gerard.casas.saez
  * @version 1.0
@@ -10,23 +10,23 @@ package prop.domain;
 public class OR extends RelacioComplexa {
 
     /**
-     * Creadora Classe OR <code>relacio1 or relacio2</code>
-     * @param relacio1 Primera relació del OR
-     * @param relacio2 Segona relació del OR
+     * OR class creator
+     * @param relation1 First relation of OR
+     * @param relation2 Second relation of OR
      */
-    public OR(Relacio relacio1, Relacio relacio2) {
-        r1 = relacio1;
-        r2 = relacio2;
+    public OR(Relation relation1, Relation relation2) {
+        r1 = relation1;
+        r2 = relation2;
     }
 
     /**
      * *
-     * @param c1    Canço 1 a evaluar
-     * @param c2    Canço 2 a evaluar
-     * @return      <code>true</code> si c1 i c2 estan relacionades o bé a R1 o bé a R2
+     * @param s1    Song 1 to evaluate
+     * @param s2    Song 2 to evaluate
+     * @return      <code>true</code> if s1 and s2 are related in R1 or R2
      */
     @Override
-    public boolean avalua(Canco c1, Canco c2) {
-        return r1.avalua(c1, c2) || r2.avalua(c1, c2);
+    public boolean evaluate(Canco s1, Canco s2) {
+        return r1.evaluate(s1, s2) || r2.evaluate(s1, s2);
     }
 }

@@ -2,12 +2,12 @@ package prop.domain;
 
 /**
  * A complex relation between songs, composed of simple or complex relations
- * @author Oscar Mañas Sanchez
- * @see prop.domain.Relacio
+ * @author Oscar Maï¿½as Sanchez
+ * @see Relation
  */
-public abstract class RelacioComplexa extends Relacio {
+public abstract class RelacioComplexa extends Relation {
 
-    protected Relacio r1;
-    protected Relacio r2;
+    protected Relation r1;
+    protected Relation r2;
 
 }

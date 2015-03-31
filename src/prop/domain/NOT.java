@@ -10,21 +10,21 @@ package prop.domain;
 public class NOT extends RelacioComplexa {
 
     /**
-     * Creadora de la classe NOT subclasse de Complexe
-     * @param relacio   Relacio a evaluar
+     * Class NOT creator
+     * @param relation   relation to evaluate
      */
-    public NOT(Relacio relacio) {
-        r1 = relacio;
+    public NOT(Relation relation) {
+        r1 = relation;
     }
 
     /**
      * *
-     * @param c1    Canço 1 a evaluar
-     * @param c2    Canço 2 a evaluar
-     * @return      <code>true</code> si <code>c1</code> i <code>c2</code> no estan relacionades
+     * @param s1    Song 1 to evaluate
+     * @param s2    Song 2 to evaluate
+     * @return      <code>true</code> if <code>s1</code> and <code>s2</code> are not related
      */
     @Override
-    public boolean avalua(Canco c1, Canco c2) {
-        return !r1.avalua(c1, c2);
+    public boolean evaluate(Canco s1, Canco s2) {
+        return !r1.evaluate(s1, s2);
     }
 }

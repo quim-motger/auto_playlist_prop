@@ -28,7 +28,7 @@ public class AND extends ComplexRelation {
      * @return      true if <b>s1</b> and <b>s2</b> are related by <b>r1</b> and <b>r2</b>; false otherwise
      */
     @Override
-    public boolean evaluates(Song s1, Song s2) {
+    public boolean evaluate(Song s1, Song s2) {
         return r1.evaluates(s1, s2) && r2.evaluates(s1, s2);
     }
 }
