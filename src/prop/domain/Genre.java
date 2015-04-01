@@ -3,7 +3,7 @@ package prop.domain;
 import java.util.HashMap;
 
 /**
- * The genre list as defined in http://www.id3.org/id3v2.3.0.
+ * The genre list as defined in http://www.id3.org/id3v2.3.0
  * @author oscar.manas
  */
 public enum Genre {
