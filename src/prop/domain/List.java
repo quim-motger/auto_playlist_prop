@@ -52,6 +52,14 @@ public class List {
     public Song obtainSong(int position) {
         return songs.get(position);
     }
+
+    /**
+     * Obtain an array list of all the songs in the list
+     * @return Array of Songs of the list
+     */
+    public ArrayList<Song> obtainSongs() {
+        return songs;
+    }
     
     /**
      * Obtains the position of a song inside the list
