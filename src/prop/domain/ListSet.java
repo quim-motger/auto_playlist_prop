@@ -12,9 +12,11 @@ public class ListSet {
 
     /* CONSTRUCTORS */
     /**
-     * ListSet default constructor. Creates and empty ListSet
+     * ListSet default constructor. Creates a ListSet with 0 lists
      */
-    public ListSet() {}
+    public ListSet() {
+        lists = new ArrayList<>();
+    }
 
     /**
      * ListSet constructor with its only member
@@ -99,7 +101,7 @@ public class ListSet {
     }
 
     /**
-     * Returns size of the set
+     * Returns the number of lists contained in the set
      * @return int size
      */
     public int size() { return lists.size(); }
