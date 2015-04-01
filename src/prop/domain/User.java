@@ -4,49 +4,52 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- *
+ * Class User represents a user identity and contains their personal information as well as a register of songs played
+ * by them and a list of playlists associated to them.
  * @author Carles Garcia Cabot
  */
 public class User {
     private String name;
     private Gender gender;
-    private Data birthdate;
-    private String country;
-    private ArrayList<Playback> playbackRegister; // Ordered from oldest to newest
+    private Calendar birthdate;
+    private CountryCode country;
+    private ArrayList<Playback> playbackRegister; // Sorted from oldest to newest
     private ArrayList<List> associatedLists; // Can't contain repeated lists
 
 
     /* CONSTRUCTORS */
 
     /**
-     * User default constructor
+     * User default constructor, creates an empty User
      * */
     public User() {}
 
     /**
-     * User constructor with personal data
-     * @param name String which contains the User name
+     * User constructor with personal data. The playbackRegister and the associatedLists are empty.
+     * @param name String which contains the User's name
      * @param gender User's gender
-     * @param data User's birthdate
-     * @param country String which contains the User's country of residence
+     * @param birthdate User's birthdate
+     * @param country User's country of residence
      */
-    public User(String name, Gender gender, Data birthdate, String country) {
+    public User(String name, Gender gender, Calendar birthdate, CountryCode country) {
         this.name = name;
         this.gender = gender;
         this.birthdate = birthdate;
         this.country = country;
+        playbackRegister = new ArrayList<Playback>();
+        associatedLists = new ArrayList<List>();
     }
 
     /**
      * User constructor with all members
-     * @param name
-     * @param gender
-     * @param birthdate
-     * @param country
-     * @param playbackRegister
-     * @param associatedLists
+     * @param name String which contains the User's name
+     * @param gender User's gender
+     * @param birthdate User's birthdate
+     * @param country User's country of residence
+     * @param playbackRegister User's playback begister
+     * @param associatedLists User's associated lists
      */
-    public User(String name, Gender gender, Data birthdate, String country, ArrayList<Playback> playbackRegister, ArrayList<List> associatedLists) {
+    public User(String name, Gender gender, Calendar birthdate, CountryCode country, ArrayList<Playback> playbackRegister, ArrayList<List> associatedLists) {
         this.name = name;
         this.gender = gender;
         this.birthdate = birthdate;
@@ -64,11 +67,11 @@ public class User {
         return playbackRegister;
     }
 
-    public String getCountry() {
+    public CountryCode getCountry() {
         return country;
     }
 
-    public Data getBirthdate() {
+    public Calendar getBirthdate() {
         return birthdate;
     }
 
@@ -89,11 +92,11 @@ public class User {
         this.gender = gender;
     }
 
-    public void setBirthdate(Data birthdate) {
+    public void setBirthdate(Calendar birthdate) {
         this.birthdate = birthdate;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(CountryCode country) {
         this.country = country;
     }
 
@@ -107,14 +110,22 @@ public class User {
 
     /* OTHER METHODS */
 
+    /**
+     * Returns the user's current age
+     * @return integer number that contains the user's age
+     */
     public int age() {
-        // calcula edat
-        return 0;
+        Calendar now = Calendar.getInstance();
+        int age = now.get(Calendar.YEAR) - birthdate.get(Calendar.YEAR);
+        if (now.get(Calendar.MONTH) < birthdate.get(Calendar.MONTH)) --age;
+        else if (now.get(Calendar.MONTH) == birthdate.get(Calendar.MONTH)
+                && now.get(Calendar.DAY_OF_MONTH) < birthdate.get(Calendar.DAY_OF_MONTH)) --age;
+        return age;
     }
 
     /**
      * Adds the playback to the user's playback register
-     * @param play
+     * @param play Playback to be added
      */
     public void addPlayback(Playback play) {
         playbackRegister.add(play);
@@ -160,8 +171,5 @@ public class User {
     public void clearLists() {
         associatedLists.clear();
     }
-
-
-
 
 }
