@@ -3,16 +3,16 @@ package prop.domain;
 import java.util.ArrayList;
 
 /**
- * Conjunt de songs ordenades
+ * Sorted set of songs
  * @author gerard.casas.saez
  * @version 1.0
  * @see Song
  */
 public class List {
     
-    int id;
-    String title;
-    ArrayList<Song> songs;
+    private int id;
+    private String title;
+    private ArrayList<Song> songs;
 
     /**
      * Creates an empty list with the designated title
