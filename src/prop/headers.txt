@@ -119,3 +119,54 @@ public class CommunitiesGraph<T> extends Graph {
 	/* densitat = (numArestesComunitat / numVertexsComunitat) */
 	public double getDensity(int i);
 }
+
+-----------------------------------------------------
+
+2/04/2015
+
+public class DataController {
+
+	public void save(String path, String data);
+	public String load(String path);
+
+}
+
+public class SongController {
+
+	SongSet songSet;
+
+	public SongController();
+	public boolean addSong(int id, String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration);
+	public boolean removeSong(int id);
+	public void editSong(String title, String artist, Pair<Atributte,Value>);
+	public String getSongSet();
+	public Song getSong(String title, String artist);
+	public ArrayList<String> searchSongs(ArrayList<Pair<Atributte,Value>>);
+	public void save(String path);
+    public void load(String path);
+
+}
+
+public class ListController {
+
+	ListSet listSet;
+
+	...
+
+}
+
+public class UserController {
+
+	UserSet userSet;
+
+	public UserController();
+	public boolean addUser(String name, String gender, long birthdate, String country);
+    public boolean removeUser(String name);
+    public void editUser(String name, Pair<Attribute,Value>);
+	public String getUser(String name);
+	public String getUserSet();
+	public void playSong(String title, String artist, String name);
+	public void save(String path);
+    public void load(String path);
+
+}
