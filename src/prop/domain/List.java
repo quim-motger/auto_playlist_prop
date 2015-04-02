@@ -81,8 +81,8 @@ public class List {
      */
     public int obtainTotalTime() {
         int total=0;
-        for (int i=0; i < size();++i) {
-            total += songs.get(i).getDuration();
+        for (Song song : songs) {
+            total += song.getDuration();
         }
         return total;
     }

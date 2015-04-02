@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @version 1.0
  */
 
-public class UsersSet {
+public class UserSet {
 
     private ArrayList<User> users;
     private int size;
@@ -17,7 +17,7 @@ public class UsersSet {
     /**
      * <b>UsersSet</b> class creator
      */
-    public UsersSet() {
+    public UserSet() {
         size = 0;
     }
 
