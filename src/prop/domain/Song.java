@@ -3,12 +3,11 @@ package prop.domain;
 import java.util.Calendar;
 
 /**
- * A song
+ * A song, identified by title and artist
  * @author oscar.manas
  */
 public class Song {
 
-    private int id;
     private String title;
     private String artist;
     private String album;
@@ -19,7 +18,6 @@ public class Song {
 
     /**
      * Constructor specifying a value for all attributes
-     * @param id        song ID
      * @param title     song title
      * @param artist    song artist
      * @param album     song album
@@ -28,8 +26,7 @@ public class Song {
      * @param subgenre  song subgenre
      * @param duration  song duration in seconds
      */
-    public Song(int id, String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) {
-        this.id = id;
+    public Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) {
         this.title = title;
         this.artist = artist;
         this.album = album;
@@ -37,10 +34,6 @@ public class Song {
         this.genre = genre;
         this.subgenre = subgenre;
         this.duration = duration;
-    }
-
-    public int getId(){
-        return id;
     }
 
     public String getTitle() {
@@ -71,10 +64,6 @@ public class Song {
         return duration;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -101,16 +90,6 @@ public class Song {
 
     public void setDuration(int duration) {
         this.duration = duration;
-    }
-
-    /**
-     * Play the song, i.e., add a playback to the user's register with this song and the current timestamp
-     * @param user  the user to whom the song will be added
-     */
-    public void play(User user) {
-        Calendar cal = Calendar.getInstance();
-        Playback playback = new Playback(this,cal);
-        user.addPlayback(playback);
     }
 
 }

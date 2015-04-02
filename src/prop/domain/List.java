@@ -18,7 +18,7 @@ public class List {
      * Creates an empty list with the designated title
      * @param listTitle   Title of the list
      */
-    public List(int list_id,String listTitle) { 
+    public List(String listTitle) {
         id=-1;
         title = listTitle;
         songs = new ArrayList<>();
@@ -72,14 +72,15 @@ public class List {
     
     /**
      * Obtains the position of a song inside the list
-     * @param songId Id of the searched song
+     * @param title     the title of the searched song
+     * @param artist    the artist of the searched song
      * @return the position of the first time the song appears in the list or -1 if the song is not in the list
      */
-    public int obtainSongPosition(int songId) {
-        for(int i=0; i<songs.size(); ++i) {
-            if(songs.get(i).getId() == songId)
+    public int obtainSongPosition(String title, String artist) {
+        for (int i = 0; i < songs.size(); ++i) {
+            Song song = songs.get(i);
+            if (song.getTitle().equals(title) && song.getArtist().equals(artist))
                 return i;
-            
         }
         return -1;
     }
@@ -98,11 +99,12 @@ public class List {
 
     /**
      *Check if a song is included in the list
-     * @param songId Id of the wanted song
+     * @param title     the title of the wanted song
+     * @param artist    the artist of the wanted song
      * @return <code>true</code> if the song is in the list
      */
-    public boolean contains(int songId) {
-        return obtainSongPosition(songId) != -1;
+    public boolean contains(String title, String artist) {
+        return obtainSongPosition(title,artist) != -1;
     }
 
     /**

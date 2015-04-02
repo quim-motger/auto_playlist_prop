@@ -33,11 +33,11 @@ public class SongSet {
     /**
      * Add a song to the set
      * @param song  the song to add
-     * @return      true if the song was added
+     * @return      true if the song was added,
      *              false if the song was present, and thus not added
      */
     public boolean addSong(Song song) {
-        if (!contains(song.getId())) {
+        if (!contains(song.getTitle(),song.getArtist())) {
             songSet.add(song);
             return true;
         }
@@ -47,12 +47,13 @@ public class SongSet {
 
     /**
      * Remove a song from the set
-     * @param id    the identification of a song
-     * @return      the song if present
-     *              null if not present
+     * @param title     the title of the song
+     * @param artist    the artist of the song
+     * @return          the song if present,
+     *                  null if not present
      */
-    public Song removeSong(int id) {
-        int i = getSongIndex(id);
+    public Song removeSong(String title, String artist) {
+        int i = getSongIndex(title,artist);
         if (i != -1)
             return songSet.remove(i);
         else
@@ -61,13 +62,14 @@ public class SongSet {
 
     /**
      * Returns true if the song set contains the specified song
-     * @param id    the identification of the specified song
-     * @return      true if present
-     *              false if not present
+     * @param title     the title of the specified song
+     * @param artist    the artist of the specified song
+     * @return          true if present,
+     *                  false if not present
      */
-    public boolean contains(int id) {
-        for (int i = 0; i < songSet.size(); ++i) {
-            if (songSet.get(i).getId() == id)
+    public boolean contains(String title, String artist) {
+        for (Song song : songSet) {
+            if (song.getTitle().equals(title) && song.getArtist().equals(artist))
                 return true;
         }
         return false;
@@ -79,21 +81,25 @@ public class SongSet {
      */
     public int getTotalDuration() {
         int sum = 0;
-        for (int i = 0; i < songSet.size(); ++i) {
-            sum += songSet.get(i).getDuration();
+        for (Song song : songSet) {
+            sum += song.getDuration();
         }
         return sum;
     }
 
     /**
      * Get a group of songs
-     * @param ids   list of identifications of the songs to get
-     * @return      list of present songs
+     * @param titles            list of titles of the songs to get
+     * @param artists           list of artist of the songs to get
+     * @throws RuntimeException if titles.length != artists.length
+     * @return                  list of present songs
      */
-    public ArrayList<Song> getSongsById(int[] ids) {
+    public ArrayList<Song> getSongs(String[] titles, String[] artists) {
+        if (titles.length != artists.length)
+            throw new RuntimeException("titles and artists arrays should have the same length");
         ArrayList<Song> songList = new ArrayList<Song>();
-        for (int i = 0; i < ids.length; ++i) {
-            Song c = getSongById(ids[i]);
+        for (int i = 0; i < titles.length; ++i) {
+            Song c = getSong(titles[i],artists[i]);
             if (c != null)
                 songList.add(c);
         }
@@ -102,27 +108,30 @@ public class SongSet {
 
     /**
      * Get a song
-     * @param id    the identification of the song to get
-     * @return      the song if present
-     *              null if not present
+     * @param title     the title of the song to get
+     * @param artist    the artist of the song to get
+     * @return          the song if present,
+     *                  null if not present
      */
-    public Song getSongById(int id) {
-        for (int i = 0; i < songSet.size(); ++i) {
-            if (songSet.get(i).getId() == id)
-                return songSet.get(i);
+    public Song getSong(String title, String artist) {
+        for (Song song : songSet) {
+            if (song.getTitle().equals(title) && song.getArtist().equals(artist))
+                return song;
         }
         return null;
     }
 
     /**
      * Get the song index within the song set
-     * @param id    the identification of the song to search
-     * @return      the index of the song in the set if present
-     *              -1 if not present
+     * @param title     the title of the song to search
+     * @param artist    the artist of the song to search
+     * @return          the index of the song in the set if present,
+     *                  -1 if not present
      */
-    private int getSongIndex(int id) {
+    private int getSongIndex(String title, String artist) {
         for (int i = 0; i < songSet.size(); ++i) {
-            if (songSet.get(i).getId() == id)
+            Song song = songSet.get(i);
+            if (song.getTitle().equals(title) && song.getArtist().equals(artist))
                 return i;
         }
         return -1;

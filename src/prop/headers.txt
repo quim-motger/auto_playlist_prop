@@ -136,12 +136,15 @@ public class SongController {
 	SongSet songSet;
 
 	public SongController();
-	public boolean addSong(int id, String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration);
-	public boolean removeSong(int id);
-	public void editSong(String title, String artist, Pair<Atributte,Value>);
+
+	public boolean addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration);
+	public boolean removeSong(String title, String artist);
+	public void editSong(String title, String artist, Pair<Attribute,Value>);
+
 	public String getSongSet();
 	public Song getSong(String title, String artist);
-	public ArrayList<String> searchSongs(ArrayList<Pair<Atributte,Value>>);
+	public ArrayList<String> searchSongs(ArrayList< Pair<Attribute,Value> >);
+
 	public void save(String path);
     public void load(String path);
 
@@ -151,7 +154,16 @@ public class ListController {
 
 	ListSet listSet;
 
-	...
+	public boolean addList(String title);		// The ID is assigned inside the ListSet class
+	public boolean removeList(int id);
+	public void editTitle(int id, String title);
+
+	public String getListSet();
+	public void addSong(int id, String title, String artist);
+	public void removeSong(int id, String title, String artist);
+
+	public void save(String path);
+    public void load(String path);
 
 }
 
@@ -160,12 +172,15 @@ public class UserController {
 	UserSet userSet;
 
 	public UserController();
-	public boolean addUser(String name, String gender, long birthdate, String country);
+
+	public boolean addUser(String name, String gender, long birthDate, String country);
     public boolean removeUser(String name);
     public void editUser(String name, Pair<Attribute,Value>);
+
 	public String getUser(String name);
 	public String getUserSet();
 	public void playSong(String title, String artist, String name);
+
 	public void save(String path);
     public void load(String path);
 
