@@ -3,12 +3,14 @@ package prop.domain;
 import java.util.ArrayList;
 
 /**
- * Class ListSet, represents a set of playlists
+ * Class ListSet, represents a set of playlists. It assigns unique ids to lists as they are added. <br>
  * A list can't be duplicated in the set
  * @author Carles Garcia Cabot
+ * @see List
  */
 public class ListSet {
     private ArrayList<List> lists; // a list can't be duplicated
+    private int nextId; // id to be assigned to a new list
 
     /* CONSTRUCTORS */
     /**
@@ -16,14 +18,16 @@ public class ListSet {
      */
     public ListSet() {
         lists = new ArrayList<>();
+        nextId = 0;
     }
 
     /**
-     * ListSet constructor with its only member
+     * ListSet constructor with lists
      * @param lists array of lists to form the set
      */
     public ListSet(ArrayList<List> lists) {
         this.lists = lists;
+        nextId = 0;
     }
 
     /* GETTERS */
@@ -36,6 +40,8 @@ public class ListSet {
         this.lists = lists;
     }
 
+
+
     /* OTHER METHODS */
 
     /**
@@ -44,7 +50,9 @@ public class ListSet {
      *             (Precondition: list isn't already in the set)
      */
     public void add(List list) {
+        list.setId(nextId);
         lists.add(list);
+        ++nextId;
     }
 
     /**
@@ -57,13 +65,13 @@ public class ListSet {
     }
 
     /**
-     * Removes the list with this title from the set
-     * @param title string title of the list to be removed
+     * Removes the list with this id from the set
+     * @param id int id of the list to be removed
      * @return true if the list was found and removed, false otherwise
      */
-    public boolean remove(String title) {
+    public boolean remove(int id) {
         for (int i = 0; i < lists.size(); ++i) {
-            if (lists.get(i).obtainTitle().equals(title)) {
+            if (lists.get(i).obtainId() == id) {
                 lists.remove(i);
                 return true;
             }
@@ -81,12 +89,22 @@ public class ListSet {
     }
 
     /**
-     * Indicates if the list with this title is contained in the set
+     * Indicates if a list with this title is contained in the set
      * @param title string title of the list to look up
      * @return true if found, false otherwise
      */
     public boolean contains(String title) {
         for (List l : lists) if (l.obtainTitle().equals(title)) return true;
+        return false;
+    }
+
+    /**
+     * Indicates if the list with this id is contained in the set
+     * @param id int id of the list to look up
+     * @return true if found, false otherwise
+     */
+    public boolean contains(int id) {
+        for (List l : lists) if (l.obtainId() == id) return true;
         return false;
     }
 
@@ -111,6 +129,7 @@ public class ListSet {
      */
     public void clear() {
         lists.clear();
+        nextId = 0;
     }
 
 }

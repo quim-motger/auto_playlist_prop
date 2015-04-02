@@ -127,7 +127,7 @@ public class User {
      * Adds the playback to the user's playback register
      * @param play Playback to be added
      */
-    public void addPlayback(Playback play) {
+    public void add(Playback play) {
         playbackRegister.add(play);
     }
 
@@ -136,7 +136,7 @@ public class User {
      * @param list List to be associated.
      *             (Precondition: the list isn't already associated to the user)
      */
-    public void associateList(List list) {
+    public void associate(List list) {
         associatedLists.add(list);
     }
 
