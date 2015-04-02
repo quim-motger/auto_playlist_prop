@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class List {
     
+    int id;
     String title;
     ArrayList<Song> songs;
 
@@ -17,17 +18,19 @@ public class List {
      * Creates an empty list with the designated title
      * @param listTitle   Title of the list
      */
-    public List(String listTitle) { 
+    public List(int list_id,String listTitle) { 
+        id=list_id;
         title = listTitle;
         songs = new ArrayList<>();
     }
 
     /**
-     * <Creates a list with the designated title and the designated songs
+     * Creates a list with the designated title and the designated songs
      * @param listTitle   Title of the list
      * @param newSongs   Array of initial songs for the list
      */
-    public List(String listTitle, ArrayList<Song> newSongs) { 
+    public List(int list_id,String listTitle, ArrayList<Song> newSongs) { 
+        id=list_id;
         title = listTitle;
         songs = newSongs;
     }
@@ -43,6 +46,12 @@ public class List {
      * @return title of the <code>List</code>
      */
     public String obtainTitle() {return title;}
+
+    /**
+     * Obtain <code>Id</code>
+     * @return id from the List
+     */
+    public int obtainId() {return id;}
 
     /**
      * Obtain the song at the position <code>position</code>
@@ -92,7 +101,7 @@ public class List {
      * @param songId Id of the wanted song
      * @return <code>true</code> if the song is in the list
      */
-    public boolean checkSong(int songId) {
+    public boolean contains(int songId) {
         return obtainSongPosition(songId) != -1;
     }
 
@@ -107,7 +116,7 @@ public class List {
      * @param title String that we want the list to be named
      */
     public void editTitle(String title) {
-        this.title =title;
+        this.title = title;
     }
 
     /**
