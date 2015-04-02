@@ -50,7 +50,7 @@ public class ListSet {
      *             (Precondition: list isn't already in the set)
      */
     public void add(List list) {
-        list.setId(nextId);
+        list.editId(nextId);
         lists.add(list);
         ++nextId;
     }

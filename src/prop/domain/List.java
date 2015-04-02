@@ -19,7 +19,7 @@ public class List {
      * @param listTitle   Title of the list
      */
     public List(int list_id,String listTitle) { 
-        id=list_id;
+        id=-1;
         title = listTitle;
         songs = new ArrayList<>();
     }
@@ -29,8 +29,8 @@ public class List {
      * @param listTitle   Title of the list
      * @param newSongs   Array of initial songs for the list
      */
-    public List(int list_id,String listTitle, ArrayList<Song> newSongs) { 
-        id=list_id;
+    public List(String listTitle, ArrayList<Song> newSongs) {
+        id = -1;
         title = listTitle;
         songs = newSongs;
     }
@@ -117,6 +117,10 @@ public class List {
      */
     public void editTitle(String title) {
         this.title = title;
+    }
+    
+    public void editId(int listId){
+        id =listId;
     }
 
     /**
