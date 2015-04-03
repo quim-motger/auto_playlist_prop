@@ -154,11 +154,13 @@ public class ListController {
 
 	ListSet listSet;
 
-	public boolean addList(String title);		// The ID is assigned inside the ListSet class
+	public void addList(String title);		// The ID is assigned inside the ListSet class
 	public boolean removeList(int id);
-	public void editTitle(int id, String title);
+	public void setTitle(int id, String title);
 
-	public String getListSet();
+	public String getListString(int id);
+	public String getListSetString();
+	public List getList(int id);
 	public void addSong(int id, String title, String artist);
 	public void removeSong(int id, String title, String artist);
 
@@ -179,6 +181,8 @@ public class UserController {
 
 	public String getUser(String name);
 	public String getUserSet();
+	public void associateList(String name, int id);
+	public void disassociateList(String name, int id);
 	public void playSong(String title, String artist, String name);
 
 	public void save(String path);

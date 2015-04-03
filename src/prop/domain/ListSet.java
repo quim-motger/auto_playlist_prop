@@ -35,6 +35,13 @@ public class ListSet {
         return lists;
     }
 
+    public List getList(int id) {
+        for (List list: lists)
+            if (list.obtainId() == id)
+                return list;
+        return null;
+    }
+
     /* SETTERS */
     public void setLists(ArrayList<List> lists) {
         this.lists = lists;
