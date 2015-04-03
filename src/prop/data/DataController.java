@@ -41,8 +41,9 @@ public class DataController {
     /**
      * Loads all lines from a file in the specified path to an ArrayList of strings. <br>
      * Each string contains a line, not including any line-termination characters.
+     * For huge files (3 million lines) it can be 4 times slower than {@link DataController#load}
      * @param path String path of the file to load
-     * @return ArrayList of strings with the line of the file in order.
+     * @return ArrayList of strings with the lines of the file in order.
      * @throws IOException
      */
     public static ArrayList<String> loadAllLines(String path) throws IOException {
