@@ -10,6 +10,9 @@ public class SongSet {
 
     private ArrayList<Song> songSet;
 
+    /**
+     * Constructor
+     */
     public SongSet() {
         songSet = new ArrayList<Song>();
     }
@@ -135,5 +138,59 @@ public class SongSet {
                 return i;
         }
         return -1;
+    }
+
+    /**
+     * Search for songs that have the specified values for the specified attributes
+     * @param attributes        the list of attributes
+     * @param values            the list of values
+     * @return                  a list of songs that meet the requirements
+     * @throws RuntimeException if attributes.length != values.length
+     */
+    public ArrayList<Song> searchSongs(String[] attributes, String[] values) {
+        if (attributes.length != values.length)
+            throw new RuntimeException("attributes and values arrays should have the same length");
+        ArrayList<Song> songs = new ArrayList<Song>();
+        for (Song song : songSet) {
+            boolean valid = true;
+            for (int i = 0; i < attributes.length; ++i) {
+                if (!satisfies(song,attributes[i],values[i])) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid)
+                songs.add(song);
+        }
+        return songs;
+    }
+
+    /**
+     * Returns true if the {@code song} has the specified {@code value} for the specified {@code attribute}
+     * @param song          the song to validate
+     * @param attribute     the attribute to validate
+     * @param value         the value that the attribute of the song must have
+     * @return              true if the song has the specified value for the specified attribute,
+     *                      false otherwise
+     */
+    private boolean satisfies(Song song, String attribute, String value) {
+        switch (attribute) {
+            case "title":
+                return song.getTitle().equals(value);
+            case "artist":
+                return song.getArtist().equals(value);
+            case "album":
+                return song.getAlbum().equals(value);
+            case "year":
+                return song.getYear() == Integer.parseInt(value);
+            case "genre":
+                return song.getGenre().getName().equals(value);
+            case "subgenre":
+                return song.getSubgenre().getName().equals(value);
+            case "duration":
+                return song.getDuration() == Integer.parseInt(value);
+            default:
+                throw new RuntimeException("invalid attribute name");
+        }
     }
 }

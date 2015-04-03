@@ -17,6 +17,11 @@ public class Song {
     private int duration;
 
     /**
+     * The default constructor
+     */
+    public Song(){}
+
+    /**
      * Constructor specifying a value for all attributes
      * @param title     song title
      * @param artist    song artist
