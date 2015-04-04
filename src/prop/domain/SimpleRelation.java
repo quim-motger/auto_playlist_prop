@@ -8,7 +8,7 @@ import java.lang.Integer;
  * @see     Relation
  */
 
-public class Simple extends Relation {
+public class SimpleRelation extends Relation {
 
     private String attribute;
     private String value;
@@ -18,34 +18,44 @@ public class Simple extends Relation {
      * @params  attribute  attribute name
      * @params  value  value of attribute
      */
-    public Simple(String attribute, String value) {
+    public SimpleRelation(String attribute, String value) {
         this.attribute = attribute;
         this.value = value;
     }
 
+    /**
+     * Evaluates s1 and s2
+     * @param s1    first song
+     * @param s2    second song
+     * @return      true if they match the specified relation; false otherwise
+     */
     public boolean evaluate(Song s1, Song s2) {
+        String s;
+        int i;
         switch(attribute) {
-            case title:
-                String s = s1.getTitle();
+            case "title":
+                s = s1.getTitle();
                 return s.equals(s2.getTitle()) && s.equals(value);
-            case artist:
-                String s = s1.getArtist();
+            case "artist":
+                s = s1.getArtist();
                 return s.equals(s2.getArtist()) && s.equals(value);
-            case album:
-                String s = s1.getAlbum():
+            case "album":
+                s = s1.getAlbum();
                 return s.equals(s2.getAlbum()) && s.equals(value);
-            case year:
-                int i = s1.getYear();
+            case "year":
+                i = s1.getYear();
                 return i == s2.getYear() && i == Integer.parseInt(value);
-            case genre:
-                String s = s1.getGenre().getName();
+            case "genre":
+                s = s1.getGenre().getName();
                 return s.equals(s2.getGenre().getName()) && s.equals(value);
-            case subgenre:
-                String s = s1.getSubgenre().getName();
+            case "subgenre":
+                s = s1.getSubgenre().getName();
                 return s.equals(s2.getSubgenre().getName()) && s.equals(value);
-            case duration:
-                int i = s1.getDuration();
+            case "duration":
+                i = s1.getDuration();
                 return i == s2.getDuration() && i == Integer.parseInt(value);
+            default:
+                return false;
         }
     }
 
