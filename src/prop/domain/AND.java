@@ -3,13 +3,12 @@ package prop.domain;
 /**
  * AND complex relation
  * @author joaquim.motger
- * @version 1.0
  */
 
 public class AND extends ComplexRelation {
 
     /**
-     * <b>AND</b> class creator
+     * <b>AND</b> class constructor
      * @param R1    first <b>Relation</b>
      * @param R2    second <b>Relation</b>
      */

@@ -3,9 +3,8 @@ package prop.domain;
 import java.util.ArrayList;
 
 /**
- * Users set
- * @author joaquim.motger
- * @version 1.0
+ * User set
+ * @author  joaquim.motger
  */
 
 public class UserSet {
@@ -15,10 +14,11 @@ public class UserSet {
 
 
     /**
-     * <b>UsersSet</b> class creator
+     * <b>UsersSet</b> class constructor
      */
     public UserSet() {
         size = 0;
+        users = new ArrayList<User>();
     }
 
     /**
@@ -38,23 +38,6 @@ public class UserSet {
     }
 
     /**
-     * Getter method of the <b>position</b> of <b>User</b> with requested <b>name</b>
-     * @params name  user <b>name</b>
-     * @return      position  user position in <b>users</b>; -1 if not found
-     */
-    public int getUserPos(String name) {
-        int i = 0;
-        boolean found = false;
-        while(!found && i < size) {
-            User user = users.get(i);
-            if (user.getName().equals(name)) found = true;
-            else ++i;
-        }
-        if (found) return i;
-        else return -1;
-    }
-
-    /**
      * Add <b>user</b> to <b>users</b>
      * @params  user  new <b>user</b> to add
      * @return  i   <b>user</b> position with same name; -1 if name available
@@ -69,13 +52,41 @@ public class UserSet {
     }
 
     /**
-     * Remove <b>user</b> in position <b>i</b> from <b>users</b>
-     * @params  i   <b>user</b> position in <b>users</b>
+     * Getter method of the <b>User</b> with name <b>name</b>
+     * @params  name    <b>user</b> name
+     * @return  user    the user; null if not found
      */
-    public void removeUser (int i) {
-        if (i >= 0 && i < size) {
-            users.remove(i);
-            --size;
+    public User getUserByName(String name) {
+        int i = getUserPos(name);
+        if (i != -1) return users.get(i);
+        else return null;
+    }
+
+    /**
+     * Remove <b>user</b> with name <b>name</b> from <b>users</b>
+     * @params  name    <b>user</b> name
+     * @return  user    the user removed; null if not found
+     */
+    public User removeUser (String name) {
+        int i = getUserPos(name);
+        if (i != -1) return users.remove(i);
+        else return null;
+    }
+
+    /**
+     * Getter method of the <b>position</b> of <b>User</b> with requested <b>name</b>
+     * @params name  user <b>name</b>
+     * @return      position  user position in <b>users</b>; -1 if not found
+     */
+    private int getUserPos(String name) {
+        int i = 0;
+        boolean found = false;
+        while(!found && i < size) {
+            User user = users.get(i);
+            if (user.getName().equals(name)) found = true;
+            else ++i;
         }
+        if (found) return i;
+        else return -1;
     }
 }

@@ -5,7 +5,6 @@ import java.util.Calendar;
 /**
  * A playback of a song in a specific date
  * @author joaquim.motger
- * @version 1.0
  */
 
 public class Playback {
@@ -14,7 +13,7 @@ public class Playback {
     private Calendar date;
 
     /**
-     * <b>Playback</b> class creator
+     * <b>Playback</b> class constructor
      * @param song      <b>song</b> played
      * @param date      play <b>date</b>
      */
