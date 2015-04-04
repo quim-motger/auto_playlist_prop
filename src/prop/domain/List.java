@@ -120,7 +120,11 @@ public class List {
     public void editTitle(String title) {
         this.title = title;
     }
-    
+
+    /**
+     * Edit List ID 
+     * @param listId new ID
+     */
     public void editId(int listId){
         id =listId;
     }
@@ -146,11 +150,23 @@ public class List {
     }
 
     /**
+     * Modifier that deletes a song from the List
+     * @param title title of the song
+     * @param artist artist of the song
+     */
+    public void removeSong(String title, String artist) {
+        int pos= obtainSongPosition(title,artist);
+        if(pos>0) {
+            removeSong(pos);
+        }
+    }
+
+    /**
      *  Modifier that deletes a song from the list
      *  The songs below the deleted one get promoted one position to fill the blank
      * @param pos   0 < <code>pos</code> < <code>size()</code>
      */
-    public void deleteSong(int pos) {
+    public void removeSong(int pos) {
         songs.remove(pos);
     }
 

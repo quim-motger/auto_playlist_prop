@@ -1,5 +1,7 @@
 package prop;
 
+import prop.domain.Gender;
+
 import java.util.Calendar;
 
 public class Main {
@@ -18,6 +20,6 @@ public class Main {
             age--;
         }
 
-        System.out.println("Edat: " + age);
+        System.out.println(Gender.FEMALE.toString());
     }
 }
