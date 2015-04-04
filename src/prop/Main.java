@@ -1,6 +1,6 @@
 package prop;
 
-import prop.domain.Gender;
+import prop.domain.UserController;
 
 import java.util.Calendar;
 
@@ -20,6 +20,8 @@ public class Main {
             age--;
         }
 
-        System.out.println(Gender.FEMALE.toString());
+        UserController cont = new UserController();
+        cont.addUser("test","test",3343434,"ES");
+        System.out.println(cont.obtainUser("test"));
     }
 }
