@@ -94,7 +94,7 @@ public class InputController {
 }
 
 public class Graph <T> {
-	/* Ha de permetre tenir múltiples arestes entre un parell de vèrtexs,
+	/* Ha de permetre tenir mï¿½ltiples arestes entre un parell de vï¿½rtexs,
 	   i cada aresta ha de tenir un pes */
 
 	private ArrayList< ArrayList<T> > graph;
@@ -143,7 +143,7 @@ public class SongController {
 
 	public String getSongSet();
 	public Song getSong(String title, String artist);
-	public ArrayList<String> searchSongs(ArrayList< Pair<Attribute,Value> >);
+	public String searchSongs(ArrayList< Pair<Attribute,Value> >);
 
 	public void save(String path);
     public void load(String path);

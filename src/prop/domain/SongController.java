@@ -1,6 +1,8 @@
 package prop.domain;
 
+import java.lang.String;
 import java.lang.StringBuilder;
+import java.util.ArrayList;
 
 /**
  * Song Controller
@@ -33,7 +35,7 @@ public class SongController {
      */
     public boolean addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) {
         Song song = new Song(title, artist, album, year, genre, subgenre, duration);
-        return songSet.add(song);
+        return songSet.addSong(song);
     }
 
     /**
@@ -43,7 +45,9 @@ public class SongController {
      * @return          true if the song was removed; false if the song was not present
      */
     public boolean removeSong(String title, String artist) {
-        return songSet.remove(title, artist);
+        Song song = songSet.removeSong(title, artist);
+        if (song != null) return true;
+        else return false;
     }
 
     /**
@@ -52,24 +56,31 @@ public class SongController {
      * @param artist    song artist
      * @param pair      a pair defining attribute and new value
      */
-    public void editSong(String title, String artist, Pair<Attribute,Value> pair) {
+    public void editSong(String title, String artist, Pair<String, String> pair) {
         Song song = songSet.getSong(title, artist);
         if (song != null) {
             switch(pair.first) {
-                case title:
+                case "title":
                     song.setTitle(pair.second);
-                case artist:
+                    break;
+                case "artist":
                     song.setArtist(pair.second);
-                case album:
+                    break;
+                case "album":
                     song.setAlbum(pair.second);
-                case year:
-                    song.setYears(pair.second);
-                case genre:
-                    song.setGenre(pair.second);
-                case subgenre:
-                    song.setSubgenre(pair.second);
-                case duration:
-                    song.setDuration(pair.second);
+                    break;
+                case "year":
+                    song.setYear(Integer.parseInt(pair.second));
+                    break;
+                case "genre":
+                    song.setGenre(getGenreByName(pair.second));
+                    break;
+                case "subgenre":
+                    song.setSubgenre(getGenreByName(pair.second));
+                    break;
+                case "duration":
+                    song.setDuration(Integer.parseInt(pair.second));
+                    break;
             }
         }
     }
@@ -82,8 +93,8 @@ public class SongController {
         ArrayList<Song> songs = songSet.getSongSet();
         for (Song song : songs) {
             sb.append(song.getTitle() + "\t" + song.getArtist() + "\t" + song.getAlbum() + "\t" +
-                        Integer.toString(song.getYear()) + "\t" + song.getGenre() + "\t" + song.getSubgenre() + "\t" +
-                        Integer.toString(song.getDuration()) + "\n");
+                        Integer.toString(song.getYear()) + "\t" + song.getGenre().getName() + "\t" +
+                        song.getSubgenre().getName() + "\t" + Integer.toString(song.getDuration()) + "\n");
         }
         return sb.toString();
     }
@@ -101,10 +112,45 @@ public class SongController {
     /**
      * Search songs with the defined values for specified attributes
      * @param l     list with pairs of attributes and value to define search
-     * @return      list with all the songs that match the search
+     * @return      string with all the songs that match the search
      */
-    public ArrayList<String> searchSongs(ArrayList< Pair<Attribute, Value> > l) {
-
+    public String searchSongs(ArrayList< Pair<String, String> > l) {
+        StringBuilder sb = new StringBuilder();
+        ArrayList<Song> songs = songSet.getSongSet();
+        for (Song song : songs) {
+            boolean match = true;
+            for (Pair<String, String> pair : l) {
+                switch(pair.first) {
+                    case "title":
+                        match = song.getTitle().equals(pair.second);
+                        break;
+                    case "artist":
+                        match = song.getArtist().equals(pair.second);
+                        break;
+                    case "album":
+                        match = song.getAlbum().equals(pair.second);
+                        break;
+                    case "year":
+                        match = Integer.toString(song.getYear()).equals(pair.second);
+                        break;
+                    case "genre":
+                        match = song.getGenre().getName().equals(pair.second);
+                        break;
+                    case "subgenre":
+                        match = song.getSubgenre().getName().equals(pair.second);
+                        break;
+                    case "duration":
+                        match = Integer.toString(song.getDuration()).equals(pair.second);
+                        break;
+                }
+                if (!match) break;
+            }
+            if (match) {
+                sb.append(song.getTitle() + "\t" + song.getArtist() + "\t" + song.getAlbum() + "\t" +
+                        Integer.toString(song.getYear()) + "\t" + song.getGenre().getName() + "\t" +
+                        song.getSubgenre().getName() + "\t" + Integer.toString(song.getDuration()) + "\n");
+            }
+        }
     }
 
     /**
@@ -120,7 +166,7 @@ public class SongController {
      * @param path      path to load the songSet
      */
     public void load(String path) {
-        
+
     }
 }
 
