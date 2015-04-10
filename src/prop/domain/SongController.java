@@ -73,10 +73,10 @@ public class SongController {
                     song.setYear(Integer.parseInt(pair.second));
                     break;
                 case "genre":
-                    song.setGenre(getGenreByName(pair.second));
+                    song.setGenre(Genre.getGenreByName(pair.second));
                     break;
                 case "subgenre":
-                    song.setSubgenre(getGenreByName(pair.second));
+                    song.setSubgenre(Genre.getGenreByName(pair.second));
                     break;
                 case "duration":
                     song.setDuration(Integer.parseInt(pair.second));
@@ -151,6 +151,7 @@ public class SongController {
                         song.getSubgenre().getName() + "\t" + Integer.toString(song.getDuration()) + "\n");
             }
         }
+        return sb.toString();
     }
 
     /**
