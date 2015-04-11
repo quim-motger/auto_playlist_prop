@@ -30,7 +30,7 @@ public class DataController {
     /**
      * Loads all the content from a file to a string
      * @param path String path of the file to load
-     * @return String that containing the bytes of the file
+     * @return String that contains the bytes of the file
      * @throws IOException
      */
     public static String load(String path) throws IOException {
