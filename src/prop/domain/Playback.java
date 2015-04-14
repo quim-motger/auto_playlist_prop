@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.lang.Override;
 import java.util.Calendar;
 
 /**
@@ -36,5 +37,34 @@ public class Playback {
      */
     public Calendar getDate () {
         return date;
+    }
+
+    /**
+     * Setter method of the <b>song</b> played
+     * @param     <b>song</b>
+     */
+    public void setSong (Song song) {
+        this.song = song;
+    }
+
+    /**
+     * Setter method of the play <b>date</b>
+     * @param     play <b>date</b>
+     */
+    public void setDate (Calendar date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        String s = getSong.getTitle() + "\n" + getSong.getArtist() + "\n"
+                + getDate.get(Calendar.YEAR) + "\n" + getDate.get(Calendar.MONTH) + "\n"
+                + getDate.get(Calendar.DAY_OF_MONTH) + "\n" + getDate.get(Calendar.HOUR) + "\n"
+                + getDate.get(Calendar.MINUTE) + "\n" + getDate.get(Calendar.SECOND) + "\n";
+        return s;
+    }
+
+    public static Playback valueOf(String s) {
+
     }
 }
