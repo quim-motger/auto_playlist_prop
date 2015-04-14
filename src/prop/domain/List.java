@@ -1,6 +1,9 @@
 package prop.domain;
 
+import prop.ErrorString;
+
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Sorted set of songs
@@ -9,10 +12,15 @@ import java.util.ArrayList;
  * @see Song
  */
 public class List {
+
     
     private int id;
     private String title;
     private ArrayList<Song> songs;
+    
+    private static final String LIST_DELIMITER = "|L|";
+    private static final String LIST_STRING_ID = "LIST_STRING";
+    private static final String SONG_DELIMITER = "|S|";
 
     /**
      * Creates an empty list with the designated title
@@ -186,5 +194,36 @@ public class List {
         Song song = songs.get(index1);
         songs.set(index1, songs.get(index2));
         songs.set(index2, song);
+    }
+
+
+    @Override
+    public String toString() {
+        String ret = LIST_STRING_ID+ LIST_DELIMITER;
+        ret += String.valueOf(id) + LIST_DELIMITER;
+        ret += title + LIST_DELIMITER;
+        ret += songs.size() + LIST_DELIMITER;
+        for (Song song : songs){
+            ret += song.getTitle()+SONG_DELIMITER;
+            ret += song.getArtist()+LIST_DELIMITER;
+        }
+        return ret;
+    }
+    
+    public static List valueOf(String origin, SongController songController) throws Exception{
+        String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
+        if (!tokens[0].equals(LIST_STRING_ID)) {
+            throw new Exception(ErrorString.INCORRECT_FORMAT);
+        }
+        List list = new List(tokens[2]);
+        list.editId(Integer.valueOf(tokens[1]));
+        int size = Integer.valueOf(tokens[3]);
+        for (int i = 4; i<size; ++i) {
+            String[] songId = tokens[i].split(SONG_DELIMITER);
+            Song song = songController.getSong(songId[0], songId[1]);
+            if(song==null) throw  new Exception(ErrorString.INEXISTING_SONG);
+            list.addSong(song);
+        }
+        return list;
     }
 }
