@@ -172,4 +172,25 @@ public class User {
         associatedLists.clear();
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name + "\n");
+        sb.append(gender.toString() + "\n");
+        sb.append(birthdate.toString() + "\n");
+        sb.append(country.toString() + "\n");
+        sb.append(playbackRegister.size() + "\n");
+        for (Playback p : playbackRegister) {
+            //write every playback
+        }
+        sb.append(associatedLists.size() + "\n");
+        for (List l : associatedLists) {
+            sb.append(l.obtainId() + " ");
+        }
+        sb.append("\n\n");
+        return sb.toString();
+    }
+
+    public static User valueOf(String source, ListSet ls) {
+        return new User();
+    }
 }
