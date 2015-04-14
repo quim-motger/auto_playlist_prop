@@ -15,6 +15,7 @@ public class SongDriver {
         printInfo();
 
         Song song = new Song();
+        String serialized = "";
         Scanner in = new Scanner(System.in);
         int i = -1;
         while(i != 0) {
@@ -74,6 +75,14 @@ public class SongDriver {
                     int duration = in.nextInt();
                     song.setDuration(duration);
                     break;
+                case 16:
+                    serialized = song.toString();
+                    break;
+                case 17:
+                    Song s = Song.parse(serialized);
+                    System.out.println(s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
+                    " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration());
+                    break;
             }
         }
 
@@ -97,6 +106,8 @@ public class SongDriver {
         sb.append("13: Genre setGenre(Genre genre)\n");
         sb.append("14: Genre setSubgenre(Genre subgenre)\n");
         sb.append("15: int setDuration(int duration)\n");
+        sb.append("16: public String toString()\n");
+        sb.append("17: public static Song parse(String s)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

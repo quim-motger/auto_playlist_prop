@@ -1,6 +1,7 @@
 package prop.domain;
 
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 /**
  * A song, identified by title and artist
@@ -15,6 +16,8 @@ public class Song {
     private Genre genre;
     private Genre subgenre;
     private int duration;
+
+    private static final char delimiter = '\n';
 
     /**
      * The default constructor
@@ -95,6 +98,25 @@ public class Song {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public String toString() {
+        String s = "";
+        s += title + delimiter;
+        s += artist + delimiter;
+        s += album + delimiter;
+        s += year + delimiter;
+        s += genre.getId() + delimiter;
+        s += subgenre.getId() + delimiter;
+        s += duration;
+
+        return s;
+    }
+
+    public static Song parse(String s) {
+        String[] t = s.split(String.valueOf(delimiter));
+        return new Song(t[0],t[1],t[2],Integer.parseInt(t[3]),Genre.getGenreById(Integer.parseInt(t[4])),
+                Genre.getGenreById(Integer.parseInt(t[5])),Integer.parseInt(t[6]));
     }
 
 }
