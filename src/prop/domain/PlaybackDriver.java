@@ -117,7 +117,12 @@ public class PlaybackDriver {
                     System.out.println(s3);
                     break;
                 case 7:
+                    //playback = Playback.valueOf();
                     break;
+                case 8:
+                    break;
+                default:
+                    printInfo();
             }
         }
     }
@@ -132,6 +137,7 @@ public class PlaybackDriver {
         sb.append("5:   void setDate(Calendar date)\n");
         sb.append("6:   String toString()\n");
         sb.append("7:   void valueOf(String s)\n");
+        sb.append("8:   Song(String title,String artist,String album,int year,Genre genre,Genre subgenre,int duration)\n");
         System.out.print(sb.toString());
     }
 }

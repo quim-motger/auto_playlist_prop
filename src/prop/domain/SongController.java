@@ -1,5 +1,8 @@
 package prop.domain;
 
+import prop.data.DataController;
+
+import java.io.IOException;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.util.ArrayList;
@@ -15,11 +18,21 @@ public class SongController {
 
     SongSet songSet;
 
+    private final static String delimiter = "$";
+
     /**
      * Song Controller constructor
      */
     public SongController() {
         songSet = new SongSet();
+    }
+
+    /**
+     * Set the songSet of the controller
+     * @param  songSet  songSet of the SongController
+     */
+    public void setSongSet(SongSet songSet) {
+        this.songSet = songSet;
     }
 
     /**
@@ -92,9 +105,7 @@ public class SongController {
         StringBuilder sb = new StringBuilder();
         ArrayList<Song> songs = songSet.getSongSet();
         for (Song song : songs) {
-            sb.append(song.getTitle() + "\t" + song.getArtist() + "\t" + song.getAlbum() + "\t" +
-                        Integer.toString(song.getYear()) + "\t" + song.getGenre().getName() + "\t" +
-                        song.getSubgenre().getName() + "\t" + Integer.toString(song.getDuration()) + "\n");
+            sb.append(song.toString()+delimiter);
         }
         return sb.toString();
     }
@@ -115,43 +126,12 @@ public class SongController {
      * @return      string with all the songs that match the search
      */
     public String searchSongs(ArrayList< Pair<String, String> > l) {
-        StringBuilder sb = new StringBuilder();
-        ArrayList<Song> songs = songSet.getSongSet();
+        ArrayList<Song> songs = songSet.getSongs(l);
+        String s = "";
         for (Song song : songs) {
-            boolean match = true;
-            for (Pair<String, String> pair : l) {
-                switch(pair.first) {
-                    case "title":
-                        match = song.getTitle().equals(pair.second);
-                        break;
-                    case "artist":
-                        match = song.getArtist().equals(pair.second);
-                        break;
-                    case "album":
-                        match = song.getAlbum().equals(pair.second);
-                        break;
-                    case "year":
-                        match = Integer.toString(song.getYear()).equals(pair.second);
-                        break;
-                    case "genre":
-                        match = song.getGenre().getName().equals(pair.second);
-                        break;
-                    case "subgenre":
-                        match = song.getSubgenre().getName().equals(pair.second);
-                        break;
-                    case "duration":
-                        match = Integer.toString(song.getDuration()).equals(pair.second);
-                        break;
-                }
-                if (!match) break;
-            }
-            if (match) {
-                sb.append(song.getTitle() + "\t" + song.getArtist() + "\t" + song.getAlbum() + "\t" +
-                        Integer.toString(song.getYear()) + "\t" + song.getGenre().getName() + "\t" +
-                        song.getSubgenre().getName() + "\t" + Integer.toString(song.getDuration()) + "\n");
-            }
+            s += song.toString();
         }
-        return sb.toString();
+        return s;
     }
 
     /**
@@ -159,7 +139,12 @@ public class SongController {
      * @param path      path to save the songSet
      */
     public void save(String path) {
-
+        try {
+            DataController.save(getSongSet(), path);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -167,7 +152,20 @@ public class SongController {
      * @param path      path to load the songSet
      */
     public void load(String path) {
-
+        String s;
+        SongSet songSet = new SongSet();
+        try {
+            s = DataController.load(path);
+            String[] t = s.split(delimiter);
+            for (String string : t) {
+                Song song = Song.parse(string);
+                songSet.addSong(song);
+            }
+            setSongSet(songSet);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
 
