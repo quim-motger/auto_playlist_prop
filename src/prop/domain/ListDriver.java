@@ -129,7 +129,7 @@ public class ListDriver {
         sb.append("6:  Song obtainSong(int position)\n");
         sb.append("7:  ArrayList<Song> obtainSongs()\n");
         sb.append("8:  int obtainSongPosition(String title, String artist)\n");
-        sb.append("9: int obtainTotalTime()\n");
+        sb.append("9:  int obtainTotalTime()\n");
         sb.append("10: boolean contains(String title, String artist)\n");
         sb.append("11: boolean isEmpty()\n");
         sb.append("12: void editTitle(String title)\n");
@@ -143,3 +143,7 @@ public class ListDriver {
         System.out.print(sb.toString());
     }
 }
+
+/*
+TODO: Incorporar opcions driver de song al driver
+ */

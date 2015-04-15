@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  * Sorted set of songs
+ * ID -> id: int
  * @author gerard.casas.saez
  * @version 1.0
  * @see Song
@@ -215,14 +216,14 @@ public class List {
 
     /**
      * *
-     * @param origin
-     * @param songController
-     * @return
-     * @throws Exception
+     * @param origin String to be parsed
+     * @param songController SongController containing all songs
+     * @return List created parsing origin
+     * @throws Exception if origin format incorrect
      */
     public static List valueOf(String origin, SongController songController) throws Exception{
         String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
-        if (!tokens[0].equals(LIST_STRING_ID)) {
+        if (tokens.length<4 || !tokens[0].equals(LIST_STRING_ID)) {
             throw new Exception(ErrorString.INCORRECT_FORMAT);
         }
         List list = new List(tokens[2]);

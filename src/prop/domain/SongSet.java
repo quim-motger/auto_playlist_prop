@@ -10,6 +10,8 @@ public class SongSet {
 
     private ArrayList<Song> songSet;
 
+    private static final char delimiter = '\n';
+
     /**
      * Constructor
      */
@@ -188,4 +190,24 @@ public class SongSet {
                 throw new Exception("invalid attribute name");
         }
     }
+
+    public String toString() {
+        String s = "";
+        int i;
+        for (i = 0; i < songSet.size()-1; ++i) {
+            s += songSet.get(i).toString() + delimiter;
+        }
+        s += songSet.get(i);
+        return s;
+    }
+
+    public static SongSet valueOf(String s) {
+        String[] songs = s.split(String.valueOf(delimiter));
+        SongSet ss = new SongSet();
+        for (String r : songs) {
+            ss.addSong(Song.valueOf(r));
+        }
+        return ss;
+    }
+
 }
