@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @author joaquim.motger
  */
 public class SongControllerDriver {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("**********************************************************");
         System.out.println("** Song Controller");
         System.out.println("**********************************************************");
@@ -80,6 +80,7 @@ public class SongControllerDriver {
                     System.out.print("Artist");
                     String artist4 = in.next();
                     song = songController.getSong(title4,artist4);
+                    System.out.print(song.toString());
                     break;
                 case 7:
                     System.out.print("Search songs\n");

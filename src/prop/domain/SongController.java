@@ -117,8 +117,8 @@ public class SongController {
      * @param l     list with pairs of attributes and value to define search
      * @return      string with all the songs that match the search
      */
-    public String searchSongs(ArrayList< Pair<String, String> > l) {
-        ArrayList<Song> songs = songSet.getSongs(l);
+    public String searchSongs(ArrayList< Pair<String, String> > l) throws Exception {
+        ArrayList<Song> songs = songSet.searchSongs(l);
         String s = "";
         for (Song song : songs) {
             s += song.toString() + "\n";
