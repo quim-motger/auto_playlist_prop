@@ -1,6 +1,7 @@
 package prop.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 /**
@@ -44,8 +45,28 @@ public class UserSetDriver {
                     else System.out.print("User doesn't exist\n");
                     break;
                 case 5:
+                    System.out.print("Name:");
+                    String name2 = in.next();
+                    user = userSet.getUserByName(name2);
+                    System.out.print(user.toString());
                     break;
                 case 6:
+                   /* System.out.print("Name:");
+                    String name3 = in.next();
+                    System.out.print("Gender (FEMALE/MALE/OTHER):");
+
+                    Calendar birthdate = Calendar.getInstance();
+                    System.out.print("Birthdate\n");
+                    System.out.print("Year:");
+                    int year = in.nextInt();
+                    System.out.print("Month:");
+                    int month = in.nextInt();
+                    System.out.print("Day:");
+                    int day = in.nextInt();
+                    birthdate.set(year,month,day);
+                    System.out.print("Country:");
+                    CountryCode country = CountryCode.getByCode(in.nextInt());
+                    user = new User(name3, gender, birthdate, country);*/
                     break;
                 default:
                     printInfo();
