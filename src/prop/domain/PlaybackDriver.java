@@ -29,22 +29,12 @@ public class PlaybackDriver {
                 case 0:
                     break;
                 case 1:
-                    song = new Song();
                     System.out.print("Song\n");
                     System.out.print("Title:");
-                    song.setTitle(in.next());
+                    String title3 = in.next();
                     System.out.print("Artist:");
-                    song.setArtist(in.next());
-                    System.out.print("Album:");
-                    song.setAlbum(in.next());
-                    System.out.print("Year:");
-                    song.setYear(in.nextInt());
-                    System.out.print("Genre:");
-                    song.setGenre(Genre.getGenreById(in.nextInt()));
-                    System.out.print("Subgenre:");
-                    song.setSubgenre(Genre.getGenreById(in.nextInt()));
-                    System.out.print("Duration:");
-                    song.setDuration(in.nextInt());
+                    String artist3 = in.next();
+                    song = songController.getSong(title3,artist3);
                     date = Calendar.getInstance();
                     System.out.print("Date\n");
                     System.out.print("Year:");
@@ -82,22 +72,12 @@ public class PlaybackDriver {
                     System.out.println("Second: "+date.get(Calendar.SECOND));
                     break;
                 case 4:
-                    song = new Song();
                     System.out.print("Song\n");
                     System.out.print("Title:");
-                    song.setTitle(in.next());
+                    String title4 = in.next();
                     System.out.print("Artist:");
-                    song.setArtist(in.next());
-                    System.out.print("Album:");
-                    song.setAlbum(in.next());
-                    System.out.print("Year:");
-                    song.setYear(in.nextInt());
-                    System.out.print("Genre:");
-                    song.setGenre(Genre.getGenreById(in.nextInt()));
-                    System.out.print("Subgenre:");
-                    song.setSubgenre(Genre.getGenreById(in.nextInt()));
-                    System.out.print("Duration:");
-                    song.setDuration(in.nextInt());
+                    String artist4 = in.next();
+                    song = songController.getSong(title4,artist4);
                     playback.setSong(song);
                 case 5:
                     date = Calendar.getInstance();
@@ -121,13 +101,41 @@ public class PlaybackDriver {
                     System.out.println(s);
                     break;
                 case 7:
-                    Playback.valueOf(s, songController);
+                    playback = Playback.valueOf(s, songController);
                     break;
                 case 8:
                     songController = new SongController();
                     break;
                 case 9:
-
+                    System.out.print("Add song\n");
+                    System.out.print("Title:");
+                    String title = in.next();
+                    System.out.print("Artist:");
+                    String artist = in.next();
+                    System.out.print("Album:");
+                    String album = in.next();
+                    System.out.print("Year:");
+                    int y = in.nextInt();
+                    System.out.print("Genre:");
+                    Genre genre = Genre.getGenreById(in.nextInt());
+                    System.out.print("Subgenre:");
+                    Genre subgenre = Genre.getGenreById(in.nextInt());
+                    System.out.print("Duration:");
+                    int duration = in.nextInt();
+                    boolean b = songController.addSong(title,artist,album,y,genre,subgenre,duration);
+                    if (b) System.out.print("Song added\n");
+                    else System.out.print("Song already exists\n");
+                    break;
+                case 10:
+                    System.out.print("Remove song\n");
+                    System.out.print("Title:");
+                    String title2 = in.next();
+                    System.out.print("Artist:");
+                    String artist2 = in.next();
+                    boolean b2 = songController.removeSong(title2, artist2);
+                    if (b2) System.out.print("Song removed\n");
+                    else System.out.print("Song doesn't exist\n");
+                    break;
                 default:
                     printInfo();
             }
