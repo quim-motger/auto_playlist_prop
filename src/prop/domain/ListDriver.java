@@ -84,6 +84,8 @@ public class ListDriver {
                     System.out.print("Title:");
                     song.setTitle(in.next());
                     System.out.print("Artist:");
+                    song.setArtist(in.next());
+                    System.out.print("Album:");
                     song.setAlbum(in.next());
                     System.out.print("Year:");
                     song.setYear(in.nextInt());
@@ -132,11 +134,11 @@ public class ListDriver {
         sb.append("11: boolean isEmpty()\n");
         sb.append("12: void editTitle(String title)\n");
         sb.append("13: void editId(int listId)\n");
-        sb.append("14: void addSong(Song song)");
-        sb.append("15: void removeSong(String title, String artist)");
-        sb.append("16: void empty()");
-        sb.append("17: void swapSongs(int index1, int index2)");
-        sb.append("18: String toString()");
+        sb.append("14: void addSong(Song song)\n");
+        sb.append("15: void removeSong(String title, String artist)\n");
+        sb.append("16: void empty()\n");
+        sb.append("17: void swapSongs(int index1, int index2)\n");
+        sb.append("18: String toString()\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

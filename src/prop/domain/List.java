@@ -18,9 +18,9 @@ public class List {
     private String title;
     private ArrayList<Song> songs;
     
-    private static final String LIST_DELIMITER = "|L|";
+    private static final String LIST_DELIMITER = "||";
     private static final String LIST_STRING_ID = "LIST_STRING";
-    private static final String SONG_DELIMITER = "|S|";
+    private static final String SONG_DELIMITER = "~";
 
     /**
      * Creates an empty list with the designated title
@@ -196,7 +196,10 @@ public class List {
         songs.set(index2, song);
     }
 
-
+    /**
+     * * 
+     * @return
+     */
     @Override
     public String toString() {
         String ret = LIST_STRING_ID+ LIST_DELIMITER;
@@ -209,7 +212,14 @@ public class List {
         }
         return ret;
     }
-    
+
+    /**
+     * *
+     * @param origin
+     * @param songController
+     * @return
+     * @throws Exception
+     */
     public static List valueOf(String origin, SongController songController) throws Exception{
         String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
         if (!tokens[0].equals(LIST_STRING_ID)) {

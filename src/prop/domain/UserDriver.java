@@ -1,7 +1,6 @@
 package prop.domain;
 
 import java.util.Scanner;
-import prop.domain.User;
 /**
  * User Driver
  * @author Carles Garcia Cabot
@@ -50,23 +49,23 @@ public class UserDriver {
                     break;
                /* case 9:
                     int year = in.nextInt();
-                    song.setYear(year);
+                    //song.setYear(year);
                     break;
                 case 12:
                     String album = in.next();
-                    song.setAlbum(album);
+                    //song.setAlbum(album);
                     break;
                 case 13:
                     int genre = in.nextInt();
-                    song.setGenre(Genre.getGenreById(genre));
+                    //song.setGenre(Genre.getGenreById(genre));
                     break;
                 case 14:
                     int subgenre = in.nextInt();
-                    song.setGenre(Genre.getGenreById(subgenre));
+                    //song.setGenre(Genre.getGenreById(subgenre));
                     break;
                 case 15:
                     int duration = in.nextInt();
-                    song.setDuration(duration);
+                    //song.setDuration(duration);
                     break;
                 case 16:*/
 
