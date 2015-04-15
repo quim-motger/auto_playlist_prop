@@ -41,7 +41,7 @@ public class Playback {
 
     /**
      * Setter method of the <b>song</b> played
-     * @param     <b>song</b>
+     * @param   song    <b>song</b>
      */
     public void setSong (Song song) {
         this.song = song;
@@ -49,7 +49,7 @@ public class Playback {
 
     /**
      * Setter method of the play <b>date</b>
-     * @param     play <b>date</b>
+     * @param   date    play <b>date</b>
      */
     public void setDate (Calendar date) {
         this.date = date;
@@ -57,14 +57,17 @@ public class Playback {
 
     @Override
     public String toString() {
-        String s = getSong.getTitle() + "\n" + getSong.getArtist() + "\n"
-                + getDate.get(Calendar.YEAR) + "\n" + getDate.get(Calendar.MONTH) + "\n"
-                + getDate.get(Calendar.DAY_OF_MONTH) + "\n" + getDate.get(Calendar.HOUR) + "\n"
-                + getDate.get(Calendar.MINUTE) + "\n" + getDate.get(Calendar.SECOND) + "\n";
+        Song song = getSong();
+        Calendar date = getDate();
+        String s = song.getTitle() + "\n" + song.getArtist() + "\n"
+                + date.get(Calendar.YEAR) + "\n" + date.get(Calendar.MONTH) + "\n"
+                + date.get(Calendar.DAY_OF_MONTH) + "\n" + date.get(Calendar.HOUR) + "\n"
+                + date.get(Calendar.MINUTE) + "\n" + date.get(Calendar.SECOND) + "\n";
         return s;
     }
 
     public static Playback valueOf(String s) {
-
+        Playback playback = null;
+        return playback;
     }
 }
