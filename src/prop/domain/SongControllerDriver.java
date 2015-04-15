@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * SongSet Controller Driver
- * @author quim_motger
+ * @author joaquim.motger
  */
 public class SongControllerDriver {
     public static void main(String[] args) {
