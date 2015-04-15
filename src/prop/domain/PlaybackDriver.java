@@ -17,6 +17,8 @@ public class PlaybackDriver {
 
         Scanner in = new Scanner(System.in);
         Playback playback = null;
+        Song song = null;
+        Calendar date = null;
         int i = -1;
         while (i != 0) {
             printInfo();
@@ -25,7 +27,6 @@ public class PlaybackDriver {
                 case 0:
                     break;
                 case 1:
-                    Song song = new Song();
                     System.out.print("Song\n");
                     System.out.print("Title:");
                     song.setTitle(in.next());
@@ -41,7 +42,6 @@ public class PlaybackDriver {
                     song.setSubgenre(Genre.getGenreById(in.nextInt()));
                     System.out.print("Duration:");
                     song.setDuration(in.nextInt());
-                    Calendar date = Calendar.getInstance();
                     System.out.print("Date\n");
                     System.out.print("Year:");
                     int year = in.nextInt();
@@ -59,44 +59,42 @@ public class PlaybackDriver {
                     playback = new Playback(song, date);
                     break;
                 case 2:
-                    Song s = playback.getSong();
-                    System.out.println("Title: "+s.getTitle());
-                    System.out.println("Artist: "+s.getArtist());
-                    System.out.println("Album: "+s.getAlbum());
-                    System.out.println("Year: "+s.getYear());
-                    System.out.println("Genre: "+s.getGenre().getName());
-                    System.out.println("Subgenre: "+s.getSubgenre().getName());
-                    System.out.println("Duration: "+s.getDuration());
+                    song = playback.getSong();
+                    System.out.println("Title: "+song.getTitle());
+                    System.out.println("Artist: "+song.getArtist());
+                    System.out.println("Album: "+song.getAlbum());
+                    System.out.println("Year: "+song.getYear());
+                    System.out.println("Genre: "+song.getGenre().getName());
+                    System.out.println("Subgenre: "+song.getSubgenre().getName());
+                    System.out.println("Duration: "+song.getDuration());
                     break;
                 case 3:
-                    Calendar d = playback.getDate();
-                    System.out.println("Year: "+d.get(Calendar.YEAR));
-                    System.out.println("Month: "+d.get(Calendar.MONTH));
-                    System.out.println("Day: "+d.get(Calendar.DAY_OF_MONTH));
-                    System.out.println("Hour: "+d.get(Calendar.HOUR));
-                    System.out.println("Minute: "+d.get(Calendar.MINUTE));
-                    System.out.println("Second: "+d.get(Calendar.SECOND));
+                    date = playback.getDate();
+                    System.out.println("Year: "+date.get(Calendar.YEAR));
+                    System.out.println("Month: "+date.get(Calendar.MONTH));
+                    System.out.println("Day: "+date.get(Calendar.DAY_OF_MONTH));
+                    System.out.println("Hour: "+date.get(Calendar.HOUR));
+                    System.out.println("Minute: "+date.get(Calendar.MINUTE));
+                    System.out.println("Second: "+date.get(Calendar.SECOND));
                     break;
                 case 4:
-                    Song song2 = new Song();
                     System.out.print("Song\n");
                     System.out.print("Title:");
-                    song2.setTitle(in.next());
+                    song.setTitle(in.next());
                     System.out.print("Artist:");
-                    song2.setArtist(in.next());
+                    song.setArtist(in.next());
                     System.out.print("Album:");
-                    song2.setAlbum(in.next());
+                    song.setAlbum(in.next());
                     System.out.print("Year:");
-                    song2.setYear(in.nextInt());
+                    song.setYear(in.nextInt());
                     System.out.print("Genre:");
-                    song2.setGenre(Genre.getGenreById(in.nextInt()));
+                    song.setGenre(Genre.getGenreById(in.nextInt()));
                     System.out.print("Subgenre:");
-                    song2.setSubgenre(Genre.getGenreById(in.nextInt()));
+                    song.setSubgenre(Genre.getGenreById(in.nextInt()));
                     System.out.print("Duration:");
-                    song2.setDuration(in.nextInt());
-                    playback.setSong(song2);
+                    song.setDuration(in.nextInt());
+                    playback.setSong(song);
                 case 5:
-                    Calendar date2 = Calendar.getInstance();
                     System.out.print("Date\n");
                     System.out.print("Year:");
                     int year2 = in.nextInt();
@@ -110,8 +108,8 @@ public class PlaybackDriver {
                     int minute2 = in.nextInt();
                     System.out.print("Second");
                     int second2 = in.nextInt();
-                    date2.set(year2,month2,day2,hour2,minute2,second2);
-                    playback.setDate(date2);
+                    date.set(year2,month2,day2,hour2,minute2,second2);
+                    playback.setDate(date);
                 case 6:
                     String s3 = playback.toString();
                     System.out.println(s3);
@@ -128,16 +126,14 @@ public class PlaybackDriver {
     }
 
     private static void printInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("0:   terminate program\n");
-        sb.append("1:   Playback(Song song, Calendar date)\n");
-        sb.append("2:   Song getSong()\n");
-        sb.append("3:   Calendar getDate()\n");
-        sb.append("4:   void setSong(Song song)\n");
-        sb.append("5:   void setDate(Calendar date)\n");
-        sb.append("6:   String toString()\n");
-        sb.append("7:   void valueOf(String s)\n");
-        sb.append("8:   Song(String title,String artist,String album,int year,Genre genre,Genre subgenre,int duration)\n");
-        System.out.print(sb.toString());
+        System.out.print("0:   terminate program\n"
+                + "1:   Playback(Song song, Calendar date)\n"
+                + "2:   Song getSong()\n"
+                + "3:   Calendar getDate()\n"
+                + "4:   void setSong(Song song)\n"
+                + "5:   void setDate(Calendar date)\n"
+                + "6:   String toString()\n"
+                + "7:   void valueOf(String s)\n"
+                + "8:   Song(String title,String artist,String album,int year,Genre genre,Genre subgenre,int duration)\n");
     }
 }

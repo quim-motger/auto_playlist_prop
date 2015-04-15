@@ -18,21 +18,13 @@ public class SongController {
 
     SongSet songSet;
 
-    private final static String delimiter = "$";
+    private final static String delimiter = "\n\n";
 
     /**
      * Song Controller constructor
      */
     public SongController() {
         songSet = new SongSet();
-    }
-
-    /**
-     * Set the songSet of the controller
-     * @param  songSet  songSet of the SongController
-     */
-    public void setSongSet(SongSet songSet) {
-        this.songSet = songSet;
     }
 
     /**
@@ -101,7 +93,7 @@ public class SongController {
      * Get the songSet in String
      * @return  string with all songs in songSet
      */
-    public String getSongSet() {
+    public String getSongSetString() {
         StringBuilder sb = new StringBuilder();
         ArrayList<Song> songs = songSet.getSongSet();
         for (Song song : songs) {
@@ -140,7 +132,7 @@ public class SongController {
      */
     public void save(String path) {
         try {
-            DataController.save(getSongSet(), path);
+            DataController.save(getSongSetString(), path);
         } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
@@ -161,7 +153,7 @@ public class SongController {
                 Song song = Song.parse(string);
                 songSet.addSong(song);
             }
-            setSongSet(songSet);
+            this.songSet = songSet;
         } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
