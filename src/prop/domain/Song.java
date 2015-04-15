@@ -1,7 +1,5 @@
 package prop.domain;
 
-import java.util.Calendar;
-import java.util.regex.Pattern;
 
 /**
  * A song, identified by title and artist
@@ -17,7 +15,7 @@ public class Song {
     private Genre subgenre;
     private int duration;
 
-    private static final char delimiter = '\n';
+    private static final char delimiter = ';';
 
     /**
      * The default constructor
