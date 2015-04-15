@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -16,6 +17,7 @@ public class SongControllerDriver {
         Scanner in = new Scanner(System.in);
         int i = -1;
         SongController songController = null;
+        Song song;
         while (i != 0) {
             printInfo();
             i = in.nextInt();
@@ -59,7 +61,7 @@ public class SongControllerDriver {
                     System.out.print("Edit song\n");
                     System.out.print("Title:");
                     String title3 = in.next();
-                    System.out.print("Artist");
+                    System.out.print("Artist:");
                     String artist3 = in.next();
                     System.out.print("Atribute to modify:");
                     String s1 = in.next();
@@ -70,6 +72,45 @@ public class SongControllerDriver {
                     break;
                 case 5:
                     System.out.print(songController.getSongSetString());
+                    break;
+                case 6:
+                    System.out.print("Get song\n");
+                    System.out.print("Title:");
+                    String title4 = in.next();
+                    System.out.print("Artist");
+                    String artist4 = in.next();
+                    song = songController.getSong(title4,artist4);
+                    break;
+                case 7:
+                    System.out.print("Search songs\n");
+                    System.out.print("Introduce pairs of attributes and values to search songs; attribute 'finish' when finished\n");
+                    System.out.print("Attribute:");
+                    String c1 = in.next();
+                    System.out.print("Value:");
+                    String c2 = in.next();
+                    ArrayList< Pair<String,String>> l = new ArrayList<>();
+                    while (!c1.equals("finish")) {
+                        Pair<String,String> p = new Pair<>(c1,c2);
+                        l.add(p);
+                        System.out.print("Attribute:");
+                        c1 = in.next();
+                        System.out.print("Value:");
+                        c2 = in.next();
+                    }
+                    System.out.print(songController.searchSongs(l));
+                    break;
+                case 8:
+                    System.out.print("Save\n");
+                    System.out.print("Path:");
+                    String path = in.next();
+                    songController.save(path);
+                    break;
+                case 9:
+                    System.out.print("Load\n");
+                    System.out.print("Path:");
+                    String path2 = in.next();
+                    songController.load(path2);
+                    break;
                 default:
                     printInfo();
             }
@@ -87,6 +128,6 @@ public class SongControllerDriver {
                 + "6:   Song getSong(String title, String artist)\n"
                 + "7:   String searchSongs(ArrayList< Pair<String, String> > l)\n"
                 + "8:   void save(String path)\n"
-                + "9:  void load(String path)\n");
+                + "9:   void load(String path)\n");
     }
 }

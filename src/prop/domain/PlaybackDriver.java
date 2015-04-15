@@ -17,8 +17,10 @@ public class PlaybackDriver {
 
         Scanner in = new Scanner(System.in);
         Playback playback = null;
-        Song song = null;
-        Calendar date = null;
+        Song song;
+        Calendar date;
+        SongController songController = null;
+        String s = "";
         int i = -1;
         while (i != 0) {
             printInfo();
@@ -27,6 +29,7 @@ public class PlaybackDriver {
                 case 0:
                     break;
                 case 1:
+                    song = new Song();
                     System.out.print("Song\n");
                     System.out.print("Title:");
                     song.setTitle(in.next());
@@ -42,18 +45,19 @@ public class PlaybackDriver {
                     song.setSubgenre(Genre.getGenreById(in.nextInt()));
                     System.out.print("Duration:");
                     song.setDuration(in.nextInt());
+                    date = Calendar.getInstance();
                     System.out.print("Date\n");
                     System.out.print("Year:");
                     int year = in.nextInt();
                     System.out.print("Month:");
                     int month = in.nextInt();
-                    System.out.print("Day");
+                    System.out.print("Day:");
                     int day = in.nextInt();
-                    System.out.print("Hour");
+                    System.out.print("Hour:");
                     int hour = in.nextInt();
-                    System.out.print("Minute");
+                    System.out.print("Minute:");
                     int minute = in.nextInt();
-                    System.out.print("Second");
+                    System.out.print("Second:");
                     int second = in.nextInt();
                     date.set(year,month,day,hour,minute,second);
                     playback = new Playback(song, date);
@@ -78,6 +82,7 @@ public class PlaybackDriver {
                     System.out.println("Second: "+date.get(Calendar.SECOND));
                     break;
                 case 4:
+                    song = new Song();
                     System.out.print("Song\n");
                     System.out.print("Title:");
                     song.setTitle(in.next());
@@ -95,30 +100,34 @@ public class PlaybackDriver {
                     song.setDuration(in.nextInt());
                     playback.setSong(song);
                 case 5:
+                    date = Calendar.getInstance();
                     System.out.print("Date\n");
                     System.out.print("Year:");
                     int year2 = in.nextInt();
                     System.out.print("Month:");
                     int month2 = in.nextInt();
-                    System.out.print("Day");
+                    System.out.print("Day:");
                     int day2 = in.nextInt();
-                    System.out.print("Hour");
+                    System.out.print("Hour:");
                     int hour2 = in.nextInt();
-                    System.out.print("Minute");
+                    System.out.print("Minute:");
                     int minute2 = in.nextInt();
-                    System.out.print("Second");
+                    System.out.print("Second:");
                     int second2 = in.nextInt();
                     date.set(year2,month2,day2,hour2,minute2,second2);
                     playback.setDate(date);
                 case 6:
-                    String s3 = playback.toString();
-                    System.out.println(s3);
+                    s = playback.toString();
+                    System.out.println(s);
                     break;
                 case 7:
-                    //playback = Playback.valueOf();
+                    Playback.valueOf(s, songController);
                     break;
                 case 8:
+                    songController = new SongController();
                     break;
+                case 9:
+
                 default:
                     printInfo();
             }
@@ -134,6 +143,8 @@ public class PlaybackDriver {
                 + "5:   void setDate(Calendar date)\n"
                 + "6:   String toString()\n"
                 + "7:   void valueOf(String s)\n"
-                + "8:   Song(String title,String artist,String album,int year,Genre genre,Genre subgenre,int duration)\n");
+                + "8:   SongController()\n"
+                + "9:   boolean addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
+                + "10:  boolean removeSong(String title, String artist)\n");
     }
 }

@@ -121,7 +121,7 @@ public class SongController {
         ArrayList<Song> songs = songSet.getSongs(l);
         String s = "";
         for (Song song : songs) {
-            s += song.toString();
+            s += song.toString() + "\n";
         }
         return s;
     }
@@ -150,7 +150,7 @@ public class SongController {
             s = DataController.load(path);
             String[] t = s.split(delimiter);
             for (String string : t) {
-                Song song = Song.parse(string);
+                Song song = Song.valueOf(string);
                 songSet.addSong(song);
             }
             this.songSet = songSet;
