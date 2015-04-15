@@ -48,7 +48,7 @@ public class UserDriver {
                     String sge = in.next();
                     u.setGender(Gender.valueOf(sge));
                     break;
-                case 9:
+               /* case 9:
                     int year = in.nextInt();
                     song.setYear(year);
                     break;
@@ -68,7 +68,7 @@ public class UserDriver {
                     int duration = in.nextInt();
                     song.setDuration(duration);
                     break;
-                case 16:
+                case 16:*/
 
             }
             StringBuilder sb = new StringBuilder();
