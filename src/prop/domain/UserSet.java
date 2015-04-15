@@ -10,14 +10,12 @@ import java.util.ArrayList;
 public class UserSet {
 
     private ArrayList<User> users;
-    private int size;
 
 
     /**
      * <b>UsersSet</b> class constructor
      */
     public UserSet() {
-        size = 0;
         users = new ArrayList<User>();
     }
 
@@ -30,25 +28,17 @@ public class UserSet {
     }
 
     /**
-     * Getter method of <b>size</b>
-     * @return      size
-     */
-    public int getSize() {
-        return size;
-    }
-
-    /**
      * Add <b>user</b> to <b>users</b>
      * @params  user  new <b>user</b> to add
-     * @return  i   <b>user</b> position with same name; -1 if name available
+     * @return      true if added; false if User already exists
      */
-    public int addUser(User user) {
+    public boolean addUser(User user) {
         int i = getUserPos(user.getName());
         if (i == -1) {
             users.add(user);
-            ++size;
+            return true;
         }
-        return i;
+        return false;
     }
 
     /**
@@ -65,12 +55,15 @@ public class UserSet {
     /**
      * Remove <b>user</b> with name <b>name</b> from <b>users</b>
      * @params  name    <b>user</b> name
-     * @return  user    the user removed; null if not found
+     * @return      true if removed; false if user doesn't exist
      */
-    public User removeUser (String name) {
+    public boolean removeUser (String name) {
         int i = getUserPos(name);
-        if (i != -1) return users.remove(i);
-        else return null;
+        if (i != -1) {
+            users.remove(i);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -81,7 +74,7 @@ public class UserSet {
     private int getUserPos(String name) {
         int i = 0;
         boolean found = false;
-        while(!found && i < size) {
+        while(!found && i < users.size()) {
             User user = users.get(i);
             if (user.getName().equals(name)) found = true;
             else ++i;

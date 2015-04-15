@@ -45,7 +45,7 @@ public class UserController {
         CountryCode userCountry = CountryCode.getByCode(countryCode);
         Calendar userBirthday = getCaledarFromLong(birthday);
         User user = new User(name,userGender,userBirthday,userCountry);
-        return 0<userSet.addUser(user);
+        return userSet.addUser(user);
     }
 
     /**
@@ -55,7 +55,7 @@ public class UserController {
      * @see prop.domain.User 
      */
     public boolean removeUser (String name){
-        return  null!=userSet.removeUser(name);
+        return  userSet.removeUser(name);
     }
 
     /**
