@@ -66,8 +66,12 @@ public class Playback {
         return s;
     }
 
-    public static Playback valueOf(String s) {
-        Playback playback = null;
-        return playback;
+    public static Playback valueOf(String s, SongController songController) {
+        String[] t = s.split(String.valueOf("\n"));
+        Song song = songController.getSong(t[0], t[1]);
+        Calendar d = Calendar.getInstance();
+        d.set(Integer.parseInt(t[2]),Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5]),
+                Integer.parseInt(t[6]),Integer.parseInt(t[7]));
+        return new Playback(song,d);
     }
 }
