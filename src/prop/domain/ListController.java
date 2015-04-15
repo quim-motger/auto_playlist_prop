@@ -1,5 +1,8 @@
 package prop.domain;
 
+import prop.data.DataController;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -57,7 +60,7 @@ public class ListController {
      */
     public void addSong(int id, String title, String artist, SongController songController) {
         List list = listSet.getList(id);
-        Song song = songController.getSong(title,artist);  // the getSong() method should be in the SongController class
+        Song song = songController.getSong(title, artist);  // the getSong() method should be in the SongController class
         list.addSong(song);
     }
 
@@ -107,8 +110,23 @@ public class ListController {
         return sb.toString();
     }
 
-    public void save(String path){}
+    public void save(String path){
+        try {
+            DataController.save(listSet.toString(),path);
+        }
+        catch(IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-    public void load(String path){}
+    public void load(String path){
+        try {
+            String serialized = DataController.load(path);
+            //listSet = ListSet.valueOf(serialized);
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }
