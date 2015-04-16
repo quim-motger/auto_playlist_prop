@@ -7,12 +7,14 @@ import java.util.Scanner;
  * @author oscar.manas
  */
 public class SongDriver {
+
     public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** Song");
         System.out.println("**********************************************************");
         System.out.print("\n");
         printInfo();
+        System.out.println("WARNING: it is highly recommendable to start with option #2 or #3\n");
 
         Song song = null;
         String serialized = "";
@@ -104,7 +106,6 @@ public class SongDriver {
                     break;
             }
         }
-
     }
 
     private static void printInfo() {
@@ -132,4 +133,5 @@ public class SongDriver {
         sb.append("\n");
         System.out.print(sb.toString());
     }
+
 }

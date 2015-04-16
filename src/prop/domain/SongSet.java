@@ -73,7 +73,7 @@ public class SongSet {
      *              false if the song was present, and thus not added
      */
     public boolean addSong(Song song) {
-        if (!contains(song.getTitle(),song.getArtist())) {
+        if (song != null && !contains(song.getTitle(),song.getArtist())) {
             songSet.add(song);
             return true;
         }

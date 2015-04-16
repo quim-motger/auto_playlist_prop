@@ -144,7 +144,7 @@ public class List {
      *  @see Song
      */
     public void addSong(Song song) {
-        songs.add(song);
+        if (song != null) songs.add(song);
     }
     
     /**

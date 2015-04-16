@@ -15,6 +15,7 @@ public class SongSetDriver {
         System.out.println("**********************************************************");
         System.out.print("\n");
         printInfo();
+        System.out.println("WARNING: it is highly recommendable to start with option #2\n");
 
         SongSet songSet = null;
         String serialized = "";

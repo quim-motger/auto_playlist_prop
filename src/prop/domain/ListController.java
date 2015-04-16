@@ -1,7 +1,6 @@
 package prop.domain;
 
 import prop.data.DataController;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -20,6 +19,14 @@ public class ListController {
      */
     public ListController() {
         listSet = new ListSet();
+    }
+
+    /**
+     * Get the size of the list set
+     * @return  the size of the list set
+     */
+    public int size() {
+        return listSet.size();
     }
 
     /**
@@ -110,7 +117,11 @@ public class ListController {
         return sb.toString();
     }
 
-    public void save(String path){
+    /**
+     * Save the list set in the specified path
+     * @param path  the path where save the list set to
+     */
+    public void save(String path) {
         try {
             DataController.save(listSet.toString(),path);
         }
@@ -119,7 +130,11 @@ public class ListController {
         }
     }
 
-    public void load(String path){
+    /**
+     * Load the list set from the specified path
+     * @param path  the path where load the list set from
+     */
+    public void load(String path) {
         try {
             String serialized = DataController.load(path);
             //listSet = ListSet.valueOf(serialized);
