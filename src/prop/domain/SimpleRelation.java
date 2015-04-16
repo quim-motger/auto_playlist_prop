@@ -15,8 +15,8 @@ public class SimpleRelation extends Relation {
 
     /**
      * Simple class constructor
-     * @params  attribute  attribute name
-     * @params  value  value of attribute
+     * @param   attribute   attribute name
+     * @param   value       value of attribute
      */
     public SimpleRelation(String attribute, String value) {
         this.attribute = attribute;
@@ -25,8 +25,8 @@ public class SimpleRelation extends Relation {
 
     /**
      * Evaluates s1 and s2
-     * @param s1    first song
-     * @param s2    second song
+     * @param   s1      first song
+     * @param   s2      second song
      * @return      true if they match the specified relation; false otherwise
      */
     public boolean evaluate(Song s1, Song s2) {
