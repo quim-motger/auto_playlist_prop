@@ -18,7 +18,7 @@ public class UserSetDriver {
         Scanner in = new Scanner(System.in);
         int i = -1;
         UserSet userSet = null;
-        User user;
+        User user = null;
         while (i != 0) {
             printInfo();
             i = in.nextInt();
@@ -35,6 +35,7 @@ public class UserSetDriver {
                     }
                     break;
                 case 3:
+                    userSet.addUser(user);
                     break;
                 case 4:
                     System.out.print("Remove user\n");
@@ -51,10 +52,11 @@ public class UserSetDriver {
                     System.out.print(user.toString());
                     break;
                 case 6:
-                   /* System.out.print("Name:");
+                    System.out.print("Name:");
                     String name3 = in.next();
                     System.out.print("Gender (FEMALE/MALE/OTHER):");
-
+                    String g = in.next();
+                    Gender gender = Gender.valueOf(g);
                     Calendar birthdate = Calendar.getInstance();
                     System.out.print("Birthdate\n");
                     System.out.print("Year:");
@@ -66,7 +68,7 @@ public class UserSetDriver {
                     birthdate.set(year,month,day);
                     System.out.print("Country:");
                     CountryCode country = CountryCode.getByCode(in.nextInt());
-                    user = new User(name3, gender, birthdate, country);*/
+                    user = new User(name3, gender, birthdate, country);
                     break;
                 default:
                     printInfo();
