@@ -145,15 +145,9 @@ public class SongController {
      */
     public void load(String path) {
         String s;
-        SongSet songSet = new SongSet();
         try {
             s = DataController.load(path);
-            String[] t = s.split(delimiter);
-            for (String string : t) {
-                Song song = Song.valueOf(string);
-                songSet.addSong(song);
-            }
-            this.songSet = songSet;
+            this.songSet = SongSet.valueOf(s);
         } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

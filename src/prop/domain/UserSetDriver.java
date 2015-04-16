@@ -77,7 +77,7 @@ public class UserSetDriver {
     }
 
     private static void printInfo() {
-        System.out.print("0:   terminate program\n"
+        System.out.print("0:    terminate program\n"
                         + "1:   UserSet()\n"
                         + "2:   ArrayList<User> getUsers()\n"
                         + "3:   boolean addUser(User user)\n"
