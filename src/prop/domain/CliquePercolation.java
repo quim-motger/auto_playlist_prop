@@ -11,29 +11,29 @@ public class CliquePercolation {
 
     private Graph graph;
 
-    private ArrayList<Set<Song>> cliques;
+    private ArrayList<Set<Vertex>> cliques;
 
     public CliquePercolation(Graph graph) {
         this.graph = graph;
     }
 
-    public ArrayList<Set<Song>> getMaximalCliques() {
-        ArrayList<Set<Song>> cliques = new ArrayList<>();
-        ArrayList<Song> potential_cliques = new ArrayList<>();
-        ArrayList<Song> candidates = new ArrayList<>();
-        ArrayList<Song> found = new ArrayList<>();
+    public ArrayList<Set<Vertex>> getMaximalCliques() {
+        ArrayList<Set<Vertex>> cliques = new ArrayList<>();
+        ArrayList<Vertex> potential_cliques = new ArrayList<>();
+        ArrayList<Vertex> candidates = new ArrayList<>();
+        ArrayList<Vertex> found = new ArrayList<>();
         //candidates.addAll(graph.getVertices());
         cliques = findCliques(potential_cliques, candidates, found);
         return cliques;
     }
 
-    public ArrayList<Set<Song>> getBiggestMaximalCliques() {
-        ArrayList<Set<Song>> cliques = new ArrayList<>();
+    public ArrayList<Set<Vertex>> getBiggestMaximalCliques() {
+        ArrayList<Set<Vertex>> cliques = new ArrayList<>();
         return cliques;
     }
 
-    public ArrayList<Set<Song>> findCliques(ArrayList<Song> potential_cliques, ArrayList<Song> candidates, ArrayList<Song> found) {
-        ArrayList<Set<Song>> cliques = new ArrayList<>();
+    public ArrayList<Set<Vertex>> findCliques(ArrayList<Vertex> potential_cliques, ArrayList<Vertex> candidates, ArrayList<Vertex> found) {
+        ArrayList<Set<Vertex>> cliques = new ArrayList<>();
         return cliques;
     }
 
