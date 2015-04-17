@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class SimpleRelationDriver {
     public static void main(String[] args) throws Exception {
         System.out.println("**********************************************************");
-        System.out.println("** Complex Relation AND");
+        System.out.println("** Simple Relation Driver");
         System.out.println("**********************************************************");
         System.out.print("\n");
 

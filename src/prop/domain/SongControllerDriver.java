@@ -17,7 +17,7 @@ public class SongControllerDriver {
         Scanner in = new Scanner(System.in);
         int i = -1;
         SongController songController = new SongController();
-        Song song = null;
+        Song song;
         printInfoComplete();
         while (i != 0) {
             i = in.nextInt();
@@ -54,10 +54,7 @@ public class SongControllerDriver {
                     System.out.print(songController.getSongSetString());
                     break;
                 case 6:
-                    System.out.print("Get song\n");
-                    System.out.print("Title:");
                     String title4 = in.next();
-                    System.out.print("Artist");
                     String artist4 = in.next();
                     song = songController.getSong(title4,artist4);
                     System.out.print(song.toString());
@@ -81,16 +78,10 @@ public class SongControllerDriver {
                     System.out.print(songController.searchSongs(l));
                     break;
                 case 8:
-                    System.out.print("Save\n");
-                    System.out.print("Path:");
-                    String path = in.next();
-                    songController.save(path);
+                    songController.save(in.next());
                     break;
                 case 9:
-                    System.out.print("Load\n");
-                    System.out.print("Path:");
-                    String path2 = in.next();
-                    songController.load(path2);
+                    songController.load(in.next());
                     break;
                 default:
                     printInfoComplete();
@@ -102,8 +93,8 @@ public class SongControllerDriver {
     private static void printInfoComplete() {
         System.out.print("0:   terminate program\n"
                 + "1:   printInfoComplete()\n"
-                + "2:   boolean addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
-                + "3:   boolean removeSong(String title, String artist\n"
+                + "2:   void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
+                + "3:   void removeSong(String title, String artist\n"
                 + "4:   void editSong(String title, String artist, Pair<String, String> pair)\n"
                 + "6:   String getSongSetString()\n"
                 + "7:   Song getSong(String title, String artist)\n"

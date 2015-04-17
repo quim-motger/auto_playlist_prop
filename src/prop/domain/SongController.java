@@ -145,10 +145,8 @@ public class SongController {
         try {
             s = DataController.load(path);
             this.songSet = SongSet.valueOf(s);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
