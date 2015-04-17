@@ -10,7 +10,7 @@ import java.util.Scanner;
  *          Creation Date: 17/04/15
  */
 public class NOTDriver {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("**********************************************************");
         System.out.println("** Complex Relation NOT");
         System.out.println("**********************************************************");
@@ -64,9 +64,7 @@ public class NOTDriver {
                     Genre subgenre = Genre.getGenreById(in.nextInt());
                     System.out.print("Duration:");
                     int duration = in.nextInt();
-                    boolean b = sc.addSong(title,artist,album,y,genre,subgenre,duration);
-                    if (b) System.out.print("Song added\n");
-                    else System.out.print("Song already exists\n");
+                    sc.addSong(title,artist,album,y,genre,subgenre,duration);
                     break;
                 case 6:
                     System.out.print("Select the song to define (1/2):");

@@ -14,7 +14,8 @@ public class ErrorString {
 
     public static final String INCORRECT_FORMAT = "The String parameter is not correctly formatted";
     public static final String EXISTING_SONG = "Song already exists in the system";
-    public static final String INEXISTING_SONG = "Song does not exist in the system";
+    public static final String UNEXISTING_SONG = "Song does not exist in the system";
     public static final String EXISTING_USER = "User already exists in the system";
     public static final String UNEXISTING_USER = "User does not exist in the system";
+    public static final String NULL = "Null value";
 }

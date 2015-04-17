@@ -232,7 +232,7 @@ public class List {
         for (int i = 4; i<size; ++i) {
             String[] songId = tokens[i].split(SONG_DELIMITER);
             Song song = songController.getSong(songId[0], songId[1]);
-            if(song==null) throw  new Exception(ErrorString.INEXISTING_SONG);
+            if(song==null) throw  new Exception(ErrorString.UNEXISTING_SONG);
             list.addSong(song);
         }
         return list;

@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.ErrorString;
+
 import java.util.ArrayList;
 
 /**
@@ -69,31 +71,27 @@ public class SongSet {
     /**
      * Add a song to the set
      * @param song  the song to add
-     * @return      true if the song was added,
-     *              false if the song was present, and thus not added
      */
-    public boolean addSong(Song song) {
-        if (song != null && !contains(song.getTitle(),song.getArtist())) {
-            songSet.add(song);
-            return true;
+    public void addSong(Song song) throws Exception {
+        if (song != null) {
+            if (!contains(song.getTitle(), song.getArtist())) {
+                songSet.add(song);
+            } else throw new Exception(ErrorString.EXISTING_SONG);
         }
-        else
-            return false;
+        else throw new Exception(ErrorString.NULL);
     }
 
     /**
      * Remove a song from the set
      * @param title     the title of the song
      * @param artist    the artist of the song
-     * @return          the song if present,
-     *                  null if not present
      */
-    public Song removeSong(String title, String artist) {
+    public void removeSong(String title, String artist) throws Exception {
         int i = getSongIndex(title,artist);
         if (i != -1)
-            return songSet.remove(i);
+            songSet.remove(i);
         else
-            return null;
+            throw new Exception(ErrorString.UNEXISTING_SONG);
     }
 
     /**
@@ -201,7 +199,7 @@ public class SongSet {
         return s;
     }
 
-    public static SongSet valueOf(String s) {
+    public static SongSet valueOf(String s) throws Exception {
         String[] songs = s.split(String.valueOf(delimiter));
         SongSet ss = new SongSet();
         for (String r : songs) {

@@ -74,14 +74,12 @@ public class PlaybackDriver {
                     Genre genre = Genre.getGenreById(in.nextInt());
                     Genre subgenre = Genre.getGenreById(in.nextInt());
                     int duration = in.nextInt();
-                    boolean b = sc.addSong(title,artist,album,year,genre,subgenre,duration);
-                    if (!b) System.out.print("Song already exists");
+                    sc.addSong(title,artist,album,year,genre,subgenre,duration);
                     break;
                 case 10:
                     String title2 = in.next();
                     String artist2 = in.next();
-                    boolean b2 = sc.removeSong(title2, artist2);
-                    if (!b2) System.out.print("Song doesn't exist\n");
+                    sc.removeSong(title2, artist2);
                     break;
                 case 11:
                     String title3 = in.next();

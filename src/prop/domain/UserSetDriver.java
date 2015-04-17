@@ -17,17 +17,16 @@ public class UserSetDriver {
 
         Scanner in = new Scanner(System.in);
         int i = -1;
-        UserSet userSet = null;
+        UserSet userSet = new UserSet();
         User user = null;
+        printInfoComplete();
         while (i != 0) {
-            printInfo();
             i = in.nextInt();
             switch(i) {
                 case 0:
                     break;
                 case 1:
-                    userSet = new UserSet();
-                    break;
+                    printInfoComplete();
                 case 2:
                     ArrayList<User> users = userSet.getUsers();
                     for (User u : users) {
@@ -62,23 +61,29 @@ public class UserSetDriver {
                     int year = in.nextInt();
                     int month = in.nextInt();
                     int day = in.nextInt();
-                    birthdate.set(year,month,day);
+                    birthdate.set(year, month, day);
                     CountryCode country = CountryCode.getByCode(in.nextInt());
                     user = new User(name3, gender, birthdate, country);
                     break;
                 default:
-                    printInfo();
+                    printInfoComplete();
             }
+            if (i > 0 && i < 7) printInfoBrief();
         }
     }
 
-    private static void printInfo() {
+    private static void printInfoComplete() {
         System.out.print("0:    terminate program\n"
-                        + "1:   UserSet()\n"
-                        + "2:   ArrayList<User> getUsers()\n"
-                        + "3:   boolean addUser(User user)\n"
-                        + "4:   boolean removeUser(String name)\n"
-                        + "5:   User getUserByName(String name)\n"
-                        + "6:   user = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
+                + "1:   printInfoComplete()\n"
+                + "2:   ArrayList<User> getUsers()\n"
+                + "3:   void addUser(User user)\n"
+                + "4:   void removeUser(String name)\n"
+                + "5:   User getUserByName(String name)\n"
+                + "6:   user = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
+    }
+
+    private static void printInfoBrief() {
+        System.out.print("0:   terminate program\n"
+                    + "1    printInfoComplete()\n");
     }
 }

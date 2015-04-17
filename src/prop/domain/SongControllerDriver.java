@@ -35,14 +35,12 @@ public class SongControllerDriver {
                     Genre genre = Genre.getGenreById(in.nextInt());
                     Genre subgenre = Genre.getGenreById(in.nextInt());
                     int duration = in.nextInt();
-                    boolean b = songController.addSong(title,artist,album,year,genre,subgenre,duration);
-                    if (!b) System.out.print("Song already exists\n");
+                    songController.addSong(title,artist,album,year,genre,subgenre,duration);
                     break;
                 case 3:
                     String title2 = in.next();
                     String artist2 = in.next();
-                    boolean b2 = songController.removeSong(title2,artist2);
-                    if (!b2) System.out.print("Song doesn't exist\n");
+                    songController.removeSong(title2,artist2);
                     break;
                 case 4:
                     String title3 = in.next();

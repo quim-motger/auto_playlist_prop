@@ -38,21 +38,18 @@ public class SongController {
      * @param duration  song duration in seconds
      * @return          true if the song was added; false if the song was present and not added
      */
-    public boolean addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) {
+    public void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) throws Exception {
         Song song = new Song(title, artist, album, year, genre, subgenre, duration);
-        return songSet.addSong(song);
+        songSet.addSong(song);
     }
 
     /**
      * Remove a <b>song</b> of the set
      * @param title     song title
      * @param artist    song artist
-     * @return          true if the song was removed; false if the song was not present
      */
-    public boolean removeSong(String title, String artist) {
-        Song song = songSet.removeSong(title, artist);
-        if (song != null) return true;
-        else return false;
+    public void removeSong(String title, String artist) throws Exception {
+        songSet.removeSong(title, artist);
     }
 
     /**
@@ -149,7 +146,8 @@ public class SongController {
             s = DataController.load(path);
             this.songSet = SongSet.valueOf(s);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

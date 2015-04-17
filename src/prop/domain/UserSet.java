@@ -34,11 +34,13 @@ public class UserSet {
      * @params  user  new <b>user</b> to add
      */
     public void addUser(User user) throws Exception {
-        int i = getUserPos(user.getName());
-        if (i == -1) {
-            users.add(user);
+        if (user!=null) {
+            int i = getUserPos(user.getName());
+            if (i == -1) {
+                users.add(user);
+            } else throw new Exception(ErrorString.EXISTING_USER);
         }
-        else throw new Exception(ErrorString.EXISTING_USER);
+        else throw new Exception(ErrorString.NULL);
     }
 
     /**
