@@ -16,8 +16,8 @@ public class ANDDriver {
 
         Scanner in = new Scanner(System.in);
         ComplexRelation r = null;
-        SimpleRelation r1 = null;
-        SimpleRelation r2 = null;
+        Relation r1 = null;
+        Relation r2 = null;
         Song s1 = new Song();
         Song s2 = new Song();
         SongController sc = null;
@@ -88,11 +88,11 @@ public class ANDDriver {
 
     private static void printInfo() {
         System.out.print("0:    terminate program\n");
-        System.out.print("1:    AND(Relation r1, Relation r2)\n");
+        System.out.print("1:    Relation r =AND(Relation r1, Relation r2)\n");
         System.out.print("2:    evaluate(Song s1, Song s2)\n");
-        System.out.print("3:    SimpleRelation(String attribute, String value)\n");
-        System.out.print("4:    SongController()\n");
-        System.out.print("5:    boolean addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        System.out.print("6:    Song getSong(String title, String artist)\n");
+        System.out.print("3:    r1 = SimpleRelation(String attribute, String value)\n");
+        System.out.print("3:    r2 = SimpleRelation(String attribute, String value)\n");
+        System.out.print("6:    s1 = new Song(String title, String artist, [...])\n");
+        System.out.print("7:    s2 = new Song(String title, String artist, [...])\n");
     }
 }
