@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.ErrorString;
+
 import java.util.ArrayList;
 
 /**
@@ -30,15 +32,13 @@ public class UserSet {
     /**
      * Add <b>user</b> to <b>users</b>
      * @params  user  new <b>user</b> to add
-     * @return      true if added; false if User already exists
      */
-    public boolean addUser(User user) {
+    public void addUser(User user) throws Exception {
         int i = getUserPos(user.getName());
         if (i == -1) {
             users.add(user);
-            return true;
         }
-        return false;
+        else throw new Exception(ErrorString.EXISTING_USER);
     }
 
     /**
@@ -55,15 +55,13 @@ public class UserSet {
     /**
      * Remove <b>user</b> with name <b>name</b> from <b>users</b>
      * @params  name    <b>user</b> name
-     * @return      true if removed; false if user doesn't exist
      */
-    public boolean removeUser (String name) {
+    public void removeUser (String name) throws Exception {
         int i = getUserPos(name);
         if (i != -1) {
             users.remove(i);
-            return true;
         }
-        return false;
+        else throw new Exception(ErrorString.UNEXISTING_USER);
     }
 
     /**

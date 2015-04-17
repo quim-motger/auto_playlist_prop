@@ -21,7 +21,11 @@ public class Main {
         }
 
         UserController cont = new UserController();
-        cont.addUser("test","test",3343434,"ES");
+        try {
+            cont.addUser("test", "test", 3343434, "ES");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println(cont.obtainUser("test"));
     }
 }

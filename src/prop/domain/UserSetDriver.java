@@ -35,38 +35,34 @@ public class UserSetDriver {
                     }
                     break;
                 case 3:
-                    userSet.addUser(user);
+                    try {
+                        userSet.addUser(user);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 4:
-                    System.out.print("Remove user\n");
-                    System.out.print("Name:");
                     String name = in.next();
-                    boolean b = userSet.removeUser(name);
-                    if (b) System.out.print("User removed\n");
-                    else System.out.print("User doesn't exist\n");
+                    try{
+                        userSet.removeUser(name);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 5:
-                    System.out.print("Name:");
                     String name2 = in.next();
                     user = userSet.getUserByName(name2);
                     System.out.print(user.toString());
                     break;
                 case 6:
-                    System.out.print("Name:");
                     String name3 = in.next();
-                    System.out.print("Gender (FEMALE/MALE/OTHER):");
                     String g = in.next();
                     Gender gender = Gender.valueOf(g);
                     Calendar birthdate = Calendar.getInstance();
-                    System.out.print("Birthdate\n");
-                    System.out.print("Year:");
                     int year = in.nextInt();
-                    System.out.print("Month:");
                     int month = in.nextInt();
-                    System.out.print("Day:");
                     int day = in.nextInt();
                     birthdate.set(year,month,day);
-                    System.out.print("Country:");
                     CountryCode country = CountryCode.getByCode(in.nextInt());
                     user = new User(name3, gender, birthdate, country);
                     break;
@@ -83,6 +79,6 @@ public class UserSetDriver {
                         + "3:   boolean addUser(User user)\n"
                         + "4:   boolean removeUser(String name)\n"
                         + "5:   User getUserByName(String name)\n"
-                        + "6:   User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
+                        + "6:   user = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
     }
 }

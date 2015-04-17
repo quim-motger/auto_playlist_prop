@@ -40,12 +40,12 @@ public class UserController {
      * @return <code>true</code> if the user is succesfully added, <code>false</code> if the user name already exists
      * @see prop.domain.User 
      */
-    public boolean addUser(String name, String gender, long birthday, String countryCode) {
+    public void addUser(String name, String gender, long birthday, String countryCode) throws Exception {
         Gender userGender = Gender.valueOf(gender);
         CountryCode userCountry = CountryCode.getByCode(countryCode);
         Calendar userBirthday = getCaledarFromLong(birthday);
         User user = new User(name,userGender,userBirthday,userCountry);
-        return userSet.addUser(user);
+        userSet.addUser(user);
     }
 
     /**
@@ -54,8 +54,8 @@ public class UserController {
      * @return <code>false</code> the user doesn't exist and it can't be removed
      * @see prop.domain.User 
      */
-    public boolean removeUser (String name){
-        return  userSet.removeUser(name);
+    public void removeUser (String name) throws Exception {
+        userSet.removeUser(name);
     }
 
     /**
