@@ -4,6 +4,7 @@ import prop.ErrorString;
 
 import java.lang.Override;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 /**
  * A playback of a song in a specific date
@@ -15,8 +16,8 @@ public class Playback {
     private Song song;
     private Calendar date;
 
-    private static final String PLAYBACK_DELIMITER = "|P|";
-    private static final String PLAYBACK_STRING_ID = "PLAYBACK_STRING\n";
+    private static final String PLAYBACK_DELIMITER = "|P|\n";
+    private static final String PLAYBACK_STRING_ID = "PLAYBACK_STRING";
 
     /**
      * <b>Playback</b> class constructor
@@ -77,14 +78,14 @@ public class Playback {
     }
 
     public static Playback valueOf(String s, SongController songController) throws Exception {
-        String[] t = s.split(PLAYBACK_DELIMITER);
-        if (t.length!=9 || !t[0].equals(PLAYBACK_STRING_ID)) {
+        String[] t = s.split(Pattern.quote(PLAYBACK_DELIMITER));
+        if (t.length != 9 || !t[0].equals(PLAYBACK_STRING_ID)) {
             throw new Exception(ErrorString.INCORRECT_FORMAT);
         }
         Song song = songController.getSong(t[1], t[2]);
         Calendar d = Calendar.getInstance();
-        d.set(Integer.parseInt(t[3]),Integer.parseInt(t[4]),Integer.parseInt(t[5]),Integer.parseInt(t[6]),
-                Integer.parseInt(t[7]),Integer.parseInt(t[8]));
+        d.set(Integer.parseInt(t[3]), Integer.parseInt(t[4]), Integer.parseInt(t[5]), Integer.parseInt(t[6]),
+                Integer.parseInt(t[7]), Integer.parseInt(t[8]));
         return new Playback(song,d);
     }
 }

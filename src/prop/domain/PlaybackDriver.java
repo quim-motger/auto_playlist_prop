@@ -55,8 +55,10 @@ public class PlaybackDriver {
                     break;
                 case 5:
                     playback.setSong(song);
+                    break;
                 case 6:
                     playback.setDate(date);
+                    break;
                 case 7:
                     s = playback.toString();
                     System.out.print(s);
@@ -98,7 +100,7 @@ public class PlaybackDriver {
                 default:
                     printInfoComplete();
             }
-            if (i != 0) printInfoBrief();
+            if (i > 0 && i < 13) printInfoBrief();
         }
     }
 
@@ -120,6 +122,6 @@ public class PlaybackDriver {
 
     private static void printInfoBrief() {
         System.out.print("0:    terminate program\n"
-                + "1:   printInfoComplete()\n");
+                + "1:    printInfoComplete()\n");
     }
 }
