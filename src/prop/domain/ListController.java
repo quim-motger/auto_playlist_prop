@@ -67,7 +67,7 @@ public class ListController {
      */
     public void addSong(int id, String title, String artist, SongController songController) {
         List list = listSet.getList(id);
-        Song song = songController.getSong(title, artist);  // the getSong() method should be in the SongController class
+        Song song = songController.getSong(title, artist);
         list.addSong(song);
     }
 

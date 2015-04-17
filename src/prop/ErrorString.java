@@ -4,6 +4,9 @@ package prop;
  * ErrorString in prop
  *
  * @author gerard.casas.saez
+ * @author joaquim.motger
+ * @author  oscar.mañas
+ * @author carles.garcia
  * @version 1.0
  *          Creation Date: 12/04/15
  */
