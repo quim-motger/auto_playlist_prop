@@ -13,7 +13,7 @@ public class User {
     private Gender gender;
     private Calendar birthdate;
     private CountryCode country;
-    private ArrayList<Playback> playbackRegister; // Sorted from oldest to newest
+    private ArrayList<Playback> playbackRegister; // TODO: guarantee sorting from oldest to newest
     private ArrayList<List> associatedLists; // Can't contain repeated lists
 
 

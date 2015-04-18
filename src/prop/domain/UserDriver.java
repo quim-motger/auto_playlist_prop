@@ -1,5 +1,7 @@
 package prop.domain;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 /**
  * User Driver
@@ -13,7 +15,7 @@ public class UserDriver {
         System.out.print("\n");
         printInfo();
 
-        User u = new User();
+        User u = null;
         Scanner in = new Scanner(System.in);
         int i = -1;
         while(i != 0) {
@@ -25,57 +27,88 @@ public class UserDriver {
                     printInfo();
                     break;
                 case 2:
-                    System.out.println(u.getAssociatedLists());
+                    u = new User();
                     break;
-                case 3:
-                    System.out.println(u.getPlaybackRegister());
+                case 3: {
+                    String name = in.next();
+                    Gender gender = Gender.valueOf(in.next());
+                    System.out.println("Write day, month and year of birthdate separated by spaces");
+                    int day = in.nextInt();
+                    int month = in.nextInt();
+                    int y = in.nextInt();
+                    u.setBirthdate(new GregorianCalendar(y, month, day));
+                    u.setCountry(CountryCode.valueOf(in.next()));
                     break;
+                }
                 case 4:
-                    System.out.println(u.getCountry());
+                    // TODO: User constructor with all members
                     break;
                 case 5:
-                    System.out.println(u.getBirthdate());
+                    // TODO: add playback
                     break;
                 case 6:
-                    System.out.println(u.getGender());
+                    // TODO: associate list
                     break;
                 case 7:
-                    String name = in.next();
-                    u.setName(name);
+                    u.clearLists();
                     break;
                 case 8:
-                    String sge = in.next();
-                    u.setGender(Gender.valueOf(sge));
+                    u.clearRegister();
                     break;
-               /* case 9:
-                    int year = in.nextInt();
-                    //song.setYear(year);
+                case 9:
+                    // TODO disassociate list
+                    break;
+                case 10:
+                    u.getAssociatedLists().toString();
+                    break;
+                case 11:
+                    u.getBirthdate().toString();
                     break;
                 case 12:
-                    String album = in.next();
-                    //song.setAlbum(album);
+                    u.getCountry().getName().toString();
                     break;
                 case 13:
-                    int genre = in.nextInt();
-                    //song.setGenre(Genre.getGenreById(genre));
+                    u.getGender().toString();
                     break;
                 case 14:
-                    int subgenre = in.nextInt();
-                    //song.setGenre(Genre.getGenreById(subgenre));
+                    u.getName().toString();
                     break;
                 case 15:
-                    int duration = in.nextInt();
-                    //song.setDuration(duration);
+                    u.getPlaybackRegister().toString();
                     break;
-                case 16:*/
-
+                case 16:
+                    // todo: hasList
+                    break;
+                case 17:
+                    // todo setAssociatedLists
+                    break;
+                case 18: {
+                    System.out.println("Write day, month and year of birthdate separated by spaces");
+                    int day = in.nextInt();
+                    int month = in.nextInt();
+                    int y = in.nextInt();
+                    u.setBirthdate(new GregorianCalendar(y, month, day));
+                    break;
+                }
+                case 19:
+                    u.setCountry(CountryCode.valueOf(in.next()));
+                    break;
+                case 20:
+                    u.setGender(Gender.valueOf(in.next()));
+                    break;
+                case 21:
+                    u.setName(in.next());
+                    break;
+                case 22:
+                    // todo setPlaybackREgister
+                    break;
+                case 23:
+                    System.out.println(u.toString());
+                    break;
+                // faltaria valueOf pero es molt dificil de testejar
             }
-            StringBuilder sb = new StringBuilder();
-            sb.append("0:  terminate program\n");
-            sb.append("1:  info\n");
-            System.out.print(sb.toString());
+            printInfoBrief();
         }
-
     }
 
     private static void printInfo() {
@@ -107,4 +140,11 @@ public class UserDriver {
         sb.append("  : \n");
         System.out.print(sb.toString());
     }
+
+    private static void printInfoBrief() {
+        System.out.print("0:    terminate program\n"
+                + "1:    printInfoComplete()\n");
+    }
+
+
 }
