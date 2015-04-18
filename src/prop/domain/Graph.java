@@ -12,6 +12,8 @@ addDirectedEdge;
 
      */
 
+import java.util.HashMap;
+
 /**
  * Class Graph represents a generic mixed weighted pseudograph. That is, a weighted graph that can have multiple edges between
  two vertices and loops, and these edges can be either directed or undirected.
@@ -20,6 +22,15 @@ addDirectedEdge;
  * @author Carles Garcia Cabot
  */
 public class Graph<V extends Vertex, E extends Edge> {
+    private Integer nextVertex; // Contains next Vertex identifier to be used
+    private HashMap<V, Integer> vertices; // Each vertex has a unique identifier
+
+    public Graph() {
+        nextVertex = 0;
+    }
+
+
+
 /*
     public boolean isEmpty();
     public boolean addVertex(Vertex<T> v);
