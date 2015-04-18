@@ -106,6 +106,8 @@ public class UserDriver {
                     System.out.println(u.toString());
                     break;
                 // faltaria valueOf pero es molt dificil de testejar
+                default:
+                    printInfo();
             }
             printInfoBrief();
         }
