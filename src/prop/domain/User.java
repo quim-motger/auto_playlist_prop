@@ -13,8 +13,12 @@ public class User {
     private Gender gender;
     private Calendar birthdate;
     private CountryCode country;
-    private ArrayList<Playback> playbackRegister; // Sorted from oldest to newest
+    private ArrayList<Playback> playbackRegister; // TODO: guarantee sorting from oldest to newest
     private ArrayList<List> associatedLists; // Can't contain repeated lists
+
+    private static final String USER_DELIMITER = "|U|\n";
+    private static final String USER_STRING_ID = "USER_STRING";
+    private static final String SONG_DELIMITER = "|S|\n";
 
 
     /* CONSTRUCTORS */
