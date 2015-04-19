@@ -22,6 +22,13 @@ public class List {
     private static final String LIST_DELIMITER = "|L|\n";
     private static final String LIST_STRING_ID = "LIST_STRING";
     private static final String SONG_DELIMITER = "|S|\n";
+    
+    
+    public List (){
+        title = null;
+        id=-1;
+        songs = new ArrayList<>();
+    }
 
     /**
      * Creates an empty list with the designated title
