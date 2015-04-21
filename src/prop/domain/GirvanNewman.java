@@ -1,6 +1,5 @@
 package prop.domain;
 
-import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,21 +10,17 @@ import java.util.Scanner;
 public class GirvanNewman {
 
     private static final int infinity = 1000000000;
-    private static ArrayList<Pair<Integer,Integer>>[] graph; // Undirected, weighted graph
-    private static int[][] parents;
-    private static int[][] edgeScores;
-    private static int edges;
-    private static Pair<Integer,Integer> mbEdge;
-    private static int n;
-    private static int m;
+    private ArrayList<Pair<Integer,Integer>>[] graph; // Undirected, weighted graph
+    private int[][] parents;
+    private int[][] edgeScores;
+    private int edges;
+    private Pair<Integer,Integer> mbEdge;
+    private int n;
+    private int m;
 
-    public static void main(String[] args) {
-        readGraph();
-        System.out.println("Adjacency list:");
-        writeGraph();
-        System.out.print("\n");
-
+    public void execute() {
         parents = floydWarshall(graph);
+
         System.out.println("Predecessor Matrix:");
         for (int[] p : parents) {
             for (int i : p)
@@ -34,6 +29,7 @@ public class GirvanNewman {
         }
         System.out.print("\n");
 
+        edges = 0;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j <= i; ++j) {
                 ArrayList<Integer> path = new ArrayList<>();
@@ -52,7 +48,7 @@ public class GirvanNewman {
 
         System.out.println("Edges: " + edges + "\n");
 
-        edgeBetweenness();
+        calculateEdgeBetweenness();
         System.out.println("Edge scores:");
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j)
@@ -61,10 +57,11 @@ public class GirvanNewman {
         }
         System.out.print("\n");
 
-        System.out.println("Maximum betweenness edge: (" + mbEdge.getKey() + "," + mbEdge.getValue() + ")");
+        System.out.println("Edge removed: (" + mbEdge.first + "," + mbEdge.second + ")");
+        removeEdge(mbEdge.first,mbEdge.second);
     }
 
-    public static int[][] floydWarshall(ArrayList<Pair<Integer,Integer>>[] graph) {
+    private int[][] floydWarshall(ArrayList<Pair<Integer,Integer>>[] graph) {
         // Path Matrix
         // D[i][j] is the weight of the shortest path from vertex i to vertex j
         int[][] D = new int[n][n];
@@ -75,8 +72,8 @@ public class GirvanNewman {
         // D[i][j] is the weight of an edge between vertex i and vertex j
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < graph[i].size(); ++j) {
-                int v = graph[i].get(j).getKey();
-                int w = graph[i].get(j).getValue();
+                int v = graph[i].get(j).first;
+                int w = graph[i].get(j).second;
                 D[i][v] = w;
             }
             // The path from a vertex to itself has weight 0
@@ -112,7 +109,7 @@ public class GirvanNewman {
         return P;
     }
 
-    public static void path(int i, int j, ArrayList<Integer> path) {
+    private void path(int i, int j, ArrayList<Integer> path) {
         if (parents[i][j] != -1) {
             if (j == i) {
                 path.add(j);
@@ -124,7 +121,7 @@ public class GirvanNewman {
         }
     }
 
-    public static void edgeBetweenness() {
+    private void calculateEdgeBetweenness() {
         edgeScores = new int[n][n]; // By default, elements are initialized to 0
         mbEdge = new Pair<>(0,0);
 
@@ -135,18 +132,18 @@ public class GirvanNewman {
         }
     }
 
-    private static void processEdge(int i, int j) {
+    private void processEdge(int i, int j) {
         if (parents[i][j] != -1) {
             if (j != i) {
                 int k = parents[i][j];
                 if (j >= k) {
                     edgeScores[j][k] += 1;
-                    if (edgeScores[j][k] > edgeScores[mbEdge.getKey()][mbEdge.getValue()])
+                    if (edgeScores[j][k] > edgeScores[mbEdge.first][mbEdge.second])
                         mbEdge = new Pair<>(j,k);
                 }
                 else {
                     edgeScores[k][j] += 1;
-                    if (edgeScores[k][j] > edgeScores[mbEdge.getKey()][mbEdge.getValue()])
+                    if (edgeScores[k][j] > edgeScores[mbEdge.first][mbEdge.second])
                         mbEdge = new Pair<>(k,j);
                 }
                 processEdge(i, k);
@@ -155,7 +152,22 @@ public class GirvanNewman {
         }
     }
 
-    public static void readGraph() {
+    private void removeEdge(int i, int j) {
+        for (int k = 0; k < graph[i].size(); ++k) {
+            if (graph[i].get(k).first == j) {
+                graph[i].remove(k);
+                break;
+            }
+        }
+        for (int k = 0; k < graph[j].size(); ++k) {
+            if (graph[j].get(k).first == i) {
+                graph[j].remove(k);
+                break;
+            }
+        }
+    }
+
+    public void readGraph() {
         Scanner in = new Scanner(System.in);
         n = in.nextInt();
         m = in.nextInt();
@@ -172,13 +184,15 @@ public class GirvanNewman {
         }
     }
 
-    public static void writeGraph() {
+    public void writeGraph() {
+        System.out.println("Adjacency list:");
         for (ArrayList<Pair<Integer,Integer>> l : graph) {
             for (Pair<Integer,Integer> v : l) {
-                System.out.print(v.getKey() + " ");
+                System.out.print(v.first + " ");
             }
             System.out.print("\n");
         }
+        System.out.print("\n");
     }
 
 }
