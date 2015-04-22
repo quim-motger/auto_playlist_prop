@@ -1,5 +1,7 @@
 package prop.domain;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -38,6 +40,14 @@ public class CliquePercolationDriver {
                 case 5:
                     cp.execute();
                     break;
+                case 6:
+                    cp.getCliques();
+                    break;
+                case 7:
+                    int n = in.nextInt();
+                    ArrayList<Integer> neighbours = cp.neighbours(n);
+                    for (int m : neighbours) System.out.print(m + " ");
+                    System.out.print("\n");
             }
         }
     }
@@ -50,6 +60,7 @@ public class CliquePercolationDriver {
         sb.append("3:  void readGraph()\n");
         sb.append("4:  void writeGraph()\n");
         sb.append("5:  void execute()\n");
+        sb.append("6:  void getCliques()\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

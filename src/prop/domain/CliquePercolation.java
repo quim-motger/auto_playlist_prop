@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,13 +12,12 @@ public class CliquePercolation{
 
     int n;
     int m;
-    int i;
-    ArrayList<Integer>[] cliques;
+    ArrayList<ArrayList<Integer>> cliques;
     ArrayList<Integer>[] graph;
     
     public void execute() {
         Result ret = new Result();
-        i = 0;
+        cliques = new ArrayList<>();
         ArrayList<Integer> R = new ArrayList<>();
         ArrayList<Integer> P = new ArrayList<>();
         ArrayList<Integer> X = new ArrayList<>();
@@ -30,25 +30,33 @@ public class CliquePercolation{
     }
 
     private void BronKerboschTomita(ArrayList<Integer> R, ArrayList<Integer> P, ArrayList<Integer> X) {
-        if (P.size() == 0 && X.size() == 0) {
-            cliques[i] = R;
-            ++i;
+        System.out.print("R:");
+        for (int r : R) System.out.print(" " + r);
+        System.out.print("\nP:");
+        for (int p : P) System.out.print(" " + p);
+        System.out.print("\nX:");
+        for (int x : X) System.out.print(" " + x);
+        System.out.print("\n");
+        if (P.isEmpty() && X.isEmpty()) {
+            cliques.add(R);
+            System.out.print("A new clique was found\n");
         }
         else {
-            Integer u = pivot(union(P,X));
-            ArrayList<Integer> Pn = difference(P,neighbours(u));
-            for (Integer v : Pn) {
+            System.out.print("Lets work\n");
+            int u = pivot(union(P,X));
+            ArrayList<Integer> Pn = difference(P, neighbours(u));
+            for(int v : Pn) {
                 ArrayList<Integer> un = new ArrayList<>();
                 un.add(v);
                 ArrayList<Integer> n = neighbours(v);
-                BronKerboschTomita(union(R,un), intersection(P,n), intersection(X,n));
+                BronKerboschTomita(un, intersection(P,n), intersection(X,n));
                 P = difference(P, un);
-                X = union(P, un);
+                X.add(v);
             }
         }
     }
 
-    private int pivot(ArrayList<Integer> A) {
+    public int pivot(ArrayList<Integer> A) {
         int v = A.get(0);
         for (int a : A) {
             if (graph[a].size() > graph[v].size()) {
@@ -58,22 +66,31 @@ public class CliquePercolation{
         return v;
     }
 
-    private ArrayList<Integer> union(ArrayList<Integer> A, ArrayList<Integer> B) {
-        ArrayList<Integer> u = new ArrayList<>();
+    public ArrayList<Integer> union(ArrayList<Integer> A, ArrayList<Integer> B) {
+        ArrayList<Integer> u = A;
+        for(int b : B) {
+            if (!u.contains(b)) u.add(b);
+        }
         return u;
     }
 
-    private ArrayList<Integer> intersection(ArrayList<Integer> A, ArrayList<Integer> B) {
+    public ArrayList<Integer> intersection(ArrayList<Integer> A, ArrayList<Integer> B) {
         ArrayList<Integer> i = new ArrayList<>();
+        for (int a: A) {
+            if (B.contains(a)) i.add(a);
+        }
         return i;
     }
 
-    private ArrayList<Integer> difference(ArrayList<Integer> A, ArrayList<Integer> B) {
+    public ArrayList<Integer> difference(ArrayList<Integer> A, ArrayList<Integer> B) {
         ArrayList<Integer> d = new ArrayList<>();
+        for (int a: A) {
+            if (!B.contains(a)) d.add(a);
+        }
         return d;
     }
 
-    private ArrayList<Integer> neighbours(int v) {
+    public ArrayList<Integer> neighbours(int v) {
         ArrayList<Integer> n = new ArrayList<>();
         for (int u : graph[v]) {
             n.add(u);
@@ -102,6 +119,17 @@ public class CliquePercolation{
         for (ArrayList<Integer> l : graph) {
             for (int v : l) {
                 System.out.print(v + " ");
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n");
+    }
+
+    public void getCliques() {
+        System.out.println("Cliques:");
+        for (ArrayList<Integer> l : cliques) {
+            for (int i : l) {
+                System.out.print(i + " ");
             }
             System.out.print("\n");
         }
