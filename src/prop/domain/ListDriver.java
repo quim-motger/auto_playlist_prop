@@ -136,6 +136,9 @@ public class ListDriver {
                         System.out.println(e.getMessage());
                         i=0;
                     }
+                    break;
+                default:
+                    printInfo();
             }
             
         }

@@ -37,10 +37,9 @@ public class UserController {
      * @param gender gender of the User
      * @param birthday Birthday expressed in long (Date to Long)
      * @param countryCode Country where the user is from
-     * @return <code>true</code> if the user is succesfully added, <code>false</code> if the user name already exists
      * @see prop.domain.User 
      */
-    public void addUser(String name, String gender, long birthday, String countryCode) throws Exception {
+    public void addUser(String name, String gender, long birthday, int countryCode) throws Exception {
         Gender userGender = Gender.valueOf(gender);
         CountryCode userCountry = CountryCode.getByCode(countryCode);
         Calendar userBirthday = getCaledarFromLong(birthday);
@@ -51,7 +50,6 @@ public class UserController {
     /**
      * Modifier that removes an existing user
      * @param name Name of the user that wants to be removed
-     * @return <code>false</code> the user doesn't exist and it can't be removed
      * @see prop.domain.User 
      */
     public void removeUser (String name) throws Exception {
@@ -68,6 +66,19 @@ public class UserController {
     public void editUser(String name, String attribute, String value) {
         Pair<String,String> pair = Pair.create(attribute,value);
         editUser(name,pair);        
+    }
+
+    /**
+     * Obtain Attribute names of a user
+     * @param delimiter String between attribute names
+     * @return Attribute names separated with the specified delimiter
+     */
+    public static String obtainAttributes(String delimiter) {
+        return  NAME + delimiter +
+                GENDER + delimiter +
+                BIRTHDAY + delimiter +
+                COUNTRY_CODE + delimiter;
+        
     }
 
     /**
@@ -101,34 +112,49 @@ public class UserController {
     }
 
     /**
-     *Obtains user with the specified name
+     *Obtains user with the specified name in the form of a String
      * @param name Desired name user
      * @return String of the desired user
      */
-    public String obtainUser(String name) {
-       return userSet.getUserByName(name)
-                     .toString();
+    public String obtainUserToString(String name) {
+        return obtainUser(name).toString();
+    }
+
+    /**
+     * Obtains user with the specified name
+     * @param name Desired name user
+     * @return Desired user
+     */
+    public User obtainUser(String name){
+        return userSet.getUserByName(name);
     }
 
     /**
      * Obtains all users in the controller 
      * @return String of all the users contained in the controller
      */
-    public String obtainUserSet() {
+    public String obtainUserSetToString() {
         return userSet.toString();
     }
 
     /**
+     * Obtains all users in the controller 
+     * @return All the users contained in the controller
+     */
+    public UserSet obtainUserSet() {
+        return userSet;
+    }
+        
+    /**
      *
      * @param title Title of the played song
      * @param artist Artist of the played song
-     * @param name Name of the user playing the song
+     * @param userName Name of the user playing the song
      * @param songController Main SongController
      * @see prop.domain.SongController                       
      */
-    public void playSong(String title, String artist, String name, SongController songController) {
-        //TODO: HOW TO COMMUNICATE BETWEEN CONTROLLERS
-        User user = userSet.getUserByName(name);
+    public void playSong(String title, String artist, String userName, SongController songController) {
+        User user = userSet.getUserByName(userName);
         Song song = songController.getSong(title,artist);
         Calendar time = Calendar.getInstance();
         Playback playback = new Playback(song,time);
@@ -142,7 +168,7 @@ public class UserController {
      */
     public void save (String path) {
         try {
-            DataController.save(obtainUserSet(), path);
+            DataController.save(obtainUserSetToString(), path);
         } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
