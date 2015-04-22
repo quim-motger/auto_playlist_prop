@@ -52,8 +52,9 @@ public class Louvain extends Algorithm {
 
     
     private Graph communityAgregation(Graph oldGraph) {
-        Graph<Integer,Edge<Integer>> graph = new Graph<>();
-        return graph;
+        //Graph<Integer,Edge<Integer>> graph = new Graph<>();
+        //return graph;
+        return null;
     }
 
     /**
@@ -71,7 +72,6 @@ public class Louvain extends Algorithm {
         nClusters = nNodes;
         for (int i = 0; i<nNodes; ++i){
             cluster[i]=i;
-            
         }
         
     }

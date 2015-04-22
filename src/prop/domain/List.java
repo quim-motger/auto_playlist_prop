@@ -1,6 +1,7 @@
 package prop.domain;
 
 import prop.ErrorString;
+import prop.PropException;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -231,7 +232,7 @@ public class List {
     public static List valueOf(String origin, SongController songController) throws Exception {
         String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
         if (tokens.length<4 || !tokens[0].equals(LIST_STRING_ID)) {
-            throw new Exception(ErrorString.INCORRECT_FORMAT);
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
         }
         List list = new List(tokens[2]);
         list.editId(Integer.valueOf(tokens[1]));
@@ -239,7 +240,7 @@ public class List {
         for (int i = 4; i<size; ++i) {
             String[] songId = tokens[i].split(SONG_DELIMITER);
             Song song = songController.getSong(songId[0], songId[1]);
-            if(song==null) throw  new Exception(ErrorString.UNEXISTING_SONG);
+            if(song==null) throw new PropException(ErrorString.UNEXISTING_SONG);
             list.addSong(song);
         }
         return list;
