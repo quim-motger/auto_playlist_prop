@@ -36,22 +36,22 @@ public class PlaybackDriver {
                     break;
                 case 3:
                     song = playback.getSong();
-                    System.out.println("Title: "+song.getTitle());
-                    System.out.println("Artist: "+song.getArtist());
-                    System.out.println("Album: "+song.getAlbum());
-                    System.out.println("Year: "+song.getYear());
-                    System.out.println("Genre: "+song.getGenre().getName());
-                    System.out.println("Subgenre: "+song.getSubgenre().getName());
-                    System.out.println("Duration: "+song.getDuration());
+                    System.out.println(song.getTitle());
+                    System.out.println(song.getArtist());
+                    System.out.println(song.getAlbum());
+                    System.out.println(song.getYear());
+                    System.out.println(song.getGenre().getName());
+                    System.out.println(song.getSubgenre().getName());
+                    System.out.println(+song.getDuration());
                     break;
                 case 4:
                     date = playback.getDate();
-                    System.out.println("Year: "+date.get(Calendar.YEAR));
-                    System.out.println("Month: "+date.get(Calendar.MONTH));
-                    System.out.println("Day: "+date.get(Calendar.DAY_OF_MONTH));
-                    System.out.println("Hour: "+date.get(Calendar.HOUR));
-                    System.out.println("Minute: "+date.get(Calendar.MINUTE));
-                    System.out.println("Second: "+date.get(Calendar.SECOND));
+                    System.out.println(date.get(Calendar.YEAR));
+                    System.out.println(date.get(Calendar.MONTH));
+                    System.out.println(date.get(Calendar.DAY_OF_MONTH));
+                    System.out.println(date.get(Calendar.HOUR));
+                    System.out.println(date.get(Calendar.MINUTE));
+                    System.out.println(date.get(Calendar.SECOND));
                     break;
                 case 5:
                     playback.setSong(song);

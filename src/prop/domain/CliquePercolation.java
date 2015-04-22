@@ -4,37 +4,69 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * Clique Percolation method class based on Bron Kerbosch algorithm
+ * Clique Percolation method class based on Bron Kerbosch algorithm (Tomita version)
  * @author joaquim.motger
  */
-public class CliquePercolation {
+public class CliquePercolation extends Algorithm {
 
-    private Graph graph;
+    ArrayList<ArrayList<Vertex>> clusters;
+    Graph graph;
 
-    private ArrayList<Set<Vertex>> cliques;
-
-    public CliquePercolation(Graph graph) {
+    @Override
+    public Result execute(Graph graph) {
+        Result ret = new Result();
         this.graph = graph;
+        clusters = new ArrayList<>();
+        ArrayList<Vertex> R = new ArrayList<>();
+        ArrayList<Vertex> P = new ArrayList<>();
+        ArrayList<Vertex> X = new ArrayList<>();
+        //P = getVertices();
+        BronKerboschTomita(R,P,X);
+        return ret;
     }
 
-    public ArrayList<Set<Vertex>> getMaximalCliques() {
-        ArrayList<Set<Vertex>> cliques = new ArrayList<>();
-        ArrayList<Vertex> potential_cliques = new ArrayList<>();
-        ArrayList<Vertex> candidates = new ArrayList<>();
-        ArrayList<Vertex> found = new ArrayList<>();
-        //candidates.addAll(graph.getVertices());
-        cliques = findCliques(potential_cliques, candidates, found);
-        return cliques;
+    private void BronKerboschTomita(ArrayList<Vertex> R, ArrayList<Vertex> P, ArrayList<Vertex> X) {
+        if (P.size() == 0 && X.size() == 0) {
+            clusters.add(R);
+        }
+        else {
+            Vertex u = pivot(union(P,X));
+            ArrayList<Vertex> Pn = difference(P,neighbours(graph,u));
+            for (Vertex v : Pn) {
+                ArrayList<Vertex> un = new ArrayList<>();
+                ArrayList<Vertex> newR = R;
+                un.add(v);
+                ArrayList<Vertex> n = neighbours(graph, v);
+                BronKerboschTomita(newR, intersection(P,n), intersection(X,n));
+                P = difference(P, un);
+                X = union(P, un);
+            }
+        }
     }
 
-    public ArrayList<Set<Vertex>> getBiggestMaximalCliques() {
-        ArrayList<Set<Vertex>> cliques = new ArrayList<>();
-        return cliques;
+    private Vertex pivot(ArrayList<Vertex> A) {
+        Vertex v = new Vertex();
+        return v;
     }
 
-    public ArrayList<Set<Vertex>> findCliques(ArrayList<Vertex> potential_cliques, ArrayList<Vertex> candidates, ArrayList<Vertex> found) {
-        ArrayList<Set<Vertex>> cliques = new ArrayList<>();
-        return cliques;
+    private ArrayList<Vertex> union(ArrayList<Vertex> A, ArrayList<Vertex> B) {
+        ArrayList<Vertex> u = new ArrayList<>();
+        return u;
+    }
+
+    private ArrayList<Vertex> intersection(ArrayList<Vertex> A, ArrayList<Vertex> B) {
+        ArrayList<Vertex> i = new ArrayList<>();
+        return i;
+    }
+
+    private ArrayList<Vertex> difference(ArrayList<Vertex> A, ArrayList<Vertex> B) {
+        ArrayList<Vertex> d = new ArrayList<>();
+        return d;
+    }
+
+    private ArrayList<Vertex> neighbours(Graph graph, Vertex v) {
+        ArrayList<Vertex> n = new ArrayList<>();
+        return n;
     }
 
 }

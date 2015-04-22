@@ -15,82 +15,75 @@ public class ANDDriver {
         System.out.print("\n");
 
         Scanner in = new Scanner(System.in);
-        ComplexRelation r = null;
+        AND r = null;
         Relation r1 = null;
         Relation r2 = null;
         Song s1 = new Song();
         Song s2 = new Song();
-        SongController sc = null;
 
         int i = -1;
+        printInfoComplete();
         while (i!=0) {
-            printInfo();
             i = in.nextInt();
             switch (i) {
                 case 0:
                     break;
                 case 1:
-                    r = new AND(r1,r2);
+                    printInfoComplete();
                     break;
                 case 2:
-                    if (r.evaluate(s1,s2)) System.out.print("The songs are related by the specified relation\n");
-                    else System.out.print("The songs are not related by the specified relation\n");
+                    if (r.evaluate(s1,s2)) System.out.print("true\n");
+                    else System.out.print("false\n");
                     break;
                 case 3:
-                    System.out.print("Select the relation to create (1/2):");
-                    int rel = in.nextInt();
-                    System.out.print("Select the attribute of the relation (title,artist,"
-                                    +"album,year,genre,subgenre,duration):");
                     String attribute = in.next();
-                    System.out.print("Specify the value of the attribute:");
                     String value = in.next();
-                    if (rel == 1) r1 = new SimpleRelation(attribute,value);
-                    else if (rel == 2) r2 = new SimpleRelation(attribute,value);
+                    r1 = new SimpleRelation(attribute,value);
                     break;
                 case 4:
-                    sc = new SongController();
+                    String attribute2 = in.next();
+                    String value2 = in.next();
+                    r1 = new SimpleRelation(attribute2,value2);
                     break;
                 case 5:
-                    System.out.print("Add song\n");
-                    System.out.print("Title:");
                     String title = in.next();
-                    System.out.print("Artist:");
                     String artist = in.next();
-                    System.out.print("Album:");
                     String album = in.next();
-                    System.out.print("Year:");
                     int y = in.nextInt();
-                    System.out.print("Genre:");
                     Genre genre = Genre.getGenreById(in.nextInt());
-                    System.out.print("Subgenre:");
                     Genre subgenre = Genre.getGenreById(in.nextInt());
-                    System.out.print("Duration:");
                     int duration = in.nextInt();
-                    sc.addSong(title,artist,album,y,genre,subgenre,duration);
+                    s1 = new Song(title,artist,album,y,genre,subgenre,duration);
                     break;
                 case 6:
-                    System.out.print("Select the song to define (1/2):");
-                    int c = in.nextInt();
-                    System.out.print("Specify the title of the song:");
                     String title2 = in.next();
-                    System.out.print("Specify the artist of the song:");
                     String artist2 = in.next();
-                    if (c == 1) s1 = sc.getSong(title2,artist2);
-                    else if (c == 2) s2 = sc.getSong(title2,artist2);
+                    String album2 = in.next();
+                    int y2 = in.nextInt();
+                    Genre genre2 = Genre.getGenreById(in.nextInt());
+                    Genre subgenre2 = Genre.getGenreById(in.nextInt());
+                    int duration2 = in.nextInt();
+                    s1 = new Song(title2,artist2,album2,y2,genre2,subgenre2,duration2);
                     break;
                 default:
-                    printInfo();
+                    printInfoComplete();
             }
+            if (i > 0 && i < 7) printInfoBrief();
         }
     }
 
-    private static void printInfo() {
+    private static void printInfoComplete() {
         System.out.print("0:    terminate program\n");
-        System.out.print("1:    Relation r =AND(Relation r1, Relation r2)\n");
+        System.out.print("1:    printInfoComplete()\n");
         System.out.print("2:    evaluate(Song s1, Song s2)\n");
-        System.out.print("3:    r1 = SimpleRelation(String attribute, String value)\n");
-        System.out.print("3:    r2 = SimpleRelation(String attribute, String value)\n");
-        System.out.print("6:    s1 = new Song(String title, String artist, [...])\n");
-        System.out.print("7:    s2 = new Song(String title, String artist, [...])\n");
+        System.out.print("3:    r1 = new Relation(String attribute, String value)\n");
+        System.out.print("4:    r2 = new Relation(String attribute, String value)\n");
+        System.out.print("5:    s1 = new Song(String title, String artist, S)\n");
+        System.out.print("6:    s2 = new Song(String title, String artist, [...])\n");
+    }
+
+    private static void printInfoBrief() {
+        System.out.print("0:    terminate program\n");
+        System.out.print("1:    printInfoComplete()\n");
     }
 }
