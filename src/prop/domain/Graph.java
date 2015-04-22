@@ -4,27 +4,27 @@ package prop.domain;
 // http://www.docjar.com/docs/api/org/jboss/util/graph/Graph.html
     /*
 double default_weight;
-setDefaultWeight;
-addEdge(Vertex v1, Vertex v2, double w);
-addEdge(Vertex v1, Vertex v2); // with default weight
-addEdge(Edge e);
-addDirectedEdge;
+public void setDefaultWeight(double weight);
+addDirectedEdge(T from, T to, double weight);
+addDirectedEdge(T from, T to); // with default weight
+addEdge(T v1, T v2, double weight);
+addEdge(T v1, T v2); // with default weight
 
      */
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
- * Class Graph represents a generic mixed weighted pseudograph. That is, a weighted graph that can have multiple edges between
+ * Class Graph is a generic mixed weighted pseudograph. That is, a weighted graph that can have multiple edges between
  two vertices and loops, and these edges can be either directed or undirected.
- * @param <V> A subclass of {@link Vertex}
- * @param <E> A subclass of {@link Edge}
+ * @param <T> the vertices type
  * @author Carles Garcia Cabot
  */
-public class Graph<V extends Vertex, E extends Edge> {
+public class Graph<T> {
     private Integer nextVertex; // Contains next Vertex identifier to be used
-    private HashMap<V, Integer> vertices; // Each vertex has a unique identifier
-
+    private HashMap<T, Integer> vToInt; // Each vertex has a unique identifier
+    private HashSet<Integer> vertices;
     public Graph() {
         nextVertex = 0;
     }
@@ -33,15 +33,63 @@ public class Graph<V extends Vertex, E extends Edge> {
 
 /*
     public boolean isEmpty();
-    public boolean addVertex(Vertex<T> v);
-    //public boolean addVertex(T);	no perque un vertex no es pot identificar per data. Un vertex té identitat propia i pertany a un conjunt, pertant no es pot repetir
+    public boolean addVertex(T v);
     public int size();
     public ArrayList<Vertex<T>> getVertices();
-    public boolean addEdge(Vertex<T> from, Vertex<T> to, int cost) throws IllegalArgumentException;
-    public List<Edge<T>> getEdges();
     public boolean removeVertex(Vertex<T> v);
     public boolean removeEdge(Vertex<T> from, Vertex<T> to) // remove an arbitrary edge between the 2 vertices
     public void unvisitEdges();
     public void unvisitVertices()
 */
 }
+
+
+
+/*
+public class Vertex<T> {
+    protected T data;
+    protected boolean visited;//public??
+    private List<E extends Edge> incomingEdges;
+    private List<E extends Edge> outgoingEdges;
+
+    public Vertex<T>(
+    T data
+    );
+    public Vertex<T>(
+    T data, boolean visited
+    );
+
+    public T getData();
+
+    public T setData();
+
+    public addEdge(E extends Edge);
+
+    public boolean hasEdge(Edge<T> e);
+
+    public boolean remove(Edge<T> e);
+
+    public int getDegree();
+
+    public int getIndegree();
+
+    public int getIndegree();
+
+    public void visit();
+
+    public void unvisit();
+}
+ */
+
+/*
+public class Edge<V extends Vertex> {
+
+    protected V from;
+    protected V to;
+    protected double weight;
+    private boolean visited;
+    private boolean directed;
+    private static defaultWeight;
+
+}
+*/
