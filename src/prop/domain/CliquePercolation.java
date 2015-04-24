@@ -12,15 +12,16 @@ public class CliquePercolation{
 
     int n;
     int m;
-    ArrayList<ArrayList<Integer>> cliques;
+    int i;
+    ArrayList<Integer>[] cliques;
     ArrayList<Integer>[] graph;
     
     public void execute() {
-        Result ret = new Result();
-        cliques = new ArrayList<>();
         ArrayList<Integer> R = new ArrayList<>();
         ArrayList<Integer> P = new ArrayList<>();
         ArrayList<Integer> X = new ArrayList<>();
+        cliques = (ArrayList<Integer>[])new ArrayList[n];
+        i = 0;
         int k = 0;
         while (k < n) {
             P.add(k);
@@ -38,64 +39,64 @@ public class CliquePercolation{
         for (int x : X) System.out.print(" " + x);
         System.out.print("\n");
         if (P.isEmpty() && X.isEmpty()) {
-            cliques.add(R);
-            System.out.print("A new clique was found\n");
+            System.out.print("Cliques since now:\n");
+            getCliques();
+            cliques[i] = new ArrayList<>();
+            cliques[i] = R;
+            i = i+1;
+            System.out.print("New clique found:\n");
+            getCliques();
         }
-        else {
-            System.out.print("Lets work\n");
-            int u = pivot(union(P,X));
-            ArrayList<Integer> Pn = difference(P, neighbours(u));
-            for(int v : Pn) {
-                ArrayList<Integer> un = new ArrayList<>();
-                un.add(v);
-                ArrayList<Integer> n = neighbours(v);
-                BronKerboschTomita(un, intersection(P,n), intersection(X,n));
-                P = difference(P, un);
-                X.add(v);
-            }
+        ArrayList<Integer> P1 = new ArrayList<>(P);
+        for (int v : P) {
+            if (!R.contains(v)) R.add(v);
+            BronKerboschTomita(R, intersection(P1, neighbours(v)), intersection(X, neighbours(v)));
+            R = remove(R,v);
+            P1 = remove(P1,v);
+            X.add(v);
         }
     }
 
-    public int pivot(ArrayList<Integer> A) {
-        int v = A.get(0);
-        for (int a : A) {
-            if (graph[a].size() > graph[v].size()) {
-                v = a;
-            }
+    private ArrayList<Integer> union(ArrayList<Integer> A, ArrayList<Integer> B) {
+        //System.out.print("Union\n");
+        ArrayList<Integer> union = new ArrayList<>(A);
+        for (int i : B) {
+            if (!union.contains(i)) union.add(i);
         }
-        return v;
+        printList(union);
+        return union;
     }
 
-    public ArrayList<Integer> union(ArrayList<Integer> A, ArrayList<Integer> B) {
-        ArrayList<Integer> u = A;
-        for(int b : B) {
-            if (!u.contains(b)) u.add(b);
-        }
-        return u;
+    private ArrayList<Integer> intersection(ArrayList<Integer> A, ArrayList<Integer> B) {
+        ArrayList<Integer> intersection = new ArrayList<>(A);
+        intersection.retainAll(B);
+        printList(intersection);
+        return intersection;
     }
 
-    public ArrayList<Integer> intersection(ArrayList<Integer> A, ArrayList<Integer> B) {
-        ArrayList<Integer> i = new ArrayList<>();
-        for (int a: A) {
-            if (B.contains(a)) i.add(a);
-        }
-        return i;
+    private ArrayList<Integer> remove(ArrayList<Integer> A, int v) {
+        ArrayList<Integer> B = new ArrayList<>();
+        B.add(v);
+        ArrayList<Integer> difference = new ArrayList<>(A);
+        difference.removeAll(B);
+        printList(difference);
+        return difference;
     }
 
-    public ArrayList<Integer> difference(ArrayList<Integer> A, ArrayList<Integer> B) {
-        ArrayList<Integer> d = new ArrayList<>();
-        for (int a: A) {
-            if (!B.contains(a)) d.add(a);
-        }
-        return d;
-    }
-
-    public ArrayList<Integer> neighbours(int v) {
+    private ArrayList<Integer> neighbours(int v) {
         ArrayList<Integer> n = new ArrayList<>();
         for (int u : graph[v]) {
             n.add(u);
         }
         return n;
+    }
+
+    private void printList(ArrayList<Integer> l) {
+        System.out.print("Llista:");
+        for (int i : l) {
+            System.out.print(" " + i);
+        }
+        System.out.print("\n");
     }
 
     public void readGraph() {
@@ -127,13 +128,13 @@ public class CliquePercolation{
 
     public void getCliques() {
         System.out.println("Cliques:");
-        for (ArrayList<Integer> l : cliques) {
-            for (int i : l) {
-                System.out.print(i + " ");
+        int k;
+        for (k = 0; k < i; ++k) {
+            for (int p : cliques[k]) {
+                System.out.print(" " + p);
             }
             System.out.print("\n");
         }
-        System.out.print("\n");
     }
 
 }

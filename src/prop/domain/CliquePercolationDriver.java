@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class CliquePercolationDriver {
     public static void main(String[] args) {
         System.out.println("**********************************************************");
-        System.out.println("** Girvan-Newman algorithm");
+        System.out.println("** Clique Percolation method - Bron Kerbosch algorithm");
         System.out.println("**********************************************************");
         System.out.print("\n");
         printInfo();
@@ -43,11 +43,6 @@ public class CliquePercolationDriver {
                 case 6:
                     cp.getCliques();
                     break;
-                case 7:
-                    int n = in.nextInt();
-                    ArrayList<Integer> neighbours = cp.neighbours(n);
-                    for (int m : neighbours) System.out.print(m + " ");
-                    System.out.print("\n");
             }
         }
     }
