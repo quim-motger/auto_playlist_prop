@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Clique Percolation method class based on Bron Kerbosch algorithm (Tomita version)
+ * Clique Percolation method class based on Bron Kerbosch algorithm
  * @author joaquim.motger
  */
 public class CliquePercolation{
@@ -33,11 +33,11 @@ public class CliquePercolation{
             ++k;
         }
         //Executes the clique percolation algorithm
-        BronKerboschTomita(R,P,X);
+        BronKerbosch(R,P,X);
         getCliques();
     }
 
-    private void BronKerboschTomita(ArrayList<Integer> R, ArrayList<Integer> P, ArrayList<Integer> X) {
+    private void BronKerbosch(ArrayList<Integer> R, ArrayList<Integer> P, ArrayList<Integer> X) {
         System.out.print("Provisional clique:");
         for (int r : R) System.out.print(" " + r);
         System.out.print("\nCandidates:");
@@ -65,7 +65,7 @@ public class CliquePercolation{
             if (!R.contains(v)) R.add(v);
             //Remove non-neighbours of v from candidates to be added to clique (P) and from
             //rejected who could be added to the clique, then backtrack
-            BronKerboschTomita(R, intersection(P1, neighbours(v)), intersection(X, neighbours(v)));
+            BronKerbosch(R, intersection(P1, neighbours(v)), intersection(X, neighbours(v)));
             //Remove v from vertices that may compose a clique (R)
             R = remove(R,v);
             //Remove v from candidates to be added (P1)
