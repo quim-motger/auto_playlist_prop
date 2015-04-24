@@ -1,6 +1,5 @@
 package prop.domain;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,11 +9,11 @@ import java.util.Scanner;
  */
 public class CliquePercolation{
 
-    int n;
-    int m;
-    int i;
-    ArrayList<Integer>[] cliques;
-    ArrayList<Integer>[] graph;
+    int n;      //number of graph nodes
+    int m;      //number of graph edges
+    int i;      //number of cliques found
+    ArrayList<Integer>[] cliques;       //list of maximal cliques
+    ArrayList<Integer>[] graph;         //graph
     
     public void execute() {
         //R: list of vertices that may compose a clique
@@ -49,7 +48,7 @@ public class CliquePercolation{
         //there aren't any other vertices connected with all of those in R who have
         //been rejected (X is empty), then R contains a maximal clique
         if (P.isEmpty() && X.isEmpty()) {
-            System.out.print("New clique found\n");
+            System.out.print("New clique found:");
             printClique(R);
             cliques[i] = new ArrayList<>();
             //R is added to array of maximal cliques
@@ -98,11 +97,21 @@ public class CliquePercolation{
     }
 
     private void printClique(ArrayList<Integer> l) {
-        System.out.print("New clique:");
         for (int i : l) {
             System.out.print(" " + i);
         }
         System.out.print("\n");
+    }
+
+    private void getCliques() {
+        System.out.println("Cliques:");
+        int k;
+        for (k = 0; k < i; ++k) {
+            for (int p : cliques[k]) {
+                System.out.print(" " + p);
+            }
+            System.out.print("\n");
+        }
     }
 
     public void readGraph() {
@@ -130,17 +139,6 @@ public class CliquePercolation{
             System.out.print("\n");
         }
         System.out.print("\n");
-    }
-
-    public void getCliques() {
-        System.out.println("Cliques:");
-        int k;
-        for (k = 0; k < i; ++k) {
-            for (int p : cliques[k]) {
-                System.out.print(" " + p);
-            }
-            System.out.print("\n");
-        }
     }
 
 }
