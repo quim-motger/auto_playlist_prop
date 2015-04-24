@@ -57,16 +57,6 @@ public class CliquePercolation{
         }
     }
 
-    private ArrayList<Integer> union(ArrayList<Integer> A, ArrayList<Integer> B) {
-        //System.out.print("Union\n");
-        ArrayList<Integer> union = new ArrayList<>(A);
-        for (int i : B) {
-            if (!union.contains(i)) union.add(i);
-        }
-        printList(union);
-        return union;
-    }
-
     private ArrayList<Integer> intersection(ArrayList<Integer> A, ArrayList<Integer> B) {
         ArrayList<Integer> intersection = new ArrayList<>(A);
         intersection.retainAll(B);
