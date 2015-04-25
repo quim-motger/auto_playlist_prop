@@ -3,6 +3,7 @@ package prop.domain;
 // Per PROP, només necessitem multigraf no dirigit ponderat
 // http://www.docjar.com/docs/api/org/jboss/util/graph/Graph.html
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -58,15 +59,21 @@ public class Graph<T> {
     }
 
     /**
-     * Removes a vertex from the graph.
+     * Removes a vertex from the graph. Cost proportional to the number of undirected, outgoing and incoming
+     * edges of the vertex.
      * @param v T vertex to remove
      * @return False if the vertex wasn't in the graph, true if it was successfully removed
      */
     public boolean removeVertex(T v) {
-        // Todo: s'han d'eliminar totes les aparicions en EdgeList
         if (vertices.containsKey(v)) {
             for (T vertex : vertices.get(v).list.undirected.keySet()) {
-                //vertices.get(vertex).list.undirected.
+                vertices.get(vertex).list.undirected.remove(v);
+            }
+            for (T vertex : vertices.get(v).list.outgoing.keySet()) {
+                vertices.get(vertex).list.incoming.remove(v);
+            }
+            for (T vertex : vertices.get(v).list.incoming.keySet()) {
+                vertices.get(vertex).list.outgoing.remove(v);
             }
             vertices.remove(v);
             return true;
@@ -99,10 +106,7 @@ public class Graph<T> {
      * @param v2 vertex 2
      * @return true if the edge was successfully added. False if a vertex doesn't exist.
      */
-    public boolean addEdge(T v1, T v2)
-    {
-        return addEdge(v1, v2, defaultWeight);
-    }
+    public boolean addEdge(T v1, T v2) { return addEdge(v1, v2, defaultWeight); }
 
     /**
      * Adds an undirected weighted edge between two vertices. Cost O(1)
@@ -114,18 +118,37 @@ public class Graph<T> {
     public boolean addEdge(T v1, T v2, double weight) {
         if (!vertices.containsKey(v1) || !vertices.containsKey(v2)) return false;
         if (v1 == v2) { // check if it's a loop
-            vertices.get(v1).list.edgeLoops.put(v1, new Edge(weight));
+            vertices.get(v1).list.edgeLoops.add(new Edge(weight));
         }
         else {
-            vertices.get(v1).list.undirected.put(v2, new Edge(weight));
-            vertices.get(v2).list.undirected.put(v1, new Edge(weight));
+            if (!vertices.get(v1).list.undirected.containsKey(v2))
+                vertices.get(v1).list.undirected.put(v2, new ArrayList<Edge>());
+            Edge newEdge = new Edge(weight);
+            vertices.get(v1).list.undirected.get(v2).add(newEdge);
+            if (!vertices.get(v2).list.undirected.containsKey(v1))
+                vertices.get(v2).list.undirected.put(v1, new ArrayList<Edge>());
+            vertices.get(v2).list.undirected.get(v1).add(newEdge);
         }
         return true;
     }
 
+    // this removes an arbitrary edge. If edges where ordered, it could remove the last edge added
     public boolean removeEdge(T v1, T v2) {
-        // todo
-        return false;
+        if (v1 == v2) {
+            if (vertices.get(v1).list.edgeLoops.isEmpty()) return false;
+            else {
+                vertices.get(v1).list.edgeLoops.remove(vertices.get(v1).list.edgeLoops.size()-1);
+            }
+        }
+        else {
+            if (!vertices.get(v1).list.undirected.containsKey(v2)) return false;
+            else {
+                Edge removedEdge = vertices.get(v1).list.undirected.get(v2).get(vertices.get(v1).list.undirected.size()-1);
+                vertices.get(v1).list.undirected.get(v2).remove(removedEdge);
+                vertices.get(v2).list.undirected.get(v1).remove(removedEdge);
+            }
+        }
+        return true;
     }
 
     /**
@@ -148,11 +171,35 @@ public class Graph<T> {
     public boolean addArc(T from, T to, double weight) {
         if (!vertices.containsKey(from) || !vertices.containsKey(to)) return false;
         if (from == to) { // check if it's a loop
-            vertices.get(from).list.arcLoops.put(from, new Edge(weight));
+            vertices.get(from).list.arcLoops.add(new Edge(weight));
         }
         else {
-            vertices.get(from).list.outgoing.put(to, new Edge(weight));
-            vertices.get(to).list.incoming.put(from, new Edge(weight));
+            if (!vertices.get(from).list.outgoing.containsKey(to))
+                vertices.get(from).list.outgoing.put(to, new ArrayList<Edge>());
+            Edge newEdge = new Edge(weight);
+            vertices.get(from).list.outgoing.get(to).add(newEdge);
+            if (!vertices.get(to).list.incoming.containsKey(from))
+                vertices.get(to).list.incoming.put(from, new ArrayList<Edge>());
+            vertices.get(to).list.incoming.get(from).add(newEdge);
+        }
+        return true;
+    }
+
+    // this removes an arbitrary edge. If edges where ordered, it could remove the last edge added
+    public boolean removeArc(T from, T to) {
+        if (from == to) {
+            if (vertices.get(from).list.arcLoops.isEmpty()) return false;
+            else {
+                vertices.get(from).list.arcLoops.remove(vertices.get(from).list.edgeLoops.size()-1);
+            }
+        }
+        else {
+            if (!vertices.get(from).list.outgoing.containsKey(to)) return false;
+            else {
+                Edge removedEdge = vertices.get(from).list.outgoing.get(to).get(vertices.get(from).list.undirected.size()-1);
+                vertices.get(from).list.outgoing.get(to).remove(removedEdge);
+                vertices.get(to).list.incoming.get(from).remove(removedEdge);
+            }
         }
         return true;
     }
@@ -165,7 +212,7 @@ public class Graph<T> {
      */
     public boolean hasEdge(T v1, T v2) {
         if (v1 == v2) {// check only loops
-            if (vertices.get(v1).list.edgeLoops.containsKey(v1)) return true;
+            if (!vertices.get(v1).list.edgeLoops.isEmpty()) return true;
         }
         else {
             if (vertices.get(v1).list.undirected.containsKey(v2)) return true;
@@ -181,7 +228,7 @@ public class Graph<T> {
      */
     public boolean hasArc(T from, T to) {
         if (from == to) {// check only loops
-            if (vertices.get(from).list.arcLoops.containsKey(from)) return true;
+            if (!vertices.get(from).list.arcLoops.isEmpty()) return true;
         }
         else {
             if (vertices.get(from).list.outgoing.containsKey(to)) return true;
@@ -199,6 +246,19 @@ public class Graph<T> {
      */
     public boolean areAdjacent(T v1, T v2) {
         return hasEdge(v1,v2) || hasArc(v1,v2) || hasArc(v2,v1);
+    }
+
+    // s'ha de fer tenint en compte els loops
+    public int getDegree(T v) {
+        return vertices.get(v).list.undirectedCount();
+    }
+
+    public int getIndegree(T v) {
+        return vertices.get(v).list.incomingCount();
+    }
+
+    public int getOutdegree(T v) {
+        return vertices.get(v).list.outgoingCount();
     }
 
 
@@ -247,16 +307,62 @@ public class Graph<T> {
     }
 
     private class EdgeList {
-        // todo: AIXI NOMES HI POT HAVER UNA ARESTA ENTRE DOS VERTEXS. HAURIA DE SER <T, ArrayList<Edge>>
-        HashMap<T, Edge> undirected;
-        HashMap<T, Edge> edgeLoops; //count as 2 incoming & 2 outgoing
-        HashMap<T, Edge> incoming;
-        HashMap<T, Edge> outgoing;
-        HashMap<T, Edge> arcLoops; // count as 1 incoming & 1 outgoing
+        HashMap<T, ArrayList<Edge>> undirected;
+        ArrayList<Edge> edgeLoops; //count as 2 incoming & 2 outgoing
+        HashMap<T, ArrayList<Edge>> incoming;
+        HashMap<T, ArrayList<Edge>> outgoing;
+        ArrayList<Edge> arcLoops; // count as 1 incoming & 1 outgoing
 
-        int size() {
-            return undirected.size() + edgeLoops.size() + incoming.size() + outgoing.size() + arcLoops.size();
+        EdgeList() {
+            undirected = new HashMap<>();
+            edgeLoops = new ArrayList<>();
+            incoming = new HashMap<>();
+            outgoing = new HashMap<>();
+            arcLoops = new ArrayList<>();
         }
+
+        // en comptes de fer counts hi podria haver atributs que s'actualitzessin quan s'afegeix o elimina aresta
+        int undirectedCount() {
+            int s = 0;
+            for (ArrayList<Edge> v : undirected.values()) {
+                s += v.size();
+            }
+            return s;
+        }
+
+        int edgeLoopsCount() {
+            return edgeLoops.size();
+        }
+
+        int incomingCount() {
+            int s = 0;
+            for (ArrayList<Edge> v : incoming.values()) {
+                s += v.size();
+            }
+            return s;
+        }
+
+        int outgoingCount() {
+            int s = 0;
+            for (ArrayList<Edge> v : outgoing.values()) {
+                s += v.size();
+            }
+            return s;
+        }
+
+        int arcLoopsCount() {
+            return arcLoops.size();
+        }
+
+        /*// todo: refer (fa falta si ja hi ha edgeCount ???)
+        int size() {
+            int s = 0;
+            for (ArrayList<Edge> v : undirected.values()) {
+                s += v.size();
+            }
+            s += edgeLoops.size();
+            return undirected.size() + edgeLoops.size() + incoming.size() + outgoing.size() + arcLoops.size();
+        }*/
     }
 }
 
@@ -265,13 +371,6 @@ public class Graph<T> {
 /*
 
 
-    public boolean remove(Edge<T> e);
-
-    public int getDegree();
-
-    public int getIndegree();
-
-    public int getIndegree();
 
     public void visit();
 
