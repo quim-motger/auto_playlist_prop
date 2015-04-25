@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ListControllerDriver {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("**********************************************************");
         System.out.println("** ListController");
         System.out.println("**********************************************************");

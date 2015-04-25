@@ -14,6 +14,7 @@ public class GirvanNewmanDriver {
         System.out.println("**********************************************************");
         System.out.print("\n");
         printInfo();
+        System.out.println("WARNING: it is highly recommendable to start with option #2\n");
 
         GirvanNewman gn = null;
 

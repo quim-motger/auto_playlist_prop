@@ -3,6 +3,7 @@ package prop.domain;
 import prop.ErrorString;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * A set of songs
@@ -12,7 +13,7 @@ public class SongSet {
 
     private ArrayList<Song> songSet;
 
-    private static final char delimiter = '\n';
+    private static final String delimiter = "\n\n";
 
     /**
      * Constructor
@@ -39,17 +40,18 @@ public class SongSet {
 
     /**
      * Get a song
-     * @param title     the title of the song to get
-     * @param artist    the artist of the song to get
-     * @return          the song if present,
-     *                  null if not present
+     * @param title         the title of the song to get
+     * @param artist        the artist of the song to get
+     * @return              the song if present,
+     *                      null if not present
+     * @throws Exception    if the song is not present in the set
      */
-    public Song getSong(String title, String artist) {
+    public Song getSong(String title, String artist) throws Exception {
         for (Song song : songSet) {
             if (song.getTitle().equals(title) && song.getArtist().equals(artist))
                 return song;
         }
-        return null;
+        throw new Exception(ErrorString.UNEXISTING_SONG);
     }
 
     /**
@@ -58,7 +60,7 @@ public class SongSet {
      *              and the second element is the {@code artist} of the song
      * @return      list of present songs
      */
-    public ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids) {
+    public ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids) throws Exception {
         ArrayList<Song> songList = new ArrayList<Song>();
         for (Pair<String,String>id : ids) {
             Song c = getSong(id.first,id.second);
@@ -70,21 +72,24 @@ public class SongSet {
 
     /**
      * Add a song to the set
-     * @param song  the song to add
+     * @param song          the song to add
+     * @throws Exception    if the song already exists or if the {@code song} parameter is null
      */
     public void addSong(Song song) throws Exception {
         if (song != null) {
             if (!contains(song.getTitle(), song.getArtist())) {
                 songSet.add(song);
-            } else throw new Exception(ErrorString.EXISTING_SONG);
+            }
+            else throw new Exception(ErrorString.EXISTING_SONG);
         }
         else throw new Exception(ErrorString.NULL);
     }
 
     /**
      * Remove a song from the set
-     * @param title     the title of the song
-     * @param artist    the artist of the song
+     * @param title         the title of the song
+     * @param artist        the artist of the song
+     * @throws Exception    if the song is not present in the set
      */
     public void removeSong(String title, String artist) throws Exception {
         int i = getSongIndex(title,artist);
@@ -189,6 +194,10 @@ public class SongSet {
         }
     }
 
+    /**
+     * Convert a song set into a String
+     * @return  the String representing the song set
+     */
     public String toString() {
         String s = "";
         int i;
@@ -199,8 +208,14 @@ public class SongSet {
         return s;
     }
 
+    /**
+     * Parse a string to a {@code SongSet} object
+     * @param s the string representing the song set
+     * @return  the {@code SongSet} object created from the String
+     * @throws  Exception
+     */
     public static SongSet valueOf(String s) throws Exception {
-        String[] songs = s.split(String.valueOf(delimiter));
+        String[] songs = s.split(Pattern.quote(delimiter));
         SongSet ss = new SongSet();
         for (String r : songs) {
             ss.addSong(Song.valueOf(r));

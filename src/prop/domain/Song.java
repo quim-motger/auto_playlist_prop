@@ -1,6 +1,8 @@
 package prop.domain;
 
 
+import java.util.regex.Pattern;
+
 /**
  * A song, identified by title and artist
  * @author oscar.manas
@@ -15,7 +17,7 @@ public class Song {
     private Genre subgenre;
     private int duration;
 
-    private static final char delimiter = ';';
+    private static final String delimiter = "|S|\n";
 
     /**
      * The default constructor
@@ -98,6 +100,10 @@ public class Song {
         this.duration = duration;
     }
 
+    /**
+     * Convert a song into a String
+     * @return the String representing the song
+     */
     public String toString() {
         String s = "";
         s += title + delimiter;
@@ -111,8 +117,13 @@ public class Song {
         return s;
     }
 
+    /**
+     * Parse a string to a {@code Song} object
+     * @param s the String representing the song
+     * @return  the {@code Song} object created from the String
+     */
     public static Song valueOf(String s) {
-        String[] t = s.split(String.valueOf(delimiter));
+        String[] t = s.split(Pattern.quote(delimiter));
         return new Song(t[0],t[1],t[2],Integer.parseInt(t[3]),Genre.getGenreById(Integer.parseInt(t[4])),
                 Genre.getGenreById(Integer.parseInt(t[5])),Integer.parseInt(t[6]));
     }

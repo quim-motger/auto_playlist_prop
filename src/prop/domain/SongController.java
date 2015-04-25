@@ -58,7 +58,7 @@ public class SongController {
      * @param artist    song artist
      * @param pair      a pair defining attribute and new value
      */
-    public void editSong(String title, String artist, Pair<String, String> pair) {
+    public void editSong(String title, String artist, Pair<String, String> pair) throws Exception {
         Song song = songSet.getSong(title, artist);
         if (song != null) {
             switch(pair.first) {
@@ -105,7 +105,7 @@ public class SongController {
      * @param artist    song artist
      * @return          song with title and artist required
      */
-    public Song getSong(String title, String artist) {
+    public Song getSong(String title, String artist) throws Exception {
         return songSet.getSong(title, artist);
     }
 
