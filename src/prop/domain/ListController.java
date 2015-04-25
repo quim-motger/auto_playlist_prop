@@ -2,7 +2,7 @@ package prop.domain;
 
 import prop.data.DataController;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * The controller for {@code List} and {@code ListSet}
@@ -49,6 +49,32 @@ public class ListController {
     }
 
     /**
+     * Generate a random song list
+     * @param title             the title of the list
+     * @param n                 the number of songs the list will contain
+     * @param songController    an instance of the Song Controller
+     */
+    public void createRandomList(String title, int n, SongController songController) throws Exception {
+        int m = songController.size();
+        Random rand = new Random();
+        // We use LinkedHashSet to maintain insertion order
+        Set<Integer> positions = new LinkedHashSet<Integer>();
+        // Generate m random integers with no duplicates
+        while (positions.size() < n){
+            int r = rand.nextInt(m);
+            // As we're adding to a set, this will automatically do a containment check
+            positions.add(r);
+        }
+
+        List list = new List(title);
+        Iterator<Integer> it = positions.iterator();
+        while (it.hasNext()) {
+            list.addSong(songController.getSong(it.next()));
+        }
+        listSet.add(list);
+    }
+
+    /**
      * Set a new title for a list
      * @param id    the identification of the specified list
      * @param title the new title
@@ -64,6 +90,7 @@ public class ListController {
      * @param id        the identification of the specified list
      * @param title     the title of the song to add
      * @param artist    the artist of the song to add
+     * @param songController    an instance of the Song Controller
      */
     public void addSong(int id, String title, String artist, SongController songController) throws Exception {
         List list = listSet.getList(id);

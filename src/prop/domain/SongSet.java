@@ -39,12 +39,11 @@ public class SongSet {
     }
 
     /**
-     * Get a song
+     * Get a song identified by title and artist
      * @param title         the title of the song to get
      * @param artist        the artist of the song to get
-     * @return              the song if present,
-     *                      null if not present
-     * @throws Exception    if the song is not present in the set
+     * @return              the song if present
+     * @throws Exception    if the song is not present
      */
     public Song getSong(String title, String artist) throws Exception {
         for (Song song : songSet) {
@@ -52,6 +51,19 @@ public class SongSet {
                 return song;
         }
         throw new Exception(ErrorString.UNEXISTING_SONG);
+    }
+
+    /**
+     * Get a song by position
+     * @param i             the position of the song to get
+     * @return              the song if present
+     * @throws Exception    if the song is not present
+     */
+    public Song getSong(int i) throws Exception {
+        if (i < songSet.size())
+            return songSet.get(i);
+        else
+            throw new Exception(ErrorString.UNEXISTING_SONG);
     }
 
     /**

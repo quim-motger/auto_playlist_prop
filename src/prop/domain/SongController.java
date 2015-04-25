@@ -29,6 +29,14 @@ public class SongController {
     }
 
     /**
+     * Get the size of the set
+     * @return  the size of the set
+     */
+    public int size() {
+        return songSet.size();
+    }
+
+    /**
      * Add a new <b>song</b> to the set
      * @param title     song title
      * @param artist    song artist
@@ -103,13 +111,24 @@ public class SongController {
     }
 
     /**
-     * Get a song
-     * @param title     song title
-     * @param artist    song artist
-     * @return          song with title and artist required
+     * Get a song identified by title and artist
+     * @param title         the title of the song to get
+     * @param artist        the artist of the song to get
+     * @return              the song if present
+     * @throws Exception    if the song is not present
      */
     public Song getSong(String title, String artist) throws Exception {
         return songSet.getSong(title, artist);
+    }
+
+    /**
+     * Get a song by position
+     * @param i             the position of the song to get
+     * @return              the song if present
+     * @throws Exception    if the song is not present
+     */
+    public Song getSong(int i) throws Exception {
+        return songSet.getSong(i);
     }
 
     /**

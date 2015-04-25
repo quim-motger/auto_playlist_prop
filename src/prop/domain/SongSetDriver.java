@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class SongSetDriver {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** SongSet");
         System.out.println("**********************************************************");
@@ -47,18 +47,28 @@ public class SongSetDriver {
                         System.out.println(s.toString());
                     break;
                 case 5:
-                    title = in.next();
-                    artist = in.next();
-                    System.out.println(songSet.getSong(title,artist));
+                        title = in.next();
+                        artist = in.next();
+                    try {
+                        System.out.println(songSet.getSong(title, artist).toString());
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 6:
-                    ArrayList<Pair<String,String>> ids = new ArrayList<>();
+                    ArrayList<Pair<String, String>> ids = new ArrayList<>();
                     n = in.nextInt();
                     for (int j = 0; j < n; ++j)
-                        ids.add(new Pair<>(in.next(),in.next()));
-                    songs = songSet.getSongs(ids);
-                    for (Song s : songs)
-                        System.out.println(s.toString());
+                        ids.add(new Pair<>(in.next(), in.next()));
+                    try {
+                        songs = songSet.getSongs(ids);
+                        for (Song s : songs)
+                            System.out.println(s.toString());
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 7:
                     title = in.next();
@@ -69,12 +79,22 @@ public class SongSetDriver {
                     subgenre = Genre.getGenreById(in.nextInt());
                     duration = in.nextInt();
                     Song song = new Song(title, artist, album, year, genre, subgenre, duration);
-                    songSet.addSong(song);
+                    try {
+                        songSet.addSong(song);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 8:
                     title = in.next();
                     artist = in.next();
-                    songSet.removeSong(title,artist);
+                    try {
+                        songSet.removeSong(title, artist);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 9:
                     title = in.next();
@@ -88,22 +108,32 @@ public class SongSetDriver {
                     System.out.println(songSet.getTotalDuration());
                     break;
                 case 11:
-                    ArrayList<Pair<String,String>> conditions = new ArrayList<>();
+                    ArrayList<Pair<String, String>> conditions = new ArrayList<>();
                     n = in.nextInt();
                     for (int j = 0; j < n; ++j)
-                        conditions.add(new Pair<>(in.next(),in.next()));
-                    songs = songSet.searchSongs(conditions);
-                    for (Song s : songs)
-                        System.out.println(s.toString());
+                        conditions.add(new Pair<>(in.next(), in.next()));
+                    try {
+                        songs = songSet.searchSongs(conditions);
+                        for (Song s : songs)
+                            System.out.println(s.toString());
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 12:
                     serialized = songSet.toString();
                     System.out.println(serialized);
                     break;
                 case 13:
-                    SongSet ss = SongSet.valueOf(serialized);
-                    for (Song s : ss.getSongSet()) {
-                        System.out.println(s.toString());
+                    try {
+                        SongSet ss = SongSet.valueOf(serialized);
+                        for (Song s : ss.getSongSet()) {
+                            System.out.println(s.toString());
+                        }
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
             }

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ListControllerDriver {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** ListController");
         System.out.println("**********************************************************");
@@ -14,8 +14,19 @@ public class ListControllerDriver {
 
         ListController listController = null;
         SongController songController = new SongController();
+        try {
+            songController.addSong("titol1", "artista1", "album1", 2011, Genre.getGenreById(121), Genre.getGenreById(121), 111);
+            songController.addSong("titol2", "artista2", "album2", 2012, Genre.getGenreById(122), Genre.getGenreById(122), 112);
+            songController.addSong("titol3", "artista3", "album3", 2013, Genre.getGenreById(123), Genre.getGenreById(123), 113);
+            songController.addSong("titol4", "artista4", "album4", 2014, Genre.getGenreById(124), Genre.getGenreById(124), 114);
+            songController.addSong("titol5", "artista5", "album5", 2013, Genre.getGenreById(125), Genre.getGenreById(125), 115);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         String title,artist,path;
-        int id;
+        int id,n;
         Scanner in = new Scanner(System.in);
 
         int i = -1;
@@ -82,6 +93,16 @@ public class ListControllerDriver {
                     path = in.next();
                     listController.load(path);
                     break;
+                case 14:
+                    title = in.next();
+                    n = in.nextInt();
+                    try {
+                        listController.createRandomList(title,n,songController);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
             }
         }
     }
@@ -102,6 +123,7 @@ public class ListControllerDriver {
         sb.append("11: String getListSetString()\n");
         sb.append("12: void save(String path)\n");
         sb.append("13: void load(String path)\n");
+        sb.append("14: void createRandomList(String title, int n, SongController songController)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }
