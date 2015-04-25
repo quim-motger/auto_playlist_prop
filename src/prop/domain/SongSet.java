@@ -190,7 +190,7 @@ public class SongSet {
             case "duration":
                 return song.getDuration() == Integer.parseInt(value);
             default:
-                throw new Exception("invalid attribute name");
+                throw new Exception(ErrorString.UNEXISTING_ATTRIBUTE);
         }
     }
 

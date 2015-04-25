@@ -1,5 +1,6 @@
 package prop.domain;
 
+import prop.ErrorString;
 import prop.data.DataController;
 
 import java.io.IOException;
@@ -83,6 +84,8 @@ public class SongController {
                 case "duration":
                     song.setDuration(Integer.parseInt(pair.second));
                     break;
+                default:
+                    throw new Exception(ErrorString.UNEXISTING_ATTRIBUTE);
             }
         }
     }
