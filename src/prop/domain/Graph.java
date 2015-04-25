@@ -4,8 +4,8 @@ package prop.domain;
 // http://www.docjar.com/docs/api/org/jboss/util/graph/Graph.html
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.TreeSet;
 
 /**
  * Class Graph is a generic mixed weighted pseudograph. That is, a weighted graph that can have multiple edges between
@@ -15,14 +15,6 @@ import java.util.TreeSet;
  * @author Carles Garcia Cabot
  */
 public class Graph<T> {
-    // Old Implementation:
-    //private Integer nextVertex; // Contains next Vertex identifier to be used
-    //private HashMap<T, Integer> vToInt; // Each vertex has a unique identifier
-    //private HashSet<Integer> vertices; // provisional
-    //private HashSet<Integer> edges;
-
-    // NOTA: els unweighted edges en comptes de tenir default_weight podria fer que els Edge tinguessin Double
-    // i posar-los a null
 
     /* LinkedHashMap provides constant-time performance for the basic operations (add, contains and remove)
      * Performance is likely to be just slightly below that of HashMap, due to the added expense of maintaining the
@@ -31,14 +23,14 @@ public class Graph<T> {
      * expensive, requiring time proportional to its capacity.
      */
     private LinkedHashMap<T, Vertex> vertices;
-    private int vertexId;
+    // NOTA: els unweighted edges en comptes de tenir default_weight podria fer que els Edge tinguessin Double
+    // i posar-los a null
     private double defaultWeight;
     private int edgeCount;
 
     /* CONSTRUCTORS */
     public Graph() {
         vertices = new LinkedHashMap<>();
-        vertexId = 0;
         defaultWeight = 1;
         edgeCount = 0;
     }
@@ -50,16 +42,12 @@ public class Graph<T> {
     public void setDefaultWeight(double w) { defaultWeight = w; }
 
     /* OTHER METHODS */
-    private int nextId() {
-        ++vertexId;
-        return vertexId;
-    }
     public int numberOfVertices() { return vertices.size(); }
     public int numberOfEdges() { return edgeCount; }
     public boolean isEmpty() { return vertices.isEmpty(); }
 
     /**
-     * Adds a vertex to the graph
+     * Adds a vertex to the graph. Cost O(1)
      * @param v T vertex to add
      * @return False if the vertex was already in the graph, true if it was successfully added
      */
@@ -75,7 +63,11 @@ public class Graph<T> {
      * @return False if the vertex wasn't in the graph, true if it was successfully removed
      */
     public boolean removeVertex(T v) {
+        // Todo: s'han d'eliminar totes les aparicions en EdgeList
         if (vertices.containsKey(v)) {
+            for (T vertex : vertices.get(v).list.undirected.keySet()) {
+                vertices.get(vertex).list.undirected.
+            }
             vertices.remove(v);
             return true;
         }
@@ -83,7 +75,7 @@ public class Graph<T> {
     }
 
     /**
-     * Indicates if the graph contains a vertex
+     * Indicates if the graph contains a vertex. Cost O(1)
      * @param v Vertex to search
      * @return True if found, false otherwise
      */
@@ -101,166 +93,111 @@ public class Graph<T> {
         return l;
     }
 
+    /**
+     * Adds an undirected edge between two vertices with defaultWeight. Useful to add "unweighted" edges. Cost O(1)
+     * @param v1 vertex 1
+     * @param v2 vertex 2
+     * @return true if the edge was successfully added. False if a vertex doesn't exist.
+     */
     public boolean addEdge(T v1, T v2)
     {
-        if (!vertices.containsKey(v1) || !vertices.containsKey(v2)) return false;
-        if (v1 == v2) { // check if it's a loop
-            vertices.get(v1).list.edgeLoops.add(new Edge(v1, defaultWeight));
-        }
-        else {
-            vertices.get(v1).list.undirected.add(new Edge(v2, defaultWeight));
-            vertices.get(v2).list.undirected.add(new Edge(v1, defaultWeight));
-        }
-        return true;
+        return addEdge(v1, v2, defaultWeight);
     }
 
+    /**
+     * Adds an undirected weighted edge between two vertices. Cost O(1)
+     * @param v1 vertex 1
+     * @param v2 vertex 2
+     * @param weight edge weight
+     * @return true if the edge was successfully added. False if a vertex doesn't exist.
+     */
     public boolean addEdge(T v1, T v2, double weight) {
         if (!vertices.containsKey(v1) || !vertices.containsKey(v2)) return false;
         if (v1 == v2) { // check if it's a loop
-            vertices.get(v1).list.edgeLoops.add(new Edge(v1, weight));
+            vertices.get(v1).list.edgeLoops.put(v1, new Edge(weight));
         }
         else {
-            vertices.get(v1).list.undirected.add(new Edge(v2, weight));
-            vertices.get(v2).list.undirected.add(new Edge(v1, weight));
+            vertices.get(v1).list.undirected.put(v2, new Edge(weight));
+            vertices.get(v2).list.undirected.put(v1, new Edge(weight));
         }
         return true;
     }
 
+    public boolean removeEdge(T v1, T v2) {
+
+    }
+
+    /**
+     * Adds an arc(directed edge) between two vertices with defaultWeight. Useful to add "unweighted" arcs. Cost O(1)
+     * @param from vertex origin
+     * @param to vertex destination
+     * @return true if the arc was successfully added. False if a vertex doesn't exist.
+     */
     public boolean addArc(T from, T to) {
-        if (!vertices.containsKey(from) || !vertices.containsKey(to)) return false;
-        if (from == to) { // check if it's a loop
-            vertices.get(from).list.arcLoops.add(new Edge(from, defaultWeight));
-        }
-        else {
-            vertices.get(from).list.outgoing.add(new Edge(to, defaultWeight));
-            vertices.get(to).list.incoming.add(new Edge(from, defaultWeight));
-        }
-        return true;
+        return addArc(from, to, defaultWeight);
     }
 
+    /**
+     * Adds a weighted arc(directed edge) between two vertices. Cost O(1)
+     * @param from vertex origin
+     * @param to vertex destination
+     * @param weight arc weight
+     * @return true if the arc was successfully added. False if a vertex doesn't exist.
+     */
     public boolean addArc(T from, T to, double weight) {
         if (!vertices.containsKey(from) || !vertices.containsKey(to)) return false;
         if (from == to) { // check if it's a loop
-            vertices.get(from).list.arcLoops.add(new Edge(from, weight));
+            vertices.get(from).list.arcLoops.put(from, new Edge(weight));
         }
         else {
-            vertices.get(from).list.outgoing.add(new Edge(to, weight));
-            vertices.get(to).list.incoming.add(new Edge(from, weight));
+            vertices.get(from).list.outgoing.put(to, new Edge(weight));
+            vertices.get(to).list.incoming.put(from, new Edge(weight));
         }
         return true;
     }
 
-    private boolean searchVertex(TreeSet<Edge> e, int id) {
-        return false;
-    }
-
+    /**
+     * Returns if there is an edge between two specified vertices. Cost O(1)
+     * @param v1 vertex 1
+     * @param v2 vertex 2
+     * @return true if found, false otherwise
+     */
     public boolean hasEdge(T v1, T v2) {
         if (v1 == v2) {// check only loops
-            if (searchVertex(vertices.get(v1).list.edgeLoops, vertices.get(v1).id)) return true;
+            if (vertices.get(v1).list.edgeLoops.containsKey(v1)) return true;
         }
         else {
-            // check what vertex has less undirected edges to optimize search
-            T va, vb;
-            if (vertices.get(v1).list.undirected.size() < vertices.get(v2).list.undirected.size()) {
-                va = v1;
-                vb = v2;
-            }
-            else {
-                va = v2;
-                vb = v1;
-            }
-            for (Edge e : vertices.get(va).list.undirected) {
-                if (e.vertex == vb) return true;
-            }
+            if (vertices.get(v1).list.undirected.containsKey(v2)) return true;
         }
         return false;
     }
 
+    /**
+     * Returns if there is an arc between two specified vertices. Cost O(1)
+     * @param from vertex origin
+     * @param to vertex destination
+     * @return true if found, false otherwise
+     */
     public boolean hasArc(T from, T to) {
         if (from == to) {// check only loops
-            for (Edge e : vertices.get(from).list.arcLoops) {
-                if (e.vertex == from) return true;
-            }
+            if (vertices.get(from).list.arcLoops.containsKey(from)) return true;
         }
         else {
-            // check what vertex has less incoming or outgoing arcs to optimize search
-            if (vertices.get(from).list.outgoing.size() < vertices.get(to).list.incoming.size()) {
-                for (Edge e : vertices.get(from).list.outgoing) {
-                    if (e.vertex == to) return true;
-                }
-            }
-            else {
-                for (Edge e : vertices.get(to).list.incoming) {
-                    if (e.vertex == from) return true;
-                }
-            }
+            if (vertices.get(from).list.outgoing.containsKey(to)) return true;
         }
         return false;
     }
 
+    /**
+     * Returns if two specified vertices are adjacent, that is, if there's an edge or an arc(ignoring the direction)
+     * between the two vertices.
+     * Cost O(1)
+     * @param v1 vertex 1
+     * @param v2 vertex 2
+     * @return true if found, false otherwise
+     */
     public boolean areAdjacent(T v1, T v2) {
-        if (v1 == v2) {// check only loops
-            for (Edge e : vertices.get(v1).list.edgeLoops) {
-                if (e.vertex == v1) return true;
-            }
-            for (Edge e : vertices.get(v1).list.arcLoops) {
-                if (e.vertex == v1) return true;
-            }
-        }
-        else {
-            // check what vertex has less undirected edges to optimize search
-            T va, vb;
-            if (vertices.get(v1).list.undirected.size() < vertices.get(v2).list.undirected.size()) {
-                va = v1;
-                vb = v2;
-            }
-            else {
-                va = v2;
-                vb = v1;
-            }
-            for (Edge e : vertices.get(va).list.undirected) {
-                if (e.vertex == vb) return true;
-            }
-            // check what vertex has less arcs to optimize search
-            int v1in_v2in = vertices.get(v1).list.incoming.size() + vertices.get(v2).list.incoming.size();
-            int v1out_v2out = vertices.get(v1).list.outgoing.size() + vertices.get(v2).list.outgoing.size();
-            int v1in_v1out = vertices.get(v1).list.incoming.size() + vertices.get(v1).list.outgoing.size();
-            int v2in_v2out = vertices.get(v2).list.incoming.size() + vertices.get(v2).list.outgoing.size();
-            int min = Math.min(Math.min(v1in_v2in, v1out_v2out), Math.min(v1in_v1out, v2in_v2out));
-            if (min == v1in_v2in) {
-                for (Edge e : vertices.get(v1).list.incoming) {
-                    if (e.vertex == v2) return true;
-                }
-                for (Edge e : vertices.get(v2).list.incoming) {
-                    if (e.vertex == v1) return true;
-                }
-            }
-            else if (min == v1out_v2out) {
-                for (Edge e : vertices.get(v1).list.outgoing) {
-                    if (e.vertex == v2) return true;
-                }
-                for (Edge e : vertices.get(v2).list.outgoing) {
-                    if (e.vertex == v1) return true;
-                }
-            }
-            else if (min == v1in_v1out) {
-                for (Edge e : vertices.get(v1).list.incoming) {
-                    if (e.vertex == v2) return true;
-                }
-                for (Edge e : vertices.get(v1).list.outgoing) {
-                    if (e.vertex == v2) return true;
-                }
-            }
-            else if (min == v2in_v2out) {
-                for (Edge e : vertices.get(v2).list.incoming) {
-                    if (e.vertex == v1) return true;
-                }
-                for (Edge e : vertices.get(v2).list.outgoing) {
-                    if (e.vertex == v1) return true;
-                }
-            }
-        }
-        return false;
+        return hasEdge(v1,v2) || hasArc(v1,v2) || hasArc(v2,v1);
     }
 
 
@@ -274,12 +211,12 @@ public class Graph<T> {
 */
 
     private class Vertex {
-        int id;
+        //int id;
         boolean visited;
         EdgeList list;
 
         Vertex() {
-            id = nextId();
+            //id = nextId();
             visited = false;
             list = new EdgeList();
         }
@@ -287,33 +224,34 @@ public class Graph<T> {
         void visit() { visited = true; }
         void unvisit() { visited = false; }
     }
-    private class Edge implements Comparable<Edge> {
-        T vertex; // to or from
+    private class Edge {
+        //T vertex; // to or from
         double weight;
         boolean visited;
 
         Edge() {
-            vertex = null;
+            //vertex = null;
             weight = defaultWeight;
             visited = false;
         }
 
-        Edge(T v, double w) {
-            vertex = v;
+        Edge(double w) {
+            //vertex = v;
             weight = w;
         }
 
-        public int compareTo(Edge e) {
+        /*public int compareTo(Edge e) {
             return Integer.compare(vertices.get(this.vertex).id, vertices.get(e.vertex).id);
-        }
+        }*/
     }
 
     private class EdgeList {
-        TreeSet<Edge> undirected;
-        TreeSet<Edge> edgeLoops; //count as 2 incoming & 2 outgoing
-        TreeSet<Edge> incoming;
-        TreeSet<Edge> outgoing;
-        TreeSet<Edge> arcLoops; // count as 1 incoming & 1 outgoing
+        // todo: AIXI NOMES HI POT HAVER UNA ARESTA ENTRE DOS VERTEXS. HAURIA DE SER <T, ArrayList<Edge>>
+        HashMap<T, Edge> undirected;
+        HashMap<T, Edge> edgeLoops; //count as 2 incoming & 2 outgoing
+        HashMap<T, Edge> incoming;
+        HashMap<T, Edge> outgoing;
+        HashMap<T, Edge> arcLoops; // count as 1 incoming & 1 outgoing
 
         int size() {
             return undirected.size() + edgeLoops.size() + incoming.size() + outgoing.size() + arcLoops.size();
@@ -325,8 +263,6 @@ public class Graph<T> {
 
 /*
 
-
-    public boolean hasEdge(Edge<T> e);
 
     public boolean remove(Edge<T> e);
 
