@@ -66,7 +66,7 @@ public class Graph<T> {
         // Todo: s'han d'eliminar totes les aparicions en EdgeList
         if (vertices.containsKey(v)) {
             for (T vertex : vertices.get(v).list.undirected.keySet()) {
-                vertices.get(vertex).list.undirected.
+                //vertices.get(vertex).list.undirected.
             }
             vertices.remove(v);
             return true;
@@ -124,7 +124,8 @@ public class Graph<T> {
     }
 
     public boolean removeEdge(T v1, T v2) {
-
+        // todo
+        return false;
     }
 
     /**
