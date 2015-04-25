@@ -121,7 +121,11 @@ public class ListDriver {
                             in.nextInt());
                     break;
                 case 21:
-                    song = sc.getSong(in.next(),in.next());
+                    try {
+                        song = sc.getSong(in.next(),in.next());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 22:
                     try {

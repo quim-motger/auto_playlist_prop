@@ -153,7 +153,7 @@ public class UserController {
      * @param songController Main SongController
      * @see prop.domain.SongController                       
      */
-    public void playSong(String title, String artist, String userName, SongController songController) {
+    public void playSong(String title, String artist, String userName, SongController songController) throws Exception {
         User user = userSet.getUserByName(userName);
         Song song = songController.getSong(title,artist);
         Calendar time = Calendar.getInstance();

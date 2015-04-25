@@ -4,6 +4,7 @@ import prop.ErrorString;
 
 import java.lang.Override;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.regex.Pattern;
 
 /**
@@ -59,6 +60,15 @@ public class Playback {
      */
     public void setDate (Calendar date) {
         this.date = date;
+    }
+
+    /**
+     * Compare method of playbacks
+     * @param p     playback to compare
+     * @return      true if this playback's date is before p playback's date
+     */
+    public boolean compareTo (Playback p) {
+        return this.date.before(p.getDate());
     }
 
     @Override

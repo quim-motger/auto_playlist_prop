@@ -65,7 +65,7 @@ public class ListController {
      * @param title     the title of the song to add
      * @param artist    the artist of the song to add
      */
-    public void addSong(int id, String title, String artist, SongController songController) {
+    public void addSong(int id, String title, String artist, SongController songController) throws Exception {
         List list = listSet.getList(id);
         Song song = songController.getSong(title, artist);
         list.addSong(song);

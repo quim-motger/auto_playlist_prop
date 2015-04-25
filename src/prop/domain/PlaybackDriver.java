@@ -95,6 +95,13 @@ public class PlaybackDriver {
                     int second = in.nextInt();
                     date.set(y,month,day,hour,minute,second);
                     break;
+                case 13:
+                    Song ns = sc.getSong(in.next(), in.next());
+                    Calendar d = Calendar.getInstance();
+                    d.set(in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
+                    Playback p = new Playback(ns, d);
+                    if (playback.compareTo(p)) System.out.print("This new playback is posterior\n");
+                    else System.out.print("This new playback is anterior\n");
                 default:
                     printInfoComplete();
             }
@@ -115,7 +122,8 @@ public class PlaybackDriver {
                 + "9:   boolean addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
                 + "10:  boolean removeSong(String title, String artist)\n"
                 + "11:  song = sc.getSong(String title, String artist)\n"
-                + "12:  date.set(int year, int month, int day, int hour, int minute, int second)\n");
+                + "12:  date.set(int year, int month, int day, int hour, int minute, int second)\n"
+                + "13:  boolean compareTo(Playback p)\n");
     }
 
     private static void printInfoBrief() {
