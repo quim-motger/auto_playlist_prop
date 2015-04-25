@@ -5,10 +5,12 @@ package prop.domain;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.TreeSet;
 
 /**
  * Class Graph is a generic mixed weighted pseudograph. That is, a weighted graph that can have multiple edges between
- two vertices and loops, and these edges can be either directed or undirected.
+ two vertices and loops, and these edges can be either directed(arcs) or undirected. In addition, Using a default weight
+ the graph can be considered unweighted.
  * @param <T> the vertices type
  * @author Carles Garcia Cabot
  */
@@ -19,6 +21,9 @@ public class Graph<T> {
     //private HashSet<Integer> vertices; // provisional
     //private HashSet<Integer> edges;
 
+    // NOTA: els unweighted edges en comptes de tenir default_weight podria fer que els Edge tinguessin Double
+    // i posar-los a null
+
     /* LinkedHashMap provides constant-time performance for the basic operations (add, contains and remove)
      * Performance is likely to be just slightly below that of HashMap, due to the added expense of maintaining the
      * linked list, with one exception: Iteration over the collection-views of a LinkedHashMap requires time
@@ -26,12 +31,14 @@ public class Graph<T> {
      * expensive, requiring time proportional to its capacity.
      */
     private LinkedHashMap<T, Vertex> vertices;
+    private int vertexId;
     private double defaultWeight;
     private int edgeCount;
 
     /* CONSTRUCTORS */
     public Graph() {
         vertices = new LinkedHashMap<>();
+        vertexId = 0;
         defaultWeight = 1;
         edgeCount = 0;
     }
@@ -43,6 +50,10 @@ public class Graph<T> {
     public void setDefaultWeight(double w) { defaultWeight = w; }
 
     /* OTHER METHODS */
+    private int nextId() {
+        ++vertexId;
+        return vertexId;
+    }
     public int numberOfVertices() { return vertices.size(); }
     public int numberOfEdges() { return edgeCount; }
     public boolean isEmpty() { return vertices.isEmpty(); }
@@ -139,6 +150,54 @@ public class Graph<T> {
         return true;
     }
 
+    private boolean searchVertex(TreeSet<Edge> e, int id) {
+        return false;
+    }
+
+    public boolean hasEdge(T v1, T v2) {
+        if (v1 == v2) {// check only loops
+            if (searchVertex(vertices.get(v1).list.edgeLoops, vertices.get(v1).id)) return true;
+        }
+        else {
+            // check what vertex has less undirected edges to optimize search
+            T va, vb;
+            if (vertices.get(v1).list.undirected.size() < vertices.get(v2).list.undirected.size()) {
+                va = v1;
+                vb = v2;
+            }
+            else {
+                va = v2;
+                vb = v1;
+            }
+            for (Edge e : vertices.get(va).list.undirected) {
+                if (e.vertex == vb) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasArc(T from, T to) {
+        if (from == to) {// check only loops
+            for (Edge e : vertices.get(from).list.arcLoops) {
+                if (e.vertex == from) return true;
+            }
+        }
+        else {
+            // check what vertex has less incoming or outgoing arcs to optimize search
+            if (vertices.get(from).list.outgoing.size() < vertices.get(to).list.incoming.size()) {
+                for (Edge e : vertices.get(from).list.outgoing) {
+                    if (e.vertex == to) return true;
+                }
+            }
+            else {
+                for (Edge e : vertices.get(to).list.incoming) {
+                    if (e.vertex == from) return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean areAdjacent(T v1, T v2) {
         if (v1 == v2) {// check only loops
             for (Edge e : vertices.get(v1).list.edgeLoops) {
@@ -204,6 +263,8 @@ public class Graph<T> {
         return false;
     }
 
+
+
 /*
 
 
@@ -213,10 +274,12 @@ public class Graph<T> {
 */
 
     private class Vertex {
+        int id;
         boolean visited;
         EdgeList list;
 
         Vertex() {
+            id = nextId();
             visited = false;
             list = new EdgeList();
         }
@@ -224,7 +287,7 @@ public class Graph<T> {
         void visit() { visited = true; }
         void unvisit() { visited = false; }
     }
-    private class Edge {
+    private class Edge implements Comparable<Edge> {
         T vertex; // to or from
         double weight;
         boolean visited;
@@ -239,14 +302,18 @@ public class Graph<T> {
             vertex = v;
             weight = w;
         }
+
+        public int compareTo(Edge e) {
+            return Integer.compare(vertices.get(this.vertex).id, vertices.get(e.vertex).id);
+        }
     }
 
     private class EdgeList {
-        ArrayList<Edge> undirected;
-        ArrayList<Edge> edgeLoops; //count as 2 incoming & 2 outgoing
-        ArrayList<Edge> incoming;
-        ArrayList<Edge> outgoing;
-        ArrayList<Edge> arcLoops; // count as 1 incoming & 1 outgoing
+        TreeSet<Edge> undirected;
+        TreeSet<Edge> edgeLoops; //count as 2 incoming & 2 outgoing
+        TreeSet<Edge> incoming;
+        TreeSet<Edge> outgoing;
+        TreeSet<Edge> arcLoops; // count as 1 incoming & 1 outgoing
 
         int size() {
             return undirected.size() + edgeLoops.size() + incoming.size() + outgoing.size() + arcLoops.size();
