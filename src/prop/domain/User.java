@@ -2,6 +2,7 @@ package prop.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TreeSet;
 
 /**
  * Class User represents a user identity and contains their personal information as well as a register of songs played
@@ -13,7 +14,7 @@ public class User {
     private Gender gender;
     private Calendar birthdate;
     private CountryCode country;
-    private ArrayList<Playback> playbackRegister; // TODO: guarantee sorting from oldest to newest
+    private TreeSet<Playback> playbackRegister; // Playback must be comparable
     private ArrayList<List> associatedLists; // Can't contain repeated lists
 
     private static final String USER_DELIMITER = "|U|\n";
@@ -40,7 +41,7 @@ public class User {
         this.gender = gender;
         this.birthdate = birthdate;
         this.country = country;
-        playbackRegister = new ArrayList<Playback>();
+        playbackRegister = new TreeSet<Playback>();
         associatedLists = new ArrayList<List>();
     }
 
@@ -53,7 +54,7 @@ public class User {
      * @param playbackRegister User's playback begister
      * @param associatedLists User's associated lists
      */
-    public User(String name, Gender gender, Calendar birthdate, CountryCode country, ArrayList<Playback> playbackRegister, ArrayList<List> associatedLists) {
+    public User(String name, Gender gender, Calendar birthdate, CountryCode country, TreeSet<Playback> playbackRegister, ArrayList<List> associatedLists) {
         this.name = name;
         this.gender = gender;
         this.birthdate = birthdate;
@@ -67,7 +68,7 @@ public class User {
         return associatedLists;
     }
 
-    public ArrayList<Playback> getPlaybackRegister() {
+    public TreeSet<Playback> getPlaybackRegister() {
         return playbackRegister;
     }
 
@@ -104,7 +105,7 @@ public class User {
         this.country = country;
     }
 
-    public void setPlaybackRegister(ArrayList<Playback> playbackRegister) {
+    public void setPlaybackRegister(TreeSet<Playback> playbackRegister) {
         this.playbackRegister = playbackRegister;
     }
 
