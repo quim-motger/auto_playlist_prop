@@ -1,5 +1,7 @@
 package prop.domain;
 
+import com.sun.rmi.rmid.ExecPermission;
+import prop.ErrorString;
 import prop.data.DataController;
 
 import java.io.IOException;
@@ -58,7 +60,7 @@ public class SongController {
      * @param artist    song artist
      * @param pair      a pair defining attribute and new value
      */
-    public void editSong(String title, String artist, Pair<String, String> pair) {
+    public void editSong(String title, String artist, Pair<String, String> pair) throws Exception{
         Song song = songSet.getSong(title, artist);
         if (song != null) {
             switch(pair.first) {
@@ -83,6 +85,8 @@ public class SongController {
                 case "duration":
                     song.setDuration(Integer.parseInt(pair.second));
                     break;
+                default:
+                    throw new Exception(ErrorString.UNEXISTING_ATTRIBUTE);
             }
         }
     }
@@ -105,8 +109,10 @@ public class SongController {
      * @param artist    song artist
      * @return          song with title and artist required
      */
-    public Song getSong(String title, String artist) {
-        return songSet.getSong(title, artist);
+    public Song getSong(String title, String artist) throws Exception {
+        Song s = songSet.getSong(title, artist);
+        if (s == null) throw new Exception(ErrorString.NULL);
+        return s;
     }
 
     /**
