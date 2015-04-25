@@ -18,4 +18,5 @@ public class ErrorString {
     public static final String EXISTING_USER = "User already exists in the system";
     public static final String UNEXISTING_USER = "User does not exist in the system";
     public static final String NULL = "Null value";
+    public static final String UNEXISTING_ATTRIBUTE = "The attribute does not exist";
 }

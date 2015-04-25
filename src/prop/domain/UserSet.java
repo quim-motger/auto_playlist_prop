@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class UserSet {
 
     private ArrayList<User> users;
+    private static final char delimiter = '\n';
 
 
     /**
@@ -81,5 +82,24 @@ public class UserSet {
         }
         if (found) return i;
         else return -1;
+    }
+
+    public String toString() {
+        String s = "";
+        int i;
+        for (i = 0; i < users.size()-1; ++i) {
+            s += users.get(i).toString() + delimiter;
+        }
+        s += users.get(i);
+        return s;
+    }
+
+    public static UserSet valueOf(String s) throws Exception {
+        String[] users = s.split(String.valueOf(delimiter));
+        UserSet us = new UserSet();
+        for (String r : users) {
+            //us.addUser(User.valueOf(r));
+        }
+        return us;
     }
 }

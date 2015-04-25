@@ -70,7 +70,11 @@ public class UserControllerDriver {
                     System.out.println(userController.obtainUserSetToString());
                     break;
                 case 9:
-                    userController.playSong(in.next(), in.next(), in.next(), songController);
+                    try {
+                        userController.playSong(in.next(), in.next(), in.next(), songController);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 10:
                     userController.save(in.next());

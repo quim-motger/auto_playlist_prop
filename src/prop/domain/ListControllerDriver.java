@@ -50,7 +50,11 @@ public class ListControllerDriver {
                     id = in.nextInt();
                     title = in.next();
                     artist = in.next();
-                    listController.addSong(id,title,artist,songController);
+                    try {
+                        listController.addSong(id,title,artist,songController);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 8:
                     id = in.nextInt();

@@ -1,7 +1,5 @@
 package prop.domain;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -39,9 +37,6 @@ public class CliquePercolationDriver {
                     break;
                 case 5:
                     cp.execute();
-                    break;
-                case 6:
-                    cp.getCliques();
                     break;
             }
         }

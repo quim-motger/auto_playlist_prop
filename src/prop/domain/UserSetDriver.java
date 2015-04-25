@@ -65,10 +65,14 @@ public class UserSetDriver {
                     CountryCode country = CountryCode.getByCode(in.nextInt());
                     user = new User(name3, gender, birthdate, country);
                     break;
+                case 7:
+                    break;
+                case 8:
+                    break;
                 default:
                     printInfoComplete();
             }
-            if (i > 0 && i < 7) printInfoBrief();
+            if (i > 0 && i < 9) printInfoBrief();
         }
     }
 
@@ -79,7 +83,9 @@ public class UserSetDriver {
                 + "3:   void addUser(User user)\n"
                 + "4:   void removeUser(String name)\n"
                 + "5:   User getUserByName(String name)\n"
-                + "6:   user = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
+                + "6:   user = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n"
+                + "7:   String toString()\n"
+                + "8:   UserSet valueOf(String s)\n");
     }
 
     private static void printInfoBrief() {

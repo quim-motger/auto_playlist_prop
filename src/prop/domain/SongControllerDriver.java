@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @author joaquim.motger
  */
 public class SongControllerDriver {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** Song Controller");
         System.out.println("**********************************************************");
@@ -35,12 +35,20 @@ public class SongControllerDriver {
                     Genre genre = Genre.getGenreById(in.nextInt());
                     Genre subgenre = Genre.getGenreById(in.nextInt());
                     int duration = in.nextInt();
-                    songController.addSong(title,artist,album,year,genre,subgenre,duration);
+                    try {
+                        songController.addSong(title,artist,album,year,genre,subgenre,duration);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
                     String title2 = in.next();
                     String artist2 = in.next();
-                    songController.removeSong(title2,artist2);
+                    try {
+                        songController.removeSong(title2,artist2);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 4:
                     String title3 = in.next();
@@ -48,7 +56,11 @@ public class SongControllerDriver {
                     String attribute = in.next();
                     String value = in.next();
                     Pair<String,String> pair = new Pair<>(attribute, value);
-                    songController.editSong(title3, artist3, pair);
+                    try {
+                        songController.editSong(title3, artist3, pair);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 5:
                     System.out.print(songController.getSongSetString());
@@ -56,26 +68,27 @@ public class SongControllerDriver {
                 case 6:
                     String title4 = in.next();
                     String artist4 = in.next();
-                    song = songController.getSong(title4,artist4);
-                    System.out.print(song.toString());
+                    try {
+                        song = songController.getSong(title4,artist4);
+                        System.out.print(song.toString());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 7:
-                    System.out.print("Search songs\n");
-                    System.out.print("Introduce pairs of attributes and values to search songs; attribute 'finish' when finished\n");
-                    System.out.print("Attribute:");
-                    String c1 = in.next();
-                    System.out.print("Value:");
-                    String c2 = in.next();
+                    int n = in.nextInt();
                     ArrayList< Pair<String,String>> l = new ArrayList<>();
-                    while (!c1.equals("finish")) {
-                        Pair<String,String> p = new Pair<>(c1,c2);
+                    while (n > 0) {
+                        Pair<String,String> p = new Pair<>(in.next(),in.next());
                         l.add(p);
-                        System.out.print("Attribute:");
-                        c1 = in.next();
-                        System.out.print("Value:");
-                        c2 = in.next();
+                        --n;
                     }
-                    System.out.print(songController.searchSongs(l));
+                    try {
+                        String p = songController.searchSongs(l);
+                        System.out.print(p);
+                    } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                    }
                     break;
                 case 8:
                     songController.save(in.next());
@@ -86,7 +99,7 @@ public class SongControllerDriver {
                 default:
                     printInfoComplete();
             }
-            if (i > 0 && i < 11) printInfoBrief();
+            if (i > 0 && i < 10) printInfoBrief();
         }
     }
 
@@ -96,11 +109,11 @@ public class SongControllerDriver {
                 + "2:   void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
                 + "3:   void removeSong(String title, String artist\n"
                 + "4:   void editSong(String title, String artist, Pair<String, String> pair)\n"
-                + "6:   String getSongSetString()\n"
-                + "7:   Song getSong(String title, String artist)\n"
-                + "8:   String searchSongs(ArrayList< Pair<String, String> > l)\n"
-                + "9:   void save(String path)\n"
-                + "10:   void load(String path)\n");
+                + "5:   String getSongSetString()\n"
+                + "6:   Song getSong(String title, String artist)\n"
+                + "7:   String searchSongs(ArrayList< Pair<String, String> > l)\n"
+                + "8:   void save(String path)\n"
+                + "9:   void load(String path)\n");
     }
 
     private static void printInfoBrief() {
