@@ -24,9 +24,11 @@ public class GirvanNewman {
     public void execute(int n) {
         log = new ArrayList<>();
         components = calculateComponents();
-        System.out.println("Components: " + components);
+
+        parents = floydWarshall(graph);
         for (int i = 0; i < n; ++i) {
             StringBuilder entry = new StringBuilder();
+            if (i == 0) entry.append("Initial components: " + components + "\n\n");
             entry.append("-- Round " + i + "\n");
 
             removeNext(entry);
@@ -37,8 +39,6 @@ public class GirvanNewman {
     }
 
     private void removeNext(StringBuilder entry) {
-        parents = floydWarshall(graph);
-
         entry.append("Predecessor Matrix:\n");
         for (int[] p : parents) {
             for (int i : p)
@@ -64,7 +64,7 @@ public class GirvanNewman {
         }
         entry.append("\n");
 
-        entry.append("Edges: " + edges + "\n");
+        entry.append("Sum of all minimum path edges: " + edges + "\n");
         entry.append("\n");
 
         calculateEdgeBetweenness();
@@ -78,8 +78,20 @@ public class GirvanNewman {
 
         entry.append("Edge removed: (" + mbEdge.first + "," + mbEdge.second + ")\n");
         removeEdge(mbEdge.first, mbEdge.second);
+
+        parents = floydWarshall(graph);
+        // If there's no path between the vertices of the edge we've just removed,
+        // then there's one more connected component
+        if (parents[mbEdge.first][mbEdge.second] == -1)
+            ++components;
+        entry.append("Components: " + components + "\n");
     }
 
+    /**
+     * Calculate the minimum path between all pairs of vertices
+     * @param graph     the graph
+     * @return          a parents matrix
+     */
     private int[][] floydWarshall(ArrayList<Pair<Integer,Integer>>[] graph) {
         // Path Matrix
         // D[i][j] is the weight of the shortest path from vertex i to vertex j
@@ -140,6 +152,9 @@ public class GirvanNewman {
         }
     }
 
+    /**
+     * Calculate the betweenness of all edges
+     */
     private void calculateEdgeBetweenness() {
         edgeScores = new int[n][n]; // By default, elements are initialized to 0
         mbEdge = new Pair<>(0,0);
@@ -166,7 +181,6 @@ public class GirvanNewman {
                         mbEdge = new Pair<>(k,j);
                 }
                 processEdge(i, k);
-
             }
         }
     }
