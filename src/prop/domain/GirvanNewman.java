@@ -2,6 +2,7 @@ package prop.domain;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * Girvan-Newman algorithm
@@ -10,55 +11,73 @@ import java.util.Scanner;
 public class GirvanNewman {
 
     private static final int infinity = 1000000000;
+    private ArrayList<String> log;
+    private int n;
+    private int m;
     private ArrayList<Pair<Integer,Integer>>[] graph; // Undirected, weighted graph
+    private int components;
     private int[][] parents;
     private int[][] edgeScores;
     private int edges;
     private Pair<Integer,Integer> mbEdge;
-    private int n;
-    private int m;
 
-    public void execute() {
+    public void execute(int n) {
+        log = new ArrayList<>();
+        components = calculateComponents();
+        System.out.println("Components: " + components);
+        for (int i = 0; i < n; ++i) {
+            StringBuilder entry = new StringBuilder();
+            entry.append("-- Round " + i + "\n");
+
+            removeNext(entry);
+
+            log.add(entry.toString() + "\n");
+            System.out.print(log.get(log.size() - 1));
+        }
+    }
+
+    private void removeNext(StringBuilder entry) {
         parents = floydWarshall(graph);
 
-        System.out.println("Predecessor Matrix:");
+        entry.append("Predecessor Matrix:\n");
         for (int[] p : parents) {
             for (int i : p)
-                System.out.print(i + " ");
-            System.out.print("\n");
+                entry.append(i + " ");
+            entry.append("\n");
         }
-        System.out.print("\n");
+        entry.append("\n");
 
         edges = 0;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j <= i; ++j) {
                 ArrayList<Integer> path = new ArrayList<>();
                 path(i, j, path);
-                System.out.println("Path from " + i + " to " + j + ":");
+                entry.append("Path from " + i + " to " + j + ":\n");
                 if (path.size() == 0)
-                    System.out.println("N/A");
+                    entry.append("N/A\n");
                 else {
                     for (int k : path)
-                        System.out.print(k + " ");
-                    System.out.print("\n");
+                        entry.append(k + " ");
+                    entry.append("\n");
                 }
             }
         }
-        System.out.print("\n");
+        entry.append("\n");
 
-        System.out.println("Edges: " + edges + "\n");
+        entry.append("Edges: " + edges + "\n");
+        entry.append("\n");
 
         calculateEdgeBetweenness();
-        System.out.println("Edge scores:");
+        entry.append("Edge scores:\n");
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j)
-                System.out.print(edgeScores[i][j] + " ");
-            System.out.print("\n");
+                entry.append(edgeScores[i][j] + " ");
+            entry.append("\n");
         }
-        System.out.print("\n");
+        entry.append("\n");
 
-        System.out.println("Edge removed: (" + mbEdge.first + "," + mbEdge.second + ")");
-        removeEdge(mbEdge.first,mbEdge.second);
+        entry.append("Edge removed: (" + mbEdge.first + "," + mbEdge.second + ")\n");
+        removeEdge(mbEdge.first, mbEdge.second);
     }
 
     private int[][] floydWarshall(ArrayList<Pair<Integer,Integer>>[] graph) {
@@ -165,6 +184,31 @@ public class GirvanNewman {
                 break;
             }
         }
+    }
+
+    private int calculateComponents() {
+        Stack<Integer> S = new Stack<>();
+        boolean[] vis = new boolean[n];
+        for (boolean b : vis)
+            b = false;
+
+        int c = 0;
+        for (int u = 0; u < n; ++u) {
+            if (!vis[u]) {
+                ++c;
+                S.push(u);
+                while (!S.empty()) {
+                    int v = S.pop();
+                    if (!vis[v]) {
+                        vis[v] = true;
+                        for (Pair<Integer, Integer> w : graph[v]) {
+                            S.push(w.first);
+                        }
+                    }
+                }
+            }
+        }
+        return c;
     }
 
     public void readGraph() {

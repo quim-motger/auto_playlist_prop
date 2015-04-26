@@ -38,7 +38,8 @@ public class GirvanNewmanDriver {
                     gn.writeGraph();
                     break;
                 case 5:
-                    gn.execute();
+                    int n = in.nextInt();
+                    gn.execute(n);
                     break;
             }
         }
@@ -51,7 +52,7 @@ public class GirvanNewmanDriver {
         sb.append("2:  GirvanNewman()\n");
         sb.append("3:  void readGraph()\n");
         sb.append("4:  void writeGraph()\n");
-        sb.append("5:  void execute()\n");
+        sb.append("5:  void execute(int n)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

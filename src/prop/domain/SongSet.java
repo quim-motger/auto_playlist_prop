@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 /**
  * A set of songs
  * @author oscar.manas
+ * @see Song
  */
 public class SongSet {
 

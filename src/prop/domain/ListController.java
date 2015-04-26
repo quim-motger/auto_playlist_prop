@@ -87,9 +87,9 @@ public class ListController {
 
     /**
      * Add a song to a specified list
-     * @param id        the identification of the specified list
-     * @param title     the title of the song to add
-     * @param artist    the artist of the song to add
+     * @param id                the identification of the specified list
+     * @param title             the title of the song to add
+     * @param artist            the artist of the song to add
      * @param songController    an instance of the Song Controller
      */
     public void addSong(int id, String title, String artist, SongController songController) throws Exception {
