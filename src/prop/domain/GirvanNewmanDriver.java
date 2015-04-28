@@ -54,7 +54,6 @@ public class GirvanNewmanDriver {
                     for (int j = 0; j < communities.size(); ++j) {
                         System.out.println("Community #" + j);
                         writeGraph(communities.get(j));
-                        System.out.print("\n");
                     }
                     break;
             }
@@ -99,6 +98,7 @@ public class GirvanNewmanDriver {
             }
             System.out.print("\n");
         }
+        System.out.print("\n");
     }
 
 }
