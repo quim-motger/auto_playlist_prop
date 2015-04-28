@@ -1,7 +1,5 @@
 package prop.domain;
 
-import sun.util.calendar.Gregorian;
-
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 

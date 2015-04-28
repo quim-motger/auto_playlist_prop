@@ -12,8 +12,12 @@ public class RelationController {
     Graph graph;
     boolean dirty;
 
-    public void initGraph() {
-
+    public void initGraph(SongController sc) {
+        graph = new Graph();
+        ArrayList<Song> ss = sc.getSongSet().getSongSet();
+        for (Song s : ss) {
+            graph.addVertex(s);
+        }
     }
 
     public Graph getGraph() {
@@ -25,6 +29,12 @@ public class RelationController {
     }
 
     public void addRelation(String s){
+        Relation r = parsing(s);
 
+    }
+
+    private Relation parsing(String s) {
+        Relation r = null;
+        return r;
     }
 }
