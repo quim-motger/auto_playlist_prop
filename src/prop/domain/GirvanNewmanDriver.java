@@ -43,11 +43,19 @@ public class GirvanNewmanDriver {
                     readGraph();
                     break;
                 case 4:
-                    writeGraph();
+                    writeGraph(graph);
                     break;
                 case 5:
                     int k = in.nextInt();
                     gn.execute(graph,k);
+                    break;
+                case 6:
+                    ArrayList<Graph> communities = gn.getCommunities();
+                    for (int j = 0; j < communities.size(); ++j) {
+                        System.out.println("Community #" + j);
+                        writeGraph(communities.get(j));
+                        System.out.print("\n");
+                    }
                     break;
             }
         }
@@ -81,12 +89,12 @@ public class GirvanNewmanDriver {
         graph.addEdge(song3, song4, 2);
     }
 
-    private static void writeGraph() {
-        ArrayList<Song> v = graph.getVertices();
-        for (int i = 0; i < v.size(); ++i) {
-            System.out.print(i + ": ");
-            for (int j = 0; j < graph.adjacentVertices(v.get(i)).size(); ++j) {
-                Song s = (Song) graph.adjacentVertices(v.get(i)).get(j);
+    private static void writeGraph(Graph G) {
+        ArrayList<Song> vertices = G.getVertices();
+        for (Song u : vertices) {
+            System.out.print(u.getTitle() + ": ");
+            for (Object v : G.adjacentVertices(u)) {
+                Song s = (Song) v;
                 System.out.print(s.getTitle() + " ");
             }
             System.out.print("\n");

@@ -25,7 +25,7 @@ public class GirvanNewman {
     public void execute(Graph graph, int k) {
         this.graph = graph;
         n = graph.numberOfVertices();
-        translateVertices(graph);
+        translateVertices();
         ArrayList<String> log = new ArrayList<>();
         components = calculateComponents();
 
@@ -44,8 +44,8 @@ public class GirvanNewman {
         }
     }
 
-    private void translateVertices(Graph G) {
-        ArrayList<Song> v = G.getVertices();
+    private void translateVertices() {
+        ArrayList<Song> v = graph.getVertices();
         ids = new HashMap<>();
         songs = new HashMap<>();
         for (int i = 0; i < n; ++i) {
@@ -225,8 +225,43 @@ public class GirvanNewman {
         return c;
     }
 
-    private ArrayList<Graph> getCommunities() {
-        return null;
+    public ArrayList<Graph> getCommunities() {
+        ArrayList<Graph> communities = new ArrayList<>();
+        Stack<Integer> S = new Stack<>();
+        boolean[] visVertices = new boolean[n];
+        boolean[][] visEdges = new boolean[n][n];
+        for (int i = 0; i < n; ++i) {
+            visVertices[i] = false;
+            for (int j = 0; j < n; ++j)
+                visEdges[i][j] = false;
+        }
+
+        for (int u = 0; u < n; ++u) {
+            if (!visVertices[u]) {
+                Graph G = new Graph<Song>();
+                S.push(u);
+                G.addVertex(songs.get(u));
+                visVertices[u] = true;
+                while (!S.empty()) {
+                    int v = S.pop();
+                    for (Song w : graph.adjacentVertices(songs.get(v))) {
+                        int x = ids.get(w);
+                        if (!visVertices[x]) {
+                            S.push(x);
+                            G.addVertex(songs.get(x));
+                            visVertices[x] = true;
+                        }
+                        if (!visEdges[v][x]) {
+                            G.addEdge(songs.get(v), w);
+                            visEdges[v][x] = true;
+                            visEdges[x][v] = true;
+                        }
+                    }
+                }
+                communities.add(G);
+            }
+        }
+        return communities;
     }
 
 }
