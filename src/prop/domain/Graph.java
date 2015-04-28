@@ -153,7 +153,7 @@ public class Graph<T> {
         else {
             if (!vertices.get(v1).list.undirected.containsKey(v2)) return false;
             else {
-                Edge removedEdge = vertices.get(v1).list.undirected.get(v2).get(vertices.get(v1).list.undirected.size()-1);
+                Edge removedEdge = vertices.get(v1).list.undirected.get(v2).get(vertices.get(v1).list.undirected.get(v2).size()-1);
                 vertices.get(v1).list.undirected.get(v2).remove(removedEdge);
                 vertices.get(v2).list.undirected.get(v1).remove(removedEdge);
             }
@@ -388,6 +388,7 @@ public class Graph<T> {
         int arcLoopsCount() {
             return arcLoops.size();
         }
+
 
         /*// todo: refer (fa falta si ja hi ha edgeCount ???)
         int size() {
