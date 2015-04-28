@@ -37,6 +37,12 @@ public class SongController {
     }
 
     /**
+     * Get the song set
+     * @return  the song set
+     */
+    public SongSet getSongSet() { return songSet;}
+
+    /**
      * Add a new <b>song</b> to the set
      * @param title     song title
      * @param artist    song artist

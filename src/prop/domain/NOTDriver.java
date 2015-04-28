@@ -34,7 +34,7 @@ public class NOTDriver {
                     r = new NOT(r1);
                     break;
                 case 2:
-                    if (r.evaluate(s1,s2)) System.out.print("The songs are related by the specified relation\n");
+                    if (r.evaluateSongs(s1,s2)) System.out.print("The songs are related by the specified relation\n");
                     else System.out.print("The songs are not related by the specified relation\n");
                     break;
                 case 3:

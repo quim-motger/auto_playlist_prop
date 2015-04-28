@@ -32,7 +32,7 @@ public class ANDDriver {
                     printInfoComplete();
                     break;
                 case 2:
-                    if (r.evaluate(s1,s2)) System.out.print("true\n");
+                    if (r.evaluateSongs(s1,s2)) System.out.print("true\n");
                     else System.out.print("false\n");
                     break;
                 case 3:
