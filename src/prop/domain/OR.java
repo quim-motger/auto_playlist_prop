@@ -26,7 +26,12 @@ public class OR extends ComplexRelation {
      * @return      <code>true</code> if s1 and s2 are related in R1 or R2
      */
     @Override
-    public boolean evaluate(Song s1, Song s2) {
-        return r1.evaluate(s1, s2) || r2.evaluate(s1, s2);
+    public boolean evaluateSongs(Song s1, Song s2) {
+        return r1.evaluateSongs(s1, s2) || r2.evaluateSongs(s1, s2);
+    }
+
+    @Override
+    public boolean evaluateUser(User u) {
+        return false;
     }
 }

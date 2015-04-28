@@ -11,9 +11,8 @@ public class RelationController {
 
     Graph graph;
     boolean dirty;
-    ArrayList<Relation> relations;
 
-    public void createGraph() {
+    public void initGraph() {
 
     }
 
