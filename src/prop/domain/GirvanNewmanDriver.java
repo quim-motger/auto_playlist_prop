@@ -60,7 +60,7 @@ public class GirvanNewmanDriver {
         sb.append("2:  GirvanNewman()\n");
         sb.append("3:  void readGraph()\n");
         sb.append("4:  void writeGraph()\n");
-        sb.append("5:  void execute(int n)\n");
+        sb.append("5:  void execute(Graph graph, int k)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

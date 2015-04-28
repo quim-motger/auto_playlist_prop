@@ -31,7 +31,7 @@ public class GirvanNewman {
 
         parents = floydWarshall();
         int i = 0;
-        while (components < k) {
+        while (components < k && components < n) {
             StringBuilder entry = new StringBuilder();
             if (i == 0) entry.append("Initial components: " + components + "\n\n");
             entry.append("-- Round " + i + "\n");
