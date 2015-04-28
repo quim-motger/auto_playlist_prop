@@ -155,7 +155,9 @@ public class Graph<T> {
             else {
                 Edge removedEdge = vertices.get(v1).list.undirected.get(v2).get(vertices.get(v1).list.undirected.get(v2).size()-1);
                 vertices.get(v1).list.undirected.get(v2).remove(removedEdge);
+                if (vertices.get(v1).list.undirected.get(v2).isEmpty()) vertices.get(v1).list.undirected.remove(v2);
                 vertices.get(v2).list.undirected.get(v1).remove(removedEdge);
+                if (vertices.get(v2).list.undirected.get(v1).isEmpty()) vertices.get(v2).list.undirected.remove(v1);
             }
         }
         --edgeCount;
@@ -277,6 +279,7 @@ public class Graph<T> {
 
 
     public double weight(T v1, T v2) {
+
         return vertices.get(v1).list.undirected.get(v2).get(0).weight;
     }
 
