@@ -3,7 +3,6 @@ package prop.domain;
 // Per PROP, només necessitem multigraf no dirigit ponderat
 // http://www.docjar.com/docs/api/org/jboss/util/graph/Graph.html
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -100,6 +99,14 @@ public class Graph<T> {
         return l;
     }
 
+    public ArrayList<T> adjacentVertices(T v) {
+        ArrayList<T> ret = new ArrayList<>();
+        for (T va : vertices.get(v).list.undirected.keySet()) {
+            ret.add(va);
+        }
+        return ret;
+    }
+
     /**
      * Adds an undirected edge between two vertices with defaultWeight. Useful to add "unweighted" edges. Cost O(1)
      * @param v1 vertex 1
@@ -129,6 +136,7 @@ public class Graph<T> {
                 vertices.get(v2).list.undirected.put(v1, new ArrayList<Edge>());
             vertices.get(v2).list.undirected.get(v1).add(newEdge);
         }
+        ++edgeCount;
         return true;
     }
 
@@ -148,6 +156,7 @@ public class Graph<T> {
                 vertices.get(v2).list.undirected.get(v1).remove(removedEdge);
             }
         }
+        --edgeCount;
         return true;
     }
 
@@ -182,6 +191,7 @@ public class Graph<T> {
                 vertices.get(to).list.incoming.put(from, new ArrayList<Edge>());
             vertices.get(to).list.incoming.get(from).add(newEdge);
         }
+        ++edgeCount;
         return true;
     }
 
@@ -201,6 +211,7 @@ public class Graph<T> {
                 vertices.get(to).list.incoming.get(from).remove(removedEdge);
             }
         }
+        --edgeCount;
         return true;
     }
 
