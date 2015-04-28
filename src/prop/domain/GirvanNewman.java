@@ -110,7 +110,7 @@ public class GirvanNewman {
     private int[][] floydWarshall() {
         // Path Matrix
         // D[i][j] is the weight of the shortest path from vertex i to vertex j
-        int[][] D = new int[n][n];
+        double[][] D = new double[n][n];
         for (int i = 0; i < n; ++i)
             for (int j = 0; j < n; ++j)
                 D[i][j] = infinity;
@@ -119,7 +119,7 @@ public class GirvanNewman {
         for (int i = 0; i < n; ++i) {
             for (Song u : graph.adjacentVertices(songs.get(i))) {
                 int v = ids.get(u);
-                int w = graph.getEdgeWeight(songs.get(i),u);
+                double w = graph.weight(songs.get(i), u);
                 D[i][v] = w;
             }
             // The path from a vertex to itself has weight 0
