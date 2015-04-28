@@ -27,12 +27,14 @@ public class Graph<T> {
     // i posar-los a null
     private double defaultWeight;
     private int edgeCount;
+    private int newEdgeId;
 
     /* CONSTRUCTORS */
     public Graph() {
         vertices = new LinkedHashMap<>();
         defaultWeight = 1;
         edgeCount = 0;
+        newEdgeId = 0;
     }
 
     /* GETTERS */
@@ -259,6 +261,25 @@ public class Graph<T> {
         return hasEdge(v1,v2) || hasArc(v1,v2) || hasArc(v2,v1);
     }
 
+    /**
+     * Returns every edge's weight between two vertices
+     * @param v1
+     * @param v2
+     * @return
+     */
+    public ArrayList<Double> weights(T v1, T v2) {
+        ArrayList<Double> ws = new ArrayList<>();
+        for (Edge e : vertices.get(v1).list.undirected.get(v2)) {
+            ws.add(e.weight);
+        }
+        return ws;
+    }
+
+
+    public double weight(T v1, T v2) {
+        return vertices.get(v1).list.undirected.get(v2).get(0).weight;
+    }
+
     // s'ha de fer tenint en compte els loops
     public int getDegree(T v) {
         return vertices.get(v).list.undirectedCount();
@@ -272,7 +293,10 @@ public class Graph<T> {
         return vertices.get(v).list.outgoingCount();
     }
 
-
+    private int nextEdgeId() {
+        ++newEdgeId;
+        return newEdgeId;
+    }
 
 /*
 
@@ -297,18 +321,18 @@ public class Graph<T> {
         void unvisit() { visited = false; }
     }
     private class Edge {
-        //T vertex; // to or from
+        int id;
         double weight;
         boolean visited;
 
         Edge() {
-            //vertex = null;
+            id = nextEdgeId();
             weight = defaultWeight;
             visited = false;
         }
 
         Edge(double w) {
-            //vertex = v;
+            id = nextEdgeId();
             weight = w;
         }
 
