@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -42,7 +43,7 @@ public class GirvanNewmanDriver {
                     readGraph();
                     break;
                 case 4:
-                    graph.writeGraph();
+                    writeGraph();
                     break;
                 case 5:
                     int k = in.nextInt();
@@ -71,13 +72,25 @@ public class GirvanNewmanDriver {
         graph.addVertex(song2);
         graph.addVertex(song3);
         graph.addVertex(song4);
-        graph.addEdge(song0,song1,3);
-        graph.addEdge(song0,song2,6);
-        graph.addEdge(song0,song3,3);
-        graph.addEdge(song1,song3,1);
-        graph.addEdge(song1,song4,4);
-        graph.addEdge(song2,song3,2);
-        graph.addEdge(song3,song4,2);
+        graph.addEdge(song0, song1, 3);
+        graph.addEdge(song0, song2, 6);
+        graph.addEdge(song0, song3, 3);
+        graph.addEdge(song1, song3, 1);
+        graph.addEdge(song1, song4, 4);
+        graph.addEdge(song2, song3, 2);
+        graph.addEdge(song3, song4, 2);
+    }
+
+    private static void writeGraph() {
+        ArrayList<Song> v = graph.getVertices();
+        for (int i = 0; i < v.size(); ++i) {
+            System.out.print(i + ": ");
+            for (int j = 0; j < graph.adjacentVertices(v.get(i)).size(); ++j) {
+                Song s = (Song) graph.adjacentVertices(v.get(i)).get(j);
+                System.out.print(s.getTitle() + " ");
+            }
+            System.out.print("\n");
+        }
     }
 
 }
