@@ -96,7 +96,7 @@ public class List {
     public int obtainSongPosition(String title, String artist) {
         for (int i = 0; i < songs.size(); ++i) {
             Song song = songs.get(i);
-            if (song.getTitle().equals(title) && song.getArtist().equals(artist))
+            if (song !=null && song.getTitle().equals(title) && song.getArtist().equals(artist))
                 return i;
         }
         return -1;
@@ -206,8 +206,8 @@ public class List {
     }
 
     /**
-     * * 
-     * @return
+     * Transforms a List into a String
+     * @return Representation of a List into a String
      */
     @Override
     public String toString() {
@@ -229,7 +229,7 @@ public class List {
      * @return List created parsing origin
      * @throws Exception if origin format incorrect
      */
-    public static List valueOf(String origin, SongController songController) throws Exception {
+    public static List valueOf(String origin, SongController songController) throws PropException {
         String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
         if (tokens.length<4 || !tokens[0].equals(LIST_STRING_ID)) {
             throw new PropException(ErrorString.INCORRECT_FORMAT);

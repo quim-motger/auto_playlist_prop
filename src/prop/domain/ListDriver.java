@@ -16,6 +16,7 @@ public class ListDriver {
         System.out.println("**********************************************************");
         System.out.println("** List");
         System.out.println("**********************************************************");
+        System.out.println("One line for instruction. Please avoid using spaces unless it's a separator.");
         System.out.print("\n");
         printInfo();
         
@@ -24,9 +25,12 @@ public class ListDriver {
         Scanner in = new Scanner(System.in);
         SongController sc = new SongController();
         
+        String ret;
         int i = -1;
         while (i!=0) {
-            i = in.nextInt();
+            ret = in.next();
+            String[] rets = ret.split(" ");
+            i=Integer.valueOf(rets[0]);
             switch (i) {
                 case 0:
                     break;
@@ -34,118 +38,216 @@ public class ListDriver {
                     printInfo();
                     break;
                 case 2:
-                    String title = in.next();
-                    l=new List(title);
+                    testNewList(rets,l);
                     break;
                 case 3:
-                    System.out.println(l.size());
+                    if(!invalidArguments(0,rets))
+                        System.out.println(l.size());
                     break;
                 case 4:
-                    System.out.println(l.obtainTitle());
+                    if(!invalidArguments(0,rets))
+                        System.out.println(l.obtainTitle());
                     break;
                 case 5:
-                    System.out.println(l.obtainId());
+                    if(!invalidArguments(0,rets))
+                        System.out.println(l.obtainId());
                     break;
                 case 6:
-                    int pos = in.nextInt();
-                    System.out.println(l.obtainSong(pos).toString());
+                    testObtainSong(rets,l);
                     break;
                 case 7:
-                    ArrayList<Song> a = l.obtainSongs();
-                    for (Song s : a) {
-                        System.out.println(s.toString());
-                    }
+                    testObtainSongs(rets, l);
                     break;
                 case 8:
-                    String titl, artist;
-                    titl = in.next();
-                    artist = in.next();
-                    System.out.println(l.obtainSongPosition(titl,artist));
+                    testObtainSongPosition(rets, l);
                     break;
                 case 9:
-                    System.out.println(l.obtainTotalTime());
+                    if(!invalidArguments(0,rets))
+                        System.out.println(l.obtainTotalTime());
                     break;
                 case 10:
-                    String titl2, artist2;
-                    titl2 = in.next();
-                    artist2 = in.next();
-                    System.out.println(l.contains(titl2,artist2));
+                    testContains(rets,l);
                     break;
                 case 11:
-                    System.out.println(l.isEmpty());
+                    testIsEmpty(rets,l);
                     break;
                 case 12:
-                    String title2 = in.next();
-                    l.editTitle(title2);
+                    testEditTitle(rets,l);;
                     break;
                 case 13:
+                    testEditId(rets,l);
                     int id = in.nextInt();
                     l.editId(id);
                     break;
                 case 14:
-                    l.addSong(song);
+                    if(!invalidArguments(0,rets))
+                        l.addSong(song);
                     break;
                 case 15:
-                    String sTitle = in.next();
-                    String sArtist = in.next();
-                    l.removeSong(sTitle,sArtist);
+                    testRemoveSong(rets,l);
                     break;
                 case 16:
-                    l.empty();
+                    if(!invalidArguments(0,rets)) 
+                        l.empty();
                     break;
                 case 17:
-                    int i1,i2;
-                    i1 = in.nextInt();
-                    i2 = in.nextInt();
-                    l.swapSongs(i1,i2);
+                    testSwapSongs(rets,l);
                     break;
                 case 18:
-                    System.out.println(l.toString());   
+                    if(!invalidArguments(0,rets))
+                        System.out.println(l.toString());   
                     break;
                 case 19:
-                    try {
-                        l = List.valueOf(in.next(),sc);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        i=0;
-                    }
+                    testValueOf(rets,l,sc);
                     break;
                 case 20:
-                    song = new Song(
-                            in.next(),
-                            in.next(), 
-                            in.next(),
-                            in.nextInt(),
-                            Genre.getGenreById(in.nextInt()),
-                            Genre.getGenreById(in.nextInt()),
-                            in.nextInt());
+                    testNewSong(rets,song);
                     break;
                 case 21:
-                    try {
-                        song = sc.getSong(in.next(),in.next());
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
+                    testGetSong(sc,rets,song);
                     break;
                 case 22:
-                    try {
-                        sc.addSong(in.next(),
-                                in.next(),
-                                in.next(),
-                                in.nextInt(),
-                                Genre.getGenreById(in.nextInt()),
-                                Genre.getGenreById(in.nextInt()),
-                                in.nextInt());
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        i=0;
-                    }
+                    testAddSong(sc,rets);
                     break;
                 default:
                     printInfo();
             }
             
         }
+    }
+
+    private static void testAddSong(SongController sc, String[] rets) {
+        if(!invalidArguments(7,rets))
+            try {
+                sc.addSong(
+                        rets[1],
+                        rets[2],
+                        rets[3],
+                        Integer.valueOf(rets[4]),
+                        Genre.getGenreById(Integer.valueOf(rets[5])),
+                        Genre.getGenreById(Integer.valueOf(rets[6])),
+                        Integer.valueOf(rets[7])
+                );
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+            
+    }
+
+    private static void testGetSong(SongController sc, String[] rets, Song song) {
+        if(!invalidArguments(2,rets))
+            try {
+                song = sc.getSong(rets[1],rets[2]);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+    }
+
+
+    private static void testNewSong(String[] rets, Song song) {
+        if(!invalidArguments(7,rets)) {
+            song = new Song(
+                    rets[1],
+                    rets[2],
+                    rets[3],
+                    Integer.valueOf(rets[4]),
+                    Genre.getGenreById(Integer.valueOf(rets[5])),
+                    Genre.getGenreById(Integer.valueOf(rets[6])),
+                    Integer.valueOf(rets[7])
+            );
+        }
+    }
+
+    private static void testValueOf(String[] rets, List l, SongController sc) {
+        if(!invalidArguments(1,rets)) {
+            try {
+                l = List.valueOf(rets[1],sc);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private static void testSwapSongs(String[] rets, List l) {
+        if(!invalidArguments(2,rets)) {
+            l.swapSongs(Integer.valueOf(rets[1]),Integer.valueOf(rets[2]));            
+        }
+    }
+
+    private static void testRemoveSong(String[] rets, List l) {
+        if(!invalidArguments(2,rets)) {
+            l.removeSong(rets[0],rets[1]);
+        }
+    }
+
+    private static void testEditId(String[] rets, List l) {
+        if(!invalidArguments(1,rets)) {
+            l.editId(Integer.valueOf(rets[1]));
+        }
+    }
+
+    private static void testEditTitle(String[] rets, List l) {
+        if(!invalidArguments(1,rets)) {
+            l.editTitle(rets[1]);
+        }
+    }
+
+    private static void testIsEmpty(String[] rets, List l) {
+        if(!invalidArguments(0,rets)) {
+            if(l.isEmpty()) {
+                System.out.println("true");
+            } else {
+                System.out.println("false");
+            }
+        }
+    }
+
+    private static void testContains(String[] rets, List l) {
+        if(!invalidArguments(2,rets)) {
+            if(l.contains(rets[1], rets[2])) {
+                System.out.println("true");
+            } else {
+                System.out.println("false");
+            }
+        }
+    }
+
+    private static void testObtainSongPosition(String[] rets, List l) {
+        if(!invalidArguments(2,rets)) {
+            System.out.println(l.obtainSongPosition(rets[1],rets[2]));
+        }
+    }
+
+    private static void testObtainSongs(String[] rets, List l) {
+        if(!invalidArguments(0,rets)) {
+            ArrayList<Song> a = l.obtainSongs();
+            for (Song s : a) {
+                System.out.println(s.toString());
+            }
+        }
+    }
+
+    private static void testObtainSong(String[] rets, List l) {
+        if (!invalidArguments(1,rets)) {
+            int pos = Integer.valueOf(rets[1]);
+            System.out.println(l.obtainSong(pos).toString());
+        }
+    }
+
+    private static void testNewList(String[] rets,List l) {
+        if(!invalidArguments(1,rets)) {
+            String title = rets[1];
+            l = new List(title);
+        }
+    }
+
+    private static boolean invalidArguments(int nArg, String[] rets) {
+        if((nArg+1)!=rets.length){
+            System.out.println("Invalid number of arguments");
+            return true;
+        }
+        return false;
     }
 
     private static void printInfo() {

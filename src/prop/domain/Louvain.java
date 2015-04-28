@@ -15,8 +15,7 @@ public class Louvain extends Algorithm {
     private int nNodes;
     private int nCommunities;
     private int [] community; //integer that says at which community the node is
-    ArrayList<int[]> clustering;
-    private ArrayList<Pair<Integer,Integer>>[] graph;
+    private ArrayList<int[]> clustering;
     private int sEdges;
 
 
@@ -27,12 +26,11 @@ public class Louvain extends Algorithm {
     
     
     @Override
-    public Result execute(Graph graph) {
+    public Result execute(Graph<Song> graph) {
         return null;
     }
 
-    private void executeLouvain() {
-        ArrayList<Pair<Integer,Integer>>[] nAgregatedGraph;
+    private void executeLouvain(Graph<Song> graph) {
         Result ret = new Result();
         sEdges = sumEdges();
         initSingletonCommunities();
@@ -45,7 +43,7 @@ public class Louvain extends Algorithm {
             
             //Save previous state
             clustering.add(community);
-            nAgregatedGraph = graph;
+            //nAgregatedGraph = graph;
             
             //Creates new graph agregating all nodes in a community
             //graph = communityAgregation(nAgregatedGraph);
@@ -177,15 +175,14 @@ public class Louvain extends Algorithm {
     /****IN/OUT*******/
 
     /**
-     * TEMPORAL: Reads graph 
-     */
+     * TEMPORAL: Reads graph
     public void readGraph() {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
         int m = in.nextInt();
-        graph = (ArrayList<Pair<Integer,Integer>>[])new ArrayList[n];
+        //graph = (ArrayList<Pair<Integer,Integer>>[])new ArrayList[n];
         for (int i = 0; i < n; ++i)
-            graph[i] = new ArrayList<>();
+            //graph[i] = new ArrayList<>();
         int a, b, w;
         for (int i = 0; i < m; ++i) {
             a = in.nextInt();
@@ -196,9 +193,6 @@ public class Louvain extends Algorithm {
         }
     }
 
-    /**
-     * TEMPORAL: Writes Graph and communities 
-     */
     public void writeGraph() {
         System.out.println("Adjacency list:");
         for (ArrayList<Pair<Integer,Integer>> l : graph) {
@@ -213,7 +207,7 @@ public class Louvain extends Algorithm {
             System.out.println(i+":"+community[i]);
         }
         System.out.print("\n");
-    }
+    } */
     
     /***************Graph_Comput_Methods*****************/
 
