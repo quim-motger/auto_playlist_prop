@@ -1,6 +1,7 @@
 package prop.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -11,22 +12,26 @@ import java.util.Stack;
 public class GirvanNewman {
 
     private static final int infinity = 1000000000;
-    private ArrayList<String> log;
+    private HashMap<Song,Integer> ids;
+    private HashMap<Integer,Song> songs;
     private int n;
-    private int m;
-    private ArrayList<Pair<Integer,Integer>>[] graph; // Undirected, weighted graph
+    private Graph<Song> graph; // Undirected, weighted graph
     private int components;
     private int[][] parents;
     private int[][] edgeScores;
     private int edges;
     private Pair<Integer,Integer> mbEdge;
 
-    public void execute(int n) {
-        log = new ArrayList<>();
+    public void execute(Graph graph, int k) {
+        this.graph = graph;
+        n = graph.numberOfVertices();
+        translateVertices();
+        ArrayList<String> log = new ArrayList<>();
         components = calculateComponents();
 
-        parents = floydWarshall(graph);
-        for (int i = 0; i < n; ++i) {
+        parents = floydWarshall();
+        int i = 0;
+        while (components < k && components < n) {
             StringBuilder entry = new StringBuilder();
             if (i == 0) entry.append("Initial components: " + components + "\n\n");
             entry.append("-- Round " + i + "\n");
@@ -35,6 +40,17 @@ public class GirvanNewman {
 
             log.add(entry.toString() + "\n");
             System.out.print(log.get(log.size() - 1));
+            ++i;
+        }
+    }
+
+    private void translateVertices() {
+        ArrayList<Song> v = graph.getVertices();
+        ids = new HashMap<>();
+        songs = new HashMap<>();
+        for (int i = 0; i < n; ++i) {
+            ids.put(v.get(i),i);
+            songs.put(i,v.get(i));
         }
     }
 
@@ -77,9 +93,9 @@ public class GirvanNewman {
         entry.append("\n");
 
         entry.append("Edge removed: (" + mbEdge.first + "," + mbEdge.second + ")\n");
-        removeEdge(mbEdge.first, mbEdge.second);
+        graph.removeEdge(songs.get(mbEdge.first),songs.get(mbEdge.second));
 
-        parents = floydWarshall(graph);
+        parents = floydWarshall();
         // If there's no path between the vertices of the edge we've just removed,
         // then there's one more connected component
         if (parents[mbEdge.first][mbEdge.second] == -1)
@@ -89,22 +105,21 @@ public class GirvanNewman {
 
     /**
      * Calculate the minimum path between all pairs of vertices
-     * @param graph     the graph
      * @return          a parents matrix
      */
-    private int[][] floydWarshall(ArrayList<Pair<Integer,Integer>>[] graph) {
+    private int[][] floydWarshall() {
         // Path Matrix
         // D[i][j] is the weight of the shortest path from vertex i to vertex j
-        int[][] D = new int[n][n];
+        double[][] D = new double[n][n];
         for (int i = 0; i < n; ++i)
             for (int j = 0; j < n; ++j)
                 D[i][j] = infinity;
         // Initialize with the Weight Matrix
         // D[i][j] is the weight of an edge between vertex i and vertex j
         for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < graph[i].size(); ++j) {
-                int v = graph[i].get(j).first;
-                int w = graph[i].get(j).second;
+            for (Song u : graph.adjacentVertices(songs.get(i))) {
+                int v = ids.get(u);
+                double w = graph.weight(songs.get(i), u);
                 D[i][v] = w;
             }
             // The path from a vertex to itself has weight 0
@@ -185,21 +200,6 @@ public class GirvanNewman {
         }
     }
 
-    private void removeEdge(int i, int j) {
-        for (int k = 0; k < graph[i].size(); ++k) {
-            if (graph[i].get(k).first == j) {
-                graph[i].remove(k);
-                break;
-            }
-        }
-        for (int k = 0; k < graph[j].size(); ++k) {
-            if (graph[j].get(k).first == i) {
-                graph[j].remove(k);
-                break;
-            }
-        }
-    }
-
     private int calculateComponents() {
         Stack<Integer> S = new Stack<>();
         boolean[] vis = new boolean[n];
@@ -215,8 +215,8 @@ public class GirvanNewman {
                     int v = S.pop();
                     if (!vis[v]) {
                         vis[v] = true;
-                        for (Pair<Integer, Integer> w : graph[v]) {
-                            S.push(w.first);
+                        for (Song w : graph.adjacentVertices(songs.get(v))) {
+                            S.push(ids.get(w));
                         }
                     }
                 }
@@ -225,32 +225,43 @@ public class GirvanNewman {
         return c;
     }
 
-    public void readGraph() {
-        Scanner in = new Scanner(System.in);
-        n = in.nextInt();
-        m = in.nextInt();
-        graph = (ArrayList<Pair<Integer,Integer>>[])new ArrayList[n];
-        for (int i = 0; i < n; ++i)
-            graph[i] = new ArrayList<>();
-        int a, b, w;
-        for (int i = 0; i < m; ++i) {
-            a = in.nextInt();
-            b = in.nextInt();
-            w = in.nextInt();
-            graph[a].add(new Pair<>(b,w));
-            graph[b].add(new Pair<>(a,w));
+    public ArrayList<Graph> getCommunities() {
+        ArrayList<Graph> communities = new ArrayList<>();
+        Stack<Integer> S = new Stack<>();
+        boolean[] visVertices = new boolean[n];
+        boolean[][] visEdges = new boolean[n][n];
+        for (int i = 0; i < n; ++i) {
+            visVertices[i] = false;
+            for (int j = 0; j < n; ++j)
+                visEdges[i][j] = false;
         }
-    }
 
-    public void writeGraph() {
-        System.out.println("Adjacency list:");
-        for (ArrayList<Pair<Integer,Integer>> l : graph) {
-            for (Pair<Integer,Integer> v : l) {
-                System.out.print(v.first + " ");
+        for (int u = 0; u < n; ++u) {
+            if (!visVertices[u]) {
+                Graph G = new Graph<Song>();
+                S.push(u);
+                G.addVertex(songs.get(u));
+                visVertices[u] = true;
+                while (!S.empty()) {
+                    int v = S.pop();
+                    for (Song w : graph.adjacentVertices(songs.get(v))) {
+                        int x = ids.get(w);
+                        if (!visVertices[x]) {
+                            S.push(x);
+                            G.addVertex(songs.get(x));
+                            visVertices[x] = true;
+                        }
+                        if (!visEdges[v][x]) {
+                            G.addEdge(songs.get(v), w);
+                            visEdges[v][x] = true;
+                            visEdges[x][v] = true;
+                        }
+                    }
+                }
+                communities.add(G);
             }
-            System.out.print("\n");
         }
-        System.out.print("\n");
+        return communities;
     }
 
 }
