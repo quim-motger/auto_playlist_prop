@@ -31,6 +31,14 @@ public class UserSet {
     }
 
     /**
+     * Getter method of <b>users</b> size
+     * @return      users size
+     */
+    public int getSize() {
+        return users.size();
+    }
+
+    /**
      * Add <b>user</b> to <b>users</b>
      * @params  user  new <b>user</b> to add
      */
