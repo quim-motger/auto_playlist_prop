@@ -9,7 +9,7 @@ import java.util.Stack;
  * Girvan-Newman algorithm
  * @author oscar.manas
  */
-public class GirvanNewman {
+public class GirvanNewman extends Algorithm {
 
     private static final int infinity = 1000000000;
     private HashMap<Song,Integer> ids;
@@ -22,7 +22,7 @@ public class GirvanNewman {
     private int edges;
     private Pair<Integer,Integer> mbEdge;
 
-    public void execute(Graph graph, int k) {
+    public AlgorithmOutput execute(Graph graph, int k) {
         this.graph = graph;
         n = graph.numberOfVertices();
         translateVertices();
@@ -42,6 +42,9 @@ public class GirvanNewman {
             System.out.print(log.get(log.size() - 1));
             ++i;
         }
+
+        ArrayList<Graph> communities = getCommunities();
+        return new AlgorithmOutput(communities,log);
     }
 
     private void translateVertices() {

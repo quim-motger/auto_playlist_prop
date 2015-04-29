@@ -25,6 +25,7 @@ public class GirvanNewmanDriver {
         System.out.println("WARNING: it is highly recommendable to start with option #2\n");
 
         GirvanNewman gn = null;
+        AlgorithmOutput ao = null;
 
         Scanner in = new Scanner(System.in);
         int i = -1;
@@ -47,10 +48,10 @@ public class GirvanNewmanDriver {
                     break;
                 case 5:
                     int k = in.nextInt();
-                    gn.execute(graph,k);
+                    ao = gn.execute(graph,k);
                     break;
                 case 6:
-                    ArrayList<Graph> communities = gn.getCommunities();
+                    ArrayList<Graph> communities = ao.getCommunities();
                     for (int j = 0; j < communities.size(); ++j) {
                         System.out.println("Community #" + j);
                         writeGraph(communities.get(j));

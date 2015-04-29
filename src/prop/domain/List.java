@@ -229,7 +229,7 @@ public class List {
      * @return List created parsing origin
      * @throws Exception if origin format incorrect
      */
-    public static List valueOf(String origin, SongController songController) throws PropException {
+    public static List valueOf(String origin, SongController songController) throws Exception {
         String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
         if (tokens.length<4 || !tokens[0].equals(LIST_STRING_ID)) {
             throw new PropException(ErrorString.INCORRECT_FORMAT);

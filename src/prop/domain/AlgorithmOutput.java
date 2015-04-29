@@ -19,6 +19,16 @@ public class AlgorithmOutput {
     }
 
     /**
+     * Constructor with parameters
+     * @param communities
+     * @param log
+     */
+    public AlgorithmOutput(ArrayList<Graph> communities, ArrayList<String> log) {
+        this.communities = communities;
+        this.log = log;
+    }
+
+    /**
      * Adds a graph
      * @param community Graph to add
      */
@@ -32,6 +42,10 @@ public class AlgorithmOutput {
 
     // Getter
     public ArrayList<String> getLog() { return log; };
+
+    public ArrayList<Graph> getCommunities() {
+        return communities;
+    }
 
     /**
      * Returns the densest graph. Density is defined as the number of edges divided by the number of vertices of a graph.
