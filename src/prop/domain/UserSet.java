@@ -3,13 +3,14 @@ package prop.domain;
 import prop.ErrorString;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * User set
  * @author  joaquim.motger
  */
 
-public class UserSet {
+public class UserSet implements Iterable<User>{
 
     private ArrayList<User> users;
     private static final char delimiter = '\n';
@@ -109,5 +110,34 @@ public class UserSet {
             //us.addUser(User.valueOf(r));
         }
         return us;
+    }
+    
+    public Iterator<User> iterator() {
+        return new userIterator();
+    }
+    
+    public class userIterator implements Iterator<User> {
+
+        private int i;
+        
+        public userIterator() {
+            i=0;
+        }
+        
+        @Override
+        public boolean hasNext() {
+            return i<(users.size()-1);
+        }
+
+        @Override
+        public User next() {
+            ++i;
+            return users.get(i-1);
+        }
+
+        @Override
+        public void remove() {
+            users.remove(i);
+        }
     }
 }

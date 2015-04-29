@@ -16,7 +16,7 @@ import java.util.Date;
  * @see prop.domain.User
  */
 public class UserController {
-    UserSet userSet;
+    private UserSet userSet;
     
     //USEFUL STRINGS FOR USAGE OF editUser
     public static final String NAME="name";
