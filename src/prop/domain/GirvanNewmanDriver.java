@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class GirvanNewmanDriver {
 
-    private static Graph graph = null;
+    private static HashGraph graph = null;
     private static Song song0 = new Song("title0","artist0","album0",2000,Genre.getGenreById(0),Genre.getGenreById(0),000);
     private static Song song1 = new Song("title1","artist1","album1",2001,Genre.getGenreById(1),Genre.getGenreById(1),111);
     private static Song song2 = new Song("title2","artist2","album2",2002,Genre.getGenreById(2),Genre.getGenreById(2),222);
@@ -51,7 +51,7 @@ public class GirvanNewmanDriver {
                     ao = gn.execute(graph,k);
                     break;
                 case 6:
-                    ArrayList<Graph> communities = ao.getCommunities();
+                    ArrayList<HashGraph> communities = ao.getCommunities();
                     for (int j = 0; j < communities.size(); ++j) {
                         System.out.println("Community #" + j);
                         writeGraph(communities.get(j));
@@ -74,7 +74,7 @@ public class GirvanNewmanDriver {
     }
 
     private static void readGraph(){
-        graph = new Graph<Song>();
+        graph = new HashGraph<Song>();
         graph.addVertex(song0);
         graph.addVertex(song1);
         graph.addVertex(song2);
@@ -89,7 +89,7 @@ public class GirvanNewmanDriver {
         graph.addEdge(song3, song4, 2);
     }
 
-    private static void writeGraph(Graph G) {
+    private static void writeGraph(HashGraph G) {
         ArrayList<Song> vertices = G.getVertices();
         for (Song u : vertices) {
             System.out.print(u.getTitle() + ": ");

@@ -1,16 +1,20 @@
 package prop.domain;
 
+// Per PROP, només necessitem multigraf no dirigit ponderat
+// http://www.docjar.com/docs/api/org/jboss/util/graph/Graph.html
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
- * Class Graph is a weighted graph that can have multiple edges between two vertices and loops.
- * These edges can be either directed(arcs) or undirected.
+ * Class Graph is a generic mixed weighted pseudograph. That is, a weighted graph that can have multiple edges between
+ two vertices and loops, and these edges can be either directed(arcs) or undirected. In addition, Using a default weight
+ the graph can be considered unweighted.
  * @param <T> the vertices type
  * @author Carles Garcia Cabot
  */
-public class Graph<T> {
+public class HashGraph<T> {
 
     /* LinkedHashMap provides constant-time performance for the basic operations (add, contains and remove)
      * Performance is likely to be just slightly below that of HashMap, due to the added expense of maintaining the
@@ -26,7 +30,7 @@ public class Graph<T> {
     private int newEdgeId;
 
     /* CONSTRUCTORS */
-    public Graph() {
+    public HashGraph() {
         vertices = new LinkedHashMap<>();
         defaultWeight = 1;
         edgeCount = 0;
@@ -400,3 +404,15 @@ public class Graph<T> {
         }*/
     }
 }
+
+
+
+/*
+
+
+
+    public void visit();
+
+    public void unvisit();
+}
+ */
