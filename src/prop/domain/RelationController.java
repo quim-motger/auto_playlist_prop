@@ -11,6 +11,10 @@ public class RelationController {
 
     Graph graph;
     boolean dirty;
+    
+    public RelationController() {
+        graph = new Graph();
+    }
 
     public void initGraph(SongController sc) {
         graph = new Graph();
@@ -25,6 +29,11 @@ public class RelationController {
     }
 
     public void playbackRelations(UserController userController) {
+        UserSet userSet = userController.obtainUserSet();
+        for(User u : userSet) {
+            
+            
+        }
 
     }
 

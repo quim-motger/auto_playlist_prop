@@ -16,7 +16,7 @@ import java.util.Date;
  * @see prop.domain.User
  */
 public class UserController {
-    UserSet userSet;
+    private UserSet userSet;
     
     //USEFUL STRINGS FOR USAGE OF editUser
     public static final String NAME="name";
@@ -109,6 +109,16 @@ public class UserController {
             }
         }
         
+    }
+    
+    public void associateListToUser(ListController listController, int listId, String userName) {
+        List list = listController.getList(listId);
+        userSet.getUserByName(userName).associate(list);
+    }
+    
+    public void disassociateListFromUser(ListController listController, int listId, String userName) {
+        List list = listController.getList(listId);
+        userSet.getUserByName(userName).disassociate(list);
     }
 
     /**
