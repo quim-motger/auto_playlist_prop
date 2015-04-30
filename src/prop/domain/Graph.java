@@ -52,7 +52,7 @@ public class Graph<T> {
      * @param v integer vertex
      * @return T original value
      */
-    public T getVertex(int v) {
+    public T getVertexT(int v) {
         checkVertex(v);
         return Int_to_T.get(v);
     }
@@ -63,7 +63,7 @@ public class Graph<T> {
      * @return integer vertex
      */
     public int getVertex(T v) {
-        checkVertex(v);
+        checkVertexT(v);
         return T_to_Int.get(v);
     }
 
@@ -109,7 +109,7 @@ public class Graph<T> {
         if ((v < 0) || v >= vertices.size()) throw new IllegalArgumentException("Illegal vertex");
     }
 
-    private void checkVertex(T v) {
+    private void checkVertexT(T v) {
         if (!T_to_Int.containsKey(v)) throw new IllegalArgumentException("Illegal vertex");
     }
 
@@ -119,8 +119,8 @@ public class Graph<T> {
      * @param v2 vertex 2
      */
     public void addEdge(T v1, T v2, double weight) {
-        checkVertex(v1);
-        checkVertex(v2);
+        checkVertexT(v1);
+        checkVertexT(v2);
         int vi1 = T_to_Int.get(v1);
         int vi2 = T_to_Int.get(v2);
         addEdge(vi1, vi2, weight);
