@@ -24,16 +24,16 @@ public class Louvain extends Algorithm {
         nNodes = 0;
         nCommunities =0;
     }
-    
-    
+
     @Override
-    public Result execute(Graph graph) {
+    public AlgorithmOutput execute(Graph<Song> graph, int k) {
         return null;
     }
+    
 
     private void executeLouvain() {
         ArrayList<Pair<Integer,Integer>>[] nAgregatedGraph;
-        Result ret = new Result();
+        AlgorithmOutput ret = new AlgorithmOutput();
         sEdges = sumEdges();
         initSingletonCommunities();
         
@@ -114,7 +114,7 @@ public class Louvain extends Algorithm {
             //Returns the node and move the node if there's a possible change
             community[idNode] = tmp;
             if(comDest!= community[idNode]){
-                //TODO:REMOVE THIS WHEN RESULT IMPLEMENTED ->SAVE TO RESULT
+                //TODO:REMOVE THIS WHEN AlgorithmOutput IMPLEMENTED ->SAVE TO AlgorithmOutput
                 System.out.println("Moving node "+idNode+" from "+ community[idNode]+" to "+comDest+": "+modularityGain(idNode, comDest));
                 moveMode(idNode, community[idNode],comDest);
                 roundMoved=true;
@@ -288,8 +288,6 @@ public class Louvain extends Algorithm {
         }
         return sum/2;
     }
-
-
 }
 
 
