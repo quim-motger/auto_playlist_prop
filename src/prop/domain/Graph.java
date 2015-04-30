@@ -258,6 +258,17 @@ public class Graph<T> {
     }
 
     /**
+     * Returns the number of undirected edges between two vertices
+     * @param v1
+     * @param v2
+     * @return int number of edges
+     */
+    public int numberOfEdges(int v1, int v2) {
+        checkVertex(v1);
+        checkVertex(v2);
+        return vertices.get(v1).undirected.get(v2).size();
+    }
+    /**
      * Returns the total number of edges of a vertex.
      * @param v
      * @return int total edges
