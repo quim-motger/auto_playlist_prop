@@ -5,5 +5,5 @@ package prop.domain;
  *
  */
 public abstract class Algorithm {
-    public abstract AlgorithmOutput execute(HashGraph<Song> graph, int k);
+    public abstract AlgorithmOutput execute(Graph<Song> graph, int k);
 }
