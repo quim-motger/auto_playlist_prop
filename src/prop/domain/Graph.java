@@ -114,7 +114,9 @@ public class Graph<T> {
                 vertices.get(v2).undirected.put(v1, new ArrayList<Double>());
             }
             vertices.get(v1).undirected.get(v2).add(newEdge);
+            vertices.get(v1).undirectedCount++;
             vertices.get(v2).undirected.get(v1).add(newEdge);
+            vertices.get(v2).undirectedCount++;
         }
         ++edgeCount;
     }
@@ -133,7 +135,9 @@ public class Graph<T> {
         else {
             Double removedEdge = vertices.get(v1).undirected.get(v2).get(0);
             vertices.get(v1).undirected.get(v2).remove(removedEdge);
+            vertices.get(v1).undirectedCount--;
             vertices.get(v2).undirected.get(v1).remove(removedEdge);
+            vertices.get(v2).undirectedCount--;
         }
         --edgeCount;
         return true;
@@ -162,7 +166,9 @@ public class Graph<T> {
                 vertices.get(v2).incoming.put(v1, new ArrayList<Double>());
             }
             vertices.get(v1).outgoing.get(v2).add(newEdge);
+            vertices.get(v1).outgoingCount++;
             vertices.get(v2).incoming.get(v1).add(newEdge);
+            vertices.get(v2).incomingCount++;
         }
         ++edgeCount;
     }
@@ -181,7 +187,9 @@ public class Graph<T> {
         else {
             Double removedEdge = vertices.get(v1).outgoing.get(v2).get(0);
             vertices.get(v1).outgoing.get(v2).remove(removedEdge);
+            vertices.get(v1).outgoingCount--;
             vertices.get(v2).incoming.get(v1).remove(removedEdge);
+            vertices.get(v2).incomingCount--;
         }
         --edgeCount;
         return true;
