@@ -172,7 +172,7 @@ public class ListController {
     public void load(String path) {
         try {
             String serialized = DataController.load(path);
-            listSet = ListSet.valueOf(serialized);
+            //listSet = ListSet.valueOf(serialized);
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

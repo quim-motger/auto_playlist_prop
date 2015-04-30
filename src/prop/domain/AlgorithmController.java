@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class AlgorithmController {
 
-    HashGraph<Song> graph;
+    Graph<Song> graph;
 
     public AlgorithmController() {
         graph = null;
@@ -33,13 +33,13 @@ public class AlgorithmController {
                 break;
             case 2:
                 CliquePercolation cp = new CliquePercolation();
-                ao = cp.execute(graph);
+                //ao = cp.execute(graph);
                 break;
         }
 
-        HashGraph<Song> community = ao.densestGraph();
+        Graph<Song> community = ao.densestGraph();
         List list = new List(title);
-        for (Song s : community.getVertices()) {
+        for (Song s : community.getOriginalVertices()) {
             list.addSong(s);
         }
 
