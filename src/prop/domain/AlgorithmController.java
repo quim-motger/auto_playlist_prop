@@ -12,6 +12,8 @@ import java.util.ArrayList;
  */
 public class AlgorithmController {
 
+    public AlgorithmController() {}
+
     /**
      * Execute the selected algorithm for generating a song list that will be added to the set
      * @param title                 the title of the list that will be created
@@ -27,7 +29,6 @@ public class AlgorithmController {
     public ArrayList<String> execute(String title, int algorithm, int k, ListController listController, RelationController relationController) {
 
         AlgorithmOutput ao = null;
-
         Graph<Song> graph = createInputGraph(algorithm,relationController);
 
         switch (algorithm) {
