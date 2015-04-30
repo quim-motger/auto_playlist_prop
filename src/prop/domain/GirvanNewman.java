@@ -226,14 +226,14 @@ public class GirvanNewman {
             if (!visVertices[u]) {
                 Graph G = new Graph<Song>();
                 S.push(u);
-                G.addVertex(graph.getVertex(u));
+                G.addVertex(graph.getVertexT(u));
                 visVertices[u] = true;
                 while (!S.empty()) {
                     int v = S.pop();
                     for (int w : graph.adjacentVertices(v)) {
                         if (!visVertices[w]) {
                             S.push(w);
-                            G.addVertex(graph.getVertex(w));
+                            G.addVertex(graph.getVertexT(w));
                             visVertices[w] = true;
                         }
                         if (!visEdges[v][w]) {

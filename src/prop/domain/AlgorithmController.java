@@ -14,7 +14,8 @@ public class AlgorithmController {
         graph = null;
     }
 
-    public void createInputGraph(HashGraph<Song> graph) {
+    public void createInputGraph(RelationController relationController) {
+        //graph = relationController.getGraph();
 
     }
 

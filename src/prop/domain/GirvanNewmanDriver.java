@@ -93,10 +93,10 @@ public class GirvanNewmanDriver {
     private static void writeGraph(Graph G) {
         Song s;
         for (int i = 0; i < G.numberOfVertices(); ++i) {
-            s = (Song) G.getVertex(i);
+            s = (Song) G.getVertexT(i);
             System.out.print(s.getTitle() + ": ");
             for (Integer j : (Iterable<Integer>) G.adjacentVertices(i)) {
-                s = (Song) G.getVertex((int)j);
+                s = (Song) G.getVertexT((int)j);
                 System.out.print(s.getTitle() + " ");
             }
             System.out.print("\n");
