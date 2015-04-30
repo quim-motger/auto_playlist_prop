@@ -237,7 +237,8 @@ public class GirvanNewman {
                             visVertices[w] = true;
                         }
                         if (!visEdges[v][w]) {
-                            G.addEdge(v, w);
+                            // We need to add the edge that way because we don't know the vertex identifiers in the new graph
+                            G.addEdge(graph.getVertexT(v), graph.getVertexT(w),graph.weight(v,w));
                             visEdges[v][w] = true;
                             visEdges[w][v] = true;
                         }
