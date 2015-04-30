@@ -165,8 +165,6 @@ public class Graph<T> {
      * @return true if an edge existed and was removed
      */
     public boolean removeEdge(int v1, int v2) {
-        checkVertex(v1);
-        checkVertex(v2);
         if (!hasEdge(v1,v2)) return false;
         if (v1 == v2) vertices.get(v1).edgeLoops.remove(0);
         else {
@@ -175,6 +173,11 @@ public class Graph<T> {
             vertices.get(v1).undirectedCount--;
             vertices.get(v2).undirected.get(v1).remove(removedEdge);
             vertices.get(v2).undirectedCount--;
+            // Check if v1 and v2 are no longer adjacent
+            if (vertices.get(v1).undirected.get(v2).isEmpty()) {
+                vertices.get(v1).undirected.remove(v2);
+                vertices.get(v2).undirected.remove(v1);
+            }
         }
         --edgeCount;
         return true;
@@ -217,8 +220,6 @@ public class Graph<T> {
      * @return true if an arc existed and was removed
      */
     public boolean removeArc(int v1, int v2) {
-        checkVertex(v1);
-        checkVertex(v2);
         if (!hasArc(v1,v2)) return false;
         if (v1 == v2) vertices.get(v1).arcLoops.remove(0);
         else {
