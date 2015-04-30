@@ -48,6 +48,16 @@ public class Graph<T> {
     }
 
     /**
+     * Returns the original value associated to the integer
+     * @param v integer vertex
+     * @return T original value
+     */
+    public T getVertex(int v) {
+        checkVertex(v);
+        return Int_to_T.get(v);
+    }
+
+    /**
      * Indicates if the graph contains a vertex. Cost O(1)
      * @param v Vertex to search
      * @return True if found, false otherwise
