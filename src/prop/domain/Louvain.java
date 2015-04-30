@@ -15,7 +15,8 @@ public class Louvain extends Algorithm {
     private int nNodes;
     private int nCommunities;
     private int [] community; //integer that says at which community the node is
-    private ArrayList<int[]> clustering;
+    ArrayList<int[]> clustering;
+    private ArrayList<Pair<Integer,Integer>>[] graph;
     private int sEdges;
 
 
@@ -23,15 +24,16 @@ public class Louvain extends Algorithm {
         nNodes = 0;
         nCommunities =0;
     }
-    
-    
+
     @Override
-    public Result execute(Graph<Song> graph) {
+    public AlgorithmOutput execute(Graph<Song> graph, int k) {
         return null;
     }
+    
 
-    private void executeLouvain(Graph<Song> graph) {
-        Result ret = new Result();
+    private void executeLouvain() {
+        ArrayList<Pair<Integer,Integer>>[] nAgregatedGraph;
+        AlgorithmOutput ret = new AlgorithmOutput();
         sEdges = sumEdges();
         initSingletonCommunities();
         
@@ -43,7 +45,7 @@ public class Louvain extends Algorithm {
             
             //Save previous state
             clustering.add(community);
-            //nAgregatedGraph = graph;
+            nAgregatedGraph = graph;
             
             //Creates new graph agregating all nodes in a community
             //graph = communityAgregation(nAgregatedGraph);
@@ -112,7 +114,7 @@ public class Louvain extends Algorithm {
             //Returns the node and move the node if there's a possible change
             community[idNode] = tmp;
             if(comDest!= community[idNode]){
-                //TODO:REMOVE THIS WHEN RESULT IMPLEMENTED ->SAVE TO RESULT
+                //TODO:REMOVE THIS WHEN AlgorithmOutput IMPLEMENTED ->SAVE TO AlgorithmOutput
                 System.out.println("Moving node "+idNode+" from "+ community[idNode]+" to "+comDest+": "+modularityGain(idNode, comDest));
                 moveMode(idNode, community[idNode],comDest);
                 roundMoved=true;
@@ -175,14 +177,15 @@ public class Louvain extends Algorithm {
     /****IN/OUT*******/
 
     /**
-     * TEMPORAL: Reads graph
+     * TEMPORAL: Reads graph 
+     */
     public void readGraph() {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
         int m = in.nextInt();
-        //graph = (ArrayList<Pair<Integer,Integer>>[])new ArrayList[n];
+        graph = (ArrayList<Pair<Integer,Integer>>[])new ArrayList[n];
         for (int i = 0; i < n; ++i)
-            //graph[i] = new ArrayList<>();
+            graph[i] = new ArrayList<>();
         int a, b, w;
         for (int i = 0; i < m; ++i) {
             a = in.nextInt();
@@ -193,6 +196,9 @@ public class Louvain extends Algorithm {
         }
     }
 
+    /**
+     * TEMPORAL: Writes Graph and communities 
+     */
     public void writeGraph() {
         System.out.println("Adjacency list:");
         for (ArrayList<Pair<Integer,Integer>> l : graph) {
@@ -207,7 +213,7 @@ public class Louvain extends Algorithm {
             System.out.println(i+":"+community[i]);
         }
         System.out.print("\n");
-    } */
+    }
     
     /***************Graph_Comput_Methods*****************/
 
@@ -282,8 +288,6 @@ public class Louvain extends Algorithm {
         }
         return sum/2;
     }
-
-
 }
 
 

@@ -2,27 +2,26 @@ package prop.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.Stack;
 
 /**
  * Girvan-Newman algorithm
  * @author oscar.manas
  */
-public class GirvanNewman {
+public class GirvanNewman extends Algorithm {
 
     private static final int infinity = 1000000000;
     private HashMap<Song,Integer> ids;
     private HashMap<Integer,Song> songs;
     private int n;
-    private Graph<Song> graph; // Undirected, weighted graph
+    private HashGraph<Song> graph; // Undirected, weighted graph
     private int components;
     private int[][] parents;
     private int[][] edgeScores;
     private int edges;
     private Pair<Integer,Integer> mbEdge;
 
-    public void execute(Graph graph, int k) {
+    public AlgorithmOutput execute(HashGraph graph, int k) {
         this.graph = graph;
         n = graph.numberOfVertices();
         translateVertices();
@@ -42,6 +41,9 @@ public class GirvanNewman {
             System.out.print(log.get(log.size() - 1));
             ++i;
         }
+
+        ArrayList<HashGraph> communities = getCommunities();
+        return new AlgorithmOutput(communities,log);
     }
 
     private void translateVertices() {
@@ -225,8 +227,8 @@ public class GirvanNewman {
         return c;
     }
 
-    public ArrayList<Graph> getCommunities() {
-        ArrayList<Graph> communities = new ArrayList<>();
+    public ArrayList<HashGraph> getCommunities() {
+        ArrayList<HashGraph> communities = new ArrayList<>();
         Stack<Integer> S = new Stack<>();
         boolean[] visVertices = new boolean[n];
         boolean[][] visEdges = new boolean[n][n];
@@ -238,7 +240,7 @@ public class GirvanNewman {
 
         for (int u = 0; u < n; ++u) {
             if (!visVertices[u]) {
-                Graph G = new Graph<Song>();
+                HashGraph G = new HashGraph<Song>();
                 S.push(u);
                 G.addVertex(songs.get(u));
                 visVertices[u] = true;

@@ -10,7 +10,7 @@ import java.util.Scanner;
  *          Creation Date: 22/04/15
  */
 public class LouvainDriver {
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** Louvain algorithm");
         System.out.println("**********************************************************");
@@ -55,5 +55,5 @@ public class LouvainDriver {
         sb.append("5:  void modularityOptimization()\n");
         sb.append("\n");
         System.out.print(sb.toString());
-    }
+    }*/
 }

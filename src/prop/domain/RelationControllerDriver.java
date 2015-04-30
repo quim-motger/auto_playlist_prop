@@ -47,7 +47,7 @@ public class RelationControllerDriver {
                     }
                     break;
                 case 4:
-                    Graph g = rc.getGraph();
+                    HashGraph g = rc.getGraph();
                     ArrayList<Song> songs = g.getVertices();
                     for (Song s : songs) {
                         System.out.print("(" + s.getTitle() + "," + s.getArtist() + ") :");

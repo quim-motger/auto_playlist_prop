@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Carles Garcia Cabot
  */
 public class AlgorithmOutput {
-    private ArrayList<Graph> communities;
+    private ArrayList<HashGraph> communities;
     private ArrayList<String> log;
 
     /**
@@ -19,10 +19,20 @@ public class AlgorithmOutput {
     }
 
     /**
+     * Constructor with parameters
+     * @param communities
+     * @param log
+     */
+    public AlgorithmOutput(ArrayList<HashGraph> communities, ArrayList<String> log) {
+        this.communities = communities;
+        this.log = log;
+    }
+
+    /**
      * Adds a graph
      * @param community Graph to add
      */
-    public void add(Graph community) { communities.add(community); }
+    public void add(HashGraph community) { communities.add(community); }
 
     /**
      * Adds a string to the log
@@ -33,15 +43,19 @@ public class AlgorithmOutput {
     // Getter
     public ArrayList<String> getLog() { return log; };
 
+    public ArrayList<HashGraph> getCommunities() {
+        return communities;
+    }
+
     /**
      * Returns the densest graph. Density is defined as the number of edges divided by the number of vertices of a graph.
      * @return The densest graph
      */
-    public Graph densestGraph() {
+    public HashGraph densestGraph() {
         //Todo: what if division by 0 or g = null
         double maxDensity = 0;
-        Graph g = null;
-        for (Graph gr : communities) {
+        HashGraph g = null;
+        for (HashGraph gr : communities) {
             if (gr.numberOfEdges()/(double)gr.numberOfVertices() > maxDensity) {
                 maxDensity = gr.numberOfEdges()/(double)gr.numberOfVertices();
                 g = gr;
