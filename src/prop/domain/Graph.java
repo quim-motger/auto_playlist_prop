@@ -58,6 +58,16 @@ public class Graph<T> {
     }
 
     /**
+     * Returns the integer associated to the original value
+     * @param v T original value
+     * @return integer vertex
+     */
+    public int getVertex(T v) {
+        checkVertex(v);
+        return T_to_Int.get(v);
+    }
+
+    /**
      * Indicates if the graph contains a vertex. Cost O(1)
      * @param v Vertex to search
      * @return True if found, false otherwise
@@ -97,6 +107,23 @@ public class Graph<T> {
      */
     private void checkVertex(int v) {
         if ((v < 0) || v >= vertices.size()) throw new IllegalArgumentException("Illegal vertex");
+    }
+
+    private void checkVertex(T v) {
+        if (!T_to_Int.containsKey(v)) throw new IllegalArgumentException("Illegal vertex");
+    }
+
+    /**
+     * Adds an undirected edge between two vertices
+     * @param v1 vertex 1
+     * @param v2 vertex 2
+     */
+    public void addEdge(T v1, T v2, double weight) {
+        checkVertex(v1);
+        checkVertex(v2);
+        int vi1 = T_to_Int.get(v1);
+        int vi2 = T_to_Int.get(v2);
+        addEdge(vi1, vi2, weight);
     }
 
     /**
