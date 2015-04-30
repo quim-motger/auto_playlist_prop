@@ -30,11 +30,19 @@ public class ListController {
     }
 
     /**
-     * Add a new list to the set
+     *
      * @param title the title of the list
      */
     public void addList(String title) {
         List list = new List(title);
+        listSet.add(list);
+    }
+
+    /**
+     * Add a new list to the set
+     * @param list the list
+     */
+    public void addList(List list) {
         listSet.add(list);
     }
 
@@ -164,7 +172,7 @@ public class ListController {
     public void load(String path) {
         try {
             String serialized = DataController.load(path);
-            //listSet = ListSet.valueOf(serialized);
+            listSet = ListSet.valueOf(serialized);
         }
         catch (IOException e) {
             System.out.println(e.getMessage());

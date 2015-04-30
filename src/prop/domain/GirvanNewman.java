@@ -8,7 +8,7 @@ import java.util.Stack;
  * Girvan-Newman algorithm
  * @author oscar.manas
  */
-public class GirvanNewman extends Algorithm {
+public class GirvanNewman {
 
     private static final int infinity = 1000000000;
     private HashMap<Song,Integer> ids;
