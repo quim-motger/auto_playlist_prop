@@ -156,27 +156,17 @@ public class ListController {
      * Save the list set in the specified path
      * @param path  the path where save the list set to
      */
-    public void save(String path) {
-        try {
-            DataController.save(listSet.toString(),path);
-        }
-        catch(IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void save(String path) throws IOException {
+        DataController.save(listSet.toString(),path);
     }
 
     /**
      * Load the list set from the specified path
      * @param path  the path where load the list set from
      */
-    public void load(String path) {
-        try {
-            String serialized = DataController.load(path);
-            //listSet = ListSet.valueOf(serialized);
-        }
-        catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    public void load(String path) throws IOException {
+        String serialized = DataController.load(path);
+        // todo: listSet = ListSet.valueOf(serialized);
     }
 
 }
