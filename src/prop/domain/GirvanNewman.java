@@ -19,6 +19,13 @@ public class GirvanNewman {
     private int edges;
     private Pair<Integer,Integer> mbEdge;
 
+    /**
+     * Executes the Girvan-Newman algorithm.
+     * @param graph the graph from which communities are calculated
+     * @param k     the correlation measure; the higher the value, the more correlated the elements within a
+     *              community will be, but communities will be smaller
+     * @return      an {@code AlgorithmOutput} object, including a list with communities and an execution log
+     */
     public AlgorithmOutput execute(Graph graph, int k) {
         this.graph = graph;
         n = graph.numberOfVertices();
@@ -43,6 +50,10 @@ public class GirvanNewman {
         return new AlgorithmOutput(communities,log);
     }
 
+    /**
+     * Recalculates the betweenness score for all edges and removes the edge with the highest betweenness score
+     * @param entry an entry of the execution log
+     */
     private void removeNext(StringBuilder entry) {
         entry.append("Predecessor Matrix:\n");
         for (int[] p : parents) {
@@ -93,8 +104,8 @@ public class GirvanNewman {
     }
 
     /**
-     * Calculate the minimum path between all pairs of vertices
-     * @return          a parents matrix
+     * The Floyd-Warshall algorithm. Calculates the minimum path between all pairs of vertices.
+     * @return a Predecessor Matrix
      */
     private int[][] floydWarshall() {
         // Path Matrix
@@ -141,6 +152,12 @@ public class GirvanNewman {
         return P;
     }
 
+    /**
+     * Calculates the path between vertices {@code i} and {@code j} from the Predecessor Matrix.
+     * @param i     a vertex
+     * @param j     a vertex
+     * @param path  the path between vertices {@code i} and {@code j}
+     */
     private void path(int i, int j, ArrayList<Integer> path) {
         if (parents[i][j] != -1) {
             if (j == i) {
@@ -154,7 +171,7 @@ public class GirvanNewman {
     }
 
     /**
-     * Calculate the betweenness of all edges
+     * Calculates the betweenness score of all edges.
      */
     private void calculateEdgeBetweenness() {
         edgeScores = new int[n][n]; // By default, elements are initialized to 0
@@ -167,6 +184,11 @@ public class GirvanNewman {
         }
     }
 
+    /**
+     * Calculates the betweenness score between vertices {@code i} and {@code j}.
+     * @param i a vertex
+     * @param j a vertex
+     */
     private void processEdge(int i, int j) {
         if (parents[i][j] != -1) {
             if (j != i) {
@@ -186,6 +208,10 @@ public class GirvanNewman {
         }
     }
 
+    /**
+     * Calculates the number of connected components in the graph. A classic depth-first search.
+     * @return  the number of connected components
+     */
     private int calculateComponents() {
         Stack<Integer> S = new Stack<>();
         boolean[] vis = new boolean[n];
@@ -211,6 +237,10 @@ public class GirvanNewman {
         return c;
     }
 
+    /**
+     * Separates the communities of the original graph in different graphs.
+     * @return an array of graphs containing all the communities in the original graph
+     */
     public ArrayList<Graph> getCommunities() {
         ArrayList<Graph> communities = new ArrayList<>();
         Stack<Integer> S = new Stack<>();

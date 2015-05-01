@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -15,13 +16,15 @@ public class AlgorithmController {
     public AlgorithmController() {}
 
     /**
-     * Execute the selected algorithm for generating a song list that will be added to the set
+     * Executes the selected algorithm for generating a song list that will be added to the set.
+     * This method should be called after constructing the graph in the Relation Controller, otherwise it could
+     * cause a {@code NullPointerException}.
      * @param title                 the title of the list that will be created
      * @param algorithm             the selected algorithm:
      *                                  0: Girvan-Newman
      *                                  1: Louvain
      *                                  2: Clique Percolation
-     * @param k                     correlation measure
+     * @param k                     the correlation measure
      * @param listController        an instance of the List Controller
      * @param relationController    an instance of the Relation Controller
      * @return                      a log of the algorithm execution
@@ -64,7 +67,7 @@ public class AlgorithmController {
     }
 
     /**
-     * Converts a multigraph into the graph that will be the input of the algorithm
+     * Converts a multigraph into the graph that will be the input of the algorithm.
      * @param algorithm             the selected algorithm:
      *                                  0: Girvan-Newman
      *                                  1: Louvain
@@ -72,9 +75,10 @@ public class AlgorithmController {
      * @param relationController    an instance of the Relation Controller
      * @return                      the input graph
      */
-    private Graph<Song> createInputGraph(int algorithm, RelationController relationController) {
+    private Graph<Song> createInputGraph(int algorithm, RelationController relationController) throws NullPointerException {
         Graph<Song> graph = new Graph<Song>();
         Graph<Song> G = relationController.getGraph();
+        if (G == null) throw new NullPointerException("The graph from Relation Controller was null");
         System.out.println("Original graph:"); writeGraph(G);
         int n = G.numberOfVertices();
         for (Song s : G.getOriginalVertices())
@@ -102,7 +106,7 @@ public class AlgorithmController {
     }
 
     /**
-     * Adds the weight of all the edges between a pair of vertices
+     * Adds the weight of all the edges between a pair of vertices.
      * @param G the graph
      * @param u a vertex
      * @param v a vertex
@@ -116,14 +120,15 @@ public class AlgorithmController {
         return sum;
     }
 
-    private static void writeGraph(Graph G) {
+    private void writeGraph(Graph G) {
         Song s;
+        DecimalFormat df = new DecimalFormat("0.00");
         for (int i = 0; i < G.numberOfVertices(); ++i) {
             s = (Song) G.getVertexT(i);
-            System.out.print("(" + G.getVertex(s) + ")" + s.getTitle() + ":");
+            System.out.print("(" + G.getVertex(s) + ")" + s.getTitle() + ": ");
             for (Integer j : (Iterable<Integer>) G.adjacentVertices(i)) {
                 s = (Song) G.getVertexT((int)j);
-                System.out.print(s.getTitle() + "(" + G.weight(i,j) + ") ");
+                System.out.print(s.getTitle() + "(" + df.format(G.weight(i,j)) + ") ");
             }
             System.out.print("\n");
         }

@@ -38,9 +38,14 @@ public class AlgorithmControllerDriver {
                     String title = in.next();
                     int algorithm = in.nextInt();
                     int k = in.nextInt();
-                    ArrayList<String> log = ac.execute(title, algorithm, k, listController, relationController);
-                    for (String s : log)
-                        System.out.print(s);
+                    try {
+                        ArrayList<String> log = ac.execute(title, algorithm, k, listController, relationController);
+                        for (String s : log)
+                            System.out.print(s);
+                    }
+                    catch (NullPointerException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 4:
                     int id = in.nextInt();
