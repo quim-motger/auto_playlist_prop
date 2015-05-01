@@ -52,7 +52,7 @@ public class AlgorithmOutput {
 
     /**
      * Returns the densest graph. Density is defined as the number of edges divided by the number of vertices of a graph.
-     * @return The densest graph. Null if there is no graph.
+     * @return The densest graph. Null if there is no graph or the graph is empty.
      */
     public Graph densestGraph() {
         double maxDensity = 0;
@@ -65,5 +65,4 @@ public class AlgorithmOutput {
         }
         return g;
     }
-
 }
