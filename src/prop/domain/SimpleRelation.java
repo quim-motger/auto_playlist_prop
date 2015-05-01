@@ -10,6 +10,7 @@ import java.lang.Integer;
 
 public class SimpleRelation extends Relation {
 
+    private String type;
     private String attribute;
     private String value;
 
@@ -18,9 +19,20 @@ public class SimpleRelation extends Relation {
      * @param   attribute   attribute name
      * @param   value       value of attribute
      */
-    public SimpleRelation(String attribute, String value) {
+    public SimpleRelation(String type, String attribute, String value) {
+        this.type = type;
         this.attribute = attribute;
         this.value = value;
+    }
+
+    public String getType() { return type;}
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     /**

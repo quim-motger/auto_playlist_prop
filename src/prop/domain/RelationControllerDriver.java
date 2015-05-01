@@ -71,7 +71,8 @@ public class RelationControllerDriver {
                 + "1:   printInfoComplete()\n"
                 + "2:   initGraph(SongController sc)\n"
                 + "3:   sc.addSong(new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
-                + "4:   getGraph()\n");
+                + "4:   getGraph()\n"
+                + "5:   ");
     }
 
     private static void printInfoBrief() {

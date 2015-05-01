@@ -36,14 +36,16 @@ public class ANDDriver {
                     else System.out.print("false\n");
                     break;
                 case 3:
+                    String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    r1 = new SimpleRelation(attribute,value);
+                    r1 = new SimpleRelation(type,attribute,value);
                     break;
                 case 4:
+                    String type2 = in.next();
                     String attribute2 = in.next();
                     String value2 = in.next();
-                    r1 = new SimpleRelation(attribute2,value2);
+                    r1 = new SimpleRelation(type2,attribute2,value2);
                     break;
                 case 5:
                     String title = in.next();

@@ -44,26 +44,30 @@ public class CliquePercolation{
             ++l;
         }
         //Executes the clique percolation algorithm
+        log.add("### Finding maximal cliques\n");
         findCliques(R, P, X, log);
+        log.add("### Merging cliques to find " + k + " communities\n");
         percolateCliques(k, log);
         ArrayList<Graph> com = parseCommunitiesToGraphs();
+        log.add("### Communities found\n");
         return new AlgorithmOutput(com, log);
     }
 
     private void findCliques(ArrayList<Integer> R, ArrayList<Integer> P, ArrayList<Integer> X, ArrayList<String> log) {
-        System.out.print("Provisional clique:");
-        for (int r : R) System.out.print(" " + r);
-        System.out.print("\nCandidates:");
-        for (int p : P) System.out.print(" " + p);
-        System.out.print("\nRejected:");
-        for (int x : X) System.out.print(" " + x);
-        System.out.print("\n\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Provisional clique:");
+        for (int r : R) sb.append(" " + r);
+        sb.append("\nCandidates:");
+        for (int p : P) sb.append(" " + p);
+        sb.append("\nRejected:");
+        for (int x : X) sb.append(" " + x);
+        sb.append("\n\n");
         //If there are no more candidates to be add to the clique (P is empty) and
         //there aren't any other vertices connected with all of those in R who have
         //been rejected (X is empty), then R contains a maximal clique
         if (P.isEmpty() && X.isEmpty()) {
-            System.out.print("New clique found:");
-            printClique(R);
+            sb.append("New clique found:");
+            sb.append(printClique(R));
             cliques[i] = new ArrayList<>();
             //R is added to array of maximal cliques
             cliques[i] = R;
@@ -71,17 +75,20 @@ public class CliquePercolation{
                 vertexInCliques[r].add(i);
             }
             i = i+1;
-            System.out.print("\n");
+            sb.append("\n");
+            log.add(sb.toString() + "\n");
         }
         ArrayList<Integer> P1 = new ArrayList<>(P);
         //Expand of every vertex in P
         for (int v : P) {
-            System.out.print("Expand on " + v + "\n");
+            sb.append("Expand on " + v + "\n");
             //R U v (add v to list of vertices that may compose a clique)
             if (!R.contains(v)) R.add(v);
             //Remove non-neighbours of v from candidates to be added to clique (P) and from
             //rejected who could be added to the clique, then backtrack
+            log.add(sb.toString() + "\n");
             findCliques(R, intersection(P1, neighbours(v)), intersection(X, neighbours(v)), log);
+            sb = new StringBuilder();
             //Remove v from vertices that may compose a clique (R)
             R = remove(R,v);
             //Remove v from candidates to be added (P1)
@@ -99,23 +106,23 @@ public class CliquePercolation{
             cliqueInCommunity[j] = j;
             communities[j] = cliques[j];
         }
-        //getCommunities();
         int com = i;
         if (i <= k) return;
         //For every clique found
         for (j = 0; j < i; ++j) {
-            System.out.println("Let's work in the " + j + " clique");
+            StringBuilder sb = new StringBuilder();
+            sb.append("Let's work in the " + j + " clique\n");
             //For every vertex in the clique
             int s;
             for (s = 0; s < communities[j].size(); ++s) {
                 int l = communities[j].get(s);
-                System.out.println("Let's work with vertex " + l);
+                sb.append("Let's work with vertex " + l + "\n");
                 //For every clique the vertex is in
                 for (int m : vertexInCliques[l]) {
-                    System.out.println("This vertex is also in clique " + m);
                     //If the clique is not the same
                     if (m != j && cliqueInCommunity[m] != cliqueInCommunity[j]) {
-                        System.out.println("Let's add this clique in the same community");
+                        sb.append("This vertex is also in clique " + m + "\n");
+                        sb.append("Let's add this clique in the same community\n");
                         //We add to the community of the initial clique the clique shared by the vertex
                         int q;
                         for (q = 0; q < communities[m].size(); ++q) {
@@ -130,12 +137,14 @@ public class CliquePercolation{
                         cliqueInCommunity[m] = j;
                         //Update the number of cliques
                         com = getNumCom();
-                        System.out.println("Now we have " + com + " communities");
-                        getCommunities();
+                        sb.append("Now we have " + com + " communities\n");
+                        log.add(sb.toString() + "\n");
+                        sb = new StringBuilder();
                         if (com <= k) return;
                     }
                 }
             }
+            log.add(sb.toString() + "\n");
         }
     }
 
@@ -192,24 +201,28 @@ public class CliquePercolation{
         return n;
     }
 
-    private void printClique(ArrayList<Integer> l) {
+    private StringBuilder printClique(ArrayList<Integer> l) {
+        StringBuilder sb = new StringBuilder();
         for (int i : l) {
-            System.out.print(" " + i);
+            sb.append(" " + i);
         }
-        System.out.print("\n");
+        sb.append("\n");
+        return sb;
     }
 
-    private void getCommunities() {
-        System.out.println("Communities:");
+    private StringBuilder getCommunities() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Communities:");
         int k;
         for (k = 0; k < i; ++k) {
             if (!communities[k].isEmpty()) {
                 for (int p : communities[k]) {
-                    System.out.print(" " + p);
+                    sb.append(" " + p);
                 }
-                System.out.print("\n");
+                sb.append("\n");
             }
         }
+        return sb;
     }
 
 }
