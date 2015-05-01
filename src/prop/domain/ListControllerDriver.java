@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ListControllerDriver {
@@ -87,17 +88,27 @@ public class ListControllerDriver {
                     break;
                 case 12:
                     path = in.next();
-                    listController.save(path);
+                    try {
+                        listController.save(path);
+                    }
+                    catch(IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 13:
                     path = in.next();
-                    listController.load(path);
+                    try {
+                        listController.load(path);
+                    }
+                    catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 14:
                     title = in.next();
                     n = in.nextInt();
                     try {
-                        listController.createRandomList(title,n,songController);
+                        listController.createRandomList(title, n, songController);
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());

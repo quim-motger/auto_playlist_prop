@@ -48,6 +48,26 @@ public class Graph<T> {
     }
 
     /**
+     * Returns the original value associated to the integer
+     * @param v integer vertex
+     * @return T original value
+     */
+    public T getVertexT(int v) {
+        checkVertex(v);
+        return Int_to_T.get(v);
+    }
+
+    /**
+     * Returns the integer associated to the original value
+     * @param v T original value
+     * @return integer vertex
+     */
+    public int getVertex(T v) {
+        checkVertexT(v);
+        return T_to_Int.get(v);
+    }
+
+    /**
      * Indicates if the graph contains a vertex. Cost O(1)
      * @param v Vertex to search
      * @return True if found, false otherwise
@@ -89,6 +109,23 @@ public class Graph<T> {
         if ((v < 0) || v >= vertices.size()) throw new IllegalArgumentException("Illegal vertex");
     }
 
+    private void checkVertexT(T v) {
+        if (!T_to_Int.containsKey(v)) throw new IllegalArgumentException("Illegal vertex");
+    }
+
+    /**
+     * Adds an undirected edge between two vertices
+     * @param v1 vertex 1
+     * @param v2 vertex 2
+     */
+    public void addEdge(T v1, T v2, double weight) {
+        checkVertexT(v1);
+        checkVertexT(v2);
+        int vi1 = T_to_Int.get(v1);
+        int vi2 = T_to_Int.get(v2);
+        addEdge(vi1, vi2, weight);
+    }
+
     /**
      * Adds an undirected edge between two vertices with defaultWeight. Useful to add "unweighted" edges.
      * @param v1 vertex 1
@@ -128,8 +165,6 @@ public class Graph<T> {
      * @return true if an edge existed and was removed
      */
     public boolean removeEdge(int v1, int v2) {
-        checkVertex(v1);
-        checkVertex(v2);
         if (!hasEdge(v1,v2)) return false;
         if (v1 == v2) vertices.get(v1).edgeLoops.remove(0);
         else {
@@ -138,6 +173,11 @@ public class Graph<T> {
             vertices.get(v1).undirectedCount--;
             vertices.get(v2).undirected.get(v1).remove(removedEdge);
             vertices.get(v2).undirectedCount--;
+            // Check if v1 and v2 are no longer adjacent
+            if (vertices.get(v1).undirected.get(v2).isEmpty()) {
+                vertices.get(v1).undirected.remove(v2);
+                vertices.get(v2).undirected.remove(v1);
+            }
         }
         --edgeCount;
         return true;
@@ -180,8 +220,6 @@ public class Graph<T> {
      * @return true if an arc existed and was removed
      */
     public boolean removeArc(int v1, int v2) {
-        checkVertex(v1);
-        checkVertex(v2);
         if (!hasArc(v1,v2)) return false;
         if (v1 == v2) vertices.get(v1).arcLoops.remove(0);
         else {
@@ -257,6 +295,17 @@ public class Graph<T> {
         return vertices.get(v1).undirected.get(v2).get(0);
     }
 
+    /**
+     * Returns the number of undirected edges between two vertices
+     * @param v1
+     * @param v2
+     * @return int number of edges
+     */
+    public int numberOfEdges(int v1, int v2) {
+        checkVertex(v1);
+        checkVertex(v2);
+        return vertices.get(v1).undirected.get(v2).size();
+    }
     /**
      * Returns the total number of edges of a vertex.
      * @param v

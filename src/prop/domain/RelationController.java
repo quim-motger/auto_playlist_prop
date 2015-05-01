@@ -9,22 +9,22 @@ import java.util.ArrayList;
  */
 public class RelationController {
 
-    HashGraph graph;
+    Graph graph;
     boolean dirty;
     
     public RelationController() {
-        graph = new HashGraph();
+        graph = new Graph();
     }
 
     public void initGraph(SongController sc) {
-        graph = new HashGraph();
+        graph = new Graph();
         ArrayList<Song> ss = sc.getSongSet().getSongSet();
         for (Song s : ss) {
             graph.addVertex(s);
         }
     }
 
-    public HashGraph getGraph() {
+    public Graph getGraph() {
         return graph;
     }
 

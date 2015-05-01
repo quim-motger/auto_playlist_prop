@@ -8,23 +8,20 @@ import java.util.Stack;
  * Girvan-Newman algorithm
  * @author oscar.manas
  */
-public class GirvanNewman extends Algorithm {
+public class GirvanNewman {
 
     private static final int infinity = 1000000000;
-    private HashMap<Song,Integer> ids;
-    private HashMap<Integer,Song> songs;
     private int n;
-    private HashGraph<Song> graph; // Undirected, weighted graph
+    private Graph<Song> graph; // Undirected, weighted graph
     private int components;
     private int[][] parents;
     private int[][] edgeScores;
     private int edges;
     private Pair<Integer,Integer> mbEdge;
 
-    public AlgorithmOutput execute(HashGraph graph, int k) {
+    public AlgorithmOutput execute(Graph graph, int k) {
         this.graph = graph;
         n = graph.numberOfVertices();
-        translateVertices();
         ArrayList<String> log = new ArrayList<>();
         components = calculateComponents();
 
@@ -42,18 +39,8 @@ public class GirvanNewman extends Algorithm {
             ++i;
         }
 
-        ArrayList<HashGraph> communities = getCommunities();
+        ArrayList<Graph> communities = getCommunities();
         return new AlgorithmOutput(communities,log);
-    }
-
-    private void translateVertices() {
-        ArrayList<Song> v = graph.getVertices();
-        ids = new HashMap<>();
-        songs = new HashMap<>();
-        for (int i = 0; i < n; ++i) {
-            ids.put(v.get(i),i);
-            songs.put(i,v.get(i));
-        }
     }
 
     private void removeNext(StringBuilder entry) {
@@ -95,7 +82,7 @@ public class GirvanNewman extends Algorithm {
         entry.append("\n");
 
         entry.append("Edge removed: (" + mbEdge.first + "," + mbEdge.second + ")\n");
-        graph.removeEdge(songs.get(mbEdge.first),songs.get(mbEdge.second));
+        graph.removeEdge(mbEdge.first,mbEdge.second);
 
         parents = floydWarshall();
         // If there's no path between the vertices of the edge we've just removed,
@@ -119,11 +106,8 @@ public class GirvanNewman extends Algorithm {
         // Initialize with the Weight Matrix
         // D[i][j] is the weight of an edge between vertex i and vertex j
         for (int i = 0; i < n; ++i) {
-            for (Song u : graph.adjacentVertices(songs.get(i))) {
-                int v = ids.get(u);
-                double w = graph.weight(songs.get(i), u);
-                D[i][v] = w;
-            }
+            for (int j : graph.adjacentVertices(i))
+                D[i][j] = graph.weight(i, j);
             // The path from a vertex to itself has weight 0
             D[i][i] = 0;
         }
@@ -217,8 +201,8 @@ public class GirvanNewman extends Algorithm {
                     int v = S.pop();
                     if (!vis[v]) {
                         vis[v] = true;
-                        for (Song w : graph.adjacentVertices(songs.get(v))) {
-                            S.push(ids.get(w));
+                        for (int w : graph.adjacentVertices(v)) {
+                            S.push(w);
                         }
                     }
                 }
@@ -227,8 +211,8 @@ public class GirvanNewman extends Algorithm {
         return c;
     }
 
-    public ArrayList<HashGraph> getCommunities() {
-        ArrayList<HashGraph> communities = new ArrayList<>();
+    public ArrayList<Graph> getCommunities() {
+        ArrayList<Graph> communities = new ArrayList<>();
         Stack<Integer> S = new Stack<>();
         boolean[] visVertices = new boolean[n];
         boolean[][] visEdges = new boolean[n][n];
@@ -240,23 +224,23 @@ public class GirvanNewman extends Algorithm {
 
         for (int u = 0; u < n; ++u) {
             if (!visVertices[u]) {
-                HashGraph G = new HashGraph<Song>();
+                Graph G = new Graph<Song>();
                 S.push(u);
-                G.addVertex(songs.get(u));
+                G.addVertex(graph.getVertexT(u));
                 visVertices[u] = true;
                 while (!S.empty()) {
                     int v = S.pop();
-                    for (Song w : graph.adjacentVertices(songs.get(v))) {
-                        int x = ids.get(w);
-                        if (!visVertices[x]) {
-                            S.push(x);
-                            G.addVertex(songs.get(x));
-                            visVertices[x] = true;
+                    for (int w : graph.adjacentVertices(v)) {
+                        if (!visVertices[w]) {
+                            S.push(w);
+                            G.addVertex(graph.getVertexT(w));
+                            visVertices[w] = true;
                         }
-                        if (!visEdges[v][x]) {
-                            G.addEdge(songs.get(v), w);
-                            visEdges[v][x] = true;
-                            visEdges[x][v] = true;
+                        if (!visEdges[v][w]) {
+                            // We need to add the edge that way because we don't know the vertex identifiers in the new graph
+                            G.addEdge(graph.getVertexT(v), graph.getVertexT(w),graph.weight(v,w));
+                            visEdges[v][w] = true;
+                            visEdges[w][v] = true;
                         }
                     }
                 }

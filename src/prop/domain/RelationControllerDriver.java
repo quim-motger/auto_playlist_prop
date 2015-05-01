@@ -46,7 +46,8 @@ public class RelationControllerDriver {
                         System.out.println("e.getMessage()");
                     }
                     break;
-                case 4:
+                // todo: adapt to Graph
+                /*case 4:
                     HashGraph g = rc.getGraph();
                     ArrayList<Song> songs = g.getVertices();
                     for (Song s : songs) {
@@ -57,7 +58,7 @@ public class RelationControllerDriver {
                         }
                         System.out.print("\n");
                     }
-                    break;
+                    break;*/
                 default:
                     printInfoComplete();
             }
