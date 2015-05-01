@@ -20,7 +20,7 @@ public class UserSet implements Iterable<User>{
      * <b>UsersSet</b> class constructor
      */
     public UserSet() {
-        users = new ArrayList<User>();
+        users = new ArrayList<>();
     }
 
     /**
@@ -29,6 +29,14 @@ public class UserSet implements Iterable<User>{
      */
     public ArrayList<User> getUsers() {
         return users;
+    }
+
+    /**
+     * Getter method of <b>users</b> size
+     * @return      users size
+     */
+    public int getSize() {
+        return users.size();
     }
 
     /**
