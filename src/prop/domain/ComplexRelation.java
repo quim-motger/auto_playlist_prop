@@ -10,4 +10,9 @@ public abstract class ComplexRelation extends Relation {
     protected Relation r1;
     protected Relation r2;
 
+    /**
+     * Default constructor.
+     */
+    public ComplexRelation() {}
+
 }

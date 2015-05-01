@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
- * A set of songs
+ * A set of songs.
  * @author oscar.manas
  * @see Song
  */
@@ -17,14 +17,14 @@ public class SongSet {
     private static final String delimiter = "\n\n";
 
     /**
-     * Constructor
+     * Default constructor.
      */
     public SongSet() {
         songSet = new ArrayList<Song>();
     }
 
     /**
-     * Get the size of the set
+     * Get the size of the set.
      * @return  the size of the set
      */
     public int size() {
@@ -32,7 +32,7 @@ public class SongSet {
     }
 
     /**
-     * Get the whole set of songs
+     * Get the whole set of songs.
      * @return  the set of songs
      */
     public ArrayList<Song> getSongSet() {
@@ -40,7 +40,7 @@ public class SongSet {
     }
 
     /**
-     * Get a song identified by title and artist
+     * Get a song identified by title and artist.
      * @param title         the title of the song to get
      * @param artist        the artist of the song to get
      * @return              the song if present
@@ -55,7 +55,7 @@ public class SongSet {
     }
 
     /**
-     * Get a song by position
+     * Get a song by position.
      * @param i             the position of the song to get
      * @return              the song if present
      * @throws Exception    if the song is not present
@@ -68,7 +68,7 @@ public class SongSet {
     }
 
     /**
-     * Get a group of songs
+     * Get a group of songs.
      * @param ids   the identifications of the songs to get; the first element of a pair is the {@code title}
      *              and the second element is the {@code artist} of the song
      * @return      list of present songs
@@ -84,7 +84,7 @@ public class SongSet {
     }
 
     /**
-     * Add a song to the set
+     * Add a song to the set.
      * @param song          the song to add
      * @throws Exception    if the song already exists or if the {@code song} parameter is null
      */
@@ -99,7 +99,7 @@ public class SongSet {
     }
 
     /**
-     * Remove a song from the set
+     * Remove a song from the set.
      * @param title         the title of the song
      * @param artist        the artist of the song
      * @throws Exception    if the song is not present in the set
@@ -113,7 +113,7 @@ public class SongSet {
     }
 
     /**
-     * Returns true if the song set contains the specified song
+     * Returns true if the song set contains the specified song.
      * @param title     the title of the specified song
      * @param artist    the artist of the specified song
      * @return          true if present,
@@ -128,7 +128,7 @@ public class SongSet {
     }
 
     /**
-     * Get the total duration of all songs in the set
+     * Get the total duration of all songs in the set.
      * @return  the total duration
      */
     public int getTotalDuration() {
@@ -140,7 +140,7 @@ public class SongSet {
     }
 
     /**
-     * Get the song index within the song set
+     * Get the song index within the song set.
      * @param title     the title of the song to search
      * @param artist    the artist of the song to search
      * @return          the index of the song in the set if present,
@@ -156,7 +156,7 @@ public class SongSet {
     }
 
     /**
-     * Search for songs that have the specified values for the specified attributes
+     * Search for songs that have the specified values for the specified attributes.
      * @param conditions    the list of conditions that searched songs must satisfy; the first element of a pair
      *                      is the {@code attribute} and the second element is the {@code value} of the condition
      * @return              a list of songs that meet the conditions
@@ -178,7 +178,7 @@ public class SongSet {
     }
 
     /**
-     * Returns true if the {@code song} has the specified {@code value} for the specified {@code attribute}
+     * Returns true if the {@code song} has the specified {@code value} for the specified {@code attribute}.
      * @param song          the song to validate
      * @param attribute     the attribute to validate
      * @param value         the value that the attribute of the song must have
@@ -208,7 +208,7 @@ public class SongSet {
     }
 
     /**
-     * Convert a song set into a String
+     * Convert a song set into a String.
      * @return  the String representing the song set
      */
     public String toString() {
@@ -222,7 +222,7 @@ public class SongSet {
     }
 
     /**
-     * Parse a string to a {@code SongSet} object
+     * Parse a string to a {@code SongSet} object.
      * @param s the string representing the song set
      * @return  the {@code SongSet} object created from the String
      * @throws  Exception
