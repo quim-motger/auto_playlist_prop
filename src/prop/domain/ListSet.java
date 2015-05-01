@@ -1,6 +1,10 @@
 package prop.domain;
 
+import prop.ErrorString;
+import prop.PropException;
+
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Class ListSet, represents a set of playlists.
@@ -11,6 +15,9 @@ public class ListSet {
     //It assigns unique ids to lists as they are added.
     private ArrayList<List> lists;
     private int nextId; // id to be assigned to a new list
+
+    private static final String DELIMITER = "|LS|\n";
+    private static final String LISTSET_ID = "LISTSET_ID";
 
     /* CONSTRUCTORS */
     /**
@@ -38,6 +45,11 @@ public class ListSet {
     /* SETTERS */
     public void setLists(ArrayList<List> lists) {
         this.lists = lists;
+    }
+
+    public void setNextId(int nid) {
+        if (nid < nextId) throw new IllegalArgumentException("nextId can't be set to an inferior number to the current");
+        nextId = nid;
     }
 
     /* OTHER METHODS */
@@ -139,5 +151,37 @@ public class ListSet {
     public void clear() {
         lists.clear();
         nextId = 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder ret = new StringBuilder();
+        ret.append(LISTSET_ID);
+        ret.append(DELIMITER);
+        ret.append(lists.size());
+        ret.append(DELIMITER);
+        for (List l : lists) {
+            ret.append(l.toString());
+            ret.append(DELIMITER);
+        }
+        ret.append(nextId);
+        return ret.toString();
+    }
+
+    public static ListSet valueOf(String origin, SongController songController) throws Exception {
+        String[] tokens = origin.split(Pattern.quote(DELIMITER));
+        if (!tokens[0].equals(LISTSET_ID)) {
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
+        }
+        ListSet ls = new ListSet();
+        ArrayList<List> lists = new ArrayList<>();
+        int i = 2;
+        int size = i + Integer.valueOf(tokens[1]);
+        for (; i < size; ++i) {
+            lists.add(List.valueOf(tokens[i], songController));
+        }
+        ls.setNextId(Integer.valueOf(tokens[i]));
+        ls.setLists(lists);
+        return ls;
     }
 }
