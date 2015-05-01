@@ -16,6 +16,8 @@ public class GirvanNewmanDriver {
     private static Song song2 = new Song("title2","artist2","album2",2002,Genre.getGenreById(2),Genre.getGenreById(2),222);
     private static Song song3 = new Song("title3","artist3","album3",2003,Genre.getGenreById(3),Genre.getGenreById(3),333);
     private static Song song4 = new Song("title4","artist4","album4",2004,Genre.getGenreById(4),Genre.getGenreById(4),444);
+    private static Song song5 = new Song("title5","artist5","album5",2005,Genre.getGenreById(5),Genre.getGenreById(5),555);
+    private static Song song6 = new Song("title6","artist6","album6",2006,Genre.getGenreById(6),Genre.getGenreById(6),666);
 
     public static void main(String[] args) {
         System.out.println("**********************************************************");
@@ -50,6 +52,9 @@ public class GirvanNewmanDriver {
                 case 5:
                     int k = in.nextInt();
                     ao = gn.execute(graph,k);
+                    ArrayList<String> log = ao.getLog();
+                    for (String s : log)
+                        System.out.print(s);
                     break;
                 case 6:
                     ArrayList<Graph> communities = ao.getCommunities();
@@ -81,13 +86,16 @@ public class GirvanNewmanDriver {
         graph.addVertex(song2);
         graph.addVertex(song3);
         graph.addVertex(song4);
-        graph.addEdge(song0, song1, 3);
-        graph.addEdge(song0, song2, 6);
-        graph.addEdge(song0, song3, 3);
-        graph.addEdge(song1, song3, 1);
-        graph.addEdge(song1, song4, 4);
-        graph.addEdge(song2, song3, 2);
-        graph.addEdge(song3, song4, 2);
+        graph.addVertex(song5);
+        graph.addVertex(song6);
+        graph.addEdge(song0,song1,3.0);
+        graph.addEdge(song0,song2,6.0);
+        graph.addEdge(song0,song3,3.0);
+        graph.addEdge(song1,song3,1.0);
+        graph.addEdge(song1,song4,4.0);
+        graph.addEdge(song2,song3,2.0);
+        graph.addEdge(song3,song4,2.0);
+        graph.addEdge(song5,song6,1.0);
     }
 
     private static void writeGraph(Graph G) {

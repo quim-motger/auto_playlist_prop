@@ -30,6 +30,7 @@ public class AlgorithmController {
 
         AlgorithmOutput ao = null;
         Graph<Song> graph = createInputGraph(algorithm,relationController);
+        System.out.println("Converted graph:"); writeGraph(graph);
 
         switch (algorithm) {
             case 0:
@@ -74,6 +75,7 @@ public class AlgorithmController {
     private Graph<Song> createInputGraph(int algorithm, RelationController relationController) {
         Graph<Song> graph = new Graph<Song>();
         Graph<Song> G = relationController.getGraph();
+        System.out.println("Original graph:"); writeGraph(G);
         int n = G.numberOfVertices();
         for (Song s : G.getOriginalVertices())
             graph.addVertex(s);
@@ -112,6 +114,20 @@ public class AlgorithmController {
         for (double w : weights)
             sum += w;
         return sum;
+    }
+
+    private static void writeGraph(Graph G) {
+        Song s;
+        for (int i = 0; i < G.numberOfVertices(); ++i) {
+            s = (Song) G.getVertexT(i);
+            System.out.print("(" + G.getVertex(s) + ")" + s.getTitle() + ":");
+            for (Integer j : (Iterable<Integer>) G.adjacentVertices(i)) {
+                s = (Song) G.getVertexT((int)j);
+                System.out.print(s.getTitle() + "(" + G.weight(i,j) + ") ");
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n");
     }
 
 }

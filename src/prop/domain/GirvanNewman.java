@@ -24,6 +24,7 @@ public class GirvanNewman {
         n = graph.numberOfVertices();
         ArrayList<String> log = new ArrayList<>();
         components = calculateComponents();
+        if (components >= k) log.add("There are " + components + " components already!\n\n");
 
         parents = floydWarshall();
         int i = 0;
@@ -35,7 +36,6 @@ public class GirvanNewman {
             removeNext(entry);
 
             log.add(entry.toString() + "\n");
-            System.out.print(log.get(log.size() - 1));
             ++i;
         }
 
