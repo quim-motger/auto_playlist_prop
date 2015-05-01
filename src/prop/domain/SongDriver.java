@@ -54,10 +54,10 @@ public class SongDriver {
                     System.out.println(song.getArtist());
                     break;
                 case 6:
-                    System.out.println(song.getYear());
+                    System.out.println(song.getAlbum());
                     break;
                 case 7:
-                    System.out.println(song.getAlbum());
+                    System.out.println(song.getYear());
                     break;
                 case 8:
                     System.out.println(song.getGenre().getName());
@@ -77,12 +77,12 @@ public class SongDriver {
                     song.setArtist(artist);
                     break;
                 case 13:
-                    year = in.nextInt();
-                    song.setYear(year);
-                    break;
-                case 14:
                     album = in.next();
                     song.setAlbum(album);
+                    break;
+                case 14:
+                    year = in.nextInt();
+                    song.setYear(year);
                     break;
                 case 15:
                     genreId = in.nextInt();
@@ -116,15 +116,15 @@ public class SongDriver {
         sb.append("3:  Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
         sb.append("4:  String getTitle()\n");
         sb.append("5:  String getArtist()\n");
-        sb.append("6:  int getYear()\n");
-        sb.append("7:  String getAlbum()\n");
+        sb.append("6:  String getAlbum()\n");
+        sb.append("7:  int getYear()\n");
         sb.append("8:  Genre getGenre()\n");
         sb.append("9:  Genre getSubgenre()\n");
         sb.append("10: int getDuration()\n");
         sb.append("11: String setTitle(String title)\n");
         sb.append("12: String setArtist(String artist)\n");
-        sb.append("13: int setYear(int year)\n");
-        sb.append("14: String setAlbum(String album)\n");
+        sb.append("13: String setAlbum(String album)\n");
+        sb.append("14: int setYear(int year)\n");
         sb.append("15: Genre setGenre(Genre genre)\n");
         sb.append("16: Genre setSubgenre(Genre subgenre)\n");
         sb.append("17: int setDuration(int duration)\n");

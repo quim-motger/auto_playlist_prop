@@ -156,7 +156,7 @@ public class ListController {
      * Save the list set in the specified path
      * @param path  the path where save the list set to
      */
-    public void save(String path) throws IOException {
+    public void save(String path) throws Exception {
         DataController.save(listSet.toString(),path);
     }
 
@@ -164,9 +164,9 @@ public class ListController {
      * Load the list set from the specified path
      * @param path  the path where load the list set from
      */
-    public void load(String path) throws IOException {
+    public void load(String path, SongController songController) throws Exception {
         String serialized = DataController.load(path);
-        // todo: listSet = ListSet.valueOf(serialized);
+        listSet = ListSet.valueOf(serialized,songController);
     }
 
 }

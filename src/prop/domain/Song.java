@@ -100,8 +100,8 @@ public class Song {
     }
 
     /**
-     * Convert a song into a String.
-     * @return the String representing the song
+     * Convert a {@code Song} into a {@code String}.
+     * @return the {@code String} representing the song
      */
     public String toString() {
         String s = "";
@@ -117,9 +117,9 @@ public class Song {
     }
 
     /**
-     * Parse a string to a {@code Song} object.
-     * @param s the String representing the song
-     * @return  the {@code Song} object created from the String
+     * Parse a {@code String} to a {@code Song} object.
+     * @param s the {@code String} representing the song
+     * @return  the {@code Song} object created from the {@code String}
      */
     public static Song valueOf(String s) {
         String[] t = s.split(Pattern.quote(delimiter));

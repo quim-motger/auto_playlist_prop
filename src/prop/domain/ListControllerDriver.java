@@ -1,6 +1,5 @@
 package prop.domain;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class ListControllerDriver {
@@ -91,16 +90,16 @@ public class ListControllerDriver {
                     try {
                         listController.save(path);
                     }
-                    catch(IOException e) {
+                    catch(Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 13:
                     path = in.next();
                     try {
-                        listController.load(path);
+                        listController.load(path,songController);
                     }
-                    catch (IOException e) {
+                    catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
