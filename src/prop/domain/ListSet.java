@@ -3,13 +3,13 @@ package prop.domain;
 import java.util.ArrayList;
 
 /**
- * Class ListSet, represents a set of playlists. It assigns unique ids to lists as they are added. <br>
- * A list can't be duplicated in the set
+ * Class ListSet, represents a set of playlists.
  * @author Carles Garcia Cabot
  * @see List
  */
 public class ListSet {
-    private ArrayList<List> lists; // a list can't be duplicated
+    //It assigns unique ids to lists as they are added.
+    private ArrayList<List> lists;
     private int nextId; // id to be assigned to a new list
 
     /* CONSTRUCTORS */
@@ -35,31 +35,33 @@ public class ListSet {
         return lists;
     }
 
-    public List getList(int id) {
-        for (List list: lists)
-            if (list.obtainId() == id)
-                return list;
-        return null;
-    }
-
     /* SETTERS */
     public void setLists(ArrayList<List> lists) {
         this.lists = lists;
     }
-
-
 
     /* OTHER METHODS */
 
     /**
      * Adds a list to the set
      * @param list list to be added
-     *             (Precondition: list isn't already in the set)
      */
     public void add(List list) {
         list.editId(nextId);
         lists.add(list);
         ++nextId;
+    }
+
+    /**
+     * Searches the list with a certain id
+     * @param id
+     * @return If found, returns the list. Else, null.
+     */
+    public List getList(int id) {
+        for (List list: lists)
+            if (list.obtainId() == id)
+                return list;
+        return null;
     }
 
     /**
@@ -138,5 +140,4 @@ public class ListSet {
         lists.clear();
         nextId = 0;
     }
-
 }
