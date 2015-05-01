@@ -32,7 +32,10 @@ public class AlgorithmOutput {
      * Adds a graph
      * @param community Graph to add
      */
-    public void add(Graph community) { communities.add(community); }
+    public void add(Graph community) {
+        if (community == null) throw new NullPointerException("Tried to add a null graph");
+        communities.add(community);
+    }
 
     /**
      * Adds a string to the log
@@ -40,8 +43,8 @@ public class AlgorithmOutput {
      */
     public void add(String l) { log.add(l); }
 
-    // Getter
-    public ArrayList<String> getLog() { return log; };
+    /* GETTERS */
+    public ArrayList<String> getLog() { return log; }
 
     public ArrayList<Graph> getCommunities() {
         return communities;
@@ -49,14 +52,13 @@ public class AlgorithmOutput {
 
     /**
      * Returns the densest graph. Density is defined as the number of edges divided by the number of vertices of a graph.
-     * @return The densest graph
+     * @return The densest graph. Null if there is no graph.
      */
     public Graph densestGraph() {
-        //Todo: what if division by 0 or g = null
         double maxDensity = 0;
         Graph g = null;
         for (Graph gr : communities) {
-            if (gr.numberOfEdges()/(double)gr.numberOfVertices() > maxDensity) {
+            if (!gr.isEmpty() && gr.numberOfEdges()/(double)gr.numberOfVertices() >= maxDensity) {
                 maxDensity = gr.numberOfEdges()/(double)gr.numberOfVertices();
                 g = gr;
             }
