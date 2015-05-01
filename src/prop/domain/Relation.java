@@ -20,4 +20,5 @@ public abstract class Relation {
      */
     public abstract boolean evaluateUser(User u);
 
+
 }

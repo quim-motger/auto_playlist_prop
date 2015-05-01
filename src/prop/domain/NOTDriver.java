@@ -38,12 +38,13 @@ public class NOTDriver {
                     else System.out.print("The songs are not related by the specified relation\n");
                     break;
                 case 3:
+                    String type = in.next();
                     System.out.print("Select the attribute of the relation (title,artist,"
                             +"album,year,genre,subgenre,duration):");
                     String attribute = in.next();
                     System.out.print("Specify the value of the attribute:");
                     String value = in.next();
-                    r1 = new SimpleRelation(attribute,value);
+                    r1 = new SimpleRelation(type,attribute,value);
                     break;
                 case 4:
                     sc = new SongController();

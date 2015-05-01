@@ -39,9 +39,10 @@ public class SimpleRelationDriver {
                     else System.out.print("false\n");
                     break;
                 case 4:
+                    String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    r = new SimpleRelation(attribute,value);
+                    r = new SimpleRelation(type,attribute,value);
                     break;
                 case 5:
                     String title = in.next();

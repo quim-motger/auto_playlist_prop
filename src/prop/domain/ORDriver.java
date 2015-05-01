@@ -41,13 +41,14 @@ public class ORDriver {
                 case 3:
                     System.out.print("Select the relation to create (1/2):");
                     int rel = in.nextInt();
+                    String type = in.next();
                     System.out.print("Select the attribute of the relation (title,artist,"
                             +"album,year,genre,subgenre,duration):");
                     String attribute = in.next();
                     System.out.print("Specify the value of the attribute:");
                     String value = in.next();
-                    if (rel == 1) r1 = new SimpleRelation(attribute,value);
-                    else if (rel == 2) r2 = new SimpleRelation(attribute,value);
+                    if (rel == 1) r1 = new SimpleRelation(type,attribute,value);
+                    else if (rel == 2) r2 = new SimpleRelation(type,attribute,value);
                     break;
                 case 4:
                     sc = new SongController();

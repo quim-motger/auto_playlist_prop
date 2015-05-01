@@ -57,6 +57,9 @@ public class CliquePercolationDriver {
                         writeGraph(communities.get(j));
                     }
                     break;
+                case 7:
+                    ArrayList<String> log = ao.getLog();
+                    for (String s : log) System.out.print(s);
             }
         }
     }
@@ -68,7 +71,9 @@ public class CliquePercolationDriver {
         sb.append("2:  BronKerboschTomita()\n");
         sb.append("3:  void readGraph()\n");
         sb.append("4:  void writeGraph()\n");
-        sb.append("5:  void execute()\n");
+        sb.append("5:  void execute(Graph graph, int k)\n");
+        sb.append("6:  printCommunities\n");
+        sb.append("7:  ao.getLog()\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }
