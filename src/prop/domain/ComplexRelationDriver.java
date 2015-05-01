@@ -3,7 +3,7 @@ package prop.domain;
 import java.util.Scanner;
 
 /**
- * Complex Relation Driver
+ * Complex Relation Driver.
  * @author oscar.manas
  */
 public class ComplexRelationDriver {
@@ -46,12 +46,10 @@ public class ComplexRelationDriver {
 
     private static class ComplexRelationStub extends ComplexRelation {
 
-        @Override
         public boolean evaluateSongs(Song s1, Song s2) {
             return false;
         }
 
-        @Override
         public boolean evaluateUser(User u) {
             return false;
         }

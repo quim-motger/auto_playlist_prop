@@ -1,7 +1,7 @@
 package prop.domain;
 
 /**
- * A complex relation between songs, composed of simple or complex relations
+ * A complex relation between songs, composed of simple or complex relations.
  * @author oscar.manas
  * @see Relation
  */

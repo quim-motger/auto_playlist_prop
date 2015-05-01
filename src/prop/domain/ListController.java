@@ -1,11 +1,10 @@
 package prop.domain;
 
 import prop.data.DataController;
-import java.io.IOException;
 import java.util.*;
 
 /**
- * The controller for {@code List} and {@code ListSet}
+ * The controller for {@code List} and {@code ListSet}.
  * @author oscar.manas
  * @see List
  * @see ListSet
