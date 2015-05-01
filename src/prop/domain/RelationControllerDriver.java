@@ -64,16 +64,26 @@ public class RelationControllerDriver {
                     }
                     break;*/
                 case 5:
+                    System.out.println("How to introduce relations:");
+                    System.out.println("1. Introduce all simple relations you are going to work with in next format");
+                    System.out.println("    type attribute value");
+                    System.out.println("2. Introduce the boolean expression using the indexs of simple relations considering their order");
+                    System.out.println("    for AND relations:  0 and 1");
+                    System.out.println("    for OR relations:   0 or 1");
+                    System.out.println("    for NOT relation:   not0");
                     StringBuilder sb = new StringBuilder();
                     String s;
                     while (!(s = in.next()).equals(";")) {
                         sb.append(s + " " + in.next() + " " + in.next() + "\n");
                     }
                     StringBuilder sp = new StringBuilder();
-                    String p;
+                    String p = in.next();
+                    sp.append(p);
                     while (!(p = in.next()).equals(";")) {
-                        sp.append(p + " ");
+                        sp.append(" " + p);
                     }
+                    System.out.println(sb.toString());
+                    System.out.println(sp.toString());
                     Relation r = rc.parsing(sb.toString(),sp.toString());
                     if(r.evaluateSongs(song0, song1)) System.out.print("true\n");
                     else System.out.print("false\n");
