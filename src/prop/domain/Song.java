@@ -1,10 +1,9 @@
 package prop.domain;
 
-
 import java.util.regex.Pattern;
 
 /**
- * A song, identified by title and artist
+ * A song, identified by title and artist.
  * @author oscar.manas
  */
 public class Song {
@@ -20,12 +19,12 @@ public class Song {
     private static final String delimiter = "|S|\n";
 
     /**
-     * The default constructor
+     * Default constructor.
      */
     public Song(){}
 
     /**
-     * Constructor specifying a value for all attributes
+     * Constructor specifying a value for all attributes.
      * @param title     song title
      * @param artist    song artist
      * @param album     song album
@@ -101,7 +100,7 @@ public class Song {
     }
 
     /**
-     * Convert a song into a String
+     * Convert a song into a String.
      * @return the String representing the song
      */
     public String toString() {
@@ -118,7 +117,7 @@ public class Song {
     }
 
     /**
-     * Parse a string to a {@code Song} object
+     * Parse a string to a {@code Song} object.
      * @param s the String representing the song
      * @return  the {@code Song} object created from the String
      */
