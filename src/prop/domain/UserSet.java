@@ -20,7 +20,7 @@ public class UserSet implements Iterable<User>{
      * <b>UsersSet</b> class constructor
      */
     public UserSet() {
-        users = new ArrayList<User>();
+        users = new ArrayList<>();
     }
 
     /**

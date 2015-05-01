@@ -1,6 +1,9 @@
 package prop.domain;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
 
 /**
@@ -12,10 +15,17 @@ public class CliquePercolation{
     int n;      //number of graph nodes
     int m;      //number of graph edges
     int i;      //number of cliques found
+    int k;
     ArrayList<Integer>[] cliques;       //list of maximal cliques
-    ArrayList<Integer>[] graph;         //graph
-    
-    public void execute() {
+    ArrayList<Integer>[] vertexInCliques;   //lists of cliques which contains the index vertex
+    ArrayList<Integer>[] communities;
+
+    private Graph<Song> graph; // Undirected, weighted graph
+
+    public AlgorithmOutput execute(Graph graph, int k) {
+        this.graph = graph;
+        n = graph.numberOfVertices();
+        ArrayList<String> log = new ArrayList<>();
         //R: list of vertices that may compose a clique
         ArrayList<Integer> R = new ArrayList<>();
         //P: candidates to be added in a clique
@@ -24,19 +34,23 @@ public class CliquePercolation{
         ArrayList<Integer> X = new ArrayList<>();
         //cliques: list of cliques in graph
         cliques = (ArrayList<Integer>[])new ArrayList[n];
+        vertexInCliques = (ArrayList<Integer>[])new ArrayList[n];
+        for (int l = 0; l < n; ++l) vertexInCliques[l] = new ArrayList<>();
         i = 0;
-        int k = 0;
-        while (k < n) {
+        int l = 0;
+        while (l < n) {
             //P contains all vertices in graph initially
-            P.add(k);
-            ++k;
+            P.add(l);
+            ++l;
         }
         //Executes the clique percolation algorithm
-        BronKerbosch(R,P,X);
-        getCliques();
+        findCliques(R, P, X, log);
+        percolateCliques(k, log);
+        ArrayList<Graph> com = parseCommunitiesToGraphs();
+        return new AlgorithmOutput(com, log);
     }
 
-    private void BronKerbosch(ArrayList<Integer> R, ArrayList<Integer> P, ArrayList<Integer> X) {
+    private void findCliques(ArrayList<Integer> R, ArrayList<Integer> P, ArrayList<Integer> X, ArrayList<String> log) {
         System.out.print("Provisional clique:");
         for (int r : R) System.out.print(" " + r);
         System.out.print("\nCandidates:");
@@ -53,6 +67,9 @@ public class CliquePercolation{
             cliques[i] = new ArrayList<>();
             //R is added to array of maximal cliques
             cliques[i] = R;
+            for (int r : R) {
+                vertexInCliques[r].add(i);
+            }
             i = i+1;
             System.out.print("\n");
         }
@@ -64,7 +81,7 @@ public class CliquePercolation{
             if (!R.contains(v)) R.add(v);
             //Remove non-neighbours of v from candidates to be added to clique (P) and from
             //rejected who could be added to the clique, then backtrack
-            BronKerbosch(R, intersection(P1, neighbours(v)), intersection(X, neighbours(v)));
+            findCliques(R, intersection(P1, neighbours(v)), intersection(X, neighbours(v)), log);
             //Remove v from vertices that may compose a clique (R)
             R = remove(R,v);
             //Remove v from candidates to be added (P1)
@@ -72,6 +89,71 @@ public class CliquePercolation{
             //Add v to the rejected candidates
             X.add(v);
         }
+    }
+
+    private void percolateCliques(int k, ArrayList<String> log) {
+        int[] cliqueInCommunity= new int[i];
+        communities = (ArrayList<Integer>[])new ArrayList[n];
+        for (ArrayList<Integer> l : communities) l = new ArrayList<>();
+        int j;
+        for (j = 0; j < i; ++j) {
+            cliqueInCommunity[j] = j;
+            communities[j] = cliques[j];
+        }
+        //getCommunities();
+        int com = i;
+        if (i <= k) return;
+        //For every clique found
+        for (j = 0; j < i; ++j) {
+            System.out.println("Let's work in the " + j + " clique");
+            //For every vertex in the clique
+            int s;
+            for (s = 0; s < communities[j].size(); ++s) {
+                int l = communities[j].get(s);
+                System.out.println("Let's work with vertex " + l);
+                //For every clique the vertex is in
+                for (int m : vertexInCliques[l]) {
+                    System.out.println("This vertex is also in clique " + m);
+                    //If the clique is not the same
+                    if (m != j && cliqueInCommunity[m] != cliqueInCommunity[j]) {
+                        System.out.println("Let's add this clique in the same community");
+                        //We add to the community of the initial clique the clique shared by the vertex
+                        int q;
+                        for (q = 0; q < communities[m].size(); ++q) {
+                            int p = communities[m].get(q);
+                            if (!communities[cliqueInCommunity[j]].contains(p)) {
+                                communities[cliqueInCommunity[j]].add(p);
+                            }
+                        }
+                        //We stop considering the clique as an independent community
+                        communities[m].clear();
+                        //Update the community that the clique is in
+                        cliqueInCommunity[m] = j;
+                        //Update the number of cliques
+                        com = getNumCom();
+                        System.out.println("Now we have " + com + " communities");
+                        //getCommunities();
+                        if (com <= k) return;
+                    }
+                }
+            }
+        }
+    }
+
+    private ArrayList<Graph> parseCommunitiesToGraphs() {
+        ArrayList<Graph> com = new ArrayList<>();
+        for (ArrayList<Integer> l : communities) {
+
+        }
+        return com;
+    }
+
+    private int getNumCom() {
+        int size = 0;
+        for (ArrayList<Integer> l : communities) {
+            if (!l.isEmpty()) ++size;
+        }
+        return size;
     }
 
     private ArrayList<Integer> intersection(ArrayList<Integer> A, ArrayList<Integer> B) {
@@ -90,8 +172,9 @@ public class CliquePercolation{
 
     private ArrayList<Integer> neighbours(int v) {
         ArrayList<Integer> n = new ArrayList<>();
-        for (int u : graph[v]) {
-            n.add(u);
+        LinkedHashSet<Integer> m = graph.adjacentVertices(v);
+        for (int p : m) {
+            n.add(p);
         }
         return n;
     }
@@ -103,42 +186,17 @@ public class CliquePercolation{
         System.out.print("\n");
     }
 
-    private void getCliques() {
-        System.out.println("Cliques:");
+    private void getCommunities() {
+        System.out.println("Communities:");
         int k;
-        for (k = 0; k < i; ++k) {
-            for (int p : cliques[k]) {
-                System.out.print(" " + p);
+        for (k = 0; k < communities.length; ++k) {
+            if (!communities[k].isEmpty()) {
+                for (int p : communities[k]) {
+                    System.out.print(" " + p);
+                }
+                System.out.print("\n");
             }
-            System.out.print("\n");
         }
-    }
-
-    public void readGraph() {
-        Scanner in = new Scanner(System.in);
-        n = in.nextInt();
-        m = in.nextInt();
-        graph = (ArrayList<Integer>[])new ArrayList[n];
-        for (int i = 0; i < n; ++i)
-            graph[i] = new ArrayList<>();
-        int a, b;
-        for (int i = 0; i < m; ++i) {
-            a = in.nextInt();
-            b = in.nextInt();
-            graph[a].add(b);
-            graph[b].add(a);
-        }
-    }
-
-    public void writeGraph() {
-        System.out.println("Adjacency list:");
-        for (ArrayList<Integer> l : graph) {
-            for (int v : l) {
-                System.out.print(v + " ");
-            }
-            System.out.print("\n");
-        }
-        System.out.print("\n");
     }
 
 }
