@@ -1,7 +1,7 @@
 package prop.domain;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.LinkedHashSet;
 
 /**
  * Louvain in prop.domain
@@ -12,66 +12,85 @@ import java.util.Scanner;
  */
 public class Louvain extends Algorithm {
     
-    private int nNodes;
     private int nCommunities;
-    private int [] community; //integer that says at which community the node is
-    ArrayList<int[]> clustering;
-    private ArrayList<Pair<Integer,Integer>>[] graph;
-    private int sEdges;
+    private double sEdges;
+    private AlgorithmOutput log;
+    private int maxComm;
 
 
     public Louvain() {
-        nNodes = 0;
-        nCommunities =0;
+        nCommunities = 0;
+        sEdges = 0;
+        log = null;
+        maxComm =0;
     }
 
     @Override
     public AlgorithmOutput execute(Graph<Song> graph, int k) {
-        return null;
-    }
-    
-
-    private void executeLouvain() {
-        ArrayList<Pair<Integer,Integer>>[] nAgregatedGraph;
-        AlgorithmOutput ret = new AlgorithmOutput();
-        sEdges = sumEdges();
-        initSingletonCommunities();
+        //Initialize Variables
+        log = new AlgorithmOutput();
+        sEdges = sumEdges(graph);
+        maxComm = k;
+        nCommunities = graph.numberOfVertices();
         
-        //Indicates if a node can be moved in the next round
-        boolean nodeMove = true;
-        while (nCommunities >1 && nodeMove) {
-            //Optimizes modularity of communities
-            nodeMove = modularityOptimization();
-            
-            //Save previous state
-            clustering.add(community);
-            nAgregatedGraph = graph;
-            
-            //Creates new graph agregating all nodes in a community
-            //graph = communityAgregation(nAgregatedGraph);
-            //initSingletonCommunities(graph);
+        //Execute Louvain
+        int[] finalComm = executeLouvain(graph);
+        
+        //Create Community Graphs
+        for(int i=0;i<nCommunities;++i) {
+            log.add(createCommunityGraph(graph,finalComm,i));
         }
+        
+        
+        return log;
     }
-    
-    
-    private Graph communityAgregation() {
-        //Graph<Integer,Edge<Integer>> graph = new Graph<>();
-        //return graph;
-        return null;
+
+    /**
+     * Louvain Algorithm 
+     * @param graph Graph where Louvain needs to be applied
+     * @return array with the number of coomunity they belong to
+     */
+    private int[] executeLouvain(Graph<Song> graph) {
+        //Base Case
+        if (graph.numberOfVertices() <= maxComm) {
+            log.add("End of Algorithm: More vertices (" + graph.numberOfVertices() +
+                    ") than desirable communities (" + maxComm + ")");
+            return initSingletonCommunities(graph);
+        }
+        
+        //Initializing Communities
+        log.add("Initializing new Round");
+        int[] comms = initSingletonCommunities(graph);
+
+        //Modularity Optimization
+        log.add("ModularityOptimization");
+        boolean moved = modularityOptimization(graph, comms);
+        
+        //If communities were optimized
+        if(moved) {
+            log.add("Normalizing community numbers");
+            comms = normalizeComms(comms);
+            
+            log.add("CommunityAggregation");
+            int[] comms2 = executeLouvain(communityAggregation(graph, comms));
+            
+            log.add("Joining communities");
+            for(int i=0; i<comms2.length;++i) {
+                changeComm(i,comms2[i],comms);
+            }
+        }
+        return comms;
     }
 
     /**
      * Apply a modularity optimization round
-     * @return <code>true</code> if at least one node has changed it's community
+     * @return <code>true</code> if at least one node has changed it's community 
+     * @param graph Graph to be optimized
+     * @param comms communities to be changed
      */
-    public boolean modularityOptimization() {
-        //TODO:REMOVE THIS WHENEVER EXECUTE LOUVAIN IS IMPLEMENTED
-        //TEMP____
-        sEdges = sumEdges();
-        initSingletonCommunities();
-        //TEMP_____
+    private boolean modularityOptimization(Graph<Song> graph, int[] comms) {
         
-        
+        int nNodes = graph.numberOfVertices();
         boolean roundMoved = false; //Has any node been moved in the last round?
         int idNode = 0; //Node being optimized
         boolean moved = false; //Has any node been moved?
@@ -87,36 +106,35 @@ public class Louvain extends Algorithm {
             
             //Max Modularity Gain for idNode
             double maxModGain = 0;
-            int comDest= community[idNode];
+            int comDest= comms[idNode];
 
-            //Takes out idNode from its Community -> Confirmar que es correcte
-            int tmp = community[idNode];
-            community[idNode] = -1;
+            //Takes out idNode from its Community
+            int tmp = comms[idNode];
+            comms[idNode] = -1;
             
             //Calculate the cost of taking out the node of its community
-            double modImprov = - modularityGain(idNode, community[idNode]);
+            double modImprov = - modularityGain(idNode, comms[idNode], comms, graph,sEdges);
             
             //For each edge that goes from idNode out
-            for(Pair<Integer,Integer> edge:graph[idNode]){
-                if(community[idNode]!= community[edge.first]) {
+            for(int node : graph.adjacentVertices(idNode)){
+                if(comms[idNode]!= comms[node]) {
                     
                     //Adds up the modularity improvement to add the node to the community
-                    modImprov += modularityGain(idNode, community[edge.first]);
+                    modImprov += modularityGain(idNode, comms[node],comms,graph,sEdges);
                     
                     //If modularityGain is over the maximum saved, save the new one
                     if (modImprov > maxModGain) {
-                        comDest = community[edge.first];
+                        comDest = comms[node];
                         maxModGain = modImprov;
                     }
                 }
             }
             
             //Returns the node and move the node if there's a possible change
-            community[idNode] = tmp;
-            if(comDest!= community[idNode]){
-                //TODO:REMOVE THIS WHEN AlgorithmOutput IMPLEMENTED ->SAVE TO AlgorithmOutput
-                System.out.println("Moving node "+idNode+" from "+ community[idNode]+" to "+comDest+": "+modularityGain(idNode, comDest));
-                moveMode(idNode, community[idNode],comDest);
+            comms[idNode] = tmp;
+            if(comDest!= comms[idNode]){
+                log.add("Moving node "+idNode+" from "+ comms[idNode]+" to "+comDest+": "+maxModGain);
+                moveMode(idNode, comms[idNode],comDest,comms);
                 roundMoved=true;
                 moved=true;
             }
@@ -126,21 +144,44 @@ public class Louvain extends Algorithm {
         return moved;
     }
 
-    /**
-     * Calculates the gain of modularity that would derivate of moving a node to a community 
-     * @param idNode Node that is being moved
-     * @param comDest Target Community for the node
-     * @return gain of modularity
-     */
-    private double modularityGain(int idNode, int comDest) {
-        double sIn = sEdgesInCom(comDest);
-        double sTot = sEdgesIncidentCom(comDest);
-        double ki = sEdgesIncidentNode(idNode);
-        double kiIn = sEdgesBetweenNC(idNode,comDest);
-        double m = sEdges;
+    /***************Community_Modifiers*****************/
 
-        double ret = ((sIn+kiIn)/(2*m))-Math.pow((sTot + ki) / (2 * m), 2);
-        return ret - ((sIn/(2*m))-Math.pow(sTot / (2 * m), 2) - Math.pow(ki / (2 * m), 2));
+    /**
+     * Change a community number in comms 
+     * @param from original Community
+     * @param to new Community
+     * @param comms array of communities
+     */
+    private void changeComm(int from, int to, int[] comms) {
+        log.add("Changing Community: "+from+" to "+to);
+        for(int i=0;i<comms.length;++i) {
+            if(comms[i]==from)
+                comms[i]=to;
+        }
+    }
+
+    /**
+     * Converts communities with random numbers into communities with values between 0 and nCommunities 
+     * @param comms array to be converted
+     * @return converted array of communities
+     */
+    private int[] normalizeComms(int[] comms) {
+        int currentComm = 0;
+        int[] ret = new int[comms.length];
+
+        int[] commTranslator = new int[comms.length];
+        for (int i= 0; i<commTranslator.length;++i)
+            commTranslator[i]=-1;
+
+        for (int i=0;i<comms.length;++i){
+            if(commTranslator[comms[i]]==-1) {
+                log.add("Normalizing community "+ comms[i] +" into "+currentComm);
+                commTranslator[comms[i]] = currentComm;
+                ++currentComm;
+            }
+            ret[i] = commTranslator[comms[i]];
+        }
+        return  ret;
     }
 
 
@@ -150,10 +191,10 @@ public class Louvain extends Algorithm {
      * @param comOrig Old/Original community
      * @param comDest New community which node belongs to
      */
-    private void moveMode(int idNode, int comOrig, int comDest) {
-        community[idNode] = comDest;
+    private void moveMode(int idNode, int comOrig, int comDest, int[] comm) {
+        comm[idNode] = comDest;
         boolean destroyCom = true;
-        for(int i: community){
+        for(int i: comm){
             if(i==comOrig) destroyCom = false;
         }
         if(destroyCom) --nCommunities;
@@ -161,71 +202,125 @@ public class Louvain extends Algorithm {
 
 
     /**
-     * Creates a community for each node of the graph
+     * Creates a Community for each vertice in the graph 
+     * @param graph Original Graph
+     * @return Array with the new communities
      */
-    private void initSingletonCommunities() {
-        nNodes = graph.length;
-        community = new int[nNodes];
-        nCommunities = nNodes;
-        for (int i = 0; i<nNodes; ++i){
-            community[i]=i;
+    private int[] initSingletonCommunities(Graph<Song> graph) {
+        int[] comms = new int[graph.numberOfVertices()];
+        int n = graph.numberOfVertices();
+        nCommunities = n;
+        for (int i = 0; i<n; ++i){
+            comms[i]=i;
         }
-        
+        return comms;
     }
 
+    /***************Graph_Creators*****************/
     
-    /****IN/OUT*******/
-
     /**
-     * TEMPORAL: Reads graph 
+     * Creates a community Graph from a graph 
+     * @param graph Original Graph
+     * @param finalComms Array with communities identifier
+     * @param selectedComm Community which graph will be created
+     * @return Graph with vertex and edges of selectedComm
      */
-    public void readGraph() {
-        Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        int m = in.nextInt();
-        graph = (ArrayList<Pair<Integer,Integer>>[])new ArrayList[n];
-        for (int i = 0; i < n; ++i)
-            graph[i] = new ArrayList<>();
-        int a, b, w;
-        for (int i = 0; i < m; ++i) {
-            a = in.nextInt();
-            b = in.nextInt();
-            w = in.nextInt();
-            graph[a].add(new Pair<>(b,w));
-            graph[b].add(new Pair<>(a,w));
+    private Graph<Song> createCommunityGraph(Graph<Song> graph, int[] finalComms, int selectedComm) {
+        Graph<Song> community = new Graph<>();
+        ArrayList<Song> songs = graph.getOriginalVertices();
+
+        //Add Nodes to community
+        for(int i=0;i<finalComms.length;++i) {
+            if(finalComms[i]==selectedComm){
+                community.addVertex(songs.get(i));
+            }
         }
+
+        //Add Vertices to community
+        for(int i=0;i<finalComms.length;++i){
+            if(finalComms[i]==selectedComm) {
+                for (int adj : graph.adjacentVertices(i)) {
+                    if(finalComms[adj]==selectedComm)
+                        community.addEdge(songs.get(i),songs.get(adj),graph.weight(i,adj));
+                }
+            }
+        }
+        return community;
     }
 
     /**
-     * TEMPORAL: Writes Graph and communities 
+     * Applies a Community Aggregation Round  
+     * @param graph Original Graph
+     * @param comm Communities to be agregated
+     * @return graph with communities agregated
      */
-    public void writeGraph() {
-        System.out.println("Adjacency list:");
-        for (ArrayList<Pair<Integer,Integer>> l : graph) {
-            for (Pair<Integer,Integer> v : l) {
-                System.out.print(v.first + " ");
+    private Graph<Song> communityAggregation(Graph<Song> graph, int[] comm) {
+        //Initialize round
+        Graph<Song> agGraph = new Graph<>();
+        ArrayList<Song> songs = graph.getOriginalVertices();
+        
+        //Add Vertices to Graph
+        for(int i=0;i<nCommunities;++i)
+            agGraph.addVertex(songs.get(i));
+        
+        //Add Edges to Graph
+        for(int i=0;i<nCommunities;++i) {
+            for (int j=0; j<nCommunities; ++j) {
+                //Add if there edges between communities
+                double w = sEdgesBetweenC(graph,i,j,comm);
+                if(w>0.0)
+                    agGraph.addEdge(i,j,w);
             }
-            System.out.print("\n");
+            agGraph.addEdge(i,i,sEdgesInCom(i,graph,comm));
         }
-
-        System.out.println("Community List:");
-        for (int i =0; i< community.length;++i) {
-            System.out.println(i+":"+community[i]);
-        }
-        System.out.print("\n");
+        return agGraph;
     }
     
     /***************Graph_Comput_Methods*****************/
 
     /**
+     * Modularity Gain if moving one vertex from one community to another
+     * @param idNode
+     * @param comDest
+     * @param comm
+     * @param graph
+     * @param m
+     * @return
+     */
+    private double modularityGain(int idNode, int comDest, int[] comm, Graph<Song> graph, double m) {
+        double sIn = sEdgesInCom(comDest,graph,comm);
+        double sTot = sEdgesIncidentCom(comDest,graph,comm);
+        double ki = sEdgesIncidentNode(idNode,graph);
+        double kiIn = sEdgesBetweenNC(idNode,comDest, graph, comm);
+
+        double ret = ((sIn+kiIn)/(2*m))-Math.pow((sTot + ki) / (2 * m), 2);
+        return ret - ((sIn/(2*m))-Math.pow(sTot / (2 * m), 2) - Math.pow(ki / (2 * m), 2));
+    }
+
+    private double sEdgesBetweenC(Graph<Song> graph,int cOrig, int cDest, int[] comm) {
+        double sum=0.0;
+        for(int i=0; i<graph.numberOfVertices();++i) {
+            if(comm[i]==cOrig) {
+                for (int node : graph.adjacentVertices(i)) {
+                    if (comm[node] == cDest) {
+                        sum += graph.weight(i, node);
+                    }
+                }
+            }
+        }
+        return  sum;
+    }
+    
+    /**
      * All edges added 
      * @return Addition of the weight of all edges in the graph
      */
-    private int sumEdges() {
-        int sum = 0;
-        for(int i=0;i<graph.length;++i) {
-            for(Pair<Integer,Integer> edge : graph[i]){
-                sum+=edge.second;
+    private double sumEdges(Graph graph) {
+        double sum = 0;
+        for(int i=0;i<graph.numberOfVertices();++i) {
+            LinkedHashSet l = graph.adjacentVertices(i);
+            for (Object j: l) {
+                sum+=graph.weight((int)j,i);
             }
         }
         return sum/2;
@@ -237,11 +332,11 @@ public class Louvain extends Algorithm {
      * @param comDest community where edges go to
      * @return addition of all edges betwee <code>idNode</code> and <code>comDest</code>
      */
-    private int sEdgesBetweenNC(int idNode, int comDest) {
-        int sum = 0;
-        for (Pair<Integer,Integer> edge:graph[idNode])
-            if(community[edge.first]==comDest)
-                sum+=edge.second;
+    private double sEdgesBetweenNC(int idNode, int comDest, Graph<Song> graph, int[] comm) {
+        double sum = 0;
+        for (int node : graph.adjacentVertices(idNode))
+            if(comm[node]==comDest)
+                sum+=graph.weight(idNode,node);
         return sum;
     }
 
@@ -250,10 +345,10 @@ public class Louvain extends Algorithm {
      * @param idNode specified node
      * @return  Addition of the weight of all edges incident in <code>idNode</code> 
      */
-    private int sEdgesIncidentNode(int idNode) {
-        int sum=0;
-        for (Pair<Integer,Integer> edge:graph[idNode])
-            sum+=edge.second;
+    private double sEdgesIncidentNode(int idNode, Graph<Song> graph) {
+        double sum=0;
+        for (int node:graph.adjacentVertices(idNode))
+            sum+=graph.weight(idNode,node);
         return sum;
     }
 
@@ -262,13 +357,13 @@ public class Louvain extends Algorithm {
      * @param comDest specified Community
      * @return Addition of the weight of all edges coming to <code>comDest</code>
      */
-    private int sEdgesIncidentCom(int comDest) {
-        int sum = 0;
-        for(int i=0;i<graph.length;++i) {
-            if(community[i]==comDest)
-                for(Pair<Integer,Integer> edge : graph[i])
-                    if(community[edge.first]!=comDest)
-                        sum+=edge.second;
+    private double sEdgesIncidentCom(int comDest, Graph<Song> graph, int[] comm) {
+        double sum = 0;
+        for(int i=0;i<graph.numberOfVertices();++i) {
+            if(comm[i]==comDest)
+                for(int node : graph.adjacentVertices(i))
+                    if(comm[node]!=comDest)
+                        sum+=graph.weight(node,i);
         }
         return sum/2;
     }
@@ -278,13 +373,13 @@ public class Louvain extends Algorithm {
      * @param comDest specified Community
      * @return Addition of the weight of all edges inside <code>comDest</code>
      */
-    private int sEdgesInCom(int comDest) {
-        int sum = 0;
-        for(int i=0;i<graph.length;++i) {
-            if(community[i]==comDest)
-                for(Pair<Integer,Integer> edge : graph[i])
-                    if(community[edge.first]==comDest)
-                        sum+=edge.second;
+    private double sEdgesInCom(int comDest, Graph<Song> graph, int[] comm) {
+        double sum = 0;
+        for(int i=0;i<graph.numberOfVertices();++i) {
+            if(comm[i]==comDest)
+                for(int node : graph.adjacentVertices(i))
+                    if(comm[node]!=comDest)
+                        sum+=graph.weight(node,i);
         }
         return sum/2;
     }
