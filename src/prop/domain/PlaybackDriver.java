@@ -100,8 +100,9 @@ public class PlaybackDriver {
                     Calendar d = Calendar.getInstance();
                     d.set(in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
                     Playback p = new Playback(ns, d);
-                    if (playback.compareTo(p)) System.out.print("This new playback is posterior\n");
-                    else System.out.print("This new playback is anterior\n");
+                    if (playback.compareTo(p) < 0) System.out.print("This new playback is posterior\n");
+                    else if (playback.compareTo(p) > 0 )System.out.print("This new playback is anterior\n");
+                    else System.out.print("dates are equal\n");
                 default:
                     printInfoComplete();
             }

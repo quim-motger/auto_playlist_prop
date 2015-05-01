@@ -1,8 +1,12 @@
 package prop.domain;
 
+import prop.ErrorString;
+import prop.PropException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 /**
  * Class User represents a user identity and contains their personal information as well as a register of songs played
@@ -18,8 +22,9 @@ public class User {
     private ArrayList<List> associatedLists; // Can't contain repeated lists
 
     private static final String USER_DELIMITER = "|U|\n";
-    private static final String USER_STRING_ID = "USER_STRING";
-    private static final String SONG_DELIMITER = "|S|\n";
+    private static final String USER_ID = "USER_ID";
+    private static final String PLAYBACK_DELIMITER = "|P|\n";
+    private static final String LIST_DELIMITER = "|ID|\n";
 
 
     /* CONSTRUCTORS */
@@ -41,8 +46,8 @@ public class User {
         this.gender = gender;
         this.birthdate = birthdate;
         this.country = country;
-        playbackRegister = new TreeSet<Playback>();
-        associatedLists = new ArrayList<List>();
+        playbackRegister = new TreeSet<>();
+        associatedLists = new ArrayList<>();
     }
 
     /**
@@ -178,24 +183,63 @@ public class User {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name + "\n");
-        sb.append(gender.toString() + "\n");
-        sb.append(birthdate.toString() + "\n");
-        sb.append(country.toString() + "\n");
-        sb.append(playbackRegister.size() + "\n");
+        StringBuilder ret = new StringBuilder();
+        ret.append(USER_ID);
+        ret.append(USER_DELIMITER);
+        ret.append(name);
+        ret.append(USER_DELIMITER);
+        ret.append(gender.toString());
+        ret.append(USER_DELIMITER);
+        ret.append(birthdate.get(Calendar.YEAR));
+        ret.append(USER_DELIMITER);
+        ret.append(birthdate.get(Calendar.MONTH));
+        ret.append(USER_DELIMITER);
+        ret.append(birthdate.get(Calendar.DAY_OF_MONTH));
+        ret.append(USER_DELIMITER);
+        ret.append(country.toString());
+        ret.append(USER_DELIMITER);
+        ret.append(playbackRegister.size());
+        ret.append(USER_DELIMITER);
         for (Playback p : playbackRegister) {
-            //write every playback
+            ret.append(p.toString());
+            ret.append(USER_DELIMITER);
         }
-        sb.append(associatedLists.size() + "\n");
+        ret.append(associatedLists.size());
+        ret.append(USER_DELIMITER);
         for (List l : associatedLists) {
-            sb.append(l.obtainId() + " ");
+            ret.append(l.obtainId());
+            ret.append(USER_DELIMITER);
         }
-        sb.append("\n\n");
-        return sb.toString();
+        return ret.toString();
     }
 
-    public static User valueOf(String source, ListSet ls) {
-        return new User();
+    public static User valueOf(String origin, ListController listController, SongController songController)
+            throws Exception {
+        String[] tokens = origin.split(Pattern.quote(USER_DELIMITER));
+        if (!tokens[0].equals(USER_ID)) {
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
+        }
+        User u = new User();
+        TreeSet<Playback> plays = new TreeSet<>();
+        ArrayList<List> lists = new ArrayList<>();
+        u.setName(tokens[1]);
+        u.setGender(Gender.valueOf(tokens[2]));
+        Calendar d = Calendar.getInstance();
+        d.set(Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]));
+        u.setBirthdate(d);
+        u.setCountry(CountryCode.valueOf(tokens[6]));
+        int i = 8;
+        int size = i + Integer.valueOf(tokens[7]);
+        for (; i < size; ++i) {
+            plays.add(Playback.valueOf(tokens[i], songController));
+        }
+        u.setPlaybackRegister((plays));
+        size = i+1 + Integer.valueOf(tokens[i]);
+        ++i;
+        for (; i < size; ++i) {
+            lists.add(listController.getList(Integer.parseInt(tokens[i])));
+        }
+        u.setAssociatedLists(lists);
+        return u;
     }
 }
