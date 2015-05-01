@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
@@ -114,38 +115,44 @@ public class UserDriver {
     }
 
     private static void printInfo() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("0:  terminate program\n");
-        sb.append("1:  info\n");
-        sb.append("2:  ArrayList<List> getAssociatedLists()\n");
-        sb.append("3:  ArrayList<Playback> getPlaybackRegister()\n");
-        sb.append("4:  CountryCode getCountry()\n");
-        sb.append("5:  Calendar getBirthdate())\n");
-        sb.append("6:  Gender getGender()\n");
-        sb.append("7:  void setName(String name)\n");
-        sb.append("8:  void setGender(Gender gender)\n");
-        sb.append("9:  void setBirthdate(Calendar birthdate)\n");
-        sb.append("10: void setCountry(CountryCode country)\n");
-        sb.append("11: void setPlaybackRegister(ArrayList<Playback> playbackRegister)\n");
-        sb.append("12: void setAssociatedLists(ArrayList<List> associatedLists)\n");
-        sb.append("13: int age()\n");
-        sb.append("14: void add(Playback play)\n");
-        sb.append("15: void associate(List list)\n");
-        sb.append("16: boolean disassociate(List list)\n");
-        sb.append("17: boolean hasList(List list)\n");
-        sb.append("18: String getName()\n");
-        sb.append("19: void clearRegister()\n");
-        sb.append("20: void clearLists()\n");
-      //  sb.append("21: User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
-      //  sb.append("22  User(String name, Gender gender, Calendar birthdate, CountryCode country, ArrayList<Playback> playbackRegister, ArrayList<List> associatedLists)\n");
-        sb.append("  : \n");
-        sb.append("  : \n");
-        System.out.print(sb.toString());
+        ArrayList<String> sb = new ArrayList<>();
+        sb.add("terminate program");
+        sb.add("info");
+        sb.add("User()");
+        sb.add("User(String name, Gender gender, Calendar birthdate, CountryCode country)");
+        sb.add("User(String name, Gender gender, Calendar birthdate, CountryCode country, TreeSet<Playback> playbackRegister," +
+                        "ArrayList<List> associatedLists");
+        sb.add("void 	add(Playback play)");
+        sb.add("int 	age()");
+        sb.add("void 	associate(List list)");
+        sb.add("void 	clearLists ()");
+        sb.add("void clearRegister()");
+        sb.add("boolean 	disassociate(List list)");
+        sb.add("java.util.ArrayList<List> 	getAssociatedLists()");
+        sb.add("java.util.Calendar 	getBirthdate()");
+        sb.add("CountryCode 	getCountry()");
+        sb.add("Gender 	getGender()");
+        sb.add("java.lang.String 	getName()");
+        sb.add("java.util.TreeSet<Playback> 	getPlaybackRegister()");
+        sb.add("boolean 	hasList(List list)");
+        sb.add("void 	setAssociatedLists(java.util.ArrayList<List> associatedLists)");
+        sb.add("void 	setBirthdate(java.util.Calendar birthdate)");
+        sb.add("void 	setCountry(CountryCode country)");
+        sb.add("void 	setGender(Gender gender)");
+        sb.add("void 	setName(java.lang.String name)");
+        sb.add("void 	setPlaybackRegister(java.util.TreeSet<Playback> playbackRegister)");
+        sb.add("java.lang.String 	toString()");
+        sb.add(" static User 	valueOf(java.lang.String origin, ListController listController, SongController songController)");
+
+
+        for (int i = 0; i < sb.size(); ++i) {
+            System.out.println(i + ": " + sb.get(i));
+        }
     }
 
     private static void printInfoBrief() {
         System.out.print("0:    terminate program\n"
-                + "1:    printInfoComplete()\n");
+                + "1:    info\n");
     }
 
 
