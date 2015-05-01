@@ -279,7 +279,8 @@ public class Graph<T> {
     public ArrayList<Double> weights(int v1, int v2) {
         checkVertex(v1);
         checkVertex(v2);
-        return vertices.get(v1).undirected.get(v2);
+        if (v1 == v2) return vertices.get(v1).edgeLoops;
+        else return vertices.get(v1).undirected.get(v2);
     }
 
     /**
@@ -291,8 +292,15 @@ public class Graph<T> {
     public double weight(int v1, int v2) {
         checkVertex(v1);
         checkVertex(v2);
-        if (!vertices.get(v1).undirected.containsKey(v2)) throw new IllegalArgumentException("The vertices aren't adjacent");
-        return vertices.get(v1).undirected.get(v2).get(0);
+        if (v1 == v2) {
+            if (vertices.get(v1).edgeLoops.isEmpty()) throw new IllegalArgumentException("The vertices aren't adjacent");
+            return vertices.get(v1).edgeLoops.get(0);
+        }
+        else {
+            if (!vertices.get(v1).undirected.containsKey(v2))
+                throw new IllegalArgumentException("The vertices aren't adjacent");
+            return vertices.get(v1).undirected.get(v2).get(0);
+        }
     }
 
     /**
