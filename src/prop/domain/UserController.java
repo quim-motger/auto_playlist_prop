@@ -3,6 +3,7 @@ package prop.domain;
 import prop.data.DataController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -110,15 +111,51 @@ public class UserController {
         }
         
     }
-    
+
+    /**
+     * Associate List to an specified User
+     * @param listController listController
+     * @param listId Id of a list included in the listController
+     * @param userName Valid name of an existing user
+     */
     public void associateListToUser(ListController listController, int listId, String userName) {
         List list = listController.getList(listId);
-        userSet.getUserByName(userName).associate(list);
+        associateListToUser(list,userName);
     }
-    
+
+    /**
+     * Associate a List to a User
+     * @param list List to be associated
+     * @param userName Valid name of an existing user
+     */
+    public void associateListToUser(List list, String userName) {
+        userSet.getUserByName(userName).associate(list);
+        
+    }
+
+    /**
+     * Disassociate List to an specified User
+     * @param listController listController
+     * @param listId Id of a list included in the listController
+     * @param userName Valid name of an existing user
+     */
     public void disassociateListFromUser(ListController listController, int listId, String userName) {
         List list = listController.getList(listId);
         userSet.getUserByName(userName).disassociate(list);
+    }
+
+    /**
+     * Obtains Strings with the titles of all lists associated to an specified user
+     * @param userName Specified user
+     * @return Titles of the lists associated to the user, separated by \n
+     */
+    public String obtainListsAssociated(String userName){
+        ArrayList<List> lists = userSet.getUserByName(userName).getAssociatedLists();
+        String ret = "";
+        for(List list : lists){
+            ret += list.obtainTitle() + "\n";
+        }
+        return ret;
     }
 
     /**

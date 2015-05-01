@@ -82,7 +82,9 @@ public class Graph<T> {
      */
     public ArrayList<T> getOriginalVertices() {
         ArrayList<T> l = new ArrayList<>();
-        for (T t: T_to_Int.keySet()) l.add(t);
+        //Enlloc de visitar les keys, visita directament els T de Int_to_T
+        //for (T t: Int_to_T) l.add(t);
+        for(T t: T_to_Int.keySet()) l.add(t);
         return l;
     }
 

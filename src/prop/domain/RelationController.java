@@ -37,8 +37,8 @@ public class RelationController {
 
     }
 
-    public void addSongRelation(String s, String p) {
-        Relation rsongs = parsing(s,p);
+    public void addSongRelation(String enumerateRel, String complexRel) {
+        Relation rsongs = parsing(enumerateRel,complexRel);
         ArrayList<Song> songs = graph.getOriginalVertices();
         for (Song s1 : songs) {
             for (Song s2 : songs) {

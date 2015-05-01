@@ -95,14 +95,14 @@ public class LouvainDriver {
         graph.addVertex(song4);
         graph.addVertex(song5);
         graph.addVertex(song6);
-        graph.addEdge(song0,song1,3.0);
-        graph.addEdge(song0,song2,6.0);
-        graph.addEdge(song0,song3,3.0);
-        graph.addEdge(song1,song3,1.0);
-        graph.addEdge(song1,song4,4.0);
-        graph.addEdge(song2,song3,2.0);
-        graph.addEdge(song3,song4,2.0);
-        graph.addEdge(song5,song6,1.0);
+        graph.addEdge(song0,song1,1.0);
+        graph.addEdge(song0,song2,1.0);
+        graph.addEdge(song1,song2,1.0);
+        graph.addEdge(song0,song3,1.0);
+        graph.addEdge(song4,song3,1.0);
+        graph.addEdge(song3,song5,1.0);
+        graph.addEdge(song4,song5,1.0);
+        graph.addEdge(song6,song4,1.0);
     }
 
     private static void writeGraph(Graph G) {
