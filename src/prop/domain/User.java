@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 /**
- * Class User represents a user identity and contains their personal information as well as a register of songs played
+ * Class User represents a user identity. Contains their personal information, a register of songs played
  * by them and a list of playlists associated to them.
  * @author Carles Garcia Cabot
  */
@@ -18,7 +18,7 @@ public class User {
     private Gender gender;
     private Calendar birthdate;
     private CountryCode country;
-    private TreeSet<Playback> playbackRegister; // Playback must be comparable
+    private TreeSet<Playback> playbackRegister; // Ordered from oldest to newest
     private ArrayList<List> associatedLists; // Can't contain repeated lists
 
     private static final String USER_DELIMITER = "|U|\n";
@@ -32,7 +32,10 @@ public class User {
     /**
      * User default constructor, creates an empty User
      * */
-    public User() {}
+    public User() {
+        playbackRegister = new TreeSet<>();
+        associatedLists = new ArrayList<>();
+    }
 
     /**
      * User constructor with personal data. The playbackRegister and the associatedLists are empty.
@@ -56,7 +59,7 @@ public class User {
      * @param gender User's gender
      * @param birthdate User's birthdate
      * @param country User's country of residence
-     * @param playbackRegister User's playback begister
+     * @param playbackRegister User's playback register
      * @param associatedLists User's associated lists
      */
     public User(String name, Gender gender, Calendar birthdate, CountryCode country, TreeSet<Playback> playbackRegister, ArrayList<List> associatedLists) {
@@ -144,10 +147,9 @@ public class User {
     /**
      * Associates list to the user
      * @param list List to be associated.
-     *             (Precondition: the list isn't already associated to the user)
      */
     public void associate(List list) {
-        associatedLists.add(list);
+        if (!associatedLists.contains(list)) associatedLists.add(list);
     }
 
     /**
