@@ -94,7 +94,6 @@ public class CliquePercolation{
     private void percolateCliques(int k, ArrayList<String> log) {
         int[] cliqueInCommunity= new int[i];
         communities = (ArrayList<Integer>[])new ArrayList[n];
-        for (ArrayList<Integer> l : communities) l = new ArrayList<>();
         int j;
         for (j = 0; j < i; ++j) {
             cliqueInCommunity[j] = j;
@@ -132,7 +131,7 @@ public class CliquePercolation{
                         //Update the number of cliques
                         com = getNumCom();
                         System.out.println("Now we have " + com + " communities");
-                        //getCommunities();
+                        getCommunities();
                         if (com <= k) return;
                     }
                 }
@@ -142,16 +141,30 @@ public class CliquePercolation{
 
     private ArrayList<Graph> parseCommunitiesToGraphs() {
         ArrayList<Graph> com = new ArrayList<>();
-        for (ArrayList<Integer> l : communities) {
-
+        int s;
+        for (s = 0; s < i; ++s) {
+            ArrayList<Integer> l = communities[s];
+            if (!l.isEmpty()) {
+                Graph g = new Graph();
+                for (int i : l) {
+                    g.addVertex(graph.getVertexT(i));
+                    for (int m : graph.adjacentVertices(i)) {
+                        if (g.contains(graph.getVertexT(m))) {
+                            g.addEdge(graph.getVertexT(i), graph.getVertexT(m), graph.weight(i, m));
+                        }
+                    }
+                }
+                com.add(g);
+            }
         }
         return com;
     }
 
     private int getNumCom() {
         int size = 0;
-        for (ArrayList<Integer> l : communities) {
-            if (!l.isEmpty()) ++size;
+        int t;
+        for (t = 0; t < i; ++t) {
+            if (!communities[t].isEmpty()) ++size;
         }
         return size;
     }
@@ -189,7 +202,7 @@ public class CliquePercolation{
     private void getCommunities() {
         System.out.println("Communities:");
         int k;
-        for (k = 0; k < communities.length; ++k) {
+        for (k = 0; k < i; ++k) {
             if (!communities[k].isEmpty()) {
                 for (int p : communities[k]) {
                     System.out.print(" " + p);
