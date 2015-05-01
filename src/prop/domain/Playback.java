@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * @author joaquim.motger
  */
 
-public class Playback {
+public class Playback implements Comparable<Playback>{
 
     private Song song;
     private Calendar date;
@@ -67,8 +67,12 @@ public class Playback {
      * @param p     playback to compare
      * @return      true if this playback's date is before p playback's date
      */
-    public boolean compareTo (Playback p) {
-        return this.date.before(p.getDate());
+    public int compareTo(Playback p) {
+        boolean b = this.date.before(p.getDate());
+        if (b) return -1;
+        b = this.date.after(p.getDate());
+        if (b) return 1;
+        else return 0;
     }
 
     @Override
