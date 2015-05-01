@@ -37,13 +37,13 @@ public class RelationController {
 
     }
 
-    public void addRelation(String s){
-        Relation r = parsing(s);
+    public void addRelation(String s, String p){
+        Relation r = parsing(s,p);
 
     }
 
-    private Relation parsing(String s) {
-        Relation r = null;
+    public Relation parsing(String s, String p) {
+        Relation r;
         String[] ss = s.split("\n");
         int i;
         ArrayList<SimpleRelation> rl = new ArrayList<>();
@@ -52,8 +52,11 @@ public class RelationController {
             String[] sr = ss[i].split(" ");
             rl.add(new SimpleRelation(sr[0], sr[1], sr[2]));
         }
+        for (i = 0; i < ss.length; ++i) {
+            System.out.print(rl.get(i).getType() + " " + rl.get(i).getAttribute() + " " + rl.get(i).getValue() + "\n" );
+        }
         int n_rel = 0;
-        String[] sc = s.split(" or ");
+        String[] sc = p.split(" or ");
         ArrayList<Relation> AND = new ArrayList<>();
         //Split by "or" so we get sets of relations connected by an AND relation
         for (i = 0; i < sc.length; ++i) {

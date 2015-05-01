@@ -10,6 +10,10 @@ import java.util.Scanner;
  * @author joaquim.motger
  */
 public class RelationControllerDriver {
+
+    private static Song song0 = new Song("title0","artist0","album0",2000,Genre.getGenreById(0),Genre.getGenreById(0),000);
+    private static Song song1 = new Song("title0","artist0","album1",2001,Genre.getGenreById(1),Genre.getGenreById(1),111);
+
     public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** Relation Controller");
@@ -59,6 +63,20 @@ public class RelationControllerDriver {
                         System.out.print("\n");
                     }
                     break;*/
+                case 5:
+                    StringBuilder sb = new StringBuilder();
+                    String s;
+                    while (!(s = in.next()).equals(";")) {
+                        sb.append(s + " " + in.next() + " " + in.next() + "\n");
+                    }
+                    StringBuilder sp = new StringBuilder();
+                    String p;
+                    while (!(p = in.next()).equals(";")) {
+                        sp.append(p + " ");
+                    }
+                    Relation r = rc.parsing(sb.toString(),sp.toString());
+                    if(r.evaluateSongs(song0, song1)) System.out.print("true\n");
+                    else System.out.print("false\n");
                 default:
                     printInfoComplete();
             }
@@ -72,7 +90,7 @@ public class RelationControllerDriver {
                 + "2:   initGraph(SongController sc)\n"
                 + "3:   sc.addSong(new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
                 + "4:   getGraph()\n"
-                + "5:   ");
+                + "5:   r1 = parsing(String s)\n");
     }
 
     private static void printInfoBrief() {
