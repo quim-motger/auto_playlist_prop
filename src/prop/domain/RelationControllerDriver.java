@@ -55,10 +55,10 @@ public class RelationControllerDriver {
                     HashGraph g = rc.getGraph();
                     ArrayList<Song> songs = g.getVertices();
                     for (Song s : songs) {
-                        System.out.print("(" + s.getTitle() + "," + s.getArtist() + ") :");
+                        System.out.print("(" + s.getListTitle() + "," + s.getArtist() + ") :");
                         ArrayList<Song> adj = g.adjacentVertices(s);
                         for (Song ss : adj) {
-                            System.out.print(" (" + ss.getTitle() + "," + ss.getArtist() + ")");
+                            System.out.print(" (" + ss.getListTitle() + "," + ss.getArtist() + ")");
                         }
                         System.out.print("\n");
                     }
