@@ -261,7 +261,7 @@ public class Louvain extends Algorithm {
             if (finalComms[i] == selectedComm) {
                 for (int adj : graph.adjacentVertices(i)) {
                     if (finalComms[adj] == selectedComm) {
-                        community.addEdge(songs.get(i), songs.get(adj), graph.weight(i, adj));
+                        community.addEdgeT(songs.get(i), songs.get(adj), graph.weight(i, adj));
                     }
                 }
             }

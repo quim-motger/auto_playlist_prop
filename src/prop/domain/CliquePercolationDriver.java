@@ -85,13 +85,13 @@ public class CliquePercolationDriver {
         graph.addVertex(song2);
         graph.addVertex(song3);
         graph.addVertex(song4);
-        graph.addEdge(song0, song1, 3);
-        graph.addEdge(song0, song2, 6);
-        graph.addEdge(song0, song3, 3);
-        graph.addEdge(song1, song3, 1);
-        graph.addEdge(song1, song4, 4);
-        graph.addEdge(song2, song3, 2);
-        graph.addEdge(song3, song4, 2);
+        graph.addEdgeT(song0, song1, 3);
+        graph.addEdgeT(song0, song2, 6);
+        graph.addEdgeT(song0, song3, 3);
+        graph.addEdgeT(song1, song3, 1);
+        graph.addEdgeT(song1, song4, 4);
+        graph.addEdgeT(song2, song3, 2);
+        graph.addEdgeT(song3, song4, 2);
     }
 
     private static void writeGraph(Graph G) {

@@ -96,7 +96,7 @@ public class AlgorithmController {
                     // considers weight as distance
                     if (algorithm == 0 && w != 0)
                         w = 1/w;
-                    graph.addEdge(G.getVertexT(u),G.getVertexT(v),w);
+                    graph.addEdgeT(G.getVertexT(u), G.getVertexT(v), w);
                     visEdges[u][v] = true;
                     visEdges[v][u] = true;
                 }

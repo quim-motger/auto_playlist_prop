@@ -58,6 +58,10 @@ public class SongController {
         songSet.addSong(song);
     }
 
+    public void addSong(Song song) throws Exception {
+        songSet.addSong(song);
+    }
+
     /**
      * Remove a <b>song</b> of the set
      * @param title     song title
