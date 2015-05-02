@@ -28,8 +28,7 @@ public class UserDriver {
             ListController listController = new ListController();
             Calendar date = Calendar.getInstance();
             String serialized = "";
-            TreeSet<Playback> setPlayback = new TreeSet<>();
-            ArrayList<List> arrayList = new ArrayList<>();
+
             int nextId = 0;
 
             Scanner in = new Scanner(System.in);
@@ -54,12 +53,14 @@ public class UserDriver {
                         //res
                     break;
                     case 5:
+                        if (playback == null) throw new NullPointerException("playback is null. Create a playback first");
                         u.add(playback);
                         break;
                     case 6:
                         System.out.println(u.age());
                         break;
                     case 7:
+                        if (list == null) throw new NullPointerException("list is null. Create a list first");
                         u.associate(list);
                         break;
                     case 8:
@@ -69,6 +70,7 @@ public class UserDriver {
                         u.clearRegister();
                         break;
                     case 10:
+                        if (list == null) throw new NullPointerException("list is null. Create a list first");
                         u.disassociate(list);
                         break;
                     case 11:
@@ -94,10 +96,11 @@ public class UserDriver {
                         for (Playback p : ap) System.out.println(p);
                         break;
                     case 17:
+                        if (list == null) throw new NullPointerException("list is null. Create a list first");
                         System.out.println(u.hasList(list));
                         break;
                     case 18:
-                        u.setAssociatedLists(arrayList);
+                       //nothing
                         break;
                     case 19:
                         u.setBirthdate(date);
@@ -112,16 +115,24 @@ public class UserDriver {
                         u.setName(in.next());
                         break;
                     case 23:
-                        u.setPlaybackRegister(setPlayback);
+                        //nothing;
                         break;
                     case 24:
-                        serialized = u.toString();
-                        System.out.println(serialized);
-                        break;
+                        try {
+                            serialized = u.toString();
+                            System.out.println(serialized);
+                            break;
+                        }
+                        catch (NullPointerException exc) {
+                            System.err.println("Error: User is empty");
+                            throw new Exception();
+                        }
                     case 25:
+                        if (serialized.equals("")) throw new Exception("Error: must do toString before valueOf");
                         u = u.valueOf(serialized, listController, songController);
                         break;
                     case 26:
+                        if (song == null) throw new NullPointerException("song is null. Create a song first");
                         playback = new Playback(song,date);
                         break;
                     case 27:
@@ -140,9 +151,11 @@ public class UserDriver {
                         list.editId(nextId++);
                         break;
                     case 31:
+                        if (song == null) throw new NullPointerException("song is null. Create a song first");
                         list.addSong(song);
                         break;
                     case 32:
+                        if (list == null) throw new NullPointerException("list is null. Create a list first");
                         listController.addList(list);
                         break;
                     default:
@@ -176,12 +189,12 @@ public class UserDriver {
         sb.add("java.lang.String 	getName()");
         sb.add("java.util.TreeSet<Playback> 	getPlaybackRegister()");
         sb.add("boolean 	hasList(List list)");
-        sb.add("void 	setAssociatedLists(java.util.ArrayList<List> associatedLists)");
-        sb.add("void 	setBirthdate(java.util.Calendar birthdate)");
+        sb.add("nothing");
+        sb.add("void 	setBirthdate(date)");
         sb.add("void 	setCountry(CountryCode country)");
         sb.add("void 	setGender(Gender gender)");
         sb.add("void 	setName(java.lang.String name)");
-        sb.add("void 	setPlaybackRegister(java.util.TreeSet<Playback> playbackRegister)");
+        sb.add("nothing");
         sb.add("java.lang.String 	toString()");
         sb.add("static User 	valueOf(java.lang.String origin, ListController listController, SongController songController)");
 

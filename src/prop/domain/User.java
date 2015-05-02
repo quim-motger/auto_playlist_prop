@@ -33,7 +33,6 @@ public class User {
      * User default constructor, creates an empty User
      * */
     public User() {
-        name = null;
         playbackRegister = new TreeSet<>();
         associatedLists = new ArrayList<>();
     }
@@ -168,7 +167,6 @@ public class User {
     }
 
     public String toString() {
-        if (name == null) throw new IllegalArgumentException("Error: toString of empty User");
         StringBuilder ret = new StringBuilder();
         ret.append(USER_ID);
         ret.append(USER_DELIMITER);
