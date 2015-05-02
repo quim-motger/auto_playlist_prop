@@ -1,7 +1,6 @@
 package prop.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Stack;
 
 /**
@@ -268,7 +267,7 @@ public class GirvanNewman {
                         }
                         if (!visEdges[v][w]) {
                             // We need to add the edge that way because we don't know the vertex identifiers in the new graph
-                            G.addEdge(graph.getVertexT(v), graph.getVertexT(w),graph.weight(v,w));
+                            G.addEdgeT(graph.getVertexT(v), graph.getVertexT(w), graph.weight(v, w));
                             visEdges[v][w] = true;
                             visEdges[w][v] = true;
                         }

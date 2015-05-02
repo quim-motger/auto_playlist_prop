@@ -44,7 +44,7 @@ public class RelationController {
             for (Song s2 : songs) {
                 if (!(s1.getTitle().equals(s2.getTitle()) && s1.getArtist().equals(s2.getArtist()))
                         && rsongs.evaluateSongs(s1,s2))
-                    graph.addEdge(s1,s2,1);
+                    graph.addEdgeT(s1, s2, 1);
             }
         }
     }
@@ -58,7 +58,7 @@ public class RelationController {
                     for (Song s1 : l.obtainSongs()) {
                         for (Song s2 : l.obtainSongs()) {
                             if (!(s1.getTitle().equals(s2.getTitle()) && s1.getArtist().equals(s2.getArtist())))
-                                graph.addEdge(s1,s2,1);
+                                graph.addEdgeT(s1, s2, 1);
                         }
                     }
                 }

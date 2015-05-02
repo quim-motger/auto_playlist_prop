@@ -18,7 +18,8 @@ public class GraphDriver {
             System.out.println("**********************************************************");
             System.out.print("\n");
             printInfo();
-
+            System.out.println("Graph is a generic class. To facilitate testing a Graph<Integer> will be used" +
+                    "\n Therefore, vertices are Integers");
             Scanner in = new Scanner(System.in);
             int i = -1;
             Graph<Integer> g = null;
@@ -46,7 +47,7 @@ public class GraphDriver {
                         g.addEdge(in.nextInt(),in.nextInt(),in.nextDouble());
                         break;
                     case 7:
-                        //void 	addEdge(T v1, T v2, double weight)"
+                        g.addEdgeT(in.nextInt(), in.nextInt(),in.nextDouble());
                         break;
                     case 8:
                         //g.addVertex()
@@ -104,7 +105,7 @@ public class GraphDriver {
                         System.out.println(g.numberOfVertices());
                         break;
                     case 26:
-                        System.out.println(g.removeArc(in.nextInt(),in.nextInt()));
+                        System.out.println(g.removeArc(in.nextInt(), in.nextInt()));
                         break;
                     case 27:
                         System.out.println(g.removeEdge(in.nextInt(), in.nextInt()));
@@ -150,7 +151,7 @@ public class GraphDriver {
         sb.add("void 	addArc(int v1, int v2, double weight)");
         sb.add("void 	addEdge(int v1, int v2)");
         sb.add("void 	addEdge(int v1, int v2, double weight)");
-        sb.add("void 	addEdge(T v1, T v2, double weight)");
+        sb.add("void 	addEdgeT(T v1, T v2, double weight)");
         sb.add("void 	addVertex(T v)");
         sb.add("java.util.LinkedHashSet<java.lang.Integer> 	adjacentVertices(int v)");
         sb.add("boolean 	areAdjacent(int v1, int v2)");

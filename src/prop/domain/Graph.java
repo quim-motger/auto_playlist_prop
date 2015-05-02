@@ -112,11 +112,11 @@ public class Graph<T> {
     }
 
     /**
-     * Adds an undirected edge between two vertices
+     * Adds an undirected edge between two vertices of type T
      * @param v1 vertex 1
      * @param v2 vertex 2
      */
-    public void addEdge(T v1, T v2, double weight) {
+    public void addEdgeT(T v1, T v2, double weight) {
         checkVertexT(v1);
         checkVertexT(v2);
         int vi1 = T_to_Int.get(v1);
@@ -133,7 +133,7 @@ public class Graph<T> {
 
 
     /**
-     * Adds an undirected edge between two vertices
+     * Adds an undirected edge between two vertices using integer identifiers
      * @param v1 vertex 1
      * @param v2 vertex 2
      * @param weight double weight

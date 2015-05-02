@@ -1,10 +1,7 @@
 package prop.domain;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.Scanner;
 
 /**
  * Clique Percolation method class based on Bron Kerbosch algorithm
@@ -159,7 +156,7 @@ public class CliquePercolation{
                     g.addVertex(graph.getVertexT(i));
                     for (int m : graph.adjacentVertices(i)) {
                         if (g.contains(graph.getVertexT(m))) {
-                            g.addEdge(graph.getVertexT(i), graph.getVertexT(m), graph.weight(i, m));
+                            g.addEdgeT(graph.getVertexT(i), graph.getVertexT(m), graph.weight(i, m));
                         }
                     }
                 }
