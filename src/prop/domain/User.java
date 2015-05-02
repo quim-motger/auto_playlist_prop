@@ -196,8 +196,8 @@ public class User {
                 ret.append(associatedLists.get(i).obtainId());
                 ret.append(USER_DELIMITER);
             }
+            ret.append(associatedLists.get(i).obtainId());
         }
-        ret.append(associatedLists.get(i).obtainId());
         return ret.toString();
     }
 
