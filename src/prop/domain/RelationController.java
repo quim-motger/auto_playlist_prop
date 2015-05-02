@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class RelationController {
 
-    Graph graph;
+    Graph<Song> graph;
     boolean dirty;
     
     public RelationController() {
@@ -17,7 +17,7 @@ public class RelationController {
     }
 
     public void initGraph(SongController sc) {
-        graph = new Graph();
+        graph = new Graph<>();
         ArrayList<Song> ss = sc.getSongSet().getSongSet();
         for (Song s : ss) {
             graph.addVertex(s);
@@ -43,7 +43,8 @@ public class RelationController {
         for (Song s1 : songs) {
             for (Song s2 : songs) {
                 if (!(s1.getTitle().equals(s2.getTitle()) && s1.getArtist().equals(s2.getArtist()))
-                        && rsongs.evaluateSongs(s1,s2)) graph.addEdge(s1,s2,1);
+                        && rsongs.evaluateSongs(s1,s2))
+                    graph.addEdge(s1,s2,1);
             }
         }
     }
