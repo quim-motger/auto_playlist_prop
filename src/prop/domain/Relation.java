@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 /**
  * Abstract Relation - 30/3/2015
  * @author gerard.casas.saez
@@ -12,13 +14,13 @@ public abstract class Relation {
      * @param s2    Song 2 to evaluate
      * @return      <code>true</code> if <code>s1</code> and <code>s2</code> are related
      */
-    public abstract boolean evaluateSongs(Song s1, Song s2);
+    public abstract boolean evaluateSongs(Song s1, Song s2) throws PropException;
 
     /**
      * @param   u    User to evaluate
      * @return      <code>true</code> if <code>u</code> is related with specified criteria
      */
-    public abstract boolean evaluateUser(User u);
+    public abstract boolean evaluateUser(User u) throws PropException;
 
 
 }

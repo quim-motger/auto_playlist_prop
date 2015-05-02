@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -31,12 +33,20 @@ public class SimpleRelationDriver {
                     printInfoComplete();
                     break;
                 case 2:
-                    if (r.evaluateSongs(s1, s2)) System.out.print("true\n");
-                    else System.out.print("false\n");
+                    try {
+                        if (r.evaluateSongs(s1, s2)) System.out.print("true\n");
+                        else System.out.print("false\n");
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 3:
-                    if (r.evaluateUser(u)) System.out.print("true\n");
-                    else System.out.print("false\n");
+                    try {
+                        if (r.evaluateUser(u)) System.out.print("true\n");
+                        else System.out.print("false\n");
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 4:
                     String type = in.next();
@@ -62,7 +72,7 @@ public class SimpleRelationDriver {
                     Genre genre2 = Genre.getGenreById(in.nextInt());
                     Genre subgenre2 = Genre.getGenreById(in.nextInt());
                     int duration2 = in.nextInt();
-                    s1 = new Song(title2, artist2, album2, y2, genre2, subgenre2, duration2);
+                    s2 = new Song(title2, artist2, album2, y2, genre2, subgenre2, duration2);
                     break;
                 case 7:
                     String name = in.next();
@@ -73,8 +83,10 @@ public class SimpleRelationDriver {
                     GregorianCalendar date = new GregorianCalendar(year, month, day);
                     CountryCode country = CountryCode.getByCode(in.nextInt());
                     u = new User(name, gender, date, country);
-                    System.out.print(u.age());
                     break;
+                case 8:
+                    System.out.print(s1.getTitle() + " " + s1.getArtist() + "\n");
+                    System.out.print(s2.getTitle() + " " + s2.getArtist() + "\n");
                 default:
                     printInfoComplete();
             }

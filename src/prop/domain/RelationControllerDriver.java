@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -85,8 +87,12 @@ public class RelationControllerDriver {
                     System.out.println(sb.toString());
                     System.out.println(sp.toString());
                     Relation r = rc.parsing(sb.toString(),sp.toString());
-                    if(r.evaluateSongs(song0, song1)) System.out.print("true\n");
-                    else System.out.print("false\n");
+                    try {
+                        if(r.evaluateSongs(song0, song1)) System.out.print("true\n");
+                        else System.out.print("false\n");
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                 default:
                     printInfoComplete();
             }

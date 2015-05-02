@@ -19,4 +19,5 @@ public class ErrorString {
     public static final String UNEXISTING_USER = "User does not exist in the system\n";
     public static final String NULL = "Null value\n";
     public static final String UNEXISTING_ATTRIBUTE = "The attribute does not exist\n";
+    public static final String WRONG_RELATION_TYPE = "The relation is not a type you can evaluate with this method\n";
 }

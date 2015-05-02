@@ -81,13 +81,22 @@ public class PlaybackDriver {
                     }
                     break;
                 case 7:
+                    Song s1 = sc.getSong(in.next(), in.next());
+                    Calendar d1 = Calendar.getInstance();
+                    d1.set(in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
+                    Playback p1 = new Playback(s1, d1);
+                    if (playback.compareTo(p1) > 0) System.out.println("this playback is posterior than new");
+                    else if (playback.compareTo(p1) < 0) System.out.println("this playback is anterior than new");
+                    else System.out.println("this playback and new have equal dates");
+                    break;
+                case 8:
                     s = playback.toString();
                     System.out.print(s);
                     break;
-                case 8:
+                case 9:
                     playback = Playback.valueOf(s, sc);
                     break;
-                case 9:
+                case 10:
                     String title = in.next();
                     String artist = in.next();
                     String album = in.next();
@@ -97,7 +106,7 @@ public class PlaybackDriver {
                     int duration = in.nextInt();
                     sc.addSong(title,artist,album,year,genre,subgenre,duration);
                     break;
-                case 10:
+                case 11:
                     String title2 = in.next();
                     String artist2 = in.next();
                     sc.removeSong(title2, artist2);
@@ -106,7 +115,7 @@ public class PlaybackDriver {
                     printInfoComplete();
             }
             System.out.print("\n");
-            if (i > 1 && i < 11) printInfoBrief();
+            if (i > 1 && i < 12) printInfoBrief();
         }
     }
 
@@ -118,11 +127,12 @@ public class PlaybackDriver {
                 + "4:   Calendar getDate()\n"
                 + "5:   void setSong(Song song): title artist\n"
                 + "6:   void setDate(Calendar date): YYYY MM DD hh mm ss\n"
-                + "7:   String toString()\n"
-                + "8:   void valueOf(String s)\n"
-                + "9:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration): title " +
+                + "7:   compareTo(Playback p): title artist YYYY MM DD hh mm ss\n"
+                + "8:   String toString()\n"
+                + "9:   void valueOf(String s)\n"
+                + "10:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration): title " +
                 "artist album YYYY id_genre id_subgenre duration(seconds)\n"
-                + "10:  sc.removeSong(String title, String artist): title artist\n");
+                + "11:  sc.removeSong(String title, String artist): title artist\n");
     }
 
     private static void printInfoBrief() {
