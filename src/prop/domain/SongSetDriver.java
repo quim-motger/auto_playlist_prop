@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -55,7 +57,7 @@ public class SongSetDriver {
                         printSong(s);
                         System.out.print("\n");
                     }
-                    catch (Exception e) {
+                    catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -66,7 +68,7 @@ public class SongSetDriver {
                         printSong(s);
                         System.out.print("\n");
                     }
-                    catch (Exception e) {
+                    catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -81,7 +83,7 @@ public class SongSetDriver {
                             printSong(s);
                         System.out.print("\n");
                     }
-                    catch (Exception e) {
+                    catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -97,7 +99,7 @@ public class SongSetDriver {
                     try {
                         songSet.addSong(song);
                     }
-                    catch (Exception e) {
+                    catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -107,7 +109,7 @@ public class SongSetDriver {
                     try {
                         songSet.removeSong(title, artist);
                     }
-                    catch (Exception e) {
+                    catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -134,7 +136,7 @@ public class SongSetDriver {
                             printSong(s);
                         System.out.print("\n");
                     }
-                    catch (Exception e) {
+                    catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -150,7 +152,7 @@ public class SongSetDriver {
                             printSong(s);
                         System.out.print("\n");
                     }
-                    catch (Exception e) {
+                    catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;

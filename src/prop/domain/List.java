@@ -227,9 +227,9 @@ public class List {
      * @param origin String to be parsed
      * @param songController SongController containing all songs
      * @return List created parsing origin
-     * @throws Exception if origin format incorrect
+     * @throws PropException if origin format incorrect
      */
-    public static List valueOf(String origin, SongController songController) throws Exception {
+    public static List valueOf(String origin, SongController songController) throws PropException {
         //Separates strings by delimiter
         String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
         if (tokens.length<4 || !tokens[0].equals(LIST_STRING_ID)) {
