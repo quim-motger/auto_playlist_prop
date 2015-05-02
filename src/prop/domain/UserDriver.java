@@ -15,8 +15,8 @@ public class UserDriver {
             System.out.println("**********************************************************");
             System.out.print("\n");
             printInfo();
-            System.out.println("This class needs 5 other Classes: Playback, Song, SongController," +
-                    " List and List Controller\n"
+            System.out.println("This class needs 3 other Classes: Playback, Song," +
+                    " and List \n"
                     + "Therefore, you can create a Song, a Playback and a List\n"
                     + "START WITH OPTION 3");
 
@@ -174,32 +174,32 @@ public class UserDriver {
         sb.add("terminate program");
         sb.add("info");
         sb.add("User()");
-        sb.add("User(String name, Gender gender, Calendar birthdate, CountryCode country)");
+        sb.add("User(String name, Gender gender, int year, int month, int day, CountryCode country)");
         sb.add("nothing");
-        sb.add("void 	add(Playback play)");
+        sb.add("void 	add(playback)");
         sb.add("int 	age()");
-        sb.add("void 	associate(List list)");
+        sb.add("void 	associate(list)");
         sb.add("void 	clearLists ()");
         sb.add("void clearRegister()");
-        sb.add("boolean 	disassociate(List list)");
-        sb.add("java.util.ArrayList<List> 	getAssociatedLists()");
-        sb.add("java.util.Calendar 	getBirthdate()");
+        sb.add("boolean 	disassociate(list)");
+        sb.add("ArrayList<List> 	getAssociatedLists()");
+        sb.add("Calendar 	getBirthdate()");
         sb.add("CountryCode 	getCountry()");
         sb.add("Gender 	getGender()");
-        sb.add("java.lang.String 	getName()");
-        sb.add("java.util.TreeSet<Playback> 	getPlaybackRegister()");
-        sb.add("boolean 	hasList(List list)");
+        sb.add("String 	getName()");
+        sb.add("TreeSet<Playback> 	getPlaybackRegister()");
+        sb.add("boolean 	hasList(list)");
         sb.add("nothing");
         sb.add("void 	setBirthdate(date)");
         sb.add("void 	setCountry(CountryCode country)");
         sb.add("void 	setGender(Gender gender)");
-        sb.add("void 	setName(java.lang.String name)");
+        sb.add("void 	setName(String name)");
         sb.add("nothing");
-        sb.add("java.lang.String 	toString()");
-        sb.add("static User 	valueOf(java.lang.String origin, ListController listController, SongController songController)");
+        sb.add("String 	toString()");
+        sb.add("static User 	valueOf()");
 
         // OTHER CLASSES
-        sb.add("\nMETHODS FOR OTHER CLASSES\nplayback = new Playback(Song song, Calendar date)");
+        sb.add("\nplayback = new Playback(Song song, Calendar date)");
         sb.add("song = songController.getSong(String title, String artist)");
         sb.add("songController.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)");
         sb.add("date.set(int year, int month, int day, int hour, int minute, int second)");
