@@ -53,24 +53,6 @@ public class User {
         associatedLists = new ArrayList<>();
     }
 
-    /**
-     * User constructor with all members
-     * @param name String which contains the User's name
-     * @param gender User's gender
-     * @param birthdate User's birthdate
-     * @param country User's country of residence
-     * @param playbackRegister User's playback register
-     * @param associatedLists User's associated lists
-     */
-    public User(String name, Gender gender, Calendar birthdate, CountryCode country, TreeSet<Playback> playbackRegister, ArrayList<List> associatedLists) {
-        this.name = name;
-        this.gender = gender;
-        this.birthdate = birthdate;
-        this.country = country;
-        this.playbackRegister = playbackRegister;
-        this.associatedLists = associatedLists;
-    }
-
     /* GETTERS */
     public ArrayList<List> getAssociatedLists() {
         return associatedLists;

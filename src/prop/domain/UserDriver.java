@@ -49,8 +49,7 @@ public class UserDriver {
                         break;
                     }
                     case 4:
-                        u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()),
-                                CountryCode.valueOf(in.next()),setPlayback,arrayList);
+                        //res
                     break;
                     case 5:
                         u.add(playback);
@@ -166,8 +165,7 @@ public class UserDriver {
         sb.add("info");
         sb.add("User()");
         sb.add("User(String name, Gender gender, Calendar birthdate, CountryCode country)");
-        sb.add("User(String name, Gender gender, Calendar birthdate, CountryCode country, TreeSet<Playback> playbackRegister," +
-                        "ArrayList<List> associatedLists");
+        sb.add("nothing");
         sb.add("void 	add(Playback play)");
         sb.add("int 	age()");
         sb.add("void 	associate(List list)");
@@ -199,7 +197,6 @@ public class UserDriver {
         sb.add("list.addSong(song)");
         sb.add("listController.add(list)");
         sb.add("setPlayback.add(playback)");
-        sb.add("arrayList.add(list)");
         for (int i = 0; i < sb.size(); ++i) {
             System.out.println(i + ": " + sb.get(i));
         }
