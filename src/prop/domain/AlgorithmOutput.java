@@ -41,7 +41,10 @@ public class AlgorithmOutput {
      * Adds a string to the log
      * @param l String to add
      */
-    public void add(String l) { log.add(l); }
+    public void add(String l) {
+        if (l == null) throw new NullPointerException("Tried to add a null string");
+        log.add(l);
+    }
 
     /* GETTERS */
     public ArrayList<String> getLog() { return log; }
