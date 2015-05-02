@@ -38,15 +38,15 @@ public class AlgorithmController {
         switch (algorithm) {
             case 0:
                 GirvanNewman gn = new GirvanNewman();
-                ao = gn.execute(graph, k);
+                ao = gn.execute(graph,k);
                 break;
             case 1:
                 Louvain l = new Louvain();
-                ao = l.execute(graph, k);
+                ao = l.execute(graph,k);
                 break;
             case 2:
                 CliquePercolation cp = new CliquePercolation();
-                // todo: ao = cp.execute(graph);
+                ao = cp.execute(graph,k);
                 break;
         }
 

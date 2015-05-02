@@ -1,6 +1,7 @@
 package prop.domain;
 
 import prop.ErrorString;
+import prop.PropException;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -41,30 +42,30 @@ public class SongSet {
 
     /**
      * Get a song identified by title and artist.
-     * @param title         the title of the song to get
-     * @param artist        the artist of the song to get
-     * @return              the song if present
-     * @throws Exception    if the song is not present
+     * @param title             the title of the song to get
+     * @param artist            the artist of the song to get
+     * @return                  the song if present
+     * @throws PropException    if the song is not present
      */
-    public Song getSong(String title, String artist) throws Exception {
+    public Song getSong(String title, String artist) throws PropException {
         for (Song song : songSet) {
             if (song.getTitle().equals(title) && song.getArtist().equals(artist))
                 return song;
         }
-        throw new Exception(ErrorString.UNEXISTING_SONG);
+        throw new PropException(ErrorString.UNEXISTING_SONG);
     }
 
     /**
      * Get a song by position.
-     * @param i             the position of the song to get
-     * @return              the song if present
-     * @throws Exception    if the song is not present
+     * @param i                 the position of the song to get
+     * @return                  the song if present
+     * @throws PropException    if the song is not present
      */
-    public Song getSong(int i) throws Exception {
+    public Song getSong(int i) throws PropException {
         if (i < songSet.size())
             return songSet.get(i);
         else
-            throw new Exception(ErrorString.UNEXISTING_SONG);
+            throw new PropException(ErrorString.UNEXISTING_SONG);
     }
 
     /**
@@ -73,7 +74,7 @@ public class SongSet {
      *              and the second element is the {@code artist} of the song
      * @return      list of present songs
      */
-    public ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids) throws Exception {
+    public ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids) throws PropException {
         ArrayList<Song> songList = new ArrayList<Song>();
         for (Pair<String,String>id : ids) {
             Song c = getSong(id.first,id.second);
@@ -85,31 +86,31 @@ public class SongSet {
 
     /**
      * Add a song to the set.
-     * @param song          the song to add
-     * @throws Exception    if the song already exists or if the {@code song} parameter is null
+     * @param song              the song to add
+     * @throws PropException    if the song already exists or if the {@code song} parameter is null
      */
-    public void addSong(Song song) throws Exception {
+    public void addSong(Song song) throws PropException {
         if (song != null) {
             if (!contains(song.getTitle(), song.getArtist())) {
                 songSet.add(song);
             }
-            else throw new Exception(ErrorString.EXISTING_SONG);
+            else throw new PropException(ErrorString.EXISTING_SONG);
         }
-        else throw new Exception(ErrorString.NULL);
+        else throw new PropException(ErrorString.NULL);
     }
 
     /**
      * Remove a song from the set.
-     * @param title         the title of the song
-     * @param artist        the artist of the song
-     * @throws Exception    if the song is not present in the set
+     * @param title             the title of the song
+     * @param artist            the artist of the song
+     * @throws PropException    if the song is not present in the set
      */
-    public void removeSong(String title, String artist) throws Exception {
+    public void removeSong(String title, String artist) throws PropException {
         int i = getSongIndex(title,artist);
         if (i != -1)
             songSet.remove(i);
         else
-            throw new Exception(ErrorString.UNEXISTING_SONG);
+            throw new PropException(ErrorString.UNEXISTING_SONG);
     }
 
     /**
@@ -161,7 +162,7 @@ public class SongSet {
      *                      is the {@code attribute} and the second element is the {@code value} of the condition
      * @return              a list of songs that meet the conditions
      */
-    public ArrayList<Song> searchSongs(ArrayList<Pair<String,String>> conditions) throws Exception {
+    public ArrayList<Song> searchSongs(ArrayList<Pair<String,String>> conditions) throws PropException {
         ArrayList<Song> songs = new ArrayList<Song>();
         for (Song song : songSet) {
             boolean valid = true;
@@ -179,14 +180,14 @@ public class SongSet {
 
     /**
      * Returns true if the {@code song} has the specified {@code value} for the specified {@code attribute}.
-     * @param song          the song to validate
-     * @param attribute     the attribute to validate
-     * @param value         the value that the attribute of the song must have
-     * @return              true if the song has the specified value for the specified attribute,
-     *                      false otherwise
-     * @throws Exception    if the parameter {@code attribute} is not valid attribute name
+     * @param song              the song to validate
+     * @param attribute         the attribute to validate
+     * @param value             the value that the attribute of the song must have
+     * @return                  true if the song has the specified value for the specified attribute,
+     *                          false otherwise
+     * @throws PropException    if the parameter {@code attribute} is not valid attribute name
      */
-    private boolean satisfies(Song song, String attribute, String value) throws Exception {
+    private boolean satisfies(Song song, String attribute, String value) throws PropException {
         switch (attribute) {
             case "title":
                 return song.getTitle().equals(value);
@@ -203,7 +204,7 @@ public class SongSet {
             case "duration":
                 return song.getDuration() == Integer.parseInt(value);
             default:
-                throw new Exception(ErrorString.UNEXISTING_ATTRIBUTE);
+                throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
         }
     }
 
@@ -217,7 +218,7 @@ public class SongSet {
         for (i = 0; i < songSet.size()-1; ++i) {
             s += songSet.get(i).toString() + delimiter;
         }
-        s += songSet.get(i);
+        if (!songSet.isEmpty()) s += songSet.get(i);
         return s;
     }
 
@@ -225,9 +226,9 @@ public class SongSet {
      * Parse a string to a {@code SongSet} object.
      * @param s the string representing the song set
      * @return  the {@code SongSet} object created from the String
-     * @throws  Exception
+     * @throws  PropException
      */
-    public static SongSet valueOf(String s) throws Exception {
+    public static SongSet valueOf(String s) throws PropException {
         String[] songs = s.split(Pattern.quote(delimiter));
         SongSet ss = new SongSet();
         for (String r : songs) {

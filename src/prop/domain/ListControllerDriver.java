@@ -1,5 +1,8 @@
 package prop.domain;
 
+import prop.PropException;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -64,7 +67,7 @@ public class ListControllerDriver {
                     try {
                         listController.createRandomList(title, n, songController);
                     }
-                    catch (Exception e) {
+                    catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -83,7 +86,7 @@ public class ListControllerDriver {
                     artist = in.next();
                     try {
                         listController.addSong(id,title,artist,songController);
-                    } catch (Exception e) {
+                    } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -139,7 +142,7 @@ public class ListControllerDriver {
                     try {
                         listController.save(path);
                     }
-                    catch(Exception e) {
+                    catch(IOException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -148,7 +151,7 @@ public class ListControllerDriver {
                     try {
                         listController.load(path, songController);
                     }
-                    catch (Exception e) {
+                    catch (PropException|IOException e) {
                         System.out.println(e.getMessage());
                     }
                     break;

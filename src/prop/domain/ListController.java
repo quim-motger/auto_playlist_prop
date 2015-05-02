@@ -1,6 +1,9 @@
 package prop.domain;
 
+import prop.PropException;
 import prop.data.DataController;
+
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -79,7 +82,7 @@ public class ListController {
      * @param n                 the number of songs the list will contain
      * @param songController    an instance of the Song Controller
      */
-    public void createRandomList(String title, int n, SongController songController) throws Exception {
+    public void createRandomList(String title, int n, SongController songController) throws PropException {
         int m = songController.size();
         if (n > m) n = m;
         Random rand = new Random();
@@ -125,7 +128,7 @@ public class ListController {
      * @param artist            the artist of the song to add
      * @param songController    an instance of the Song Controller
      */
-    public void addSong(int id, String title, String artist, SongController songController) throws Exception {
+    public void addSong(int id, String title, String artist, SongController songController) throws PropException {
         Song song = songController.getSong(title, artist);
         listSet.getList(id).addSong(song);
     }
@@ -230,7 +233,7 @@ public class ListController {
      * Save the list set in the specified path.
      * @param path  the path where save the list set to
      */
-    public void save(String path) throws Exception {
+    public void save(String path) throws IOException {
         DataController.save(listSet.toString(),path);
     }
 
@@ -238,7 +241,7 @@ public class ListController {
      * Load the list set from the specified path.
      * @param path  the path where load the list set from
      */
-    public void load(String path, SongController songController) throws Exception {
+    public void load(String path, SongController songController) throws PropException, IOException {
         String serialized = DataController.load(path);
         listSet = ListSet.valueOf(serialized,songController);
     }

@@ -1,9 +1,11 @@
 package prop.domain;
 
 import prop.ErrorString;
+import prop.PropException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.regex.Pattern;
 
 /**
  * User set
@@ -13,18 +15,18 @@ import java.util.Iterator;
 public class UserSet implements Iterable<User>{
 
     private ArrayList<User> users;
-    private static final char delimiter = '\n';
+    private static final String delimiter = "\n\n";
 
 
     /**
-     * <b>UsersSet</b> class constructor
+     * <code>UsersSet</code> class constructor
      */
     public UserSet() {
         users = new ArrayList<>();
     }
 
     /**
-     * Getter method of <b>users</b>
+     * Getter method of the <code>users</code>
      * @return      users
      */
     public ArrayList<User> getUsers() {
@@ -32,7 +34,7 @@ public class UserSet implements Iterable<User>{
     }
 
     /**
-     * Getter method of <b>users</b> size
+     * Getter method of <code>users</code> size
      * @return      users size
      */
     public int getSize() {
@@ -40,8 +42,9 @@ public class UserSet implements Iterable<User>{
     }
 
     /**
-     * Add <b>user</b> to <b>users</b>
-     * @params  user  new <b>user</b> to add
+     * Add <code>user</code> to <code>users</code>
+     * @param  user     new <code>user</code> to add
+     * @throws  Exception
      */
     public void addUser(User user) throws Exception {
         if (user!=null) {
@@ -54,8 +57,8 @@ public class UserSet implements Iterable<User>{
     }
 
     /**
-     * Getter method of the <b>User</b> with name <b>name</b>
-     * @params  name    <b>user</b> name
+     * Getter method of the <code>User</code> with name <code>name</code>
+     * @param   name    <code>user</code> name
      * @return  user    the user; null if not found
      */
     public User getUserByName(String name) {
@@ -65,8 +68,9 @@ public class UserSet implements Iterable<User>{
     }
 
     /**
-     * Remove <b>user</b> with name <b>name</b> from <b>users</b>
-     * @params  name    <b>user</b> name
+     * Remove <code>user</code> with name <code>name</code> from <code>users</code>
+     * @params  name    <code>user</code> name
+     * @throws  Exception
      */
     public void removeUser (String name) throws Exception {
         int i = getUserPos(name);
@@ -77,9 +81,9 @@ public class UserSet implements Iterable<User>{
     }
 
     /**
-     * Getter method of the <b>position</b> of <b>User</b> with requested <b>name</b>
-     * @params name  user <b>name</b>
-     * @return      position  user position in <b>users</b>; -1 if not found
+     * Getter method of the <code>position</code> of <code>User</code> with requested <code>name</code>
+     * @params name  user <code>name</code>
+     * @return      position  user position in <code>users</code>; -1 if not found
      */
     private int getUserPos(String name) {
         int i = 0;
@@ -93,6 +97,10 @@ public class UserSet implements Iterable<User>{
         else return -1;
     }
 
+    /**
+     * Get the <code>UserSet</code> in String format
+     * @return      a <code>String</code> with the <code>UserSet</code> in the specified format
+     */
     public String toString() {
         String s = "";
         int i;
@@ -103,13 +111,22 @@ public class UserSet implements Iterable<User>{
         return s;
     }
 
-    public static UserSet valueOf(String s) throws Exception {
-        String[] users = s.split(String.valueOf(delimiter));
-        UserSet us = new UserSet();
-        for (String r : users) {
-            //us.addUser(User.valueOf(r));
+    /**
+     * Get the value of the String <code>s</code> that contains a UserSet in the specified format
+     * @param s     the String that contains the UserSet
+     * @return      a UserSet
+     * @throws      Exception
+     */
+    public static UserSet valueOf(String s, ListController lc, SongController sc) throws Exception {
+        if (s == null) throw new Exception(ErrorString.NULL);
+        else {
+            String[] users = s.split(Pattern.quote(delimiter));
+            UserSet us = new UserSet();
+            for (String r : users) {
+                us.addUser(User.valueOf(r, lc, sc));
+            }
+            return us;
         }
-        return us;
     }
     
     public Iterator<User> iterator() {

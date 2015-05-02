@@ -1,6 +1,7 @@
 package prop.domain;
 
 import prop.ErrorString;
+import prop.PropException;
 import prop.data.DataController;
 
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class SongController {
     public SongSet getSongSet() { return songSet;}
 
     /**
-     * Add a new <b>song</b> to the set
+     * Add a new <code>song</code> to the set
      * @param title     song title
      * @param artist    song artist
      * @param album     song album
@@ -51,23 +52,29 @@ public class SongController {
      * @param genre     song genre
      * @param subgenre  song subgenre
      * @param duration  song duration in seconds
-     * @return          true if the song was added; false if the song was present and not added
+     * @throws PropException
      */
-    public void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) throws Exception {
+    public void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) throws PropException {
         Song song = new Song(title, artist, album, year, genre, subgenre, duration);
         songSet.addSong(song);
     }
 
-    public void addSong(Song song) throws Exception {
+    /**
+     * Add a new <code>song</code> to the <code>songSet</code> of the <code>songController</code>
+     * @param song  the song to be added
+     * @throws PropException
+     */
+    public void addSong(Song song) throws PropException {
         songSet.addSong(song);
     }
 
     /**
-     * Remove a <b>song</b> of the set
+     * Remove a <code>song</code> of the set
      * @param title     song title
      * @param artist    song artist
+     * @throws  PropException
      */
-    public void removeSong(String title, String artist) throws Exception {
+    public void removeSong(String title, String artist) throws PropException {
         songSet.removeSong(title, artist);
     }
 
@@ -76,8 +83,9 @@ public class SongController {
      * @param title     song title
      * @param artist    song artist
      * @param pair      a pair defining attribute and new value
+     * @throws  PropException
      */
-    public void editSong(String title, String artist, Pair<String, String> pair) throws Exception {
+    public void editSong(String title, String artist, Pair<String, String> pair) throws PropException {
         Song song = songSet.getSong(title, artist);
         if (song != null) {
             switch(pair.first) {
@@ -103,7 +111,7 @@ public class SongController {
                     song.setDuration(Integer.parseInt(pair.second));
                     break;
                 default:
-                    throw new Exception(ErrorString.UNEXISTING_ATTRIBUTE);
+                    throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
             }
         }
     }
@@ -125,9 +133,9 @@ public class SongController {
      * @param title         the title of the song to get
      * @param artist        the artist of the song to get
      * @return              the song if present
-     * @throws Exception    if the song is not present
+     * @throws PropException    if the song is not present
      */
-    public Song getSong(String title, String artist) throws Exception {
+    public Song getSong(String title, String artist) throws PropException {
         return songSet.getSong(title, artist);
     }
 
@@ -135,9 +143,9 @@ public class SongController {
      * Get a song by position
      * @param i             the position of the song to get
      * @return              the song if present
-     * @throws Exception    if the song is not present
+     * @throws PropException    if the song is not present
      */
-    public Song getSong(int i) throws Exception {
+    public Song getSong(int i) throws PropException {
         return songSet.getSong(i);
     }
 
@@ -146,13 +154,27 @@ public class SongController {
      * @param l     list with pairs of attributes and value to define search
      * @return      string with all the songs that match the search
      */
-    public String searchSongs(ArrayList< Pair<String, String> > l) throws Exception {
+    public String searchSongs(ArrayList< Pair<String, String> > l) throws PropException {
         ArrayList<Song> songs = songSet.searchSongs(l);
         String s = "";
         for (Song song : songs) {
-            s += song.toString() + "\n";
+            s += song.getTitle() + " " + song.getArtist() + " " + song.getAlbum() + " " + song.getYear() +
+                    " " + song.getGenre().getName() + " " + song.getSubgenre().getName() + " " + song.getDuration() + "\n";
         }
         return s;
+    }
+
+    /**
+     * list of all Genres
+     * @return  a String with the list of all genres
+     */
+    public String listGenres() {
+        StringBuilder sb = new StringBuilder();
+        int i;
+        for (i = 0; i < 132; ++i) {
+            sb.append(Genre.getGenreById(i).getId() + ": " + Genre.getGenreById(i).getName() + "\n");
+        }
+        return sb.toString();
     }
 
     /**
@@ -177,7 +199,7 @@ public class SongController {
         try {
             s = DataController.load(path);
             this.songSet = SongSet.valueOf(s);
-        } catch (Exception e) {
+        } catch (PropException|IOException e) {
             System.out.println(e.getMessage());
         }
     }

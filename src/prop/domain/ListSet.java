@@ -168,7 +168,7 @@ public class ListSet {
         return ret.toString();
     }
 
-    public static ListSet valueOf(String origin, SongController songController) throws Exception {
+    public static ListSet valueOf(String origin, SongController songController) throws PropException {
         String[] tokens = origin.split(Pattern.quote(DELIMITER));
         if (!tokens[0].equals(LISTSET_ID)) {
             throw new PropException(ErrorString.INCORRECT_FORMAT);
