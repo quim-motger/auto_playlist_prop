@@ -19,7 +19,8 @@ public class GraphDriver {
             System.out.print("\n");
             printInfo();
             System.out.println("Graph is a generic class. To facilitate testing a Graph<Integer> will be used" +
-                    "\n Therefore, vertices are Integers");
+                    "\nTherefore, vertices are Integers" +
+                    "\nSTART WITH OPTION 2");
             Scanner in = new Scanner(System.in);
             int i = -1;
             Graph<Integer> g = null;
@@ -50,76 +51,79 @@ public class GraphDriver {
                         g.addEdgeT(in.nextInt(), in.nextInt(),in.nextDouble());
                         break;
                     case 8:
-                        //g.addVertex()
+                        g.addVertex(in.nextInt());
                         break;
                     case 9:
                         LinkedHashSet<Integer> lhs = g.adjacentVertices(in.nextInt());
                         for (Integer a : lhs) System.out.println(a);
                         break;
                     case 10:
-                        //contains
+                        System.out.println(g.areAdjacent(in.nextInt(),in.nextInt()));
                         break;
                     case 11:
-                        System.out.println(g.getArcLoopDegree(in.nextInt()));
+                        System.out.println(g.contains(in.nextInt()));
                         break;
                     case 12:
-                        System.out.println(g.getDefaultWeight());
+                        System.out.println(g.getArcLoopDegree(in.nextInt()));
                         break;
                     case 13:
-                        System.out.println(g.getDegree(in.nextInt()));
+                        System.out.println(g.getDefaultWeight());
                         break;
                     case 14:
-                        System.out.println(g.getIndegree(in.nextInt()));
+                        System.out.println(g.getDegree(in.nextInt()));
                         break;
                     case 15:
-                        System.out.println(g.getLoopDegree(in.nextInt()));
+                        System.out.println(g.getIndegree(in.nextInt()));
                         break;
                     case 16:
-                        for (Integer t: g.getOriginalVertices()) System.out.println(t.toString());
+                        System.out.println(g.getLoopDegree(in.nextInt()));
                         break;
                     case 17:
-                        System.out.println(g.getOutdegree(in.nextInt()));
+                        for (Integer t: g.getOriginalVertices()) System.out.println(t.toString());
                         break;
                     case 18:
-                        // getvertex(t)
+                        System.out.println(g.getOutdegree(in.nextInt()));
                         break;
                     case 19:
-                        System.out.println(g.getVertexT(in.nextInt()).toString());
+                        System.out.println(g.getVertex(in.nextInt()));
                         break;
                     case 20:
-                        System.out.println(g.hasArc(in.nextInt(), in.nextInt()));
+                        System.out.println(g.getVertexT(in.nextInt()).toString());
                         break;
                     case 21:
-                        System.out.println(g.hasEdge(in.nextInt(), in.nextInt()));
+                        System.out.println(g.hasArc(in.nextInt(), in.nextInt()));
                         break;
                     case 22:
-                        System.out.println(g.isEmpty());
+                        System.out.println(g.hasEdge(in.nextInt(), in.nextInt()));
                         break;
                     case 23:
-                        System.out.println(g.numberOfEdges());
+                        System.out.println(g.isEmpty());
                         break;
                     case 24:
-                        System.out.println(g.numberOfEdges(in.nextInt(),in.nextInt()));
+                        System.out.println(g.numberOfEdges());
                         break;
                     case 25:
-                        System.out.println(g.numberOfVertices());
+                        System.out.println(g.numberOfEdges(in.nextInt(),in.nextInt()));
                         break;
                     case 26:
-                        System.out.println(g.removeArc(in.nextInt(), in.nextInt()));
+                        System.out.println(g.numberOfVertices());
                         break;
                     case 27:
-                        System.out.println(g.removeEdge(in.nextInt(), in.nextInt()));
+                        System.out.println(g.removeArc(in.nextInt(), in.nextInt()));
                         break;
                     case 28:
-                        g.setDefaultWeight(in.nextDouble());
+                        System.out.println(g.removeEdge(in.nextInt(), in.nextInt()));
                         break;
                     case 29:
-                        System.out.println(g.totalEdges(in.nextInt()));
+                        g.setDefaultWeight(in.nextDouble());
                         break;
                     case 30:
-                        System.out.println(g.weight(in.nextInt(),in.nextInt()));
+                        System.out.println(g.totalEdges(in.nextInt()));
                         break;
                     case 31:
+                        System.out.println(g.weight(in.nextInt(),in.nextInt()));
+                        break;
+                    case 32:
                         ArrayList<Double> ad = g.weights(in.nextInt(),in.nextInt());
                         for (Double d : ad) System.out.println(d);
                         break;
@@ -128,6 +132,9 @@ public class GraphDriver {
                 }
                 printInfoBrief();
             }
+        }
+        catch(NullPointerException ne) {
+            System.err.println("Caught NullPointerException: Incorrect format in test : " + ne.getMessage());
         }
         catch(Exception e) {
             System.err.println("Caught Exception: " + e.getMessage());
