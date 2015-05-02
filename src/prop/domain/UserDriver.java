@@ -89,6 +89,7 @@ public class UserDriver {
                         break;
                     case 16:
                         TreeSet<Playback> ap = u.getPlaybackRegister();
+                        System.out.println("PlaybackRegister Size: " + ap.size());
                         for (Playback p : ap) System.out.println(p);
                         break;
                     case 17:
@@ -130,6 +131,7 @@ public class UserDriver {
                                 Genre.valueOf(in.next()),in.nextInt());
                         break;
                     case 29:
+                        date = Calendar.getInstance();
                         date.set(in.nextInt(),in.nextInt(),in.nextInt(),in.nextInt(),in.nextInt(),in.nextInt());
                         break;
                     case 30:
