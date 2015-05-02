@@ -903,14 +903,7 @@ public enum CountryCode
 
     private static CountryCode getByAlpha2Code(String code)
     {
-        try
-        {
             return Enum.valueOf(CountryCode.class, code);
-        }
-        catch (IllegalArgumentException e)
-        {
-            return null;
-        }
     }
 
 
