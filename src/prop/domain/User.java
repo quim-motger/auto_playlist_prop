@@ -208,10 +208,12 @@ public class User {
         }
         ret.append(associatedLists.size());
         ret.append(USER_DELIMITER);
-        for (List l : associatedLists) {
-            ret.append(l.obtainId());
+        int i = 0;
+        for (; i < associatedLists.size()-1; ++i) {
+            ret.append(associatedLists.get(i).obtainId());
             ret.append(USER_DELIMITER);
         }
+        ret.append(associatedLists.get(i).obtainId());
         return ret.toString();
     }
 
