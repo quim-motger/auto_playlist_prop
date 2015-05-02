@@ -43,7 +43,7 @@ public class SongController {
     public SongSet getSongSet() { return songSet;}
 
     /**
-     * Add a new <b>song</b> to the set
+     * Add a new <code>song</code> to the set
      * @param title     song title
      * @param artist    song artist
      * @param album     song album
@@ -51,21 +51,27 @@ public class SongController {
      * @param genre     song genre
      * @param subgenre  song subgenre
      * @param duration  song duration in seconds
-     * @return          true if the song was added; false if the song was present and not added
+     * @throws Exception
      */
     public void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) throws Exception {
         Song song = new Song(title, artist, album, year, genre, subgenre, duration);
         songSet.addSong(song);
     }
 
+    /**
+     * Add a new <code>song</code> to the <code>songSet</code> of the <code>songController</code>
+     * @param song  the song to be added
+     * @throws Exception
+     */
     public void addSong(Song song) throws Exception {
         songSet.addSong(song);
     }
 
     /**
-     * Remove a <b>song</b> of the set
+     * Remove a <code>song</code> of the set
      * @param title     song title
      * @param artist    song artist
+     * @throws  Exception
      */
     public void removeSong(String title, String artist) throws Exception {
         songSet.removeSong(title, artist);
@@ -76,6 +82,7 @@ public class SongController {
      * @param title     song title
      * @param artist    song artist
      * @param pair      a pair defining attribute and new value
+     * @throws  Exception
      */
     public void editSong(String title, String artist, Pair<String, String> pair) throws Exception {
         Song song = songSet.getSong(title, artist);
@@ -150,9 +157,23 @@ public class SongController {
         ArrayList<Song> songs = songSet.searchSongs(l);
         String s = "";
         for (Song song : songs) {
-            s += song.toString() + "\n";
+            s += song.getTitle() + " " + song.getArtist() + " " + song.getAlbum() + " " + song.getYear() +
+                    " " + song.getGenre().getName() + " " + song.getSubgenre().getName() + " " + song.getDuration() + "\n";
         }
         return s;
+    }
+
+    /**
+     * list of all Genres
+     * @return  a String with the list of all genres
+     */
+    public String listGenres() {
+        StringBuilder sb = new StringBuilder();
+        int i;
+        for (i = 0; i < 132; ++i) {
+            sb.append(Genre.getGenreById(i).getId() + ": " + Genre.getGenreById(i).getName() + "\n");
+        }
+        return sb.toString();
     }
 
     /**

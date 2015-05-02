@@ -217,7 +217,7 @@ public class SongSet {
         for (i = 0; i < songSet.size()-1; ++i) {
             s += songSet.get(i).toString() + delimiter;
         }
-        s += songSet.get(i);
+        if (!songSet.isEmpty()) s += songSet.get(i);
         return s;
     }
 

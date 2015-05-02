@@ -105,6 +105,7 @@ public class PlaybackDriver {
                 default:
                     printInfoComplete();
             }
+            System.out.print("\n");
             if (i > 1 && i < 11) printInfoBrief();
         }
     }

@@ -28,6 +28,16 @@ public class SongControllerDriver {
                     printInfoComplete();
                     break;
                 case 2:
+                    System.out.print(songController.size() + "\n");
+                    break;
+                case 3:
+                    SongSet ss = songController.getSongSet();
+                    for (Song s: ss.getSongSet()) {
+                        System.out.print(s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
+                        " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration() + "\n");
+                    }
+                    break;
+                case 4:
                     String title = in.next();
                     String artist = in.next();
                     String album = in.next();
@@ -41,7 +51,7 @@ public class SongControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 3:
+                case 5:
                     String title2 = in.next();
                     String artist2 = in.next();
                     try {
@@ -50,7 +60,7 @@ public class SongControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 4:
+                case 6:
                     String title3 = in.next();
                     String artist3 = in.next();
                     String attribute = in.next();
@@ -62,20 +72,31 @@ public class SongControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 5:
+                case 7:
                     System.out.print(songController.getSongSetString());
                     break;
-                case 6:
+                case 8:
                     String title4 = in.next();
                     String artist4 = in.next();
                     try {
                         song = songController.getSong(title4,artist4);
-                        System.out.print(song.toString());
+                        System.out.print(song.getTitle() + " " + song.getArtist() + " " + song.getAlbum() + " " + song.getYear() +
+                                " " + song.getGenre().getName() + " " + song.getSubgenre().getName() + " " + song.getDuration() + "\n");
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 7:
+                case 9:
+                    try {
+                        song = songController.getSong(in.nextInt());
+                        System.out.print(song.getTitle() + " " + song.getArtist() + " " + song.getAlbum() + " " + song.getYear() +
+                                " " + song.getGenre().getName() + " " + song.getSubgenre().getName() + " " + song.getDuration() + "\n");
+
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+                    }
+                    break;
+                case 10:
                     int n = in.nextInt();
                     ArrayList< Pair<String,String>> l = new ArrayList<>();
                     while (n > 0) {
@@ -87,33 +108,40 @@ public class SongControllerDriver {
                         String p = songController.searchSongs(l);
                         System.out.print(p);
                     } catch (Exception e) {
-                            System.out.println(e.getMessage());
+                        System.out.println(e.getMessage());
                     }
                     break;
-                case 8:
+                case 11:
+                    System.out.print(songController.listGenres());
+                case 12:
                     songController.save(in.next());
                     break;
-                case 9:
+                case 13:
                     songController.load(in.next());
                     break;
                 default:
                     printInfoComplete();
             }
-            if (i > 0 && i < 10) printInfoBrief();
+            if (i > 1 && i < 14) printInfoBrief();
         }
     }
 
     private static void printInfoComplete() {
         System.out.print("0:   terminate program\n"
                 + "1:   printInfoComplete()\n"
-                + "2:   void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
-                + "3:   void removeSong(String title, String artist\n"
-                + "4:   void editSong(String title, String artist, Pair<String, String> pair)\n"
-                + "5:   String getSongSetString()\n"
-                + "6:   Song getSong(String title, String artist)\n"
-                + "7:   String searchSongs(ArrayList< Pair<String, String> > l)\n"
-                + "8:   void save(String path)\n"
-                + "9:   void load(String path)\n");
+                + "2:   int size()\n"
+                + "3:   SongSet getSongSet()\n"
+                + "4:   void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) " +
+                ": title artist album YYYY id_genre id_subgenre duration(seconds)\n"
+                + "5:   void removeSong(String title, String artist): title artist\n"
+                + "6:   void editSong(String title, String artist, Pair<String, String> pair): title artist attribute new_value\n"
+                + "7:   String getSongSetString()\n"
+                + "8:   Song getSong(String title, String artist): title artist\n"
+                + "9:   Song getSong(int i): index\n"
+                + "10:   String searchSongs(ArrayList< Pair<String, String> > l): n_criteria [attribute, value]\n"
+                + "11:   listGenres()\n"
+                + "12:   void save(String path): path\n"
+                + "13:   void load(String path): path\n");
     }
 
     private static void printInfoBrief() {
