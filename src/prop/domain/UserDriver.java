@@ -44,14 +44,8 @@ public class UserDriver {
                         u = new User();
                         break;
                     case 3: {
-                        String name = in.next();
-                        Gender gender = Gender.valueOf(in.next());
-                        System.out.println("Write day, month and year of birthdate separated by spaces");
-                        int day = in.nextInt();
-                        int month = in.nextInt();
-                        int y = in.nextInt();
-                        u.setBirthdate(new GregorianCalendar(y, month, day));
-                        u.setCountry(CountryCode.valueOf(in.next()));
+                        u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()),
+                                CountryCode.valueOf(in.next()));
                         break;
                     }
                     case 4:
