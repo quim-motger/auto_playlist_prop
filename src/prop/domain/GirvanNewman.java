@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /**
- * Girvan-Newman algorithm
+ * Girvan-Newman algorithm.
  * @author oscar.manas
  */
 public class GirvanNewman {
@@ -50,7 +50,7 @@ public class GirvanNewman {
     }
 
     /**
-     * Recalculates the betweenness score for all edges and removes the edge with the highest betweenness score
+     * Recalculates the betweenness score for all edges and removes the edge with the highest betweenness score.
      * @param entry an entry of the execution log
      */
     private void removeNext(StringBuilder entry) {

@@ -20,4 +20,5 @@ public class ErrorString {
     public static final String NULL = "Null value\n";
     public static final String UNEXISTING_ATTRIBUTE = "The attribute does not exist\n";
     public static final String WRONG_RELATION_TYPE = "The relation is not a type you can evaluate with this method\n";
+    public static final String ALGORITHM_NOT_EXECUTED = "Algorithm not executed yet\n";
 }
