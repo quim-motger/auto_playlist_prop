@@ -140,8 +140,8 @@ public class User {
      * Adds the playback to the user's playback register
      * @param play Playback to be added
      */
-    public void add(Playback play) {
-        playbackRegister.add(play);
+    public boolean add(Playback play) {
+        return playbackRegister.add(play);
     }
 
     /**

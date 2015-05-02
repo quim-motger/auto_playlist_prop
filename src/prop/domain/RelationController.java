@@ -31,7 +31,7 @@ public class RelationController {
     public Graph getGraph() {
         return graph;
     }
-
+/*
     public void playbackRelations(UserController userController) {
         UserSet userSet = userController.obtainUserSet();
         for(User u : userSet) {
@@ -40,7 +40,7 @@ public class RelationController {
         }
 
     }
-
+*/
     private void addPlaybackRelation(TreeSet<Playback> playbacks) {
         for(Playback playback : playbacks) {
             for(Playback test : playbacks) {
