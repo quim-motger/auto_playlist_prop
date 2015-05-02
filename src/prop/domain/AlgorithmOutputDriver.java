@@ -89,6 +89,7 @@ public class AlgorithmOutputDriver {
                     default:
                         printInfo();
                 }
+                printInfoBrief();
             }
         }
         catch(Exception e) {
@@ -118,6 +119,14 @@ public class AlgorithmOutputDriver {
         sb.add("arrayGraph.add(graph)");
         sb.add("arrayString = new ArrayList<String>()");
         sb.add("arrayString.add(string)");
+        for (int i = 0; i < sb.size(); ++i) {
+            System.out.println(i + ": " + sb.get(i));
+        }
+    }
+    private static void printInfoBrief() {
+        ArrayList<String> sb = new ArrayList<>();
+        sb.add("terminate program");
+        sb.add("info");
         for (int i = 0; i < sb.size(); ++i) {
             System.out.println(i + ": " + sb.get(i));
         }
