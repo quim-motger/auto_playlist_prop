@@ -18,7 +18,13 @@ public class UserDriver {
             System.out.println("This class needs 3 other Classes: Playback, Song," +
                     " and List \n"
                     + "Therefore, you can create a Song, a Playback and a List\n"
-                    + "START WITH OPTION 3");
+
+            + "Example of Genre: Rock, Blues, Disco "
+            + "\nExample of Gender: MALE, FEMALE"
+            + "\nExample of CountryCode: ES, FI, FR\n"
+                            + "START WITH OPTION 3\n");
+
+
 
             User u = null;
             Song song = null;
@@ -53,14 +59,12 @@ public class UserDriver {
                         //res
                     break;
                     case 5:
-                        if (playback == null) throw new NullPointerException("playback is null. Create a playback first");
                         u.add(playback);
                         break;
                     case 6:
                         System.out.println(u.age());
                         break;
                     case 7:
-                        if (list == null) throw new NullPointerException("list is null. Create a list first");
                         u.associate(list);
                         break;
                     case 8:
@@ -70,8 +74,7 @@ public class UserDriver {
                         u.clearRegister();
                         break;
                     case 10:
-                        if (list == null) throw new NullPointerException("list is null. Create a list first");
-                        u.disassociate(list);
+                        //nothing
                         break;
                     case 11:
                         ArrayList<List> al = u.getAssociatedLists();
@@ -92,11 +95,9 @@ public class UserDriver {
                         break;
                     case 16:
                         TreeSet<Playback> ap = u.getPlaybackRegister();
-                        System.out.println("PlaybackRegister Size: " + ap.size());
                         for (Playback p : ap) System.out.println(p);
                         break;
                     case 17:
-                        if (list == null) throw new NullPointerException("list is null. Create a list first");
                         System.out.println(u.hasList(list));
                         break;
                     case 18:
@@ -154,10 +155,6 @@ public class UserDriver {
                         if (song == null) throw new NullPointerException("song is null. Create a song first");
                         list.addSong(song);
                         break;
-                    case 32:
-                        if (list == null) throw new NullPointerException("list is null. Create a list first");
-                        listController.addList(list);
-                        break;
                     default:
                         printInfo();
                 }
@@ -181,7 +178,7 @@ public class UserDriver {
         sb.add("void 	associate(list)");
         sb.add("void 	clearLists ()");
         sb.add("void clearRegister()");
-        sb.add("boolean 	disassociate(list)");
+        sb.add("nothing");
         sb.add("ArrayList<List> 	getAssociatedLists()");
         sb.add("Calendar 	getBirthdate()");
         sb.add("CountryCode 	getCountry()");
@@ -200,12 +197,11 @@ public class UserDriver {
 
         // OTHER CLASSES
         sb.add("\nplayback = new Playback(Song song, Calendar date)");
-        sb.add("song = songController.getSong(String title, String artist)");
+        sb.add("song = getSong(String title, String artist)");
         sb.add("songController.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)");
         sb.add("date.set(int year, int month, int day, int hour, int minute, int second)");
         sb.add("list = new List(String listTitle)");
         sb.add("list.addSong(song)");
-        sb.add("listController.add(list)");
         for (int i = 0; i < sb.size(); ++i) {
             System.out.println(i + ": " + sb.get(i));
         }

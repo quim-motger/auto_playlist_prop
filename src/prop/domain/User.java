@@ -30,9 +30,13 @@ public class User {
     /* CONSTRUCTORS */
 
     /**
-     * User default constructor, creates an empty User
+     * User default constructor
      * */
     public User() {
+        this.name = "Default";
+        this.gender = Gender.MALE;
+        this.birthdate = Calendar.getInstance();
+        this.country = CountryCode.AD;
         playbackRegister = new TreeSet<>();
         associatedLists = new ArrayList<>();
     }
@@ -80,26 +84,32 @@ public class User {
 
     /* SETTERS */
     public void setName(String name) {
+        if (name == null) throw new NullPointerException("name is null");
         this.name = name;
     }
 
     public void setGender(Gender gender) {
+        if (gender == null) throw new NullPointerException("gender is null");
         this.gender = gender;
     }
 
     public void setBirthdate(Calendar birthdate) {
+        if (birthdate == null) throw new NullPointerException("birthdate is null");
         this.birthdate = birthdate;
     }
 
     public void setCountry(CountryCode country) {
+        if (country == null) throw new NullPointerException("country is null");
         this.country = country;
     }
 
     public void setPlaybackRegister(TreeSet<Playback> playbackRegister) {
+        if (playbackRegister == null) throw new NullPointerException("playbackRegister is null");
         this.playbackRegister = playbackRegister;
     }
 
     public void setAssociatedLists(ArrayList<List> associatedLists) {
+        if (associatedLists == null) throw new NullPointerException("associatedLists is null");
         this.associatedLists = associatedLists;
     }
 
@@ -110,6 +120,7 @@ public class User {
      * @return integer number that contains the user's age
      */
     public int age() {
+        if (birthdate == null) throw new NullPointerException("birthdate is null");
         Calendar now = Calendar.getInstance();
         int age = now.get(Calendar.YEAR) - birthdate.get(Calendar.YEAR);
         if (now.get(Calendar.MONTH) < birthdate.get(Calendar.MONTH)) --age;
@@ -123,6 +134,7 @@ public class User {
      * @param play Playback to be added
      */
     public boolean add(Playback play) {
+        if (play == null) throw new NullPointerException("play is null");
         return playbackRegister.add(play);
     }
 
@@ -131,6 +143,7 @@ public class User {
      * @param list List to be associated.
      */
     public void associate(List list) {
+        if (list == null) throw new NullPointerException("list is null");
         if (!associatedLists.contains(list)) associatedLists.add(list);
     }
 
@@ -140,6 +153,7 @@ public class User {
      * @return true if the list was found and disassociated, false otherwise
      */
     public boolean disassociate(List list) {
+        if (list == null) throw new NullPointerException("list is null");
         return associatedLists.remove(list);
     }
 
@@ -149,6 +163,7 @@ public class User {
      * @return true if associated, false otherwise
      */
     public boolean hasList(List list) {
+        if (list == null) throw new NullPointerException("list is null");
         return associatedLists.contains(list);
     }
 
