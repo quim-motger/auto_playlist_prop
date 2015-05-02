@@ -19,6 +19,7 @@ public class UserControllerDriver {
 
         UserController userController = null;
         SongController songController = new SongController();
+        ListController listController = new ListController();
         Scanner in = new Scanner(System.in);
         
         int i = -1;
@@ -98,6 +99,17 @@ public class UserControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
+                case 13:
+                    userController.associateListToUser(listController,in.nextInt(),in.next());
+                    break;
+                case 14:
+                    userController.disassociateListFromUser(listController,in.nextInt(),in.next());
+                    break;
+                case 15:
+                    listController.addList(in.next());
+                    break;
+                case 16:
+                    System.out.println(listController.getListSetString());
                 default:
                     printInfo();
             }
@@ -128,6 +140,10 @@ public class UserControllerDriver {
         sb.append("10:  void save (String path)\n");
         sb.append("11:  void load (String path)\n");
         sb.append("12:  songController.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
+        sb.append("13:  void associateListToUser(ListController listController, int listId, String userName)\n");
+        sb.append("14:  void disassociateListToUser(ListController listController, int listId, String userName)\n");
+        sb.append("15:  listController.addList(String title)\n");
+        sb.append("16:  String listController.getListSetString()\n");
         System.out.println(sb.toString());
     }
 }

@@ -3,7 +3,7 @@ package prop.domain;
 import java.util.Scanner;
 
 /**
- * Song Driver
+ * Song Driver.
  * @author oscar.manas
  */
 public class SongDriver {
@@ -47,26 +47,26 @@ public class SongDriver {
                     song = new Song(title, artist, album, year, genre, subgenre, duration);
                     break;
                 case 4:
-                    System.out.println(song.getTitle());
+                    System.out.println(song.getTitle() + "\n");
                     break;
 
                 case 5:
-                    System.out.println(song.getArtist());
+                    System.out.println(song.getArtist() + "\n");
                     break;
                 case 6:
-                    System.out.println(song.getAlbum());
+                    System.out.println(song.getAlbum() + "\n");
                     break;
                 case 7:
-                    System.out.println(song.getYear());
+                    System.out.println(song.getYear() + "\n");
                     break;
                 case 8:
-                    System.out.println(song.getGenre().getName());
+                    System.out.println(song.getGenre().getName() + "\n");
                     break;
                 case 9:
-                    System.out.println(song.getSubgenre().getName());
+                    System.out.println(song.getSubgenre().getName() + "\n");
                     break;
                 case 10:
-                    System.out.println(song.getDuration());
+                    System.out.println(song.getDuration() + "\n");
                     break;
                 case 11:
                     title = in.next();
@@ -102,7 +102,7 @@ public class SongDriver {
                 case 19:
                     Song s = Song.valueOf(serialized);
                     System.out.println(s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
-                    " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration());
+                    " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration() + "\n");
                     break;
             }
         }
