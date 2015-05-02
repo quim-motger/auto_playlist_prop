@@ -44,14 +44,20 @@ public class UserDriver {
                         u = new User();
                         break;
                     case 3: {
-                        u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()),
-                                CountryCode.valueOf(in.next()));
+                        String name = in.next();
+                        Gender gender = Gender.valueOf(in.next());
+                        System.out.println("Write day, month and year of birthdate separated by spaces");
+                        int day = in.nextInt();
+                        int month = in.nextInt();
+                        int y = in.nextInt();
+                        u.setBirthdate(new GregorianCalendar(y, month, day));
+                        u.setCountry(CountryCode.valueOf(in.next()));
                         break;
                     }
                     case 4:
                         u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()),
-                                CountryCode.valueOf(in.next()), setPlayback, arrayList);
-                        break;
+                                CountryCode.valueOf(in.next()),setPlayback,arrayList);
+                    break;
                     case 5:
                         u.add(playback);
                         break;
@@ -75,7 +81,8 @@ public class UserDriver {
                         for (List l : al) System.out.println(l.toString());
                         break;
                     case 12:
-                        System.out.println(u.getBirthdate());
+                        Calendar d = u.getBirthdate();
+                        System.out.println(d.get(Calendar.YEAR) + " " + d.get(Calendar.MONTH) + " " + d.get(Calendar.DAY_OF_MONTH));
                         break;
                     case 13:
                         System.out.println(u.getCountry());
