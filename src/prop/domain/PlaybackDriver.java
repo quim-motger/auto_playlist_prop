@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.Scanner;
 import java.util.Calendar;
 
@@ -13,6 +15,7 @@ public class PlaybackDriver {
         System.out.println("**********************************************************");
         System.out.println("** Playback");
         System.out.println("**********************************************************");
+        System.out.println("WARNING: you need to add songs to the Song Controller first in order to create Playbacks");
         System.out.print("\n");
 
         Scanner in = new Scanner(System.in);
@@ -32,6 +35,16 @@ public class PlaybackDriver {
                     printInfoComplete();
                     break;
                 case 2:
+                    String title3 = in.next();
+                    String artist3 = in.next();
+                    song = sc.getSong(title3, artist3);
+                    int y = in.nextInt();
+                    int month = in.nextInt();
+                    int day = in.nextInt();
+                    int hour = in.nextInt();
+                    int minute = in.nextInt();
+                    int second = in.nextInt();
+                    date.set(y,month,day,hour,minute,second);
                     playback = new Playback(song, date);
                     break;
                 case 3:
@@ -42,7 +55,7 @@ public class PlaybackDriver {
                     System.out.println(song.getYear());
                     System.out.println(song.getGenre().getName());
                     System.out.println(song.getSubgenre().getName());
-                    System.out.println(+song.getDuration());
+                    System.out.println(song.getDuration());
                     break;
                 case 4:
                     date = playback.getDate();
@@ -54,10 +67,18 @@ public class PlaybackDriver {
                     System.out.println(date.get(Calendar.SECOND));
                     break;
                 case 5:
-                    playback.setSong(song);
+                    try {
+                        playback.setSong(song);
+                    } catch (Exception pe) {
+                        System.err.println(pe.getMessage());
+                    }
                     break;
                 case 6:
-                    playback.setDate(date);
+                    try {
+                        playback.setDate(date);
+                    } catch (Exception pe) {
+                        System.err.println(pe.getMessage());
+                    }
                     break;
                 case 7:
                     s = playback.toString();
@@ -81,50 +102,26 @@ public class PlaybackDriver {
                     String artist2 = in.next();
                     sc.removeSong(title2, artist2);
                     break;
-                case 11:
-                    String title3 = in.next();
-                    String artist3 = in.next();
-                    song = sc.getSong(title3, artist3);
-                    break;
-                case 12:
-                    int y = in.nextInt();
-                    int month = in.nextInt();
-                    int day = in.nextInt();
-                    int hour = in.nextInt();
-                    int minute = in.nextInt();
-                    int second = in.nextInt();
-                    date.set(y,month,day,hour,minute,second);
-                    break;
-                case 13:
-                    Song ns = sc.getSong(in.next(), in.next());
-                    Calendar d = Calendar.getInstance();
-                    d.set(in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt(), in.nextInt());
-                    Playback p = new Playback(ns, d);
-                    if (playback.compareTo(p) < 0) System.out.print("This new playback is posterior\n");
-                    else if (playback.compareTo(p) > 0 )System.out.print("This new playback is anterior\n");
-                    else System.out.print("dates are equal\n");
                 default:
                     printInfoComplete();
             }
-            if (i > 0 && i < 13) printInfoBrief();
+            if (i > 1 && i < 11) printInfoBrief();
         }
     }
 
     private static void printInfoComplete() {
         System.out.print("0:   terminate program\n"
                 + "1:   printInfoComplete()\n"
-                + "2:   Playback(Song song, Calendar date)\n"
+                + "2:   Playback(Song song, Calendar date): title artist YYYY MM DD hh mm ss\n"
                 + "3:   Song getSong()\n"
                 + "4:   Calendar getDate()\n"
-                + "5:   void setSong(Song song)\n"
-                + "6:   void setDate(Calendar date)\n"
+                + "5:   void setSong(Song song): title artist\n"
+                + "6:   void setDate(Calendar date): YYYY MM DD hh mm ss\n"
                 + "7:   String toString()\n"
                 + "8:   void valueOf(String s)\n"
-                + "9:   boolean addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
-                + "10:  boolean removeSong(String title, String artist)\n"
-                + "11:  song = sc.getSong(String title, String artist)\n"
-                + "12:  date.set(int year, int month, int day, int hour, int minute, int second)\n"
-                + "13:  boolean compareTo(Playback p)\n");
+                + "9:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration): title " +
+                "artist album YYYY id_genre id_subgenre duration(seconds)\n"
+                + "10:  sc.removeSong(String title, String artist): title artist\n");
     }
 
     private static void printInfoBrief() {
