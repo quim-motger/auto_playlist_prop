@@ -77,15 +77,11 @@ public class Graph<T> {
     }
 
     /**
-     * Returns all original vertices in the graph
+     * Returns all original vertices in the graph. Each index in the array contains its associated vertex.
      * @return ArrayList of vertices in the graph
      */
     public ArrayList<T> getOriginalVertices() {
-        ArrayList<T> l = new ArrayList<>();
-        //Enlloc de visitar les keys, visita directament els T de Int_to_T
-        //for (T t: Int_to_T) l.add(t);
-        for(T t: T_to_Int.keySet()) l.add(t);
-        return l;
+        return Int_to_T;
     }
 
     /**
