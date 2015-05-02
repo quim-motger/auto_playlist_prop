@@ -81,6 +81,7 @@ public class ListController {
      */
     public void createRandomList(String title, int n, SongController songController) throws Exception {
         int m = songController.size();
+        if (n > m) n = m;
         Random rand = new Random();
         // We use LinkedHashSet to maintain insertion order
         Set<Integer> positions = new LinkedHashSet<Integer>();
@@ -207,7 +208,7 @@ public class ListController {
         ArrayList<Song> songs = listSet.getList(id).obtainSongs();
         for (int i = 0; i < songs.size(); ++i) {
             Song s = songs.get(i);
-            sb.append(i + "\t" + s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
+            sb.append(i + "  " + s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
                     " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration() + "\n");
         }
         return sb.toString();
@@ -221,7 +222,7 @@ public class ListController {
         StringBuilder sb = new StringBuilder();
         ArrayList<List> lists = listSet.getLists();
         for (List list : lists)
-            sb.append(list.obtainId() + "\t" + list.obtainTitle() + "\n");
+            sb.append(list.obtainId() + "  " + list.obtainTitle() + "\n");
         return sb.toString();
     }
 
