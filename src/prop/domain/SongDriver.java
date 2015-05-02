@@ -114,14 +114,14 @@ public class SongDriver {
         sb.append("1:  info\n");
         sb.append("2:  Song()\n");
         sb.append("3:  Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        sb.append("4:  String getTitle()\n");
+        sb.append("4:  String getListTitle()\n");
         sb.append("5:  String getArtist()\n");
         sb.append("6:  String getAlbum()\n");
         sb.append("7:  int getYear()\n");
         sb.append("8:  Genre getGenre()\n");
         sb.append("9:  Genre getSubgenre()\n");
         sb.append("10: int getDuration()\n");
-        sb.append("11: String setTitle(String title)\n");
+        sb.append("11: String setListTitle(String title)\n");
         sb.append("12: String setArtist(String artist)\n");
         sb.append("13: String setAlbum(String album)\n");
         sb.append("14: int setYear(int year)\n");

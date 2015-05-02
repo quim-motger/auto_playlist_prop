@@ -14,14 +14,24 @@ public class ListController {
     ListSet listSet;
 
     /**
-     * Constructor
+     * Default constructor.
      */
     public ListController() {
         listSet = new ListSet();
     }
 
     /**
-     * Get the size of the list set
+     * Indicates if the list with this id is contained in the set.
+     * @param id    the id of the list to look up
+     * @return      true if present,
+     *              false if not present
+     */
+    public boolean contains(int id) {
+        return listSet.contains(id);
+    }
+
+    /**
+     * Get the size of the list set.
      * @return  the size of the list set
      */
     public int size() {
@@ -29,7 +39,15 @@ public class ListController {
     }
 
     /**
-     *
+     * Get the total duration of all the lists in the set.
+     * @return  the total duration of all the lists in the set
+     */
+    public int getTotalDuration() {
+        return listSet.totalTime();
+    }
+
+    /**
+     * Add a new list to the set.
      * @param title the title of the list
      */
     public void addList(String title) {
@@ -38,7 +56,7 @@ public class ListController {
     }
 
     /**
-     * Add a new list to the set
+     * Add a new list to the set.
      * @param list the list
      */
     public void addList(List list) {
@@ -46,7 +64,7 @@ public class ListController {
     }
 
     /**
-     * Remove a list from the set
+     * Remove a list from the set.
      * @param id    the identification of the list to remove
      * @return      true if the list was present, and thus removed,
      *              false if the list was not present
@@ -56,7 +74,7 @@ public class ListController {
     }
 
     /**
-     * Generate a random song list
+     * Generate a random song list.
      * @param title             the title of the list
      * @param n                 the number of songs the list will contain
      * @param songController    an instance of the Song Controller
@@ -82,43 +100,97 @@ public class ListController {
     }
 
     /**
-     * Set a new title for a list
+     * Set a new title for the specified list.
      * @param id    the identification of the specified list
      * @param title the new title
      */
-    public void setTitle(int id, String title){
-        List list = listSet.getList(id);
-        if (list != null)
-            list.editTitle(title);
+    public void setListTitle(int id, String title){
+        listSet.getList(id).editTitle(title);
     }
 
     /**
-     * Add a song to a specified list
+     * Get the title of the specified list.
+     * @param id    the identification of the specified list
+     * @return      the title of the specified list
+     */
+    public String getListTitle(int id) {
+        return listSet.getList(id).obtainTitle();
+    }
+
+    /**
+     * Add a song to a specified list.
      * @param id                the identification of the specified list
      * @param title             the title of the song to add
      * @param artist            the artist of the song to add
      * @param songController    an instance of the Song Controller
      */
     public void addSong(int id, String title, String artist, SongController songController) throws Exception {
-        List list = listSet.getList(id);
         Song song = songController.getSong(title, artist);
-        list.addSong(song);
+        listSet.getList(id).addSong(song);
     }
 
     /**
-     * Remove a song from a specified list
+     * Remove a song from a specified list.
      * @param id        the identification of the specified list
      * @param title     the title of the song to remove
      * @param artist    the artist of the song to remove
      */
     public void removeSong(int id, String title, String artist) {
-        List list = listSet.getList(id);
-        list.removeSong(title, artist);
+        listSet.getList(id).removeSong(title, artist);
+    }
+
+    /**
+     * Remove a song from a specified list.
+     * @param id    the identification of the specified list
+     * @param pos   the position of the song to remove in the list
+     */
+    public void removeSong(int id, int pos) {
+        listSet.getList(id).removeSong(pos);
+    }
+
+    /**
+     * Swaps two songs inside the list.
+     * @param id    the identification of the specified list
+     * @param pos1  the position of the first song to swap
+     * @param pos2  the position of the second song to swap
+     */
+    public void swapSongs(int id, int pos1, int pos2) {
+        listSet.getList(id).swapSongs(pos1,pos2);
+    }
+
+    /**
+     * Check if a song is included in the list.
+     * @param id        the identification of the specified list
+     * @param title     the title of the wanted song
+     * @param artist    the artist of the wanted song
+     * @return          true if present,
+     *                  false if not present
+     */
+    public boolean containsSong(int id, String title, String artist) {
+        return listSet.getList(id).contains(title, artist);
+    }
+
+    /**
+     * Get the number of songs in the list.
+     * @param id    the identification of the specified list
+     * @return      the number of songs in the list
+     */
+    public int listSize(int id) {
+        return listSet.getList(id).size();
+    }
+
+    /**
+     * Get the total duration of all songs in the list.
+     * @param id    the identification of the specified list
+     * @return      the total duration of all songs in the list
+     */
+    public int getListDuration(int id) {
+        return listSet.getList(id).obtainTotalTime();
     }
 
     /**
      * Get a list
-     * @param id    the identification of the list
+     * @param id    the identification of the list.
      * @return      the list
      */
     public List getList(int id) {
@@ -126,21 +198,23 @@ public class ListController {
     }
 
     /**
-     * Get a list in string format
+     * Get a list in string format.
      * @param id    the identification of the list
      * @return      a string representing the list
      */
     public String getListString(int id) {
         StringBuilder sb = new StringBuilder();
         ArrayList<Song> songs = listSet.getList(id).obtainSongs();
-        for (Song song : songs)
-            sb.append(song.getTitle()+ "\t" + song.getArtist() + "\t" + song.getAlbum() + "\t" + song.getYear()
-                    + "\t" + song.getDuration() + "\n");
+        for (int i = 0; i < songs.size(); ++i) {
+            Song s = songs.get(i);
+            sb.append(i + "\t" + s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
+                    " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration() + "\n");
+        }
         return sb.toString();
     }
 
     /**
-     * Get all the lists in string format
+     * Get all the lists in string format.
      * @return  a string with the lists titles and their identifiers
      */
     public String getListSetString() {
@@ -152,7 +226,7 @@ public class ListController {
     }
 
     /**
-     * Save the list set in the specified path
+     * Save the list set in the specified path.
      * @param path  the path where save the list set to
      */
     public void save(String path) throws Exception {
@@ -160,7 +234,7 @@ public class ListController {
     }
 
     /**
-     * Load the list set from the specified path
+     * Load the list set from the specified path.
      * @param path  the path where load the list set from
      */
     public void load(String path, SongController songController) throws Exception {
