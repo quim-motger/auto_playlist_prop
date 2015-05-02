@@ -153,7 +153,7 @@ public class GraphDriver {
         ArrayList<String> sb = new ArrayList<>();
         sb.add("terminate program");
         sb.add("info");
-        sb.add("Graph()");
+        sb.add("new Graph<Integer>()");
         sb.add("void 	addArc(int v1, int v2)");
         sb.add("void 	addArc(int v1, int v2, double weight)");
         sb.add("void 	addEdge(int v1, int v2)");
