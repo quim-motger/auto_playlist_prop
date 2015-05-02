@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 /**
  * Classe NOT, relació complexe 30/03/15.
  *
@@ -24,12 +26,12 @@ public class NOT extends ComplexRelation {
      * @return      <code>true</code> if <code>s1</code> and <code>s2</code> are not related
      */
     @Override
-    public boolean evaluateSongs(Song s1, Song s2) {
+    public boolean evaluateSongs(Song s1, Song s2) throws PropException{
         return !r1.evaluateSongs(s1, s2);
     }
 
     @Override
-    public boolean evaluateUser(User u) {
-        return false;
+    public boolean evaluateUser(User u) throws PropException{
+        return !r1.evaluateUser(u);
     }
 }

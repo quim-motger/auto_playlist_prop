@@ -1,6 +1,7 @@
 package prop.domain;
 
 import prop.ExpressionTree;
+import prop.PropException;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
@@ -58,7 +59,7 @@ public class RelationController {
         
     }
 
-    public void addSongRelation(String simpRel, String exp) {
+    public void addSongRelation(String simpRel, String exp) throws PropException{
         Relation rsongs = parsing(simpRel, exp);
         ArrayList<Song> songs = graph.getOriginalVertices();
         for (Song s1 : songs) {
@@ -70,7 +71,7 @@ public class RelationController {
         }
     }
 
-    public void addUserRelation(String simpRel, String exp, UserController userController) {
+    public void addUserRelation(String simpRel, String exp, UserController userController) throws PropException{
         Relation rusers = parsing(simpRel, exp);
         for (User u : userController.obtainUserSet()) {
             if (rusers.evaluateUser(u)) {
