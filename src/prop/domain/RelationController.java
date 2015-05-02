@@ -1,6 +1,9 @@
 package prop.domain;
 
+import prop.ExpressionTree;
+
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 /**
  * Relation Controller
@@ -9,6 +12,7 @@ import java.util.ArrayList;
  */
 public class RelationController {
 
+    private static final long EPSILON =  600000; //10 min
     Graph<Song> graph;
     boolean dirty;
     
@@ -31,14 +35,31 @@ public class RelationController {
     public void playbackRelations(UserController userController) {
         UserSet userSet = userController.obtainUserSet();
         for(User u : userSet) {
-            
-            
+            TreeSet<Playback> playbacks = u.getPlaybackRegister();
+            addPlaybackRelation(playbacks);
         }
 
     }
 
-    public void addSongRelation(String enumerateRel, String complexRel) {
-        Relation rsongs = parsing(enumerateRel,complexRel);
+    private void addPlaybackRelation(TreeSet<Playback> playbacks) {
+        for(Playback playback : playbacks) {
+            for(Playback test : playbacks) {
+                long diff = obtainTimeFromPlayBack(test) - obtainTimeFromPlayBack(playback); 
+                if(diff > 0 && diff < EPSILON){
+                    graph.addEdgeT(playback.getSong(),test.getSong(),1);
+                }
+            }
+        }
+        
+    }
+    
+    private long obtainTimeFromPlayBack(Playback playback) {
+        return playback.getDate().getTime().getTime();
+        
+    }
+
+    public void addSongRelation(String simpRel, String exp) {
+        Relation rsongs = parsing(simpRel, exp);
         ArrayList<Song> songs = graph.getOriginalVertices();
         for (Song s1 : songs) {
             for (Song s2 : songs) {
@@ -49,8 +70,8 @@ public class RelationController {
         }
     }
 
-    public void addUserRelation(String s, String p, UserController userController) {
-        Relation rusers = parsing(s,p);
+    public void addUserRelation(String simpRel, String exp, UserController userController) {
+        Relation rusers = parsing(simpRel, exp);
         for (User u : userController.obtainUserSet()) {
             if (rusers.evaluateUser(u)) {
                 ArrayList<List> lists = u.getAssociatedLists();
@@ -66,11 +87,11 @@ public class RelationController {
         }
     }
 
-    public Relation parsing(String s, String p) {
+    public Relation parsing(String simpRels, String exp) {
         //s contains a list of all the simple relations
         //p contains de combination of relations by its index
         Relation r;
-        String[] ss = s.split("\n");
+        String[] ss = simpRels.split("\n");
         int i;
         ArrayList<SimpleRelation> rl = new ArrayList<>();
         //Get an arrayList with all simple relations
@@ -81,7 +102,7 @@ public class RelationController {
         for (i = 0; i < ss.length; ++i) {
             System.out.print(rl.get(i).getType() + " " + rl.get(i).getAttribute() + " " + rl.get(i).getValue() + "\n" );
         }
-        String[] sc = p.split(" or ");
+        String[] sc = exp.split(" or ");
         ArrayList<Relation> AND = new ArrayList<>();
         //Split by "or" so we get sets of relations connected by an AND relation
         for (i = 0; i < sc.length; ++i) {
@@ -110,5 +131,11 @@ public class RelationController {
             r = new OR(r,AND.get(i));
         }
         return r;
+    }
+    
+    public Relation parsing2(String simRel, String exp) {
+        ExpressionTree expressionTree = new ExpressionTree();
+        expressionTree.parse(exp,simRel);
+        return expressionTree.evaluate();
     }
 }

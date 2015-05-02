@@ -15,16 +15,16 @@ import java.util.regex.Pattern;
  */
 public class List {
 
-    
+
     private int id;
     private String title;
     private ArrayList<Song> songs;
-    
+
     private static final String LIST_DELIMITER = "|L|\n";
     private static final String LIST_STRING_ID = "LIST_STRING";
     private static final String SONG_DELIMITER = "|S|\n";
-    
-    
+
+
     public List (){
         title = null;
         id=-1;
@@ -86,7 +86,7 @@ public class List {
     public ArrayList<Song> obtainSongs() {
         return songs;
     }
-    
+
     /**
      * Obtains the position of a song inside the list
      * @param title     the title of the searched song
@@ -125,7 +125,7 @@ public class List {
     }
 
     /**
-     * Checks if the List is empty 
+     * Checks if the List is empty
      * @return <code>true</code> if list is empty
      */
     public boolean isEmpty() {return size()==0;}
@@ -139,7 +139,7 @@ public class List {
     }
 
     /**
-     * Edit List ID 
+     * Edit List ID
      * @param listId new ID
      */
     public void editId(int listId){
@@ -154,10 +154,10 @@ public class List {
     public void addSong(Song song) {
         if (song != null) songs.add(song);
     }
-    
+
     /**
      *  Modifier that adds songs at the end of the <code>List</code>
-     *  @param newSongs the order inside the array is the one desired to have in the list  
+     *  @param newSongs the order inside the array is the one desired to have in the list
      *  @see Song
      */
     public void addSongs(ArrayList<Song> newSongs) {
@@ -230,6 +230,7 @@ public class List {
      * @throws Exception if origin format incorrect
      */
     public static List valueOf(String origin, SongController songController) throws Exception {
+        //Separates strings by delimiter
         String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
         if (tokens.length<4 || !tokens[0].equals(LIST_STRING_ID)) {
             throw new PropException(ErrorString.INCORRECT_FORMAT);
@@ -237,7 +238,7 @@ public class List {
         List list = new List(tokens[2]);
         list.editId(Integer.valueOf(tokens[1]));
         int size = Integer.valueOf(tokens[3]);
-        for (int i = 4; i<size; ++i) {
+        for (int i = 4; i<4+size; ++i) {
             String[] songId = tokens[i].split(SONG_DELIMITER);
             Song song = songController.getSong(songId[0], songId[1]);
             if(song==null) throw new PropException(ErrorString.UNEXISTING_SONG);

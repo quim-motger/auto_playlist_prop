@@ -1,6 +1,5 @@
 package prop.domain;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**

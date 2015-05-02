@@ -1,5 +1,8 @@
 package prop;
 
+import prop.domain.*;
+
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -18,18 +21,10 @@ public class ExpressionTree {
     }
 
     /**
-     * Writes the expression tree in preOrder
-     */
-    public void write() {
-        writeRec(root);
-        System.out.print('\n');
-    }
-
-    /**
      * Evaluates the expression
      * @return  the result of the evaluation
      */
-    public double evaluate() {
+    public Relation evaluate() {
         return evaluateRec(root);
     }
 
@@ -38,66 +33,54 @@ public class ExpressionTree {
      * @param exp   the expression to parse
      *              it should be something like "(((35)-((3)*((3)+(2))))/(4))"
      */
-    public void parse(String exp) {
-        root = parseRec(exp);
+    public void parse(String exp, String relSimp) {
+        root = parseRec(exp,relSimp);
     }
 
-    private void writeRec(ExpNode node) {
-        if (node == null) {
-            System.out.print("0 ");
-        }
-        else {
-            // preOrder
-            node.write();
-            writeRec(node.left);
-            writeRec(node.right);
-        }
-    }
-
-    private double evaluateRec(ExpNode node) {
+    private Relation evaluateRec(ExpNode node) {
         if (node.left == null && node.right == null) {
-            ExpNumNode leaf = (ExpNumNode)node;
-            return leaf.number;
+            ExpSRelNode leaf = (ExpSRelNode)node;
+            return leaf.simpleRelation;
+        } else if (node.right == null && Objects.equals(((ExpOpNode) node).op, '!')){
+            return new NOT(evaluateRec(node.left));
         }
         else {
-            double leftExp = evaluateRec(node.left);
-            double rightExp = evaluateRec(node.right);
+            Relation leftExp = evaluateRec(node.left);
+            Relation rightExp = evaluateRec(node.right);
             ExpOpNode internal = (ExpOpNode)node;
 
             switch (internal.op) {
-                case '+':
-                    return leftExp + rightExp;
-                case '-':
-                    return  leftExp - rightExp;
-                case '*':
-                    return leftExp * rightExp;
-                case '/':
-                    return leftExp / rightExp;
+                case '&':
+                    return new AND(leftExp,rightExp);
+                case '|':
+                    return  new OR(leftExp,rightExp);
                 default:
                     throw new RuntimeException("invalid operand '" + internal.op + "'");
             }
         }
     }
 
-    private ExpNode parseRec(String exp) {
+    private ExpNode parseRec(String exp, String relSim) {
         ExpNode node;
-
-        System.out.println(exp);
+        
+        String[] rels = relSim.split("\n");
 
         int m = findRightParen(exp,1);
         String leftExp = exp.substring(1,m+1);
 
         if (m == exp.length()-1) {
-            double number = Double.parseDouble(exp.substring(1,exp.length()-1));
-            node = new ExpNumNode(number);
+            double d = Double.parseDouble(exp.substring(1,exp.length()-1));
+            String[] relParts = rels[(int)d].split(" ");
+            SimpleRelation sRel = new SimpleRelation(relParts[0],relParts[1],relParts[2]);
+            node = new ExpSRelNode(sRel);
             return node;
         }
         else {
             int n = findLeftParen(exp, exp.length() - 2);
             String rightExp = exp.substring(n, exp.length()-1);
 
-            ExpNode nodeLeft = parseRec(leftExp);
-            ExpNode nodeRight = parseRec(rightExp);
+            ExpNode nodeLeft = parseRec(leftExp,relSim);
+            ExpNode nodeRight = parseRec(rightExp,relSim);
 
             node = new ExpOpNode(exp.charAt(m+1),nodeLeft,nodeRight);
             return node;
@@ -160,18 +143,18 @@ public class ExpressionTree {
      * Expression tree number node
      * @author oscar.manas
      */
-    private class ExpNumNode extends ExpNode {
+    private class ExpSRelNode extends ExpNode {
 
-        private double number;
+        private SimpleRelation simpleRelation;
 
-        public ExpNumNode(double number) {
-            this.number = number;
+        public ExpSRelNode(SimpleRelation sr) {
+            simpleRelation = sr;
             super.left = null;
             super.right = null;
         }
 
         public void write() {
-            System.out.print(String.valueOf(number) + " ");
+            System.out.println(simpleRelation.toString() + " ");
         }
     }
 
