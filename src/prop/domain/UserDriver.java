@@ -29,6 +29,7 @@ public class UserDriver {
             String serialized = "";
             TreeSet<Playback> setPlayback = new TreeSet<>();
             ArrayList<List> arrayList = new ArrayList<>();
+            int nextId = 0;
 
             Scanner in = new Scanner(System.in);
             int i = -1;
@@ -135,18 +136,13 @@ public class UserDriver {
                         break;
                     case 30:
                         list = new List(in.next());
+                        list.editId(nextId++);
                         break;
                     case 31:
                         list.addSong(song);
                         break;
                     case 32:
                         listController.addList(list);
-                        break;
-                    case 33:
-                        setPlayback.add(playback);
-                        break;
-                    case 34:
-                        arrayList.add(list);
                         break;
                     default:
                         printInfo();
@@ -196,7 +192,6 @@ public class UserDriver {
         sb.add("list = new List(String listTitle)");
         sb.add("list.addSong(song)");
         sb.add("listController.add(list)");
-        sb.add("setPlayback.add(playback)");
         for (int i = 0; i < sb.size(); ++i) {
             System.out.println(i + ": " + sb.get(i));
         }

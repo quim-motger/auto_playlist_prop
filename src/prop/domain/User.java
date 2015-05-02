@@ -191,9 +191,11 @@ public class User {
         ret.append(associatedLists.size());
         ret.append(USER_DELIMITER);
         int i = 0;
-        for (; i < associatedLists.size()-1; ++i) {
-            ret.append(associatedLists.get(i).obtainId());
-            ret.append(USER_DELIMITER);
+        if (!associatedLists.isEmpty()) {
+            for (; i < associatedLists.size() - 1; ++i) {
+                ret.append(associatedLists.get(i).obtainId());
+                ret.append(USER_DELIMITER);
+            }
         }
         ret.append(associatedLists.get(i).obtainId());
         return ret.toString();
