@@ -16,13 +16,12 @@ import java.util.regex.Pattern;
 public class List {
 
 
-    private int id;
-    private String title;
-    private ArrayList<Song> songs;
-
     private static final String LIST_DELIMITER = "|L|\n";
     private static final String LIST_STRING_ID = "LIST_STRING";
     private static final String SONG_DELIMITER = "|S|\n";
+    private int id;
+    private String title;
+    private ArrayList<Song> songs;
 
 
     public List (){
@@ -53,22 +52,53 @@ public class List {
     }
 
     /**
+     * *
+     * @param origin String to be parsed
+     * @param songController SongController containing all songs
+     * @return List created parsing origin
+     * @throws PropException if origin format incorrect
+     */
+    public static List valueOf(String origin, SongController songController) throws PropException {
+        //Separates strings by delimiter
+        String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
+        if (tokens.length < 4 || !tokens[0].equals(LIST_STRING_ID)) {
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
+        }
+        List list = new List(tokens[2]);
+        list.editId(Integer.valueOf(tokens[1]));
+        int size = Integer.valueOf(tokens[3]);
+        for (int i = 4; i < 4 + size; ++i) {
+            String[] songId = tokens[i].split(Pattern.quote(SONG_DELIMITER));
+            Song song = songController.getSong(songId[0], songId[1]);
+            if (song == null) throw new PropException(ErrorString.UNEXISTING_SONG);
+            list.addSong(song);
+        }
+        return list;
+    }
+
+    /**
      *  Obtain the number of songs in the list
      * @return Number of songs in the list
      */
-    public int size() { return songs.size();}
+    public int size() {
+        return songs.size();
+    }
 
     /**
      * Obtain <code>List</code> title
      * @return title of the <code>List</code>
      */
-    public String obtainTitle() {return title;}
+    public String obtainTitle() {
+        return title;
+    }
 
     /**
      * Obtain <code>Id</code>
      * @return id from the List
      */
-    public int obtainId() {return id;}
+    public int obtainId() {
+        return id;
+    }
 
     /**
      * Obtain the song at the position <code>position</code>
@@ -96,7 +126,7 @@ public class List {
     public int obtainSongPosition(String title, String artist) {
         for (int i = 0; i < songs.size(); ++i) {
             Song song = songs.get(i);
-            if (song !=null && song.getTitle().equals(title) && song.getArtist().equals(artist))
+            if (song != null && song.getTitle().equals(title) && song.getArtist().equals(artist))
                 return i;
         }
         return -1;
@@ -104,10 +134,10 @@ public class List {
 
     /**
      * Obtain the addition of all the songs
-     * @return  total time of the list
+     * @return total time of the list
      */
     public int obtainTotalTime() {
-        int total=0;
+        int total = 0;
         for (Song song : songs) {
             total += song.getDuration();
         }
@@ -121,14 +151,16 @@ public class List {
      * @return <code>true</code> if the song is in the list
      */
     public boolean contains(String title, String artist) {
-        return obtainSongPosition(title,artist) != -1;
+        return obtainSongPosition(title, artist) != -1;
     }
 
     /**
      * Checks if the List is empty
      * @return <code>true</code> if list is empty
      */
-    public boolean isEmpty() {return size()==0;}
+    public boolean isEmpty() {
+        return size() == 0;
+    }
 
     /**
      *  Modifier of the List title
@@ -142,8 +174,8 @@ public class List {
      * Edit List ID
      * @param listId new ID
      */
-    public void editId(int listId){
-        id =listId;
+    public void editId(int listId) {
+        id = listId;
     }
 
     /**
@@ -161,7 +193,7 @@ public class List {
      *  @see Song
      */
     public void addSongs(ArrayList<Song> newSongs) {
-        for(int i = 0;i<newSongs.size();++i) {
+        for (int i = 0; i < newSongs.size(); ++i) {
             songs.add(newSongs.get(i));
         }
     }
@@ -172,8 +204,8 @@ public class List {
      * @param artist artist of the song
      */
     public void removeSong(String title, String artist) {
-        int pos= obtainSongPosition(title,artist);
-        if(pos>0) {
+        int pos = obtainSongPosition(title, artist);
+        if (pos > 0) {
             removeSong(pos);
         }
     }
@@ -191,7 +223,9 @@ public class List {
      * Deletes all the songs from the list
      * The List <code>isEmpty()</code> after this
      */
-    public void empty() {songs = new ArrayList<>();}
+    public void empty() {
+        songs = new ArrayList<>();
+    }
 
     /**
      * Modifier of order inside the list
@@ -211,39 +245,14 @@ public class List {
      */
     @Override
     public String toString() {
-        String ret = LIST_STRING_ID+ LIST_DELIMITER;
+        String ret = LIST_STRING_ID + LIST_DELIMITER;
         ret += String.valueOf(id) + LIST_DELIMITER;
         ret += title + LIST_DELIMITER;
         ret += songs.size() + LIST_DELIMITER;
-        for (Song song : songs){
-            ret += song.getTitle()+SONG_DELIMITER;
-            ret += song.getArtist()+LIST_DELIMITER;
+        for (Song song : songs) {
+            ret += song.getTitle() + SONG_DELIMITER;
+            ret += song.getArtist() + LIST_DELIMITER;
         }
         return ret;
-    }
-
-    /**
-     * *
-     * @param origin String to be parsed
-     * @param songController SongController containing all songs
-     * @return List created parsing origin
-     * @throws PropException if origin format incorrect
-     */
-    public static List valueOf(String origin, SongController songController) throws PropException {
-        //Separates strings by delimiter
-        String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
-        if (tokens.length<4 || !tokens[0].equals(LIST_STRING_ID)) {
-            throw new PropException(ErrorString.INCORRECT_FORMAT);
-        }
-        List list = new List(tokens[2]);
-        list.editId(Integer.valueOf(tokens[1]));
-        int size = Integer.valueOf(tokens[3]);
-        for (int i = 4; i<4+size; ++i) {
-            String[] songId = tokens[i].split(SONG_DELIMITER);
-            Song song = songController.getSong(songId[0], songId[1]);
-            if(song==null) throw new PropException(ErrorString.UNEXISTING_SONG);
-            list.addSong(song);
-        }
-        return list;
     }
 }

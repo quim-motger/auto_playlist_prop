@@ -1,10 +1,5 @@
 package prop.domain;
 
-import prop.domain.Genre;
-import prop.domain.List;
-import prop.domain.Song;
-import prop.domain.SongController;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -117,7 +112,7 @@ public class ListDriver {
                         l = List.valueOf(tot, sc);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
-                        i=0;
+                        e.printStackTrace();
                     }
                     break;
                 case 20:
@@ -179,7 +174,7 @@ public class ListDriver {
         sb.append("16: void empty()\n");
         sb.append("17: void swapSongs(int index1, int index2)\n");
         sb.append("18: String toString()\n");
-        sb.append("19: valueOf(String origin, SongController sc)\n");
+        sb.append("19: void valueOf(String origin, SongController sc)\n");
         sb.append("20: song = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
         sb.append("21: song = sc.getSong(String title, String artist)\n");
         sb.append("22: sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
