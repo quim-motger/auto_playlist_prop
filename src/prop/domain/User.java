@@ -33,6 +33,7 @@ public class User {
      * User default constructor, creates an empty User
      * */
     public User() {
+        name = null;
         playbackRegister = new TreeSet<>();
         associatedLists = new ArrayList<>();
     }
@@ -167,6 +168,7 @@ public class User {
     }
 
     public String toString() {
+        if (name == null) throw new IllegalArgumentException("Error: toString of empty User");
         StringBuilder ret = new StringBuilder();
         ret.append(USER_ID);
         ret.append(USER_DELIMITER);
@@ -204,7 +206,7 @@ public class User {
     public static User valueOf(String origin, ListController listController, SongController songController)
             throws Exception {
         String[] tokens = origin.split(Pattern.quote(USER_DELIMITER));
-        if (!tokens[0].equals(USER_ID)) {
+        if (!tokens[0].equals(USER_ID) || tokens.length < 9) {
             throw new PropException(ErrorString.INCORRECT_FORMAT);
         }
         User u = new User();

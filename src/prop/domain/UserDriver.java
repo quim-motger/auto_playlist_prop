@@ -17,7 +17,8 @@ public class UserDriver {
             printInfo();
             System.out.println("This class needs 5 other Classes: Playback, Song, SongController," +
                     " List and List Controller\n"
-                    + "Therefore, you can create a Song, a Playback and a List");
+                    + "Therefore, you can create a Song, a Playback and a List\n"
+                    + "START WITH OPTION 3");
 
             User u = null;
             Song song = null;
