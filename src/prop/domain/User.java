@@ -30,7 +30,7 @@ public class User {
     /* CONSTRUCTORS */
 
     /**
-     * User default constructor
+     * User default constructor. Its members have to be set before using it.
      * */
     public User() {
         this.name = "Default";

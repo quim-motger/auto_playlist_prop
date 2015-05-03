@@ -131,6 +131,7 @@ public class UserDriver {
                     case 25:
                         if (serialized.equals("")) throw new Exception("Error: must do toString before valueOf");
                         u = u.valueOf(serialized, listController, songController);
+                        serialized = "";
                         break;
                     case 26:
                         if (song == null) throw new NullPointerException("song is null. Create a song first");
@@ -150,6 +151,7 @@ public class UserDriver {
                     case 30:
                         list = new List(in.next());
                         list.editId(nextId++);
+                        listController.addList(list);
                         break;
                     case 31:
                         if (song == null) throw new NullPointerException("song is null. Create a song first");
@@ -193,17 +195,18 @@ public class UserDriver {
         sb.add("void 	setName(String name)");
         sb.add("nothing");
         sb.add("String 	toString()");
-        sb.add("static User 	valueOf()");
+        sb.add("static User 	valueOf()\n");
 
         // OTHER CLASSES
-        sb.add("\nplayback = new Playback(Song song, Calendar date)");
-        sb.add("song = getSong(String title, String artist)");
+        sb.add("playback = new Playback(Song song, Calendar date)");
+        sb.add("song = songController.getSong(String title, String artist)");
         sb.add("songController.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)");
         sb.add("date.set(int year, int month, int day, int hour, int minute, int second)");
         sb.add("list = new List(String listTitle)");
         sb.add("list.addSong(song)");
         for (int i = 0; i < sb.size(); ++i) {
-            System.out.println(i + ": " + sb.get(i));
+            if (!sb.get(i).equals("nothing"))
+                System.out.println(i + ": " + sb.get(i));
         }
     }
 
