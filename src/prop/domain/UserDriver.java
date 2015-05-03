@@ -1,6 +1,5 @@
 package prop.domain;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -130,7 +129,7 @@ public class UserDriver {
                         }
                     case 25:
                         if (serialized.equals("")) throw new Exception("Error: must do toString before valueOf");
-                        u = u.valueOf(serialized, listController, songController);
+                        u = User.valueOf(serialized, listController, songController);
                         serialized = "";
                         break;
                     case 26:
