@@ -19,7 +19,7 @@ public class ListSetDriver {
                     " and List \n"
                     + "Therefore, you can create a Song and a List\n"
 
-                    + "Example of Genre: Rock, Blues, Disco\n"
+                    + "Example of Genre: 17, 18, 19\n"
                     + "START WITH OPTION 2\n");
 
             Song song = null;
@@ -97,8 +97,8 @@ public class ListSetDriver {
                         song = songController.getSong(in.next(),in.next());
                         break;
                     case 20:
-                        songController.addSong(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
-                                Genre.valueOf(in.next()), in.nextInt());
+                        songController.addSong(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),
+                                Genre.getGenreById(in.nextInt()), in.nextInt());
                         break;
                     case 21:
                         list = new List(in.next());
@@ -145,7 +145,7 @@ public class ListSetDriver {
         sb.add("static ListSet 	valueOf()");
         // OTHER METHODS
         sb.add("song = songController.getSong(String title, String artist)");
-        sb.add("songController.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)");
+        sb.add("songController.addSong(String title, String artist, String album, int year, int genre, int subgenre, int duration)");
         sb.add("list = new List(String listTitle)");
         sb.add("list.addSong(song)");
         sb.add("nothing");
