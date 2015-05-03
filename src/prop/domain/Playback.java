@@ -21,7 +21,7 @@ public class Playback implements Comparable<Playback>{
     /**
      * <code>Playback</code> class constructor
      * @param song      <code>song</code> played
-     * @param date      play <code>date</code>
+     * @param date      play <3 code>date</code>
      * @throws PropException
      */
     public Playback(Song song, Calendar date) throws PropException {
