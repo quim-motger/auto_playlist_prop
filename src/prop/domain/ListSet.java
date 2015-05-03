@@ -42,8 +42,13 @@ public class ListSet {
         return lists;
     }
 
+    public int getNextId() {
+        return nextId;
+    }
+
     /* SETTERS */
     public void setLists(ArrayList<List> lists) {
+        if (lists == null) throw new NullPointerException("Tried to set null ArrayList<List>");
         this.lists = lists;
     }
 
@@ -56,9 +61,10 @@ public class ListSet {
 
     /**
      * Adds a list to the set
-     * @param list list to be added
+     * @param list list to be added (not null)
      */
     public void add(List list) {
+        if (list == null) throw new NullPointerException("Tried to add a null list");
         list.editId(nextId);
         lists.add(list);
         ++nextId;
@@ -78,10 +84,11 @@ public class ListSet {
 
     /**
      * Removes the list from the set
-     * @param list list to be removed
+     * @param list list to be removed (not null)
      * @return true if the list was found and removed, false otherwise
      */
     public boolean remove(List list) {
+        if (list == null) throw new NullPointerException("Tried to remove a null list");
         return lists.remove(list);
     }
 
@@ -170,7 +177,7 @@ public class ListSet {
 
     public static ListSet valueOf(String origin, SongController songController) throws PropException {
         String[] tokens = origin.split(Pattern.quote(DELIMITER));
-        if (!tokens[0].equals(LISTSET_ID)) {
+        if (!tokens[0].equals(LISTSET_ID) || tokens.length < 3) {
             throw new PropException(ErrorString.INCORRECT_FORMAT);
         }
         ListSet ls = new ListSet();
