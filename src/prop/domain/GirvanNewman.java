@@ -7,7 +7,7 @@ import java.util.Stack;
  * Girvan-Newman algorithm.
  * @author oscar.manas
  */
-public class GirvanNewman {
+public class GirvanNewman extends Algorithm {
 
     private static final double infinity = Double.MAX_VALUE;
     private int n;

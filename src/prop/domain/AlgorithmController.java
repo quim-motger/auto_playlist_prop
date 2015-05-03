@@ -39,25 +39,23 @@ public class AlgorithmController {
         log = new ArrayList<String>();
         Graph<Song> graph = createInputGraph(algorithm,relationController);
         log.add("Input graph:\n" + writeGraph(graph));
-        AlgorithmOutput ao = null;
+        Algorithm a;
 
         // We execute the selected algorithm and get the output
         switch (algorithm) {
             case 0:
-                GirvanNewman gn = new GirvanNewman();
-                ao = gn.execute(graph,k);
+                a = new GirvanNewman();
                 break;
             case 1:
-                Louvain l = new Louvain();
-                ao = l.execute(graph,k);
+                a = new Louvain();
                 break;
             case 2:
-                CliquePercolation cp = new CliquePercolation();
-                ao = cp.execute(graph,k);
+                a = new CliquePercolation();
                 break;
             default:
                 throw new PropException(ErrorString.UNEXISTING_ALGORITHM);
         }
+        AlgorithmOutput ao = a.execute(graph,k);
 
         // From the given communities, we select the densest one...
         Graph<Song> community = ao.densestGraph();
