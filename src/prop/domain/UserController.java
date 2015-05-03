@@ -102,8 +102,8 @@ public class UserController {
                     user.setGender(Gender.valueOf(attributeValue.second));
                     break;
                 case (BIRTHDAY):
-                    user.setBirthdate(getCaledarFromLong(
-                            Long.valueOf(attributeValue.second)                            
+                    user.setBirthdate(getCalendarFromLong(
+                            Long.valueOf(attributeValue.second)
                     ));
                     break;
                 case (COUNTRY_CODE):
@@ -216,13 +216,8 @@ public class UserController {
      * @param path Path to the file to be saved to
      * @see prop.data.DataController             
      */
-    public void save (String path) {
-        try {
-            DataController.save(obtainUserSetToString(), path);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        }
+    public void save(String path) throws IOException {
+        DataController.save(userSet.toString(), path);
     }
 
     /**
@@ -231,20 +226,14 @@ public class UserController {
      * @see prop.domain.UserSet 
      * @see prop.data.DataController
      */
-    public void load (String path) {
+    public void load(String path, ListController lc, SongController sc) throws Exception {
         String data;
-        try {
-            data = DataController.load(path);
-            //userSet = UserSet.valueOf(data);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        }
-        
+        data = DataController.load(path);
+        userSet = UserSet.valueOf(data, lc, sc);
     }
     
     /*PRIVATE METHODS*/
-    private Calendar getCaledarFromLong(long birthday) {
+    private Calendar getCalendarFromLong(long birthday) {
         Date date = new Date(birthday);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

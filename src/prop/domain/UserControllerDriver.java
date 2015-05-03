@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Scanner;
  *          Creation Date: 19/04/15
  */
 public class UserControllerDriver {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** UserController");
         System.out.println("**********************************************************");
@@ -80,10 +81,20 @@ public class UserControllerDriver {
                     }
                     break;
                 case 10:
-                    userController.save(in.next());
+                    try {
+                        userController.save(in.next());
+                    } catch (IOException e) {
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+                    }
                     break;
                 case 11:
-                    userController.load(in.next());
+                    try {
+                        userController.load(in.next(), listController, songController);
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+                    }
                     break;
                 case 12:
 
@@ -115,6 +126,7 @@ public class UserControllerDriver {
                     break;
                 case 17:
                     System.out.println(listController.getListSetString());
+                    break;
                 default:
                     printInfo();
             }
