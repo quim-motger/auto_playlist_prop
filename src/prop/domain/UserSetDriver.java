@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -69,10 +71,14 @@ public class UserSetDriver {
                     break;
                 case 6:
                     String name2 = in.next();
-                    user = userSet.getUserByName(name2);
-                    System.out.print(user.getName() + " " + user.getGender() + " " + user.getBirthdate().get(Calendar.DAY_OF_MONTH) +
-                            "/" + user.getBirthdate().get(Calendar.MONTH) + "/" + user.getBirthdate().get(Calendar.YEAR) + " " +
-                            user.getCountry().toString() + "\n");
+                    try {
+                        user = userSet.getUserByName(name2);
+                        System.out.print(user.getName() + " " + user.getGender() + " " + user.getBirthdate().get(Calendar.DAY_OF_MONTH) +
+                                "/" + user.getBirthdate().get(Calendar.MONTH) + "/" + user.getBirthdate().get(Calendar.YEAR) + " " +
+                                user.getCountry().toString() + "\n");
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 7:
                     s = userSet.toString();
@@ -119,6 +125,7 @@ public class UserSetDriver {
                 default:
                     printInfoComplete();
             }
+            System.out.print("\n");
             if (i > 1 && i < 13) printInfoBrief();
         }
     }

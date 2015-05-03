@@ -20,8 +20,8 @@ public class PlaybackDriver {
 
         Scanner in = new Scanner(System.in);
         Playback playback = null;
-        Song song = null;
-        String s = null;
+        Song song;
+        String s = "";
         Calendar date = Calendar.getInstance();
         SongController sc = new SongController();
         int i = -1;
@@ -121,6 +121,7 @@ public class PlaybackDriver {
                 default:
                     printInfoComplete();
             }
+            System.out.print("\n");
             if (i > 1 && i < 12) printInfoBrief();
         }
     }

@@ -61,10 +61,10 @@ public class UserSet implements Iterable<User>{
      * @param   name    <code>user</code> name
      * @return  user    the user; null if not found
      */
-    public User getUserByName(String name) {
+    public User getUserByName(String name) throws PropException{
         int i = getUserPos(name);
         if (i != -1) return users.get(i);
-        else return null;
+        else throw new PropException(ErrorString.NULL);
     }
 
     /**
