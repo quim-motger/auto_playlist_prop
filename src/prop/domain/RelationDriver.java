@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.util.Calendar;
 import java.util.Scanner;
 
 /**
@@ -13,7 +14,7 @@ public class RelationDriver {
 
     public static void main(String[] args) throws Exception {
         System.out.println("**********************************************************");
-        System.out.println("** Playback");
+        System.out.println("** Relation");
         System.out.println("**********************************************************");
         System.out.print("\n");
 
@@ -21,7 +22,11 @@ public class RelationDriver {
         Song s1 = null;
         Song s2 = null;
         User u = null;
+        Calendar birthday = Calendar.getInstance();
         Relation r = null;
+        Relation r1 = null;
+        Relation r2 = null;
+        
         int i = -1;
         while (i != 0) {
             while (i != 0) {
@@ -36,20 +41,43 @@ public class RelationDriver {
                         r = new SimpleRelation(in.next(),in.next(),in.next());
                         break;
                     case 3:
-                        System.out.println(r.evaluateSongs(s1,s2));
+                        r = new AND(r1, r2);
                         break;
                     case 4:
-                        System.out.println(r.evaluateUser(u));
+                        r = new OR(r1, r2);
                         break;
                     case 5:
-                        s1 = Song.valueOf(in.next());
+                        r = new NOT(r1);
                         break;
                     case 6:
-                        s2 = Song.valueOf(in.next());
+                        r1 = r;
                         break;
                     case 7:
-                        //TODO: Make u from something
+                        r2 = r;
                         break;
+                    case 8:
+                        System.out.println(r.evaluateSongs(s1,s2));
+                        break;
+                    case 9:
+                        System.out.println(r.evaluateUser(u));
+                        break;
+                    case 10:
+                        System.out.println("End with ;");
+                        in.useDelimiter(";");
+                        s1 = Song.valueOf(in.next());
+                        in.useDelimiter(" ");
+                        break;
+                    case 11:
+                        System.out.println("End with ;");
+                        in.useDelimiter(";");
+                        s2 = Song.valueOf(in.next());
+                        in.useDelimiter(" ");
+                        break;
+                    case 12:
+                        u = new User(in.next(), Gender.valueOf(in.next()), birthday, CountryCode.getByCode(in.next()));
+                        break;
+                    case 13:
+                        birthday.set(in.nextInt(), in.nextInt(), in.nextInt());
                     default:
                         printInfoComplete();
                 }
@@ -61,7 +89,24 @@ public class RelationDriver {
 
 
     private static void printInfoComplete() {
-
+        StringBuilder sb = new StringBuilder();
+        sb.append("0:  terminate program\n");
+        sb.append("1:  info\n");
+        sb.append("2:  r = SimpleRelation(String type, String attribute, String value)\n");
+        sb.append("3:  r = AND(r1,r2)\n");
+        sb.append("4:  r = OR(r1,r2)\n");
+        sb.append("5:  r = NOT(r1)\n");
+        sb.append("6:  r1 = r\n");
+        sb.append("7:  r2 = r\n");
+        sb.append("8:  r.evaluateSongs(s1,s2)\n");
+        sb.append("9:  r.evaluateUser(u)\n");
+        sb.append("10:  s1 = Song.valueOf(String origen)\n");
+        sb.append("11:  s2 = Song.valueOf(String origen)\n");
+        sb.append("12:  u = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
+        sb.append("13:  birthday.set(int year,int month,int date)\n");
+        sb.append("Gender must be MALE or FEMALE or OTHER, and Country needs to be introduced by CountryCode\n");
+        sb.append("\n");
+        System.out.print(sb.toString());
     }
 
 }
