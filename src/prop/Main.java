@@ -26,6 +26,10 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(cont.obtainUserToString("test"));
+        try {
+            System.out.println(cont.obtainUserToString("test"));
+        } catch (PropException e) {
+            e.printStackTrace();
+        }
     }
 }

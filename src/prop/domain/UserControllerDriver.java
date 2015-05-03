@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -58,17 +60,25 @@ public class UserControllerDriver {
 
                     break;
                 case 5:
-                    userController.editUser(
-                            in.next(),
-                            in.next(),
-                            in.next()
-                    );
+                    try {
+                        userController.editUser(
+                                in.next(),
+                                in.next(),
+                                in.next()
+                        );
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 6:
                     System.out.println(UserController.obtainAttributes(in.next()));
                     break;
                 case 7:
-                    System.out.println(userController.obtainUserToString(in.next()));
+                    try {
+                        System.out.println(userController.obtainUserToString(in.next()));
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 8:
                     System.out.println(userController.obtainUserSetToString());
@@ -113,13 +123,25 @@ public class UserControllerDriver {
                     }
                     break;
                 case 13:
-                    userController.associateListToUser(listController,in.nextInt(),in.next());
+                    try {
+                        userController.associateListToUser(listController,in.nextInt(),in.next());
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 14:
-                    userController.disassociateListFromUser(listController,in.nextInt(),in.next());
+                    try {
+                        userController.disassociateListFromUser(listController,in.nextInt(),in.next());
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 15:
-                    System.out.println(userController.obtainListsAssociated(in.next()));
+                    try {
+                        System.out.println(userController.obtainListsAssociated(in.next()));
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 16:
                     listController.addList(in.next());
