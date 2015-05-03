@@ -72,14 +72,15 @@ public class ListSet {
 
     /**
      * Searches the list with a certain id
-     * @param id
-     * @return If found, returns the list. Else, null.
+     * @param id id of the list to search. The list must be contained in the ListSet
+     * @return Returns the list
      */
     public List getList(int id) {
-        for (List list: lists)
+        for (List list: lists) {
             if (list.obtainId() == id)
                 return list;
-        return null;
+        }
+        throw new NullPointerException("The list with this id isn't contained in the ListSet");
     }
 
     /**
