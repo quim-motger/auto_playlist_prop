@@ -11,12 +11,12 @@ import java.util.Scanner;
 public class GraphDriver {
     public static void main(String[] args) {
         try {
-            System.out.println("**********************************************************");
-            System.out.println("** Graph");
-            System.out.println("**********************************************************");
-            System.out.print("\n");
+            System.err.println("**********************************************************");
+            System.err.println("** Graph");
+            System.err.println("**********************************************************");
+            System.err.print("\n");
             printInfo();
-            System.out.println("Graph is a generic class. To facilitate testing a Graph<Integer> will be used" +
+            System.err.println("Graph is a generic class. To facilitate testing a Graph<Integer> will be used" +
                     "\nTherefore, vertices are Integers" +
                     "\nSTART WITH OPTION 2");
             Scanner in = new Scanner(System.in);
@@ -180,12 +180,12 @@ public class GraphDriver {
 
         for (int i = 0; i < sb.size(); ++i) {
             if (!sb.get(i).equals("nothing"))
-                System.out.println(i + ": " + sb.get(i));
+                System.err.println(i + ": " + sb.get(i));
         }
     }
 
     private static void printInfoBrief() {
-        System.out.print("0:    terminate program\n"
+        System.err.print("0:    terminate program\n"
                 + "1:    info\n");
     }
 }
