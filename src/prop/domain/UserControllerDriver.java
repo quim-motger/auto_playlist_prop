@@ -68,6 +68,7 @@ public class UserControllerDriver {
                         );
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
+                        e.printStackTrace();
                     }
                     break;
                 case 6:
@@ -76,7 +77,7 @@ public class UserControllerDriver {
                 case 7:
                     try {
                         System.out.println(userController.obtainUserToString(in.next()));
-                    } catch (PropException e) {
+                    } catch (Exception e) {
                         System.err.println(e.getMessage());
                     }
                     break;
@@ -95,7 +96,6 @@ public class UserControllerDriver {
                         userController.save(in.next());
                     } catch (IOException e) {
                         System.err.println(e.getMessage());
-                        e.printStackTrace();
                     }
                     break;
                 case 11:
@@ -103,7 +103,6 @@ public class UserControllerDriver {
                         userController.load(in.next(), listController, songController);
                     } catch (Exception e) {
                         System.err.println(e.getMessage());
-                        e.printStackTrace();
                     }
                     break;
                 case 12:
@@ -124,14 +123,14 @@ public class UserControllerDriver {
                     break;
                 case 13:
                     try {
-                        userController.associateListToUser(listController,in.nextInt(),in.next());
+                        userController.associateListToUser(listController, in.nextInt(), in.next());
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
                     break;
                 case 14:
                     try {
-                        userController.disassociateListFromUser(listController,in.nextInt(),in.next());
+                        userController.disassociateListFromUser(listController, in.nextInt(), in.next());
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
