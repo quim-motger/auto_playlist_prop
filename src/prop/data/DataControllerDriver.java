@@ -13,10 +13,10 @@ import java.util.regex.Pattern;
 public class DataControllerDriver {
     public static void main(String[] args) {
         try {
-            System.out.println("**********************************************************");
-            System.out.println("** DataController");
-            System.out.println("**********************************************************");
-            System.out.print("\n");
+            System.err.println("**********************************************************");
+            System.err.println("** DataController");
+            System.err.println("**********************************************************");
+            System.err.print("\n");
             printInfo();
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -57,8 +57,8 @@ public class DataControllerDriver {
         sb.append("1:  info\n");
         sb.append("2:  static void save(String data, String path) throws IOException\n");
         sb.append("3:  static String load(String path) throws IOException\n");
-        System.out.print(sb.toString());
-        System.out.println("Separate parameters with '|' \n" +
+        System.err.print(sb.toString());
+        System.err.println("Separate parameters with '|' \n" +
                 "Example: 2|Hello World!|hello.txt");
     }
 }
