@@ -72,14 +72,12 @@ public class SimpleRelation extends Relation {
                     s = s1.getAlbum();
                     return s.equals(s2.getAlbum()) && s.equals(value);
                 case "yearless":
-                    i = s1.getYear();
-                    return i < s2.getYear() && s2.getYear() < Integer.parseInt(value) && i < Integer.parseInt(value);
+                    return s2.getYear() < Integer.parseInt(value) && s1.getYear() < Integer.parseInt(value);
                 case "yearequal":
                     i = s1.getYear();
                     return i == s2.getYear() && i == Integer.parseInt(value);
                 case "yearmore":
-                    i = s1.getYear();
-                    return i > s2.getYear() && s2.getYear() > Integer.parseInt(value) && i > Integer.parseInt(value);
+                    return s2.getYear() > Integer.parseInt(value) && s1.getYear() > Integer.parseInt(value);
                 case "genre":
                     s = s1.getGenre().getName();
                     return s.equals(s2.getGenre().getName()) && s.equals(value);
