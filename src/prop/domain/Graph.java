@@ -37,10 +37,12 @@ public class Graph<T> {
 
     /**
      * Adds a vertex to the graph.
-     * @param v T vertex to add
+     * @param v T vertex to add (not null)
      */
     public void addVertex(T v) {
+        if (v == null) throw new NullPointerException("Tried to add a null vertex");
         if (!T_to_Int.containsKey(v)) {
+            /* If the graph doesn't already contain v, associate v with a new integer and add it */
             T_to_Int.put(v, vertices.size());
             Int_to_T.add(v);
             vertices.add(new EdgeList());
@@ -59,20 +61,22 @@ public class Graph<T> {
 
     /**
      * Returns the integer associated to the original value
-     * @param v T original value
+     * @param v T original value (not null)
      * @return integer vertex
      */
     public int getVertex(T v) {
+        if (v == null) throw new NullPointerException("Tried to get a null vertex");
         checkVertexT(v);
         return T_to_Int.get(v);
     }
 
     /**
      * Indicates if the graph contains a vertex. Cost O(1)
-     * @param v Vertex to search
+     * @param v Vertex to search (not null)
      * @return True if found, false otherwise
      */
     public boolean contains(T v) {
+        if (v == null) throw new NullPointerException("Null vertex");
         return T_to_Int.containsKey(v);
     }
 
@@ -113,10 +117,12 @@ public class Graph<T> {
 
     /**
      * Adds an undirected edge between two vertices of type T
-     * @param v1 vertex 1
-     * @param v2 vertex 2
+     * @param v1 vertex 1 (not null)
+     * @param v2 vertex 2 (not null)
      */
     public void addEdgeT(T v1, T v2, double weight) {
+        if (v1 == null) throw new NullPointerException("Null vertex");
+        if (v2 == null) throw new NullPointerException("Null vertex");
         checkVertexT(v1);
         checkVertexT(v2);
         int vi1 = T_to_Int.get(v1);
@@ -142,12 +148,15 @@ public class Graph<T> {
         checkVertex(v1);
         checkVertex(v2);
         Double newEdge = new Double(weight);
-        if (v1 == v2) vertices.get(v1).edgeLoops.add(newEdge);
+        if (v1 == v2) // If equal, add a loop
+            vertices.get(v1).edgeLoops.add(newEdge);
         else {
-            if (!hasEdge(v1,v2)) {
+            // If they are not adjacent, update adjacency lists
+            if (!vertices.get(v1).undirected.containsKey(v2)) {
                 vertices.get(v1).undirected.put(v2, new ArrayList<Double>());
                 vertices.get(v2).undirected.put(v1, new ArrayList<Double>());
             }
+            // Add the new edge to the edge list of each vertex
             vertices.get(v1).undirected.get(v2).add(newEdge);
             vertices.get(v1).undirectedCount++;
             vertices.get(v2).undirected.get(v1).add(newEdge);
@@ -163,9 +172,17 @@ public class Graph<T> {
      * @return true if an edge existed and was removed
      */
     public boolean removeEdge(int v1, int v2) {
-        if (!hasEdge(v1,v2)) return false;
-        if (v1 == v2) vertices.get(v1).edgeLoops.remove(0);
+        checkVertex(v1);
+        checkVertex(v2);
+        if (v1 == v2) {// If equal, remove a loop
+            // If it hasn't loops return false
+            if (vertices.get(v1).edgeLoops.isEmpty()) return false;
+            vertices.get(v1).edgeLoops.remove(0);
+        }
         else {
+            // If they are not adjacent return false
+            if (!vertices.get(v1).undirected.containsKey(v2)) return false;
+            // Select an edge to remove
             Double removedEdge = vertices.get(v1).undirected.get(v2).get(0);
             vertices.get(v1).undirected.get(v2).remove(removedEdge);
             vertices.get(v1).undirectedCount--;
@@ -173,6 +190,7 @@ public class Graph<T> {
             vertices.get(v2).undirectedCount--;
             // Check if v1 and v2 are no longer adjacent
             if (vertices.get(v1).undirected.get(v2).isEmpty()) {
+                // Update adjacency lists
                 vertices.get(v1).undirected.remove(v2);
                 vertices.get(v2).undirected.remove(v1);
             }
@@ -197,12 +215,15 @@ public class Graph<T> {
         checkVertex(v1);
         checkVertex(v2);
         Double newEdge = new Double(weight);
-        if (v1 == v2) vertices.get(v1).arcLoops.add(newEdge);
+        if (v1 == v2) // If equal, add a loop
+            vertices.get(v1).arcLoops.add(newEdge);
         else {
-            if (!hasArc(v1, v2)) {
+            // If they are not adjacent, update adjacency lists
+            if (!vertices.get(v1).outgoing.containsKey(v2)) {
                 vertices.get(v1).outgoing.put(v2, new ArrayList<Double>());
                 vertices.get(v2).incoming.put(v1, new ArrayList<Double>());
             }
+            // Add the new arc to the edge list of each vertex
             vertices.get(v1).outgoing.get(v2).add(newEdge);
             vertices.get(v1).outgoingCount++;
             vertices.get(v2).incoming.get(v1).add(newEdge);
@@ -218,14 +239,28 @@ public class Graph<T> {
      * @return true if an arc existed and was removed
      */
     public boolean removeArc(int v1, int v2) {
-        if (!hasArc(v1,v2)) return false;
-        if (v1 == v2) vertices.get(v1).arcLoops.remove(0);
+        checkVertex(v1);
+        checkVertex(v2);
+        if (v1 == v2) { //If equal, remove a loop
+            // If it hasn't loops return false
+            if (vertices.get(v1).arcLoops.isEmpty()) return false;
+            vertices.get(v1).arcLoops.remove(0);
+        }
         else {
+            // If they are not adjacent return false
+            if (!vertices.get(v1).outgoing.containsKey(v2)) return false;
+            // Select an edge to remove
             Double removedEdge = vertices.get(v1).outgoing.get(v2).get(0);
             vertices.get(v1).outgoing.get(v2).remove(removedEdge);
             vertices.get(v1).outgoingCount--;
             vertices.get(v2).incoming.get(v1).remove(removedEdge);
             vertices.get(v2).incomingCount--;
+            // Check if v1 and v2 are no longer adjacent
+            if (vertices.get(v1).outgoing.get(v2).isEmpty()) {
+                // Update adjacency lists
+                vertices.get(v1).outgoing.remove(v2);
+                vertices.get(v2).incoming.remove(v1);
+            }
         }
         --edgeCount;
         return true;
@@ -245,7 +280,7 @@ public class Graph<T> {
     }
 
     /**
-     * Returns if there is an arc between two specified vertices. Cost O(1)
+     * Returns if there is an arc between two specified vertices.
      * @param v1 vertex origin
      * @param v2 vertex destination
      * @return true if found, false otherwise
@@ -282,7 +317,7 @@ public class Graph<T> {
     }
 
     /**
-     * Returns the weight of an arbitrary undirected edge between two vertices
+     * Returns the weight of an arbitrary undirected edge between two adjacent vertices
      * @param v1
      * @param v2
      * @return double weight
@@ -302,17 +337,6 @@ public class Graph<T> {
     }
 
     /**
-     * Returns the number of undirected edges between two vertices
-     * @param v1
-     * @param v2
-     * @return int number of edges
-     */
-    public int numberOfEdges(int v1, int v2) {
-        checkVertex(v1);
-        checkVertex(v2);
-        return vertices.get(v1).undirected.get(v2).size();
-    }
-    /**
      * Returns the total number of edges of a vertex.
      * @param v
      * @return int total edges
@@ -323,7 +347,7 @@ public class Graph<T> {
     }
 
     /**
-     * Returns the number of incident undirected edges in a vertex
+     * Returns the number of incident undirected edges in a vertex (not counting loops)
      * @param v
      * @return int degree
      */
@@ -343,7 +367,7 @@ public class Graph<T> {
     }
 
     /**
-     * Returns the number of incoming arcs of a vertex
+     * Returns the number of incoming arcs of a vertex (not counting loops)
      * @param v
      * @return int indegree
      */
@@ -353,7 +377,7 @@ public class Graph<T> {
     }
 
     /**
-     * Returns the number of outgoing arcs of a vertex
+     * Returns the number of outgoing arcs of a vertex (not counting loops)
      * @param v
      * @return int outdegree
      */
@@ -380,11 +404,22 @@ public class Graph<T> {
           * undirected, undirected loop (edgeLoops), incoming arcs, outgoing arcs and directed loops (arcLoops).
           * Each edge is represented as a Double that contains its weight.
           * */
+
+        // The keys are the adjacent vertices, the values are the lists of edges
         HashMap<Integer, ArrayList<Double>> undirected;
+
+        // List of edges (loops)
         ArrayList<Double> edgeLoops; //count as 2 incoming & 2 outgoing
+
+        // The keys are the adjacent vertices, the values are the lists of incoming arcs
         HashMap<Integer, ArrayList<Double>> incoming;
+
+        // The keys are the adjacent vertices, the values are the lists of outgoing arcs
         HashMap<Integer, ArrayList<Double>> outgoing;
+
+        // List of arcs (loops)
         ArrayList<Double> arcLoops; // count as 1 incoming & 1 outgoing
+
         int undirectedCount;
         int incomingCount;
         int outgoingCount;
