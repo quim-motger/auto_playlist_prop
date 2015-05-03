@@ -64,7 +64,7 @@ public class UserSet implements Iterable<User>{
     public User getUserByName(String name) throws PropException{
         int i = getUserPos(name);
         if (i != -1) return users.get(i);
-        else throw new PropException(ErrorString.NULL);
+        else throw new PropException(ErrorString.UNEXISTING_USER);
     }
 
     /**

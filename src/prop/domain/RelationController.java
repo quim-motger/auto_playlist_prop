@@ -29,6 +29,11 @@ public class RelationController {
         }
     }
 
+    /**
+     * Return Graph created
+     *
+     * @return graph with all relations
+     */
     public Graph getGraph() {
         return graph;
     }
