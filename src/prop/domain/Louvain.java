@@ -26,6 +26,13 @@ public class Louvain extends Algorithm {
         maxComm = 0;
     }
 
+    /**
+     * Execute Louvain Algorithm
+     *
+     * @param graph Input Graph
+     * @param k     Number of maximum communities
+     * @return Algorithm output with the steps of the algorithm and an array with the output communities
+     */
     @Override
     public AlgorithmOutput execute(Graph<Song> graph, int k) {
         //Initialize Variables
@@ -48,7 +55,7 @@ public class Louvain extends Algorithm {
 
     /**
      * Louvain Algorithm
-     *
+     * RECURSIVE METHOD
      * @param graph Graph where Louvain needs to be applied
      * @return array with the number of coomunity they belong to
      */
@@ -153,6 +160,7 @@ public class Louvain extends Algorithm {
                 moved = true;
             }
 
+            //Increments and gets ready for next turn
             ++iter;
             ++idNode;
         }
@@ -188,10 +196,12 @@ public class Louvain extends Algorithm {
         int currentComm = 0;
         int[] ret = new int[comms.length];
 
+        //Initializes commTranslator
         int[] commTranslator = new int[comms.length];
         for (int i = 0; i < commTranslator.length; ++i)
             commTranslator[i] = -1;
 
+        //Translates communities in lowest numbers
         for (int i = 0; i < comms.length; ++i) {
             if (commTranslator[comms[i]] == -1) {
                 log.add("Normalizing community " + comms[i] + " into " + currentComm + "\n");
@@ -213,6 +223,8 @@ public class Louvain extends Algorithm {
      */
     private void moveMode(int idNode, int comOrig, int comDest, int[] comm) {
         comm[idNode] = comDest;
+
+        //Checks if there's an empty community
         boolean destroyCom = true;
         for (int i : comm) {
             if (i == comOrig) destroyCom = false;
