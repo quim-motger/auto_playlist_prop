@@ -1,5 +1,6 @@
 package prop.domain;
 
+import prop.PropException;
 import prop.data.DataController;
 
 import java.io.IOException;
@@ -17,13 +18,12 @@ import java.util.Date;
  * @see prop.domain.User
  */
 public class UserController {
-    private UserSet userSet;
-    
     //USEFUL STRINGS FOR USAGE OF editUser
     public static final String NAME="name";
     public static final String GENDER="gender";
     public static final String BIRTHDAY="birthday";
     public static final String COUNTRY_CODE="countryCode";
+    private UserSet userSet;
 
     /**
      * Creator, resets the controller 
@@ -33,27 +33,40 @@ public class UserController {
     }
 
     /**
+     * Obtain Attribute names of a user
+     * @param delimiter String between attribute names
+     * @return Attribute names separated with the specified delimiter
+     */
+    public static String obtainAttributes(String delimiter) {
+        return NAME + delimiter +
+                GENDER + delimiter +
+                BIRTHDAY + delimiter +
+                COUNTRY_CODE + delimiter;
+
+    }
+
+    /**
      * Modifier that adds  new users
      * @param name name that will have the new user
      * @param gender gender of the User
      * @param birthday Birthday expressed in long (Date to Long)
      * @param countryCode Country where the user is from
-     * @see prop.domain.User 
+     * @see prop.domain.User
      */
     public void addUser(String name, String gender, long birthday, int countryCode) throws Exception {
         Gender userGender = Gender.valueOf(gender);
         CountryCode userCountry = CountryCode.getByCode(countryCode);
         Calendar userBirthday = getCaledarFromLong(birthday);
-        User user = new User(name,userGender,userBirthday,userCountry);
+        User user = new User(name, userGender, userBirthday, userCountry);
         userSet.addUser(user);
     }
 
     /**
      * Modifier that removes an existing user
      * @param name Name of the user that wants to be removed
-     * @see prop.domain.User 
+     * @see prop.domain.User
      */
-    public void removeUser (String name) throws Exception {
+    public void removeUser(String name) throws Exception {
         userSet.removeUser(name);
     }
 
@@ -62,24 +75,11 @@ public class UserController {
      * @param name Name of the desired user
      * @param attribute Attribute to be modified
      * @param value New value for the desired attribute
-     * @see prop.domain.User              
+     * @see prop.domain.User
      */
     public void editUser(String name, String attribute, String value) {
-        Pair<String,String> pair = Pair.create(attribute,value);
-        editUser(name,pair);        
-    }
-
-    /**
-     * Obtain Attribute names of a user
-     * @param delimiter String between attribute names
-     * @return Attribute names separated with the specified delimiter
-     */
-    public static String obtainAttributes(String delimiter) {
-        return  NAME + delimiter +
-                GENDER + delimiter +
-                BIRTHDAY + delimiter +
-                COUNTRY_CODE + delimiter;
-        
+        Pair<String, String> pair = Pair.create(attribute, value);
+        editUser(name, pair);
     }
 
     /**
@@ -200,7 +200,7 @@ public class UserController {
      * @param songController Main SongController
      * @see prop.domain.SongController                       
      */
-    public void playSong(String title, String artist, String userName, SongController songController) throws Exception {
+    public void playSong(String title, String artist, String userName, SongController songController) throws PropException {
         User user = userSet.getUserByName(userName);
         Song song = songController.getSong(title,artist);
         Calendar time = Calendar.getInstance();
