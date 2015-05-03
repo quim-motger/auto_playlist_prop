@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -58,10 +60,18 @@ public class RelationDriver {
                         r2 = r;
                         break;
                     case 8:
-                        System.out.println(r.evaluateSongs(s1,s2));
+                        try {
+                            System.out.println(r.evaluateSongs(s1, s2));
+                        } catch (PropException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 9:
-                        System.out.println(r.evaluateUser(u));
+                        try {
+                            System.out.println(r.evaluateUser(u));
+                        } catch (PropException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 10:
                         s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),

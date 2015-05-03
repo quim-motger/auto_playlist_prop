@@ -168,6 +168,9 @@ public class RelationControllerDriver {
                 case 14:
                     System.out.println(lc.getListSetString());
                     break;
+                case 15:
+                    System.out.println(lc.getListString(in.nextInt()));
+                    break;
                 default:
                     printInfoComplete();
             }
@@ -180,9 +183,9 @@ public class RelationControllerDriver {
                 + "1:   printInfoComplete()\n"
                 + "2:   initGraph(SongController sc)\n"
                 + "3:   getGraph()\n"
-                + "4:   playbackRelations(UserController uc)\n"
-                + "5:   addSongRelation(String simpRel, String exp)\n"
-                + "6:   addUserRelation(String simpRel, String exp, UserController uc)\n"
+                + "4:   addSongRelation(String simpRel, String exp)\n"
+                + "5:   addUserRelation(String simpRel, String exp, UserController uc)\n"
+                + "6:   playbackRelations(UserController uc)\n"
                 + "SONG CONTROLLER METHODS\n"
                 + "7:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration):" +
                 " title artist album YYYY id_genre id_subgenre duration(seconds)\n"
@@ -192,10 +195,11 @@ public class RelationControllerDriver {
                 "MM DD countryCode\n"
                 + "10:   uc.removeUser(String name): userName\n"
                 + "11:  uc.associateListToUser(ListController lc, int listId, String userName): listId userName\n"
-                + "12:  uc.playSong(String title, String artist, String name, SongController sc)\n"
+                + "12:  uc.playSong(String title, String artist, String name, SongController sc) : songTitle songArtist userName\n"
                 + "LIST CONTROLLER METHODS\n"
                 + "13:  lc.createRandomlist(String title, int n, SongController sc): title n\n"
-                + "14:  String lc.getListSetString()\n");
+                + "14:  String lc.getListSetString()\n"
+                + "15:  String lc.getListString(int id): idList\n");
     }
 
     private static void printInfoBrief() {
@@ -207,10 +211,10 @@ public class RelationControllerDriver {
         Song s;
         for (int i = 0; i < G.numberOfVertices(); ++i) {
             s = (Song) G.getVertexT(i);
-            System.out.print(s.getTitle() + ": ");
+            System.out.print(s.getTitle() + " " + s.getArtist() + ":");
             for (Object j : G.adjacentVertices(i)) {
                 s = (Song) G.getVertexT((int) j);
-                System.out.print(s.getTitle() + " ");
+                System.out.print(" " + s.getTitle() + " " + s.getArtist());
             }
             System.out.print("\n");
         }
