@@ -60,7 +60,9 @@ public class ListSetDriver {
                         System.out.println(l.contains(in.next()));
                         break;
                     case 9:
-                        System.out.println(l.getList(in.nextInt()));
+                        List gl = l.getList(in.nextInt());
+                        if (gl == null) System.out.println("The list with this id doesn't exist");
+                        else System.out.println(gl);
                         break;
                     case 10:
                         ArrayList<List> al = l.getLists();
