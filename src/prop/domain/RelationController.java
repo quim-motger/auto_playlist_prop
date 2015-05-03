@@ -15,7 +15,6 @@ public class RelationController {
 
     private static final long EPSILON =  600000; //10 min
     Graph<Song> graph;
-    boolean dirty;
     
     public RelationController() {
         graph = new Graph();
