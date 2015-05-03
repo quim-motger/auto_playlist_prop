@@ -22,7 +22,7 @@ public class Main {
 
         UserController cont = new UserController();
         try {
-            cont.addUser("test", "test", 3343434, 724); // 724 = ES
+            cont.addUser("test", "test", 2015, 2, 4, "ES"); // 724 = ES
         } catch (Exception e) {
             e.printStackTrace();
         }

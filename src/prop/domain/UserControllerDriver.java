@@ -39,8 +39,10 @@ public class UserControllerDriver {
                         userController.addUser(
                                 in.next(),
                                 in.next(),
-                                in.nextLong(),
-                                in.nextInt()
+                                in.nextInt(),
+                                in.nextInt(),
+                                in.nextInt(),
+                                in.next()
                         );
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -133,7 +135,7 @@ public class UserControllerDriver {
         sb.append("0:  terminate program\n");
         sb.append("1:  info\n");
         sb.append("2:  UserController()\n");
-        sb.append("3:  void addUser(String name, String gender, long birthday, int countryCode)\n");
+        sb.append("3:  void addUser(String name, String gender, int year, int month, int date, String countryCode)\n");
         sb.append("4:  void removeUser (String name)\n");
         sb.append("5:  void editUser(String name, String attribute, String value)\n");
         sb.append("6:  String obtainAttributes(String delimiter)\n");

@@ -49,14 +49,17 @@ public class UserController {
      * Modifier that adds  new users
      * @param name name that will have the new user
      * @param gender gender of the User
-     * @param birthday Birthday expressed in long (Date to Long)
+     * @param year year of the user birthday
+     * @param month month of the user birthday
+     * @param date date of the user birthday
      * @param countryCode Country where the user is from
      * @see prop.domain.User
      */
-    public void addUser(String name, String gender, long birthday, int countryCode) throws Exception {
+    public void addUser(String name, String gender, int year, int month, int date, String countryCode) throws Exception {
         Gender userGender = Gender.valueOf(gender);
         CountryCode userCountry = CountryCode.getByCode(countryCode);
-        Calendar userBirthday = getCaledarFromLong(birthday);
+        Calendar userBirthday = Calendar.getInstance();
+        userBirthday.set(year, month, date);
         User user = new User(name, userGender, userBirthday, userCountry);
         userSet.addUser(user);
     }
