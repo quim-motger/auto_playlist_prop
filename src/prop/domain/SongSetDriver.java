@@ -156,6 +156,8 @@ public class SongSetDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
+                default:
+                    printInfo();
             }
         }
     }

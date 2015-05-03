@@ -67,6 +67,8 @@ public class AlgorithmControllerDriver {
                 case 6:
                     System.out.println(listController.getListSetString());
                     break;
+                default:
+                    printInfo();
             }
 
         }

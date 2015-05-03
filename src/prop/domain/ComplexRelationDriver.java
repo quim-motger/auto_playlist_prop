@@ -31,6 +31,8 @@ public class ComplexRelationDriver {
                 case 2:
                     complexRelation = new ComplexRelationStub();
                     break;
+                default:
+                    printInfo();
             }
         }
     }

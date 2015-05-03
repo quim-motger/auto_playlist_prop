@@ -155,6 +155,8 @@ public class ListControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
+                default:
+                    printInfo();
             }
         }
     }
