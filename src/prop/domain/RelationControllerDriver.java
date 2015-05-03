@@ -26,6 +26,9 @@ public class RelationControllerDriver {
         int i = -1;
         RelationController rc = new RelationController();
         SongController sc = new SongController();
+        UserController uc = new UserController();
+        ListController lc = new ListController();
+        Relation r;
         printInfoComplete();
         while (i != 0) {
             i = in.nextInt();
@@ -67,42 +70,73 @@ public class RelationControllerDriver {
                     break;*/
                 case 5:
                     System.out.println("How to introduce relations:");
-                    System.out.println("1. Introduce all simple relations you are going to work with in next format");
-                    System.out.println("    type attribute value");
-                    System.out.println("2. Introduce the boolean expression using the indexs of simple relations considering their order");
+                    System.out.println("1. Introduce the number of SimpleRelations you are going to work with: n_relations");
+                    System.out.println("2. Introduce n_relations sequences describing the relations): attribute value");
+                    System.out.println("2. Introduce the boolean expression using the indexs of simple relations considering their order" +
+                            "(indicate end with a ';')");
                     System.out.println("    for AND relations:  0 and 1");
                     System.out.println("    for OR relations:   0 or 1");
                     System.out.println("    for NOT relation:   not0");
+                    System.out.println("    Example: not0 and 1 or 0 and not2 and 3 or 4 ;");
                     StringBuilder sb = new StringBuilder();
-                    String s;
-                    while (!(s = in.next()).equals(";")) {
-                        sb.append(s + " " + in.next() + " " + in.next() + "\n");
+                    int n = in.nextInt();
+                    while (n > 0) {
+                        sb.append("SONG " + in.next() + " " + in.next() + "\n");
+                        --n;
                     }
+
                     StringBuilder sp = new StringBuilder();
                     String p = in.next();
                     sp.append(p);
                     while (!(p = in.next()).equals(";")) {
                         sp.append(" " + p);
                     }
-                    Relation r = rc.parsing(sb.toString(),sp.toString());
                     try {
-                        if(r.evaluateSongs(song0, song1)) System.out.print("true\n");
-                        else System.out.print("false\n");
+                        rc.addSongRelation(sb.toString(),sp.toString());
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
                     break;
                 case 6:
-                    String rel = in.next();
-                    String exp = in.next();
-                    Relation r2 = rc.parsing2(rel, exp);
+                    System.out.println("How to introduce relations:");
+                    System.out.println("1. Introduce the number of SimpleRelations you are going to work with: n_relations");
+                    System.out.println("2. Introduce n_relations sequences describing the relations): attribute value");
+                    System.out.println("2. Introduce the boolean expression using the indexs of simple relations considering their order" +
+                            "(indicate end with a ';')");
+                    System.out.println("    for AND relations:  0 and 1");
+                    System.out.println("    for OR relations:   0 or 1");
+                    System.out.println("    for NOT relation:   not0");
+                    System.out.println("    Example: not0 and 1 or 0 and not2 and 3 or 4 ;");
+                    StringBuilder sb2 = new StringBuilder();
+                    int n2 = in.nextInt();
+                    while (n2 > 0) {
+                        sb2.append("USER " + in.next() + " " + in.next() + "\n");
+                        --n2;
+                    }
+
+                    StringBuilder sp2 = new StringBuilder();
+                    String p2 = in.next();
+                    sp2.append(p2);
+                    while (!(p2 = in.next()).equals(";")) {
+                        sp2.append(" " + p2);
+                    }
                     try {
-                        if(r2.evaluateSongs(song0, song1)) System.out.print("true\n");
-                        else System.out.print("false\n");
+                        rc.addUserRelation(sb2.toString(), sp2.toString(), uc);
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
                     break;
+                case 7:
+                    try {
+                        uc.addUser(
+                                in.next(),
+                                in.next(),
+                                in.nextLong(),
+                                in.nextInt()
+                        );
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 default:
                     printInfoComplete();
             }
@@ -114,9 +148,19 @@ public class RelationControllerDriver {
         System.out.print("0:   terminate program\n"
                 + "1:   printInfoComplete()\n"
                 + "2:   initGraph(SongController sc)\n"
-                + "3:   sc.addSong(new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n"
                 + "4:   getGraph()\n"
-                + "5:   r1 = parsing(String s)\n");
+                + "5:   addSongRelation(String simpRel, String exp)\n"
+                + "6:   addUserRelation(String simpRel, String exp, UserController uc)\n"
+                + "SONG CONTROLLER METHODS\n"
+                + "7:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration):" +
+                " title artist album YYYY id_genre id_subgenre duration(seconds)\n"
+                + "8:   sc.removeSong(String title, String artist): title artist\n"
+                + "USER CONTROLLER METHODS\n"
+                + "9:   uc.addUser(String name, Gender gender, long birthday, int countryCode):\n"
+                + "10:  uc.removeUser(String name): userName\n"
+                + "11:  uc.associateListToUser(ListController lc, int listId, String userName): listId userName\n"
+                + "LIST CONTROLLER METHODS\n"
+                + "12:  lc.");
     }
 
     private static void printInfoBrief() {

@@ -67,11 +67,9 @@ public class SimpleRelation extends Relation {
                     return s.equals(s2.getTitle()) && s.equals(value);
                 case "artist":
                     s = s1.getArtist();
-                    System.out.print("yeart\n");
                     return s.equals(s2.getArtist()) && s.equals(value);
                 case "album":
                     s = s1.getAlbum();
-                    System.out.print("yealb\n");
                     return s.equals(s2.getAlbum()) && s.equals(value);
                 case "yearless":
                     i = s1.getYear();
