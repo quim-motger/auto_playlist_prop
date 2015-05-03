@@ -19,6 +19,7 @@ public class SimpleRelation extends Relation {
 
     /**
      * Simple class constructor
+     * @param   type        type of relation (USER/SONG)
      * @param   attribute   attribute name
      * @param   value       value of attribute
      */
@@ -28,12 +29,24 @@ public class SimpleRelation extends Relation {
         this.value = value;
     }
 
+    /**
+     * Get the relation type
+     * @return  a String with the relation type (USER/SONG)
+     */
     public String getType() { return type;}
 
+    /**
+     * Get the relation attribute
+     * @return  a String with the relation attribute
+     */
     public String getAttribute() {
         return attribute;
     }
 
+    /**
+     * Get the relation value of the attribute
+     * @return  a String with the relation value of the attribute
+     */
     public String getValue() {
         return value;
     }
@@ -47,16 +60,18 @@ public class SimpleRelation extends Relation {
     public boolean evaluateSongs(Song s1, Song s2) throws PropException{
         String s;
         int i;
-        if (type.equals("song")) {
+        if (type.equals("SONG")) {
             switch (attribute) {
                 case "title":
                     s = s1.getTitle();
                     return s.equals(s2.getTitle()) && s.equals(value);
                 case "artist":
                     s = s1.getArtist();
+                    System.out.print("yeart\n");
                     return s.equals(s2.getArtist()) && s.equals(value);
                 case "album":
                     s = s1.getAlbum();
+                    System.out.print("yealb\n");
                     return s.equals(s2.getAlbum()) && s.equals(value);
                 case "yearless":
                     i = s1.getYear();
@@ -77,14 +92,19 @@ public class SimpleRelation extends Relation {
                     i = s1.getDuration();
                     return i == s2.getDuration() && i == Integer.parseInt(value);
                 default:
-                    return false;
+                    throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
             }
         }
         else throw new PropException(ErrorString.WRONG_RELATION_TYPE);
     }
 
+    /**
+     * Evaluates s1 and s2
+     * @param   u      first song
+     * @return      true if the user match the specified relation; false otherwise
+     */
     public boolean evaluateUser(User u) throws PropException {
-        if (type.equals("user")) {
+        if (type.equals("USER")) {
             switch (attribute) {
                 case "name":
                     return u.getName().equals(value);
@@ -99,7 +119,7 @@ public class SimpleRelation extends Relation {
                 case "agemore":
                     return u.age() > Integer.parseInt(value);
                 default:
-                    return false;
+                    throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
             }
         }
         else throw new PropException(ErrorString.WRONG_RELATION_TYPE);

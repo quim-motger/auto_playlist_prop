@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 /**
@@ -15,11 +16,12 @@ public class ANDDriver {
         System.out.print("\n");
 
         Scanner in = new Scanner(System.in);
-        AND r = null;
-        Relation r1 = null;
-        Relation r2 = null;
+        ComplexRelation r = null;
+        SimpleRelation r1 = null;
+        SimpleRelation r2 = null;
         Song s1 = new Song();
         Song s2 = new Song();
+        User u = new User();
 
         int i = -1;
         printInfoComplete();
@@ -32,22 +34,28 @@ public class ANDDriver {
                     printInfoComplete();
                     break;
                 case 2:
+                    r = new AND(r1,r2);
+                    break;
+                case 3:
                     if (r.evaluateSongs(s1,s2)) System.out.print("true\n");
                     else System.out.print("false\n");
                     break;
-                case 3:
+                case 4:
+                    if (r.evaluateUser(u)) System.out.print("true\n");
+                    else System.out.print("false\n");
+                case 5:
                     String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
                     r1 = new SimpleRelation(type,attribute,value);
                     break;
-                case 4:
+                case 6:
                     String type2 = in.next();
                     String attribute2 = in.next();
                     String value2 = in.next();
-                    r1 = new SimpleRelation(type2,attribute2,value2);
+                    r2 = new SimpleRelation(type2,attribute2,value2);
                     break;
-                case 5:
+                case 7:
                     String title = in.next();
                     String artist = in.next();
                     String album = in.next();
@@ -57,7 +65,7 @@ public class ANDDriver {
                     int duration = in.nextInt();
                     s1 = new Song(title,artist,album,y,genre,subgenre,duration);
                     break;
-                case 6:
+                case 8:
                     String title2 = in.next();
                     String artist2 = in.next();
                     String album2 = in.next();
@@ -65,23 +73,29 @@ public class ANDDriver {
                     Genre genre2 = Genre.getGenreById(in.nextInt());
                     Genre subgenre2 = Genre.getGenreById(in.nextInt());
                     int duration2 = in.nextInt();
-                    s1 = new Song(title2,artist2,album2,y2,genre2,subgenre2,duration2);
+                    s2 = new Song(title2,artist2,album2,y2,genre2,subgenre2,duration2);
                     break;
                 default:
                     printInfoComplete();
             }
-            if (i > 0 && i < 7) printInfoBrief();
+            if (i > 0 && i < 10) printInfoBrief();
         }
     }
 
     private static void printInfoComplete() {
         System.out.print("0:    terminate program\n");
         System.out.print("1:    printInfoComplete()\n");
-        System.out.print("2:    evaluate(Song s1, Song s2)\n");
-        System.out.print("3:    r1 = new Relation(String attribute, String value)\n");
-        System.out.print("4:    r2 = new Relation(String attribute, String value)\n");
-        System.out.print("5:    s1 = new Song(String title, String artist, S)\n");
-        System.out.print("6:    s2 = new Song(String title, String artist, [...])\n");
+        System.out.print("2:    r = new AND(r1, r2)\n");
+        System.out.print("3:    evaluateSongs(Song s1, Song s2)\n");
+        System.out.print("4:    evaluateUser(User u)\n");
+        System.out.print("5:    r1 = new Relation(String type, String attribute, String value): SONG/USER attribute value\n");
+        System.out.print("6:    r2 = new Relation(String type, String attribute, String value): SONG/USER attribute value\n");
+        System.out.print("7:    s1 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)" +
+                ": title artist album YYYY id_genre id_subgenre duration(seconds)\n");
+        System.out.print("8:    s2 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)" +
+                ": title artist album YYYY id_genre id_subgenre duration(seconds)\n");
+        System.out.print("9:    u = new User(String name, Gender gender, int year, int month, int day, CountryCode country): " +
+                "name MALE/FEMALE/OTHER YYYY MM DD country_code\n");
     }
 
     private static void printInfoBrief() {

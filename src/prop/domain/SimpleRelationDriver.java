@@ -84,9 +84,6 @@ public class SimpleRelationDriver {
                     CountryCode country = CountryCode.getByCode(in.nextInt());
                     u = new User(name, gender, date, country);
                     break;
-                case 8:
-                    System.out.print(s1.getTitle() + " " + s1.getArtist() + "\n");
-                    System.out.print(s2.getTitle() + " " + s2.getArtist() + "\n");
                 default:
                     printInfoComplete();
             }
@@ -99,10 +96,13 @@ public class SimpleRelationDriver {
         System.out.print("1:    printInfoComplete()\n");
         System.out.print("2:    evaluateSongs(Song s1, Song s2)\n");
         System.out.print("3:    evaluateUser(User u)\n");
-        System.out.print("4:    r = new SimpleRelation(String attribute, String value)\n");
-        System.out.print("5:    s1 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        System.out.print("6:    s2 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        System.out.print("7:    u = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
+        System.out.print("4:    r = new SimpleRelation(String type, String attribute, String value): SONG/USER attribute value\n");
+        System.out.print("5:    s1 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)" +
+                ": title artist album YYYY id_genre id_subgenre duration(seconds)\n");
+        System.out.print("6:    s2 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)" +
+                ": title artist album YYYY id_genre id_subgenre duration(seconds)\n");
+        System.out.print("7:    u = new User(String name, Gender gender, Calendar birthdate, CountryCode country)" +
+                ": name MALE/FEMALE/OTHER DD MM YYYY country_code\n");
     }
 
     private static void printInfoBrief() {
