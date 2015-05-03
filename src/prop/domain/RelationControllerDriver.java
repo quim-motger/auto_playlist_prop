@@ -41,20 +41,6 @@ public class RelationControllerDriver {
                 case 2:
                     rc.initGraph(sc);
                     break;
-                case 3:
-                    String title = in.next();
-                    String artist = in.next();
-                    String album = in.next();
-                    int year = in.nextInt();
-                    Genre genre = Genre.getGenreById(in.nextInt());
-                    Genre subgenre = Genre.getGenreById(in.nextInt());
-                    int duration = in.nextInt();
-                    try {
-                        sc.addSong(title, artist, album, year, genre, subgenre, duration);
-                    } catch (Exception e) {
-                        System.out.println("e.getMessage()");
-                    }
-                    break;
                 // todo: adapt to Graph
                 /*case 4:
                     HashGraph g = rc.getGraph();
@@ -68,7 +54,7 @@ public class RelationControllerDriver {
                         System.out.print("\n");
                     }
                     break;*/
-                case 5:
+                case 4:
                     System.out.println("How to introduce relations:");
                     System.out.println("1. Introduce the number of SimpleRelations you are going to work with: n_relations");
                     System.out.println("2. Introduce n_relations sequences describing the relations): attribute value");
@@ -97,7 +83,7 @@ public class RelationControllerDriver {
                         System.err.println(e.getMessage());
                     }
                     break;
-                case 6:
+                case 5:
                     System.out.println("How to introduce relations:");
                     System.out.println("1. Introduce the number of SimpleRelations you are going to work with: n_relations");
                     System.out.println("2. Introduce n_relations sequences describing the relations): attribute value");
@@ -126,7 +112,30 @@ public class RelationControllerDriver {
                         System.err.println(e.getMessage());
                     }
                     break;
+                case 6:
+                    String title2 = in.next();
+                    String artist2 = in.next();
+                    String album2 = in.next();
+                    int year2 = in.nextInt();
+                    Genre genre2 = Genre.getGenreById(in.nextInt());
+                    Genre subgenre2 = Genre.getGenreById(in.nextInt());
+                    int duration2 = in.nextInt();
+                    try {
+                        sc.addSong(title2, artist2, album2, year2, genre2, subgenre2, duration2);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
                 case 7:
+                    String title = in.next();
+                    String artist = in.next();
+                    try {
+                        sc.removeSong(title, artist);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 8:
                     try {
                         uc.addUser(
                                 in.next(),
@@ -137,10 +146,27 @@ public class RelationControllerDriver {
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
+                    break;
+                case 9:
+                    try {
+                        uc.removeUser(in.next());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 10:
+                    uc.associateListToUser(lc,in.nextInt(),in.next());
+                    break;
+                case 11:
+                    try {
+                        lc.createRandomList(in.next(), in.nextInt(), sc);
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
                 default:
                     printInfoComplete();
             }
-            if (i > 0 && i < 10) printInfoBrief();
+            if (i > 0 && i < 13) printInfoBrief();
         }
     }
 
@@ -148,19 +174,19 @@ public class RelationControllerDriver {
         System.out.print("0:   terminate program\n"
                 + "1:   printInfoComplete()\n"
                 + "2:   initGraph(SongController sc)\n"
-                + "4:   getGraph()\n"
-                + "5:   addSongRelation(String simpRel, String exp)\n"
-                + "6:   addUserRelation(String simpRel, String exp, UserController uc)\n"
+                + "3:   getGraph()\n"
+                + "4:   addSongRelation(String simpRel, String exp)\n"
+                + "5:   addUserRelation(String simpRel, String exp, UserController uc)\n"
                 + "SONG CONTROLLER METHODS\n"
-                + "7:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration):" +
+                + "6:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration):" +
                 " title artist album YYYY id_genre id_subgenre duration(seconds)\n"
-                + "8:   sc.removeSong(String title, String artist): title artist\n"
+                + "7:   sc.removeSong(String title, String artist): title artist\n"
                 + "USER CONTROLLER METHODS\n"
-                + "9:   uc.addUser(String name, Gender gender, long birthday, int countryCode):\n"
-                + "10:  uc.removeUser(String name): userName\n"
-                + "11:  uc.associateListToUser(ListController lc, int listId, String userName): listId userName\n"
+                + "8:   uc.addUser(String name, Gender gender, long birthday, int countryCode):\n"
+                + "9:   uc.removeUser(String name): userName\n"
+                + "10:  uc.associateListToUser(ListController lc, int listId, String userName): listId userName\n"
                 + "LIST CONTROLLER METHODS\n"
-                + "12:  lc.");
+                + "11:  lc.createRandomlist(String title, int n, SongController sc): title n\n");
     }
 
     private static void printInfoBrief() {
