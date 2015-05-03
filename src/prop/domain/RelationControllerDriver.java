@@ -84,8 +84,6 @@ public class RelationControllerDriver {
                     while (!(p = in.next()).equals(";")) {
                         sp.append(" " + p);
                     }
-                    System.out.println(sb.toString());
-                    System.out.println(sp.toString());
                     Relation r = rc.parsing(sb.toString(),sp.toString());
                     try {
                         if(r.evaluateSongs(song0, song1)) System.out.print("true\n");
@@ -93,6 +91,18 @@ public class RelationControllerDriver {
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
+                    break;
+                case 6:
+                    String rel = in.next();
+                    String exp = in.next();
+                    Relation r2 = rc.parsing2(rel, exp);
+                    try {
+                        if(r2.evaluateSongs(song0, song1)) System.out.print("true\n");
+                        else System.out.print("false\n");
+                    } catch (PropException e) {
+                        System.err.println(e.getMessage());
+                    }
+                    break;
                 default:
                     printInfoComplete();
             }

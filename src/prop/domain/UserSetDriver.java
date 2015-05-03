@@ -21,7 +21,7 @@ public class UserSetDriver {
         ListController lc = new ListController();
         SongController sc = new SongController();
         User user;
-        String s = null;
+        String s = "";
         printInfoComplete();
         while (i != 0) {
             i = in.nextInt();
@@ -32,6 +32,9 @@ public class UserSetDriver {
                     printInfoComplete();
                     break;
                 case 2:
+                    userSet = new UserSet();
+                    break;
+                case 3:
                     ArrayList<User> users = userSet.getUsers();
                     for (User u : users) {
                         System.out.print(u.getName() + " " + u.getGender() + " " + u.getBirthdate().get(Calendar.DAY_OF_MONTH) +
@@ -39,7 +42,7 @@ public class UserSetDriver {
                                 " " + u.getCountry().toString() + "\n");
                     }
                     break;
-                case 3:
+                case 4:
                     String name3 = in.next();
                     String g = in.next();
                     Gender gender = Gender.valueOf(g);
@@ -56,7 +59,7 @@ public class UserSetDriver {
                         System.err.println(e.getMessage());
                     }
                     break;
-                case 4:
+                case 5:
                     String name = in.next();
                     try{
                         userSet.removeUser(name);
@@ -64,33 +67,33 @@ public class UserSetDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 5:
+                case 6:
                     String name2 = in.next();
                     user = userSet.getUserByName(name2);
                     System.out.print(user.getName() + " " + user.getGender() + " " + user.getBirthdate().get(Calendar.DAY_OF_MONTH) +
                             "/" + user.getBirthdate().get(Calendar.MONTH) + "/" + user.getBirthdate().get(Calendar.YEAR) + " " +
                             user.getCountry().toString() + "\n");
                     break;
-                case 6:
-                    s = userSet.toString();
-                    System.out.print(s);
-                    break;
                 case 7:
+                    s = userSet.toString();
+                    System.out.print(s + "\n");
+                    break;
+                case 8:
                     try {
-                        userSet.valueOf(s, lc, sc);
+                        userSet = UserSet.valueOf(s, lc, sc);
                     } catch(Exception e) {
                         System.err.println(e.getMessage());
                     }
                     break;
-                case 8:
+                case 9:
                     String title = in.next();
                     lc.addList(title);
                     break;
-                case 9:
+                case 10:
                     int id = in.nextInt();
                     lc.removeList(id);
                     break;
-                case 10:
+                case 11:
                     String title2 = in.next();
                     String artist = in.next();
                     String album = in.next();
@@ -104,7 +107,7 @@ public class UserSetDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 11:
+                case 12:
                     String title3 = in.next();
                     String artist2 = in.next();
                     try {
@@ -116,24 +119,25 @@ public class UserSetDriver {
                 default:
                     printInfoComplete();
             }
-            if (i > 1 && i < 12) printInfoBrief();
+            if (i > 1 && i < 13) printInfoBrief();
         }
     }
 
     private static void printInfoComplete() {
         System.out.print("0:    terminate program\n"
                 + "1:   printInfoComplete()\n"
-                + "2:   ArrayList<User> getUsers()\n"
-                + "3:   void addUser(User user): name MALE/FEMALE/OTHER YYYY MM DD country\n"
-                + "4:   void removeUser(String name): name\n"
-                + "5:   User getUserByName(String name): name\n"
-                + "6:   String toString()\n"
-                + "7:   UserSet valueOf(String s)\n"
-                + "8:   lc.addList(String title): title\n"
-                + "9:   lc.removeList(int id): id\n"
-                + "10:  sc.addSong(String title, String artist, String album, int year,Genre genre, Genre subgenre, int duration)" +
+                + "2:   new UserSet()\n"
+                + "3:   ArrayList<User> getUsers()\n"
+                + "4:   void addUser(User user): name MALE/FEMALE/OTHER YYYY MM DD country\n"
+                + "5:   void removeUser(String name): name\n"
+                + "6:   User getUserByName(String name): name\n"
+                + "7:   String toString()\n"
+                + "8:   UserSet valueOf(String s)\n"
+                + "9:   lc.addList(String title): title\n"
+                + "10:   lc.removeList(int id): id\n"
+                + "11:  sc.addSong(String title, String artist, String album, int year,Genre genre, Genre subgenre, int duration)" +
                 " title artist album YYYY id_genre id_subgenre duration(seconds)\n"
-                + "11:  sc.removeSong(String title, String artist): title artist\n");
+                + "12:  sc.removeSong(String title, String artist): title artist\n");
     }
 
     private static void printInfoBrief() {

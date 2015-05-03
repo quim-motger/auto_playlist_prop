@@ -107,7 +107,7 @@ public class UserSet implements Iterable<User>{
         for (i = 0; i < users.size()-1; ++i) {
             s += users.get(i).toString() + delimiter;
         }
-        s += users.get(i);
+        if (!users.isEmpty()) s += users.get(i).toString();
         return s;
     }
 

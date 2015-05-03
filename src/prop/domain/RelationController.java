@@ -121,8 +121,15 @@ public class RelationController {
             }
             //Set all relations connected by AND into a ComplexRelation
             for (j = 1; j < cc.length; ++j) {
-                n_rel = Integer.parseInt(cc[j]);
-                Relation rr = rl.get(n_rel);
+                Relation rr;
+                if (cc[0].length() > 1) {
+                    n_rel = Integer.parseInt(cc[0].substring(3));
+                    rr = new NOT(rl.get(n_rel));
+                }
+                else {
+                    n_rel = Integer.parseInt(cc[0]);
+                    rr = rl.get(n_rel);
+                }
                 rand = new AND(rand, rr);
             }
             AND.add(rand);
@@ -139,4 +146,5 @@ public class RelationController {
         expressionTree.parse(exp,simRel);
         return expressionTree.evaluate();
     }
+
 }

@@ -8,6 +8,8 @@ import java.util.Stack;
 /**
  * Binary expression tree
  * @author oscar.manas
+ * @author gerard.casas.saez
+ * @author joaquim.motger
  */
 public class ExpressionTree {
 
