@@ -15,7 +15,7 @@ public class AlgorithmOutputDriver {
             System.out.println("**********************************************************");
             System.out.print("\n");
             printInfo();
-
+            System.out.println("START WITH OPTION 2");
             Graph<Integer> graph = null;
             ArrayList<Graph> arrayGraph = null;
             ArrayList<String> arrayString = null;
@@ -66,24 +66,27 @@ public class AlgorithmOutputDriver {
                         graph.addEdge(in.nextInt(), in.nextInt());
                         break;
                     case 13:
-                        graph.addEdgeT(in.nextInt(), in.nextInt(), in.nextDouble());
+                        graph.addEdge(in.nextInt(), in.nextInt(),in.nextDouble());
                         break;
                     case 14:
-                        graph.addVertex(in.nextInt());
+                        graph.addEdgeT(in.nextInt(), in.nextInt(), in.nextDouble());
                         break;
                     case 15:
-                        string = in.next();
+                        graph.addVertex(in.nextInt());
                         break;
                     case 16:
-                        arrayGraph = new ArrayList<>();
+                        string = in.next();
                         break;
                     case 17:
-                        arrayGraph.add(graph);
+                        arrayGraph = new ArrayList<>();
                         break;
                     case 18:
-                        arrayString = new ArrayList<>();
+                        arrayGraph.add(graph);
                         break;
                     case 19:
+                        arrayString = new ArrayList<>();
+                        break;
+                    case 20:
                         arrayString.add(string);
                         break;
                     default:
@@ -91,6 +94,9 @@ public class AlgorithmOutputDriver {
                 }
                 printInfoBrief();
             }
+        }
+        catch(NullPointerException exc) {
+            System.err.println("Caught Exception: " + exc.getMessage());
         }
         catch(Exception e) {
             System.err.println("Caught Exception: " + e.getMessage());
@@ -101,12 +107,12 @@ public class AlgorithmOutputDriver {
         sb.add("terminate program");
         sb.add("info");
         sb.add("AlgorithmOutput()");
-        sb.add("AlgorithmOutput(java.util.ArrayList<Graph> communities, java.util.ArrayList<java.lang.String> log)");
+        sb.add("AlgorithmOutput(arrayGraph, arrayString)");
         sb.add("void 	add(graph)");
         sb.add("void 	add(string)");
         sb.add("Graph 	densestGraph()");
-        sb.add("java.util.ArrayList<Graph> 	getCommunities()");
-        sb.add("java.util.ArrayList<java.lang.String> 	getLog()");
+        sb.add("ArrayList<Graph> 	getCommunities()");
+        sb.add("ArrayList<String> 	getLog()");
         sb.add("graph = new Graph<Integer>");
         sb.add("graph.addArc(int v1, int v2)");
         sb.add("graph.addArc(int v1, int v2, double weight)");
