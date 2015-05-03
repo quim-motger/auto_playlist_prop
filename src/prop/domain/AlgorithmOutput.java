@@ -30,7 +30,7 @@ public class AlgorithmOutput {
 
     /**
      * Adds a graph
-     * @param community Graph to add
+     * @param community Graph to add (not null)
      */
     public void add(Graph community) {
         if (community == null) throw new NullPointerException("Tried to add a null graph");
@@ -39,7 +39,7 @@ public class AlgorithmOutput {
 
     /**
      * Adds a string to the log
-     * @param l String to add
+     * @param l String to add (not null)
      */
     public void add(String l) {
         if (l == null) throw new NullPointerException("Tried to add a null string");
