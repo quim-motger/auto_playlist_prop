@@ -9,7 +9,7 @@ import java.util.Stack;
  */
 public class GirvanNewman {
 
-    private static final int infinity = 1000000000;
+    private static final double infinity = Double.MAX_VALUE;
     private int n;
     private Graph<Song> graph; // Undirected, weighted graph
     private int components;

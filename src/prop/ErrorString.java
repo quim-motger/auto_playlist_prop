@@ -21,4 +21,6 @@ public class ErrorString {
     public static final String UNEXISTING_ATTRIBUTE = "The attribute does not exist\n";
     public static final String WRONG_RELATION_TYPE = "The relation is not a type you can evaluate with this method\n";
     public static final String ALGORITHM_NOT_EXECUTED = "Algorithm not executed yet\n";
+    public static final String NULL_GRAPH = "The graph is null\n";
+    public static final String UNEXISTING_ALGORITHM = "Invalid algorithm argument\n";
 }
