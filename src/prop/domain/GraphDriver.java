@@ -1,8 +1,6 @@
 package prop.domain;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
 
@@ -14,7 +12,7 @@ public class GraphDriver {
     public static void main(String[] args) {
         try {
             System.out.println("**********************************************************");
-            System.out.println("** Algorithm Output");
+            System.out.println("** Graph");
             System.out.println("**********************************************************");
             System.out.print("\n");
             printInfo();
@@ -103,7 +101,7 @@ public class GraphDriver {
                         System.out.println(g.numberOfEdges());
                         break;
                     case 25:
-                        System.out.println(g.numberOfEdges(in.nextInt(),in.nextInt()));
+                        // nothing
                         break;
                     case 26:
                         System.out.println(g.numberOfVertices());
@@ -141,14 +139,6 @@ public class GraphDriver {
         }
     }
 
-    private static void printInfoBrief() {
-        ArrayList<String> sb = new ArrayList<>();
-        sb.add("terminate program");
-        sb.add("info");
-        for (int i = 0; i < sb.size(); ++i) {
-            System.out.println(i + ": " + sb.get(i));
-        }
-    }
     private static void printInfo() {
         ArrayList<String> sb = new ArrayList<>();
         sb.add("terminate program");
@@ -160,7 +150,7 @@ public class GraphDriver {
         sb.add("void 	addEdge(int v1, int v2, double weight)");
         sb.add("void 	addEdgeT(T v1, T v2, double weight)");
         sb.add("void 	addVertex(T v)");
-        sb.add("java.util.LinkedHashSet<java.lang.Integer> 	adjacentVertices(int v)");
+        sb.add("LinkedHashSet<Integer> 	adjacentVertices(int v)");
         sb.add("boolean 	areAdjacent(int v1, int v2)");
         sb.add("boolean 	contains(T v)");
         sb.add("int 	getArcLoopDegree(int v)");
@@ -168,7 +158,7 @@ public class GraphDriver {
         sb.add("int 	getDegree(int v)");
         sb.add("int 	getIndegree(int v)");
         sb.add("int 	getLoopDegree(int v)");
-        sb.add("java.util.ArrayList<T> 	getOriginalVertices()");
+        sb.add("ArrayList<T> 	getOriginalVertices()");
         sb.add("int 	getOutdegree(int v)");
         sb.add("int 	getVertex(T v)");
         sb.add("T 	getVertexT(int v)");
@@ -176,17 +166,23 @@ public class GraphDriver {
         sb.add("boolean 	hasEdge(int v1, int v2)");
         sb.add("boolean 	isEmpty()");
         sb.add("int 	numberOfEdges()");
-        sb.add("int 	numberOfEdges(int v1, int v2)");
+        sb.add("nothing");
         sb.add("int 	numberOfVertices()");
         sb.add("boolean 	removeArc(int v1, int v2)");
         sb.add("boolean 	removeEdge(int v1, int v2)");
         sb.add("void 	setDefaultWeight(double w)");
         sb.add("int 	totalEdges(int v)");
         sb.add("double 	weight(int v1, int v2)");
-        sb.add("java.util.ArrayList<java.lang.Double> 	weights(int v1, int v2)");
+        sb.add("ArrayList<Double> 	weights(int v1, int v2)");
 
         for (int i = 0; i < sb.size(); ++i) {
-            System.out.println(i + ": " + sb.get(i));
+            if (!sb.get(i).equals("nothing"))
+                System.out.println(i + ": " + sb.get(i));
         }
+    }
+
+    private static void printInfoBrief() {
+        System.out.print("0:    terminate program\n"
+                + "1:    info\n");
     }
 }
