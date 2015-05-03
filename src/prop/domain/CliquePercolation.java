@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
  * Clique Percolation method class based on Bron Kerbosch algorithm
  * @author joaquim.motger
  */
-public class CliquePercolation{
+public class CliquePercolation extends Algorithm {
 
     int n;      //number of graph nodes
     int i;      //number of cliques found
