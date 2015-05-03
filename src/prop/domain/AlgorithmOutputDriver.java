@@ -10,12 +10,12 @@ import java.util.Scanner;
 public class AlgorithmOutputDriver {
     public static void main(String[] args) {
         try {
-            System.out.println("**********************************************************");
-            System.out.println("** Algorithm Output");
-            System.out.println("**********************************************************");
-            System.out.print("\n");
+            System.err.println("**********************************************************");
+            System.err.println("** Algorithm Output");
+            System.err.println("**********************************************************");
+            System.err.print("\n");
             printInfo();
-            System.out.println("START WITH OPTION 2");
+            System.err.println("START WITH OPTION 2");
             Graph<Integer> graph = null;
             ArrayList<Graph> arrayGraph = null;
             ArrayList<String> arrayString = null;
@@ -126,7 +126,7 @@ public class AlgorithmOutputDriver {
         sb.add("arrayString = new ArrayList<String>()");
         sb.add("arrayString.add(string)");
         for (int i = 0; i < sb.size(); ++i) {
-            System.out.println(i + ": " + sb.get(i));
+            System.err.println(i + ": " + sb.get(i));
         }
     }
     private static void printInfoBrief() {
@@ -134,7 +134,7 @@ public class AlgorithmOutputDriver {
         sb.add("terminate program");
         sb.add("info");
         for (int i = 0; i < sb.size(); ++i) {
-            System.out.println(i + ": " + sb.get(i));
+            System.err.println(i + ": " + sb.get(i));
         }
     }
 }
