@@ -10,12 +10,12 @@ import java.util.Scanner;
 public class ListSetDriver {
     public static void main(String[] args) {
         try {
-            System.out.println("**********************************************************");
-            System.out.println("** ListSet");
-            System.out.println("**********************************************************");
-            System.out.print("\n");
+            System.err.println("**********************************************************");
+            System.err.println("** ListSet");
+            System.err.println("**********************************************************");
+            System.err.print("\n");
             printInfo();
-            System.out.println("This class needs 2 other Classes: Song" +
+            System.err.println("This class needs 2 other Classes: Song" +
                     " and List \n"
                     + "Therefore, you can create a Song and a List\n"
 
@@ -154,12 +154,12 @@ public class ListSetDriver {
         sb.add("arrayList.add(list)");
         for (int i = 0; i < sb.size(); ++i) {
             if (!sb.get(i).equals("nothing"))
-                System.out.println(i + ": " + sb.get(i));
+                System.err.println(i + ": " + sb.get(i));
         }
     }
 
     private static void printInfoBrief() {
-        System.out.print("0:    terminate program\n"
+        System.err.print("0:    terminate program\n"
                 + "1:    info\n");
     }
 
