@@ -23,4 +23,5 @@ public class ErrorString {
     public static final String ALGORITHM_NOT_EXECUTED = "Algorithm not executed yet\n";
     public static final String NULL_GRAPH = "The graph is null\n";
     public static final String UNEXISTING_ALGORITHM = "Invalid algorithm argument\n";
+    public static final String UNEXISTING_GENRE = "The genre does not exist\n";
 }

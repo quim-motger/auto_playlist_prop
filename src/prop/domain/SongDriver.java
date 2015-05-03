@@ -1,5 +1,8 @@
 package prop.domain;
 
+import prop.ErrorString;
+import prop.PropException;
+
 import java.util.Scanner;
 
 /**
@@ -41,10 +44,19 @@ public class SongDriver {
                     artist = in.next();
                     album = in.next();
                     year = in.nextInt();
-                    genre = Genre.getGenreById(in.nextInt());
-                    subgenre = Genre.getGenreById(in.nextInt());
-                    duration = in.nextInt();
-                    song = new Song(title, artist, album, year, genre, subgenre, duration);
+                    try {
+                        genreId = in.nextInt();
+                        if (genreId < 0 || genreId > 131) throw new PropException(ErrorString.UNEXISTING_GENRE);
+                        genre = Genre.getGenreById(genreId);
+                        subgenreId = in.nextInt();
+                        if (subgenreId < 0 || subgenreId > 131) throw new PropException(ErrorString.UNEXISTING_GENRE);
+                        subgenre = Genre.getGenreById(subgenreId);
+                        duration = in.nextInt();
+                        song = new Song(title, artist, album, year, genre, subgenre, duration);
+                    }
+                    catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 4:
                     System.out.println(song.getTitle() + "\n");
@@ -85,12 +97,24 @@ public class SongDriver {
                     song.setYear(year);
                     break;
                 case 15:
-                    genreId = in.nextInt();
-                    song.setGenre(Genre.getGenreById(genreId));
+                    try {
+                        genreId = in.nextInt();
+                        if (genreId < 0 || genreId > 131) throw new PropException(ErrorString.UNEXISTING_GENRE);
+                        song.setGenre(Genre.getGenreById(genreId));
+                    }
+                    catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 16:
-                    subgenreId = in.nextInt();
-                    song.setSubgenre(Genre.getGenreById(subgenreId));
+                    try {
+                        subgenreId = in.nextInt();
+                        if (subgenreId < 0 || subgenreId > 131) throw new PropException(ErrorString.UNEXISTING_GENRE);
+                        song.setSubgenre(Genre.getGenreById(subgenreId));
+                    }
+                    catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 17:
                     duration = in.nextInt();
