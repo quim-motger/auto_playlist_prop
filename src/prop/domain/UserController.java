@@ -80,7 +80,7 @@ public class UserController {
      * @param value New value for the desired attribute
      * @see prop.domain.User
      */
-    public void editUser(String name, String attribute, String value) {
+    public void editUser(String name, String attribute, String value) throws PropException {
         Pair<String, String> pair = Pair.create(attribute, value);
         editUser(name, pair);
     }
@@ -91,7 +91,7 @@ public class UserController {
      * @param attributeValue Pair of Attribute and Value to be modified
      * @see prop.domain.Pair                       
      */
-    public void editUser(String name, Pair<String,String> attributeValue) {
+    public void editUser(String name, Pair<String, String> attributeValue) throws PropException {
         User user = userSet.getUserByName(name);
         if(user!=null) {
             switch (attributeValue.first) {
@@ -121,7 +121,7 @@ public class UserController {
      * @param listId Id of a list included in the listController
      * @param userName Valid name of an existing user
      */
-    public void associateListToUser(ListController listController, int listId, String userName) {
+    public void associateListToUser(ListController listController, int listId, String userName) throws PropException {
         List list = listController.getList(listId);
         associateListToUser(list,userName);
     }
@@ -131,7 +131,7 @@ public class UserController {
      * @param list List to be associated
      * @param userName Valid name of an existing user
      */
-    public void associateListToUser(List list, String userName) {
+    public void associateListToUser(List list, String userName) throws PropException {
         userSet.getUserByName(userName).associate(list);
         
     }
@@ -142,7 +142,7 @@ public class UserController {
      * @param listId Id of a list included in the listController
      * @param userName Valid name of an existing user
      */
-    public void disassociateListFromUser(ListController listController, int listId, String userName) {
+    public void disassociateListFromUser(ListController listController, int listId, String userName) throws PropException {
         List list = listController.getList(listId);
         userSet.getUserByName(userName).disassociate(list);
     }
@@ -152,7 +152,7 @@ public class UserController {
      * @param userName Specified user
      * @return Titles of the lists associated to the user, separated by \n
      */
-    public String obtainListsAssociated(String userName){
+    public String obtainListsAssociated(String userName) throws PropException {
         ArrayList<List> lists = userSet.getUserByName(userName).getAssociatedLists();
         String ret = "";
         for(List list : lists){
@@ -166,7 +166,7 @@ public class UserController {
      * @param name Desired name user
      * @return String of the desired user
      */
-    public String obtainUserToString(String name) {
+    public String obtainUserToString(String name) throws PropException {
         return obtainUser(name).toString();
     }
 
@@ -175,7 +175,7 @@ public class UserController {
      * @param name Desired name user
      * @return Desired user
      */
-    public User obtainUser(String name){
+    public User obtainUser(String name) throws PropException {
         return userSet.getUserByName(name);
     }
 
@@ -239,9 +239,4 @@ public class UserController {
         cal.setTime(date);
         return  cal;
     }
-    
-    private boolean contains(String name) {
-        return userSet.getUserByName(name)!=null;
-        
-    } 
 }
