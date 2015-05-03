@@ -10,15 +10,20 @@ import java.util.LinkedHashSet;
 public class CliquePercolation{
 
     int n;      //number of graph nodes
-    int m;      //number of graph edges
     int i;      //number of cliques found
-    int k;
+    double lWeight;
     ArrayList<Integer>[] cliques;       //list of maximal cliques
     ArrayList<Integer>[] vertexInCliques;   //lists of cliques which contains the index vertex
     ArrayList<Integer>[] communities;
 
     private Graph<Song> graph; // Undirected, weighted graph
 
+    /**
+     * Executes the CliquePercolationMethod to find communities
+     * @param graph the graph from which communities are calculated
+     * @param k     number of max communities desired
+     * @return      an <code>AlgorithmOutput</code> object, including a list with communities and an execution log
+     */
     public AlgorithmOutput execute(Graph graph, int k) {
         this.graph = graph;
         n = graph.numberOfVertices();
@@ -29,8 +34,9 @@ public class CliquePercolation{
         ArrayList<Integer> P = new ArrayList<>();
         //X: rejected vertices
         ArrayList<Integer> X = new ArrayList<>();
-        //cliques: list of cliques in graph
+        //cliques: list of maximal cliques in graph
         cliques = (ArrayList<Integer>[])new ArrayList[n];
+        //vertexInCliques: an array that contains lists of the cliques that the index vertex is in
         vertexInCliques = (ArrayList<Integer>[])new ArrayList[n];
         for (int l = 0; l < n; ++l) vertexInCliques[l] = new ArrayList<>();
         i = 0;
@@ -40,31 +46,63 @@ public class CliquePercolation{
             P.add(l);
             ++l;
         }
+        //weight: we calculate a limit Weight based on the Intensity (mean Weight of a clique), considering
+        //half of the meanWeight in order to consider about the 75% higher intensities a clique
+        lWeight = meanTotalWeight()/2;
         //Executes the clique percolation algorithm
         log.add("### Finding maximal cliques\n");
+        //Find maximal cliques in graph
         findCliques(R, P, X, log);
+        log.add("### Cliques found\n");
+        //Show the maximal cliques found
+        for (l = 0; l < i; ++l) printClique(cliques[l], log);
+        log.add("### Filter maximal cliques with a low intensity\n");
+        //Removes all cliques under the lWeight
+        filtCliques(log);
+        log.add("### Cliques filtered\n");
+        //Show the maximal cliques filtered
+        for (l = 0; l < i; ++l) printClique(cliques[l], log);
         log.add("### Merging cliques to find " + k + " communities\n");
+        //Merge cliques to form communities
         percolateCliques(k, log);
+        //Pars communities (lists of integers) into graph
         ArrayList<Graph> com = parseCommunitiesToGraphs();
         log.add("### Communities found\n");
+        //Return all communities found
         return new AlgorithmOutput(com, log);
     }
 
+    /**
+     * Finds the maximal cliques in <code>graph</code>
+     * @param R     A list of vertices that may form a clique
+     * @param P     A list of provisional candidates to be added in the clique
+     * @param X     A list of rejected vertices
+     * @param log   log of the Algorithm execution
+     */
     private void findCliques(ArrayList<Integer> R, ArrayList<Integer> P, ArrayList<Integer> X, ArrayList<String> log) {
         StringBuilder sb = new StringBuilder();
+        //Information with the provisional clique found
         sb.append("Provisional clique:");
         for (int r : R) sb.append(" " + r);
+        log.add(sb.toString());
+        sb = new StringBuilder();
+        //Information with the remaining candidates to be added at the maximal clique
         sb.append("\nCandidates:");
         for (int p : P) sb.append(" " + p);
+        log.add(sb.toString());
+        sb = new StringBuilder();
+        //Information with the rejected candidates that could be added in the clique
         sb.append("\nRejected:");
         for (int x : X) sb.append(" " + x);
-        sb.append("\n\n");
+        sb.append("\n");
+        log.add(sb.toString());
+        sb = new StringBuilder();
         //If there are no more candidates to be add to the clique (P is empty) and
         //there aren't any other vertices connected with all of those in R who have
         //been rejected (X is empty), then R contains a maximal clique
         if (P.isEmpty() && X.isEmpty()) {
-            sb.append("New clique found:");
-            sb.append(printClique(R));
+            log.add("New clique found:");
+            printClique(R, log);
             cliques[i] = new ArrayList<>();
             //R is added to array of maximal cliques
             cliques[i] = R;
@@ -72,18 +110,17 @@ public class CliquePercolation{
                 vertexInCliques[r].add(i);
             }
             i = i+1;
-            sb.append("\n");
             log.add(sb.toString() + "\n");
         }
         ArrayList<Integer> P1 = new ArrayList<>(P);
         //Expand of every vertex in P
         for (int v : P) {
-            sb.append("Expand on " + v + "\n");
+            sb.append("\nExpand on " + v + "\n");
             //R U v (add v to list of vertices that may compose a clique)
             if (!R.contains(v)) R.add(v);
             //Remove non-neighbours of v from candidates to be added to clique (P) and from
             //rejected who could be added to the clique, then backtrack
-            log.add(sb.toString() + "\n");
+            log.add(sb.toString());
             findCliques(R, intersection(P1, neighbours(v)), intersection(X, neighbours(v)), log);
             sb = new StringBuilder();
             //Remove v from vertices that may compose a clique (R)
@@ -95,6 +132,71 @@ public class CliquePercolation{
         }
     }
 
+    /**
+     * filter Cliques under an intensity weight <code>lWeight</code>
+     * @param log   log of the Algorithm execution
+     */
+    private void filtCliques(ArrayList<String> log) {
+        ArrayList<Integer>[] filtedCliques = (ArrayList<Integer>[])new ArrayList[n];
+        int k, j;
+        j = 0;
+        log.add("Mean weight of graph: " + lWeight + "\n");
+        for (k = 0; k < i; ++k) {
+            //Calculates the meanWeight of the k clique
+            double mw = meanWeight(cliques[k]);
+            log.add("Evaluate clique " + k + " : mean weight " + mw + "\n");
+            //If the clique's intensity is under lWeight, we don't add it to the new list
+            if (mw >= lWeight) {
+                filtedCliques[j] = cliques[k];
+                ++j;
+            }
+        }
+        i = j;
+        //cliques now contains the filtered cliques
+        cliques = filtedCliques;
+    }
+
+    /**
+     * calculates the mean weight (intensity) of a subset of vertices of <code>graph</code>
+     * @param l     a list that contains the vertices of the subset
+     * @return      <code>meanWeight</code> of the subset
+     */
+    private double meanWeight(ArrayList<Integer> l) {
+        double meanWeight = 0;
+        for (int j : l) {
+            for (int k : l) {
+                if (j != k) {
+                    meanWeight += graph.weight(j,k);
+                }
+            }
+        }
+        meanWeight = meanWeight/((double)(l.size()*(l.size()-1)));
+        return meanWeight;
+    }
+
+    /**
+     * calculates the mean weight (intensity) of <code>graph</code>
+     * @return      the meanWeight of <code>graph</code>
+     */
+    private double meanTotalWeight() {
+        double meanWeight = 0;
+        int s = graph.numberOfVertices();
+        int k;
+        for (k = 0; k < s; ++k) {
+            int j;
+            for (j = 0; j < s; ++j) {
+                if (graph.areAdjacent(k,j)) meanWeight += graph.weight(k,j);
+            }
+        }
+        meanWeight = meanWeight/((double)graph.numberOfEdges()*2);
+        return meanWeight;
+    }
+
+    /**
+     * Merges the maximal cliques found in <code>cliques</code> until there ara k or less communities
+     * @param k     number of maximal communities
+     * @param log   log of the Algorithm execution
+     */
     private void percolateCliques(int k, ArrayList<String> log) {
         int[] cliqueInCommunity= new int[i];
         communities = (ArrayList<Integer>[])new ArrayList[n];
@@ -145,6 +247,10 @@ public class CliquePercolation{
         }
     }
 
+    /**
+     * parse subset of vertices into a graph
+     * @return  an arrayList that contains all parsed graphs
+     */
     private ArrayList<Graph> parseCommunitiesToGraphs() {
         ArrayList<Graph> com = new ArrayList<>();
         int s;
@@ -166,6 +272,10 @@ public class CliquePercolation{
         return com;
     }
 
+    /**
+     * calculates the number of <code>communities</code> found
+     * @return  the number of communities
+     */
     private int getNumCom() {
         int size = 0;
         int t;
@@ -175,12 +285,24 @@ public class CliquePercolation{
         return size;
     }
 
+    /**
+     * calculates the intersection between <code>A</code> and <code>B</code>
+     * @param A     first set
+     * @param B     second set
+     * @return      intersection between <code>A</code> and <code>B</code>
+     */
     private ArrayList<Integer> intersection(ArrayList<Integer> A, ArrayList<Integer> B) {
         ArrayList<Integer> intersection = new ArrayList<>(A);
         intersection.retainAll(B);
         return intersection;
     }
 
+    /**
+     * removes <code>v</code> from <code>A</code>
+     * @param A     the set
+     * @param v     the vertex (integer) to be removed
+     * @return      <code>A</code> without <code>v</code>
+     */
     private ArrayList<Integer> remove(ArrayList<Integer> A, int v) {
         ArrayList<Integer> B = new ArrayList<>();
         B.add(v);
@@ -189,6 +311,11 @@ public class CliquePercolation{
         return difference;
     }
 
+    /**
+     * returns a list of all neighbours of <code>v</code>
+     * @param v     the vertex
+     * @return      a list with all neihbours of <code>v</code>
+     */
     private ArrayList<Integer> neighbours(int v) {
         ArrayList<Integer> n = new ArrayList<>();
         LinkedHashSet<Integer> m = graph.adjacentVertices(v);
@@ -198,28 +325,18 @@ public class CliquePercolation{
         return n;
     }
 
-    private StringBuilder printClique(ArrayList<Integer> l) {
+    /**
+     * adds to log the index vertices a clique contains
+     * @param l     the clique - a list of integers
+     * @param log   log of the Algorithm execution
+     */
+    private void printClique(ArrayList<Integer> l, ArrayList<String> log) {
         StringBuilder sb = new StringBuilder();
         for (int i : l) {
             sb.append(" " + i);
         }
         sb.append("\n");
-        return sb;
-    }
-
-    private StringBuilder getCommunities() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Communities:");
-        int k;
-        for (k = 0; k < i; ++k) {
-            if (!communities[k].isEmpty()) {
-                for (int p : communities[k]) {
-                    sb.append(" " + p);
-                }
-                sb.append("\n");
-            }
-        }
-        return sb;
+        log.add(sb.toString());
     }
 
 }
