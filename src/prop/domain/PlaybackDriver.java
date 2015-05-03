@@ -20,8 +20,8 @@ public class PlaybackDriver {
 
         Scanner in = new Scanner(System.in);
         Playback playback = null;
-        Song song = null;
-        String s = null;
+        Song song;
+        String s = "";
         Calendar date = Calendar.getInstance();
         SongController sc = new SongController();
         int i = -1;
@@ -49,32 +49,39 @@ public class PlaybackDriver {
                     break;
                 case 3:
                     song = playback.getSong();
-                    System.out.println(song.getTitle());
-                    System.out.println(song.getArtist());
-                    System.out.println(song.getAlbum());
-                    System.out.println(song.getYear());
-                    System.out.println(song.getGenre().getName());
-                    System.out.println(song.getSubgenre().getName());
-                    System.out.println(song.getDuration());
+                    System.out.print(song.getTitle());
+                    System.out.print(" " + song.getArtist());
+                    System.out.print(" " + song.getAlbum());
+                    System.out.print(" " + song.getYear());
+                    System.out.print(" " + song.getGenre().getName());
+                    System.out.print(" " + song.getSubgenre().getName());
+                    System.out.print(" " + song.getDuration() + "\n");
                     break;
                 case 4:
                     date = playback.getDate();
-                    System.out.println(date.get(Calendar.YEAR));
-                    System.out.println(date.get(Calendar.MONTH));
-                    System.out.println(date.get(Calendar.DAY_OF_MONTH));
-                    System.out.println(date.get(Calendar.HOUR));
-                    System.out.println(date.get(Calendar.MINUTE));
-                    System.out.println(date.get(Calendar.SECOND));
+                    System.out.print(date.get(Calendar.YEAR));
+                    System.out.print(" " + date.get(Calendar.MONTH));
+                    System.out.print(" " + date.get(Calendar.DAY_OF_MONTH));
+                    System.out.print(" " + date.get(Calendar.HOUR_OF_DAY));
+                    System.out.print(" " + date.get(Calendar.MINUTE));
+                    System.out.print(" " + date.get(Calendar.SECOND) + "\n");
                     break;
                 case 5:
                     try {
-                        playback.setSong(song);
+                        playback.setSong(sc.getSong(in.next(), in.next()));
                     } catch (Exception pe) {
                         System.err.println(pe.getMessage());
                     }
                     break;
                 case 6:
                     try {
+                        int y2 = in.nextInt();
+                        int month2 = in.nextInt();
+                        int day2 = in.nextInt();
+                        int hour2 = in.nextInt();
+                        int minute2 = in.nextInt();
+                        int second2 = in.nextInt();
+                        date.set(y2,month2,day2,hour2,minute2,second2);
                         playback.setDate(date);
                     } catch (Exception pe) {
                         System.err.println(pe.getMessage());
@@ -91,7 +98,7 @@ public class PlaybackDriver {
                     break;
                 case 8:
                     s = playback.toString();
-                    System.out.print(s);
+                    System.out.print(s + "\n");
                     break;
                 case 9:
                     playback = Playback.valueOf(s, sc);

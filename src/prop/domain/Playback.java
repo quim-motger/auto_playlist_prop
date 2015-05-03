@@ -21,7 +21,7 @@ public class Playback implements Comparable<Playback>{
     /**
      * <code>Playback</code> class constructor
      * @param song      <code>song</code> played
-     * @param date      play <code>date</code>
+     * @param date      play <3 code>date</code>
      * @throws PropException
      */
     public Playback(Song song, Calendar date) throws PropException {
@@ -121,7 +121,7 @@ public class Playback implements Comparable<Playback>{
                 + date.get(Calendar.YEAR) + PLAYBACK_DELIMITER
                 + date.get(Calendar.MONTH) + PLAYBACK_DELIMITER
                 + date.get(Calendar.DAY_OF_MONTH) + PLAYBACK_DELIMITER
-                + date.get(Calendar.HOUR) + PLAYBACK_DELIMITER
+                + date.get(Calendar.HOUR_OF_DAY) + PLAYBACK_DELIMITER
                 + date.get(Calendar.MINUTE) + PLAYBACK_DELIMITER
                 + date.get(Calendar.SECOND);
     }
