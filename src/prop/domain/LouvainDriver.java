@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.ErrorString;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,14 +13,6 @@ import java.util.Scanner;
  *          Creation Date: 22/04/15
  */
 public class LouvainDriver {
-
-    private static final Song song0 = new Song("title0","artist0","album0",2000,Genre.getGenreById(0),Genre.getGenreById(0),000);
-    private static final Song song1 = new Song("title1","artist1","album1",2001,Genre.getGenreById(1),Genre.getGenreById(1),111);
-    private static final Song song2 = new Song("title2","artist2","album2",2002,Genre.getGenreById(2),Genre.getGenreById(2),222);
-    private static final Song song3 = new Song("title3","artist3","album3",2003,Genre.getGenreById(3),Genre.getGenreById(3),333);
-    private static final Song song4 = new Song("title4","artist4","album4",2004,Genre.getGenreById(4),Genre.getGenreById(4),444);
-    private static final Song song5 = new Song("title5","artist5","album5",2005,Genre.getGenreById(5),Genre.getGenreById(5),555);
-    private static final Song song6 = new Song("title6","artist6","album6",2006,Genre.getGenreById(6),Genre.getGenreById(6),666);
 
     public static void main(String[] args) {
         System.out.println("**********************************************************");
@@ -47,7 +41,28 @@ public class LouvainDriver {
                     louvain = new Louvain();
                     break;
                 case 3:
-                    readGraph(graph);
+                    int n = in.nextInt();
+                    int m = in.nextInt();
+                    graph = new Graph<Song>();
+                    ArrayList<Song> songs = new ArrayList<>();
+                    for (int j = 0; j < n; ++j) {
+                        String title = in.next();
+                        String artist = in.next();
+                        String album = in.next();
+                        int year = in.nextInt();
+                        Genre genre = Genre.getGenreById(in.nextInt());
+                        Genre subgenre = Genre.getGenreById(in.nextInt());
+                        int duration = in.nextInt();
+                        Song s = new Song(title, artist, album, year, genre, subgenre, duration);
+                        songs.add(s);
+                        graph.addVertex(s);
+                    }
+                    for (int j = 0; j < m; ++j) {
+                        int s1 = in.nextInt();
+                        int s2 = in.nextInt();
+                        double w = in.nextDouble();
+                        graph.addEdgeT(songs.get(s1), songs.get(s2), w);
+                    }
                     break;
                 case 4:
                     writeGraph(graph);
@@ -55,12 +70,17 @@ public class LouvainDriver {
                 case 5:
                     if (louvain != null) {
                         log = louvain.execute(graph,in.nextInt());
-                        ArrayList<String> mess = log.getLog();
-                        for (String s : mess)
-                            System.out.println(s);
                     }
                     break;
                 case 6:
+                    if (log != null) {
+                        ArrayList<String> mess = log.getLog();
+                        for (String s : mess)
+                            System.out.print(s);
+                    } else {
+                        System.out.println(ErrorString.ALGORITHM_NOT_EXECUTED);
+                    }
+                case 7:
                     ArrayList<Graph> communities = null;
                     if (log != null) {
                         communities = log.getCommunities();
@@ -68,6 +88,8 @@ public class LouvainDriver {
                             System.out.println("Community #" + j);
                             writeGraph(communities.get(j));
                         }
+                    } else {
+                        System.out.println(ErrorString.ALGORITHM_NOT_EXECUTED);
                     }
                     break;
             }
@@ -81,28 +103,11 @@ public class LouvainDriver {
         sb.append("2:  Louvain()\n");
         sb.append("3:  void readGraph()\n");
         sb.append("4:  void writeGraph()\n");
-        sb.append("5:  AlgorithmOutput log = execute(Graph<Song> graph)\n");
-        sb.append("6:  foreach community in log: writeGraph()\n");
+        sb.append("5:  void execute(Graph graph, int k)\n");
+        sb.append("6:  ArrayList<String> getLog()\n");
+        sb.append("7:  ArrayList<Graph> getCommunities()\n");
         sb.append("\n");
         System.out.print(sb.toString());
-    }
-
-    private static void readGraph(Graph<Song> graph){
-        graph.addVertex(song0);
-        graph.addVertex(song1);
-        graph.addVertex(song2);
-        graph.addVertex(song3);
-        graph.addVertex(song4);
-        graph.addVertex(song5);
-        graph.addVertex(song6);
-        graph.addEdgeT(song0, song1, 1.0);
-        graph.addEdgeT(song0, song2, 1.0);
-        graph.addEdgeT(song1, song2, 1.0);
-        graph.addEdgeT(song0, song3, 1.0);
-        graph.addEdgeT(song4, song3, 1.0);
-        graph.addEdgeT(song3, song5, 1.0);
-        graph.addEdgeT(song4, song5, 1.0);
-        graph.addEdgeT(song6, song4, 1.0);
     }
 
     private static void writeGraph(Graph G) {

@@ -56,36 +56,36 @@ public class Louvain extends Algorithm {
         //Base Case
         if (graph.numberOfVertices() <= maxComm) {
             log.add("End of Algorithm: More vertices (" + graph.numberOfVertices() +
-                    ") than desirable communities (" + maxComm + ")");
+                    ") than desirable communities (" + maxComm + ")\n");
             return initSingletonCommunities(graph);
         }
 
         //Initializing Communities
-        log.add("Initializing new Round");
+        log.add("Initializing new Round\n");
         int[] comms = initSingletonCommunities(graph);
 
         //Modularity Optimization
-        log.add("ModularityOptimization");
+        log.add("ModularityOptimization\n");
         boolean moved = modularityOptimization(graph, comms);
 
         //If communities were optimized
         if (moved && nCommunities>maxComm) {
-            log.add("Normalizing community numbers");
+            log.add("Normalizing community numbers\n");
             comms = normalizeComms(comms);
 
-            log.add("CommunityAggregation");
+            log.add("CommunityAggregation\n");
             int[] comms2 = executeLouvain(communityAggregation(graph, comms));
 
-            log.add("Joining communities");
+            log.add("Joining communities\n");
             for (int i = 0; i < comms2.length; ++i) {
                 changeComm(i, comms2[i], comms);
             }
-            comms = normalizeComms(comms);
         } else if (!moved){
-            log.add("End of Algorithm: No more communities to be created");
+            log.add("End of Algorithm: No more communities to be created\n");
         }else {
-            log.add("End of Algorithm: Reached maximum number of communites");
+            log.add("End of Algorithm: Reached maximum number of communites " + nCommunities + "\n");
         }
+        comms = normalizeComms(comms);
         return comms;
     }
 
@@ -104,14 +104,14 @@ public class Louvain extends Algorithm {
         int idNode = rand.nextInt(nNodes); //Node being optimized
         if(idNode<0) idNode*=-1;
         boolean moved = false; //Has any node been moved?
-
+        int iter = 0;
 
         //Stops if we are in the last node and none has moved in the last round or if we have reached the limit of communities available
-        while ((idNode != nNodes || roundMoved) && nCommunities!=maxComm) {
-                       
+        while ((iter < nNodes || roundMoved) && nCommunities != maxComm) {
 
+            idNode = idNode % nNodes;
             //Iteratiu i sequencial-> si arriba al final comença de nou
-            if (idNode == nNodes) {
+            if (iter == nNodes) {
                 idNode = rand.nextInt(nNodes);
                 if(idNode<0) idNode*=-1;
                 roundMoved = false;
@@ -146,12 +146,13 @@ public class Louvain extends Algorithm {
             //Returns the node and move the node if there's a possible change
             comms[idNode] = tmp;
             if (comDest != comms[idNode]) {
-                log.add("Moving node " + idNode + " from " + comms[idNode] + " to " + comDest + ": " + maxModGain);
+                log.add("Moving node " + idNode + " from " + comms[idNode] + " to " + comDest + ": " + maxModGain + "\n");
                 moveMode(idNode, comms[idNode], comDest, comms);
                 roundMoved = true;
                 moved = true;
             }
 
+            ++iter;
             ++idNode;
         }
         return moved;
@@ -168,7 +169,7 @@ public class Louvain extends Algorithm {
      */
     private void changeComm(int from, int to, int[] comms) {
         if (from != to) {
-            log.add("Changing Community: " + from + " to " + to);
+            log.add("Changing Community: " + from + " to " + to + "\n");
             for (int i = 0; i < comms.length; ++i) {
                 if (comms[i] == from)
                     comms[i] = to;
@@ -192,7 +193,7 @@ public class Louvain extends Algorithm {
 
         for (int i = 0; i < comms.length; ++i) {
             if (commTranslator[comms[i]] == -1) {
-                log.add("Normalizing community " + comms[i] + " into " + currentComm);
+                log.add("Normalizing community " + comms[i] + " into " + currentComm + "\n");
                 commTranslator[comms[i]] = currentComm;
                 ++currentComm;
             }
