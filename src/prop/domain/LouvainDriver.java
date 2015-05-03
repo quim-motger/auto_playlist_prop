@@ -41,8 +41,11 @@ public class LouvainDriver {
                     louvain = new Louvain();
                     break;
                 case 3:
+                    //System.out.println("Introduce number of vertices and number of edges");
                     int n = in.nextInt();
                     int m = in.nextInt();
+                    //System.out.println("for each node introduce a song : ");
+                    //System.out.println("Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)");
                     graph = new Graph<Song>();
                     ArrayList<Song> songs = new ArrayList<>();
                     for (int j = 0; j < n; ++j) {
@@ -57,6 +60,7 @@ public class LouvainDriver {
                         songs.add(s);
                         graph.addVertex(s);
                     }
+                    //System.out.println("for each  each edge introduce two index of each song and weight: ");
                     for (int j = 0; j < m; ++j) {
                         int s1 = in.nextInt();
                         int s2 = in.nextInt();
@@ -80,6 +84,7 @@ public class LouvainDriver {
                     } else {
                         System.out.println(ErrorString.ALGORITHM_NOT_EXECUTED);
                     }
+                    break;
                 case 7:
                     ArrayList<Graph> communities = null;
                     if (log != null) {
@@ -91,6 +96,9 @@ public class LouvainDriver {
                     } else {
                         System.out.println(ErrorString.ALGORITHM_NOT_EXECUTED);
                     }
+                    break;
+                default:
+                    printInfo();
                     break;
             }
         }

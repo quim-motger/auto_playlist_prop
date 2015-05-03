@@ -55,36 +55,37 @@ public class Louvain extends Algorithm {
     private int[] executeLouvain(Graph<Song> graph) {
         //Base Case
         if (graph.numberOfVertices() <= maxComm) {
-            log.add("End of Algorithm: More vertices (" + graph.numberOfVertices() +
-                    ") than desirable communities (" + maxComm + ")\n");
+            log.add("\nEnd of Algorithm: More vertices (" + graph.numberOfVertices() +
+                    ") than desirable communities (" + maxComm + ")\n\n");
             return initSingletonCommunities(graph);
         }
 
         //Initializing Communities
-        log.add("Initializing new Round\n");
+        log.add("\nInitializing new Round\n");
         int[] comms = initSingletonCommunities(graph);
 
         //Modularity Optimization
-        log.add("ModularityOptimization\n");
+        log.add("\nModularityOptimization\n");
         boolean moved = modularityOptimization(graph, comms);
 
         //If communities were optimized
         if (moved && nCommunities>maxComm) {
-            log.add("Normalizing community numbers\n");
+            log.add("\nNormalizing community numbers\n\n");
             comms = normalizeComms(comms);
 
-            log.add("CommunityAggregation\n");
+            log.add("CommunityAggregation\n\n");
             int[] comms2 = executeLouvain(communityAggregation(graph, comms));
 
-            log.add("Joining communities\n");
+            log.add("Joining communities\n\n");
             for (int i = 0; i < comms2.length; ++i) {
                 changeComm(i, comms2[i], comms);
             }
         } else if (!moved){
-            log.add("End of Algorithm: No more communities to be created\n");
+            log.add("\nEnd of Algorithm: No more communities to be created\n\n");
         }else {
-            log.add("End of Algorithm: Reached maximum number of communites " + nCommunities + "\n");
+            log.add("\nEnd of Algorithm: Reached maximum number of communites " + nCommunities + "\n\n");
         }
+        log.add("\nNormalizing community numbers\n\n");
         comms = normalizeComms(comms);
         return comms;
     }
@@ -230,6 +231,7 @@ public class Louvain extends Algorithm {
         int[] comms = new int[graph.numberOfVertices()];
         int n = graph.numberOfVertices();
         nCommunities = n;
+        log.add("Initial Communities = " + nCommunities + " 1 for node in graph");
         for (int i = 0; i < n; ++i) {
             comms[i] = i;
         }
