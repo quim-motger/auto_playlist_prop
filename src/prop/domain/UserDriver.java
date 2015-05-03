@@ -18,7 +18,7 @@ public class UserDriver {
                     " and List \n"
                     + "Therefore, you can create a Song, a Playback and a List\n"
 
-            + "Example of Genre: Rock, Blues, Disco "
+            + "Example of Genre: 17, 18, 19 "
             + "\nExample of Gender: MALE, FEMALE"
             + "\nExample of CountryCode: ES, FI, FR\n"
                             + "START WITH OPTION 3\n");
@@ -140,8 +140,8 @@ public class UserDriver {
                         song = songController.getSong(in.next(),in.next());
                         break;
                     case 28:
-                        songController.addSong(in.next(),in.next(),in.next(),in.nextInt(),Genre.valueOf(in.next()),
-                                Genre.valueOf(in.next()),in.nextInt());
+                        songController.addSong(in.next(),in.next(),in.next(),in.nextInt(),Genre.getGenreById(in.nextInt()),
+                                Genre.getGenreById(in.nextInt()),in.nextInt());
                         break;
                     case 29:
                         date = Calendar.getInstance();
@@ -199,7 +199,7 @@ public class UserDriver {
         // OTHER CLASSES
         sb.add("playback = new Playback(Song song, Calendar date)");
         sb.add("song = songController.getSong(String title, String artist)");
-        sb.add("songController.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)");
+        sb.add("songController.addSong(String title, String artist, String album, int year, int genre, int subgenre, int duration)");
         sb.add("date.set(int year, int month, int day, int hour, int minute, int second)");
         sb.add("list = new List(String listTitle)");
         sb.add("list.addSong(song)");

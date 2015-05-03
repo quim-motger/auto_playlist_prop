@@ -27,8 +27,6 @@ import java.util.Map;
 
 /**
  * Enum CountryCode, contains all codes and names of countries as defined in ISO_3166 in 2012
- *
- * @author Carles Garcia Cabot
  */
 public enum CountryCode
 {
