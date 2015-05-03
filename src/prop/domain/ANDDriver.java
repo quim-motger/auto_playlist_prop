@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -37,12 +39,23 @@ public class ANDDriver {
                     r = new AND(r1,r2);
                     break;
                 case 3:
-                    if (r.evaluateSongs(s1,s2)) System.out.print("true\n");
-                    else System.out.print("false\n");
+                    try{
+                        boolean b = r.evaluateSongs(s1, s2);
+                        if (b) System.out.print("true\n");
+                        else System.out.print("false\n");
+                    } catch (PropException pe) {
+                        System.err.println(pe.getMessage());
+                    }
                     break;
                 case 4:
-                    if (r.evaluateUser(u)) System.out.print("true\n");
-                    else System.out.print("false\n");
+                    try{
+                        boolean b = r.evaluateUser(u);
+                        if (b) System.out.print("true\n");
+                        else System.out.print("false\n");
+                    } catch (PropException pe) {
+                        System.err.println(pe.getMessage());
+                    }
+                    break;
                 case 5:
                     String type = in.next();
                     String attribute = in.next();
@@ -75,6 +88,9 @@ public class ANDDriver {
                     int duration2 = in.nextInt();
                     s2 = new Song(title2,artist2,album2,y2,genre2,subgenre2,duration2);
                     break;
+                case 9:
+                    u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()),
+                            CountryCode.valueOf(in.next()));
                 default:
                     printInfoComplete();
             }

@@ -140,7 +140,7 @@ public class CliquePercolation{
         ArrayList<Integer>[] filtedCliques = (ArrayList<Integer>[])new ArrayList[n];
         int k, j;
         j = 0;
-        log.add("Mean weight of graph: " + lWeight + "\n");
+        log.add("Limit intensity to consider a clique: " + lWeight + "\n");
         for (k = 0; k < i; ++k) {
             //Calculates the meanWeight of the k clique
             double mw = meanWeight(cliques[k]);

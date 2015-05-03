@@ -180,9 +180,9 @@ public class RelationControllerDriver {
                 + "1:   printInfoComplete()\n"
                 + "2:   initGraph(SongController sc)\n"
                 + "3:   getGraph()\n"
-                + "4:   playbackRelations(UserController uc)\n"
-                + "5:   addSongRelation(String simpRel, String exp)\n"
-                + "6:   addUserRelation(String simpRel, String exp, UserController uc)\n"
+                + "4:   addSongRelation(String simpRel, String exp)\n"
+                + "5:   addUserRelation(String simpRel, String exp, UserController uc)\n"
+                + "6:   playbackRelations(UserController uc)\n"
                 + "SONG CONTROLLER METHODS\n"
                 + "7:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration):" +
                 " title artist album YYYY id_genre id_subgenre duration(seconds)\n"
@@ -207,10 +207,10 @@ public class RelationControllerDriver {
         Song s;
         for (int i = 0; i < G.numberOfVertices(); ++i) {
             s = (Song) G.getVertexT(i);
-            System.out.print(s.getTitle() + ": ");
+            System.out.print(s.getTitle() + " " + s.getArtist() + ":");
             for (Object j : G.adjacentVertices(i)) {
                 s = (Song) G.getVertexT((int) j);
-                System.out.print(s.getTitle() + " ");
+                System.out.print(" " + s.getTitle() + " " + s.getArtist());
             }
             System.out.print("\n");
         }
