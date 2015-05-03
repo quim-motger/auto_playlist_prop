@@ -168,6 +168,9 @@ public class RelationControllerDriver {
                 case 14:
                     System.out.println(lc.getListSetString());
                     break;
+                case 15:
+                    System.out.println(lc.getListString(in.nextInt()));
+                    break;
                 default:
                     printInfoComplete();
             }
@@ -192,10 +195,11 @@ public class RelationControllerDriver {
                 "MM DD countryCode\n"
                 + "10:   uc.removeUser(String name): userName\n"
                 + "11:  uc.associateListToUser(ListController lc, int listId, String userName): listId userName\n"
-                + "12:  uc.playSong(String title, String artist, String name, SongController sc)\n"
+                + "12:  uc.playSong(String title, String artist, String name, SongController sc) : songTitle songArtist userName\n"
                 + "LIST CONTROLLER METHODS\n"
                 + "13:  lc.createRandomlist(String title, int n, SongController sc): title n\n"
-                + "14:  String lc.getListSetString()\n");
+                + "14:  String lc.getListSetString()\n"
+                + "15:  String lc.getListString(int id): idList\n");
     }
 
     private static void printInfoBrief() {
