@@ -88,7 +88,7 @@ public class RelationController {
         }
     }
 
-    public Relation parsing(String simpRels, String exp) {
+    private Relation parsing(String simpRels, String exp) {
         //s contains a list of all the simple relations
         //p contains de combination of relations by its index
         Relation r;

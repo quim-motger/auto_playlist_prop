@@ -1,10 +1,14 @@
 package prop.domain;
 
-import java.text.DecimalFormat;
+import prop.ErrorString;
+import prop.PropException;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
- * The controller for {@code GirvanNewman}, {@code Louvain} and {@code CliquePercolation}
+ * The controller for {@code GirvanNewman}, {@code Louvain} and {@code CliquePercolation}.
  * @author oscar.manas
  * @see Algorithm
  * @see GirvanNewman
@@ -13,7 +17,7 @@ import java.util.ArrayList;
  */
 public class AlgorithmController {
 
-    public AlgorithmController() {}
+    private ArrayList<String> log;
 
     /**
      * Executes the selected algorithm for generating a song list that will be added to the set.
@@ -24,17 +28,20 @@ public class AlgorithmController {
      *                                  0: Girvan-Newman
      *                                  1: Louvain
      *                                  2: Clique Percolation
-     * @param k                     the correlation measure
+     * @param k                     the correlation measure; the higher the value, the more correlated the elements
+     *                              within a community will be, but communities will be smaller
      * @param listController        an instance of the List Controller
      * @param relationController    an instance of the Relation Controller
      * @return                      a log of the algorithm execution
      */
-    public ArrayList<String> execute(String title, int algorithm, int k, ListController listController, RelationController relationController) {
+    public ArrayList<String> execute(String title, int algorithm, int k, ListController listController, RelationController relationController) throws PropException {
 
-        AlgorithmOutput ao = null;
+        log = new ArrayList<String>();
         Graph<Song> graph = createInputGraph(algorithm,relationController);
-        System.out.println("Converted graph:"); writeGraph(graph);
+        log.add("Input graph:\n" + writeGraph(graph));
+        AlgorithmOutput ao = null;
 
+        // We execute the selected algorithm and get the output
         switch (algorithm) {
             case 0:
                 GirvanNewman gn = new GirvanNewman();
@@ -48,20 +55,21 @@ public class AlgorithmController {
                 CliquePercolation cp = new CliquePercolation();
                 ao = cp.execute(graph,k);
                 break;
+            default:
+                throw new PropException(ErrorString.UNEXISTING_ALGORITHM);
         }
 
+        // From the given communities, we select the densest one...
         Graph<Song> community = ao.densestGraph();
+        // ...and generate a new list with the songs in the community
         List list = new List(title);
         for (Song s : community.getOriginalVertices()) {
             list.addSong(s);
         }
         listController.addList(list);
 
-        ArrayList<String> log = ao.getLog();
-        StringBuilder sb = new StringBuilder();
-        sb.append("List created:\n");
-        sb.append(list.obtainId() + "\t" + list.obtainTitle() + "\n");
-        log.add(sb.toString());
+        log.addAll(ao.getLog());
+        log.add("List created:\n" + list.obtainId() + "  " + list.obtainTitle() + "\n");
 
         return log;
     }
@@ -78,8 +86,9 @@ public class AlgorithmController {
     private Graph<Song> createInputGraph(int algorithm, RelationController relationController) throws NullPointerException {
         Graph<Song> graph = new Graph<Song>();
         Graph<Song> G = relationController.getGraph();
-        if (G == null) throw new NullPointerException("The graph from Relation Controller was null");
-        System.out.println("Original graph:"); writeGraph(G);
+        if (G == null) throw new NullPointerException(ErrorString.NULL_GRAPH);
+        log.add("Original graph:\n" + writeGraph(G));
+
         int n = G.numberOfVertices();
         for (Song s : G.getOriginalVertices())
             graph.addVertex(s);
@@ -88,6 +97,7 @@ public class AlgorithmController {
             for (int j = 0; j < n; ++j)
                 visEdges[i][j] = false;
         }
+
         for (int u = 0; u < n; ++u) {
             for (int v : G.adjacentVertices(u)) {
                 if (!visEdges[u][v]) {
@@ -120,19 +130,27 @@ public class AlgorithmController {
         return sum;
     }
 
-    private void writeGraph(Graph G) {
+    /**
+     * Writes a weighted graph.
+     * @param G the graph to write
+     * @return  a {@code String} representing the graph
+     */
+    private String writeGraph(Graph G) {
+        StringBuilder sb = new StringBuilder();
         Song s;
-        DecimalFormat df = new DecimalFormat("0.00");
+        NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+        nf.setMaximumFractionDigits(2);
         for (int i = 0; i < G.numberOfVertices(); ++i) {
             s = (Song) G.getVertexT(i);
-            System.out.print("(" + G.getVertex(s) + ")" + s.getTitle() + ": ");
+            sb.append("(" + G.getVertex(s) + ")" + s.getTitle() + ": ");
             for (Integer j : (Iterable<Integer>) G.adjacentVertices(i)) {
                 s = (Song) G.getVertexT((int)j);
-                System.out.print(s.getTitle() + "(" + df.format(G.weight(i,j)) + ") ");
+                sb.append(s.getTitle() + "(" + nf.format(G.weight(i,j)) + ") ");
             }
-            System.out.print("\n");
+            sb.append("\n");
         }
-        System.out.print("\n");
+        sb.append("\n");
+        return sb.toString();
     }
 
 }
