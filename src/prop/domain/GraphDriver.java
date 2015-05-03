@@ -77,7 +77,10 @@ public class GraphDriver {
                         System.out.println(g.getLoopDegree(in.nextInt()));
                         break;
                     case 17:
-                        for (Integer t: g.getOriginalVertices()) System.out.println(t.toString());
+                        ArrayList<Integer> ai = g.getOriginalVertices();
+                        for (int j = 0; j < ai.size(); ++j) {
+                            System.out.println(j + "--->" + ai.get(j).toString());
+                        }
                         break;
                     case 18:
                         System.out.println(g.getOutdegree(in.nextInt()));
