@@ -3,7 +3,6 @@ package prop.domain;
 import prop.ErrorString;
 import prop.PropException;
 
-import java.lang.Override;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -14,40 +13,54 @@ import java.util.regex.Pattern;
 
 public class Playback implements Comparable<Playback>{
 
-    private Song song;
-    private Calendar date;
-
     private static final String PLAYBACK_DELIMITER = "|P|\n";
     private static final String PLAYBACK_STRING_ID = "PLAYBACK_STRING";
+    private Song song;
+    private Calendar date;
 
     /**
      * <code>Playback</code> class constructor
      * @param song      <code>song</code> played
      * @param date      play <code>date</code>
-     * @throws  Exception
+     * @throws PropException
      */
-    public Playback (Song song, Calendar date) throws Exception {
+    public Playback(Song song, Calendar date) throws PropException {
         if (song != null && date != null) {
             this.song = song;
             this.date = date;
+        } else throw new PropException(ErrorString.NULL);
+    }
+
+    /**
+     * valueOf method of a Playback
+     * @param s     a String with the specified format of a Playback
+     * @param songController    the songController that contains the songs
+     * @return the playback obtained by the string
+     * @throws Exception
+     */
+    public static Playback valueOf(String s, SongController songController) throws PropException {
+        //Split the string by the playback delimiter
+        String[] t = s.split(Pattern.quote(PLAYBACK_DELIMITER));
+        //Check if the size and the identifier of the string are corrects
+        if (t.length != 9 || !t[0].equals(PLAYBACK_STRING_ID)) {
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
         }
-        else throw new Exception(ErrorString.NULL);
+        //Get the song
+        Song song = songController.getSong(t[1], t[2]);
+        //Get the date
+        Calendar d = Calendar.getInstance();
+        d.set(Integer.parseInt(t[3]), Integer.parseInt(t[4]), Integer.parseInt(t[5]), Integer.parseInt(t[6]),
+                Integer.parseInt(t[7]), Integer.parseInt(t[8]));
+        //Return de playback with the defined song and date
+        return new Playback(song, d);
     }
 
     /**
      * Getter method of the <code>song</code> played
      * @return      <code>song</code> played
      */
-    public Song getSong () {
+    public Song getSong() {
         return song;
-    }
-
-    /**
-     * Getter method of the play <b>date</b>
-     * @return      play <b>date</b>
-     */
-    public Calendar getDate () {
-        return date;
     }
 
     /**
@@ -61,11 +74,19 @@ public class Playback implements Comparable<Playback>{
     }
 
     /**
+     * Getter method of the play <b>date</b>
+     * @return play <b>date</b>
+     */
+    public Calendar getDate() {
+        return date;
+    }
+
+    /**
      * Setter method of the play <b>date</b>
      * @param   date    play <b>date</b>
-     * @throws  Exception
+     * @throws Exception
      */
-    public void setDate (Calendar date) throws Exception {
+    public void setDate(Calendar date) throws Exception {
         if (date != null) this.date = date;
         else throw new Exception(ErrorString.NULL);
     }
@@ -73,7 +94,7 @@ public class Playback implements Comparable<Playback>{
     /**
      * Compare method of playbacks
      * @param p     playback to compare
-     * @return      true if this playback's date is before p playback's date
+     * @return true if this playback's date is before p playback's date
      */
     public int compareTo(Playback p) {
         boolean b = this.date.before(p.getDate());
@@ -86,7 +107,7 @@ public class Playback implements Comparable<Playback>{
     @Override
     /**
      * toString method of a Playback
-     * @return  a String in the specified format with the implicit playback
+     * @return a String in the specified format with the implicit playback
      */
     public String toString() {
         //Get the song of the playback
@@ -103,29 +124,5 @@ public class Playback implements Comparable<Playback>{
                 + date.get(Calendar.HOUR) + PLAYBACK_DELIMITER
                 + date.get(Calendar.MINUTE) + PLAYBACK_DELIMITER
                 + date.get(Calendar.SECOND);
-    }
-
-    /**
-     * valueOf method of a Playback
-     * @param s     a String with the specified format of a Playback
-     * @param songController    the songController that contains the songs
-     * @return      the playback obtained by the string
-     * @throws      Exception
-     */
-    public static Playback valueOf(String s, SongController songController) throws Exception {
-        //Split the string by the playback delimiter
-        String[] t = s.split(Pattern.quote(PLAYBACK_DELIMITER));
-        //Check if the size and the identifier of the string are corrects
-        if (t.length != 9 || !t[0].equals(PLAYBACK_STRING_ID)) {
-            throw new Exception(ErrorString.INCORRECT_FORMAT);
-        }
-        //Get the song
-        Song song = songController.getSong(t[1], t[2]);
-        //Get the date
-        Calendar d = Calendar.getInstance();
-        d.set(Integer.parseInt(t[3]), Integer.parseInt(t[4]), Integer.parseInt(t[5]), Integer.parseInt(t[6]),
-                Integer.parseInt(t[7]), Integer.parseInt(t[8]));
-        //Return de playback with the defined song and date
-        return new Playback(song,d);
     }
 }

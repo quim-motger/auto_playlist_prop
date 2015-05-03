@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.ErrorString;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,25 +11,17 @@ import java.util.Scanner;
  */
 public class CliquePercolationDriver {
 
-    private static Graph graph = null;
-    private static Song song0 = new Song("title0","artist0","album0",2000,Genre.getGenreById(0),Genre.getGenreById(0),000);
-    private static Song song1 = new Song("title1","artist1","album1",2001,Genre.getGenreById(1),Genre.getGenreById(1),111);
-    private static Song song2 = new Song("title2","artist2","album2",2002,Genre.getGenreById(2),Genre.getGenreById(2),222);
-    private static Song song3 = new Song("title3","artist3","album3",2003,Genre.getGenreById(3),Genre.getGenreById(3),333);
-    private static Song song4 = new Song("title4","artist4","album4",2004,Genre.getGenreById(4),Genre.getGenreById(4),444);
-
     public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** Clique Percolation method - Bron Kerbosch algorithm");
         System.out.println("**********************************************************");
         System.out.print("\n");
-        printInfo();
-
-
+        printInfoComplete();
 
         Scanner in = new Scanner(System.in);
         CliquePercolation cp = null;
         AlgorithmOutput ao = null;
+        Graph graph = null;
         int i = -1;
         while (i != 0) {
             i = in.nextInt();
@@ -35,13 +29,34 @@ public class CliquePercolationDriver {
                 case 0:
                     break;
                 case 1:
-                    printInfo();
+                    printInfoComplete();
                     break;
                 case 2:
                     cp = new CliquePercolation();
                     break;
                 case 3:
-                    readGraph();
+                    int n = in.nextInt();
+                    int m = in.nextInt();
+                    graph = new Graph<>();
+                    ArrayList<Song> songs = new ArrayList<>();
+                    for (int j = 0; j < n; ++j) {
+                        String title = in.next();
+                        String artist = in.next();
+                        String album = in.next();
+                        int year = in.nextInt();
+                        Genre genre = Genre.getGenreById(in.nextInt());
+                        Genre subgenre = Genre.getGenreById(in.nextInt());
+                        int duration = in.nextInt();
+                        Song s = new Song(title, artist, album, year, genre, subgenre, duration);
+                        songs.add(s);
+                        graph.addVertex(s);
+                    }
+                    for (int j = 0; j < m; ++j) {
+                        int s1 = in.nextInt();
+                        int s2 = in.nextInt();
+                        double w = in.nextDouble();
+                        graph.addEdgeT(songs.get(s1),songs.get(s2),w);
+                    }
                     break;
                 case 4:
                     writeGraph(graph);
@@ -51,20 +66,35 @@ public class CliquePercolationDriver {
                     ao = cp.execute(graph,k);
                     break;
                 case 6:
-                    ArrayList<Graph> communities = ao.getCommunities();
-                    for (int j = 0; j < communities.size(); ++j) {
-                        System.out.println("Community #" + j);
-                        writeGraph(communities.get(j));
+                    try {
+                        ArrayList<String> log = ao.getLog();
+                        for (String s : log)
+                            System.out.print(s);
+                    }
+                    catch (NullPointerException e) {
+                        System.out.println(ErrorString.ALGORITHM_NOT_EXECUTED);
                     }
                     break;
                 case 7:
-                    ArrayList<String> log = ao.getLog();
-                    for (String s : log) System.out.print(s);
+                    try {
+                        ArrayList<Graph> communities = ao.getCommunities();
+                        for (int j = 0; j < communities.size(); ++j) {
+                            System.out.println("Community #" + j);
+                            writeGraph(communities.get(j));
+                        }
+                    }
+                    catch (NullPointerException e) {
+                        System.out.println(ErrorString.ALGORITHM_NOT_EXECUTED);
+                    }
+                    break;
+                default:
+                    printInfoComplete();
             }
+            if (i > 1 && i < 8) printInfoBrief();
         }
     }
 
-    private static void printInfo() {
+    private static void printInfoComplete() {
         StringBuilder sb = new StringBuilder();
         sb.append("0:  terminate program\n");
         sb.append("1:  info\n");
@@ -72,26 +102,17 @@ public class CliquePercolationDriver {
         sb.append("3:  void readGraph()\n");
         sb.append("4:  void writeGraph()\n");
         sb.append("5:  void execute(Graph graph, int k)\n");
-        sb.append("6:  printCommunities\n");
-        sb.append("7:  ao.getLog()\n");
+        sb.append("6:  ArrayList<String> getLog()\n");
+        sb.append("7:  ArrayList<Graph> getCommunitites()\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }
 
-    private static void readGraph(){
-        graph = new Graph<Song>();
-        graph.addVertex(song0);
-        graph.addVertex(song1);
-        graph.addVertex(song2);
-        graph.addVertex(song3);
-        graph.addVertex(song4);
-        graph.addEdgeT(song0, song1, 3);
-        graph.addEdgeT(song0, song2, 6);
-        graph.addEdgeT(song0, song3, 3);
-        graph.addEdgeT(song1, song3, 1);
-        graph.addEdgeT(song1, song4, 4);
-        graph.addEdgeT(song2, song3, 2);
-        graph.addEdgeT(song3, song4, 2);
+    private static void printInfoBrief() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("0:  terminate program\n");
+        sb.append("1:  info\n");
+        System.out.print(sb.toString());
     }
 
     private static void writeGraph(Graph G) {
@@ -100,7 +121,7 @@ public class CliquePercolationDriver {
             s = (Song) G.getVertexT(i);
             System.out.print(s.getTitle() + ": ");
             for (Integer j : (Iterable<Integer>) G.adjacentVertices(i)) {
-                s = (Song) G.getVertexT((int)j);
+                s = (Song) G.getVertexT(j);
                 System.out.print(s.getTitle() + " ");
             }
             System.out.print("\n");
