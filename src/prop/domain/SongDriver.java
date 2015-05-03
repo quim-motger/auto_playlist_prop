@@ -104,6 +104,8 @@ public class SongDriver {
                     System.out.println(s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
                     " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration() + "\n");
                     break;
+                default:
+                    printInfo();
             }
         }
     }

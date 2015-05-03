@@ -2,7 +2,6 @@ package prop.domain;
 
 import prop.PropException;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -38,19 +37,9 @@ public class RelationControllerDriver {
                 case 2:
                     rc.initGraph(sc);
                     break;
-                // todo: adapt to Graph
-                /*case 4:
-                    HashGraph g = rc.getGraph();
-                    ArrayList<Song> songs = g.getVertices();
-                    for (Song s : songs) {
-                        System.out.print("(" + s.getTitle() + "," + s.getArtist() + ") :");
-                        ArrayList<Song> adj = g.adjacentVertices(s);
-                        for (Song ss : adj) {
-                            System.out.print(" (" + ss.getTitle() + "," + ss.getArtist() + ")");
-                        }
-                        System.out.print("\n");
-                    }
-                    break;*/
+                case 3:
+                    writeGraph(rc.getGraph());
+                    break;
                 case 4:
                     System.out.println("How to introduce relations:");
                     System.out.println("1. Introduce the number of SimpleRelations you are going to work with: n_relations");
@@ -110,6 +99,9 @@ public class RelationControllerDriver {
                     }
                     break;
                 case 6:
+                    rc.playbackRelations(uc);
+                    break;
+                case 7:
                     String title2 = in.next();
                     String artist2 = in.next();
                     String album2 = in.next();
@@ -123,7 +115,7 @@ public class RelationControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 7:
+                case 8:
                     String title = in.next();
                     String artist = in.next();
                     try {
@@ -132,7 +124,7 @@ public class RelationControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 8:
+                case 9:
                     try {
                         uc.addUser(
                                 in.next(),
@@ -146,26 +138,39 @@ public class RelationControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 9:
+                case 10:
                     try {
                         uc.removeUser(in.next());
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 10:
+                case 11:
                     try {
                         uc.associateListToUser(lc,in.nextInt(),in.next());
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
                     break;
-                case 11:
+                case 12:
+                    try {
+                        uc.playSong(in.next(), in.next(), in.next(), sc);
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
+                case 13:
                     try {
                         lc.createRandomList(in.next(), in.nextInt(), sc);
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
+                    break;
+                case 14:
+                    System.out.println(lc.getListSetString());
+                    break;
+                case 15:
+                    System.out.println(lc.getListString(in.nextInt()));
+                    break;
                 default:
                     printInfoComplete();
             }
@@ -180,21 +185,39 @@ public class RelationControllerDriver {
                 + "3:   getGraph()\n"
                 + "4:   addSongRelation(String simpRel, String exp)\n"
                 + "5:   addUserRelation(String simpRel, String exp, UserController uc)\n"
+                + "6:   playbackRelations(UserController uc)\n"
                 + "SONG CONTROLLER METHODS\n"
-                + "6:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration):" +
+                + "7:   sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration):" +
                 " title artist album YYYY id_genre id_subgenre duration(seconds)\n"
-                + "7:   sc.removeSong(String title, String artist): title artist\n"
+                + "8:   sc.removeSong(String title, String artist): title artist\n"
                 + "USER CONTROLLER METHODS\n"
-                + "8:   uc.addUser(String name, Gender gender, long birthday, int countryCode): name MALE/FEMALE/OTHER YYYY " +
+                + "9:   uc.addUser(String name, String gender, int year, int month, int date, String countryCode): name MALE/FEMALE/OTHER YYYY " +
                 "MM DD countryCode\n"
-                + "9:   uc.removeUser(String name): userName\n"
-                + "10:  uc.associateListToUser(ListController lc, int listId, String userName): listId userName\n"
+                + "10:   uc.removeUser(String name): userName\n"
+                + "11:  uc.associateListToUser(ListController lc, int listId, String userName): listId userName\n"
+                + "12:  uc.playSong(String title, String artist, String name, SongController sc) : songTitle songArtist userName\n"
                 + "LIST CONTROLLER METHODS\n"
-                + "11:  lc.createRandomlist(String title, int n, SongController sc): title n\n");
+                + "13:  lc.createRandomlist(String title, int n, SongController sc): title n\n"
+                + "14:  String lc.getListSetString()\n"
+                + "15:  String lc.getListString(int id): idList\n");
     }
 
     private static void printInfoBrief() {
         System.out.print("0:   terminate program\n"
                 + "1:   printInfoComplete()\n");
+    }
+
+    private static void writeGraph(Graph G) {
+        Song s;
+        for (int i = 0; i < G.numberOfVertices(); ++i) {
+            s = (Song) G.getVertexT(i);
+            System.out.print(s.getTitle() + " " + s.getArtist() + ":");
+            for (Object j : G.adjacentVertices(i)) {
+                s = (Song) G.getVertexT((int) j);
+                System.out.print(" " + s.getTitle() + " " + s.getArtist());
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n");
     }
 }

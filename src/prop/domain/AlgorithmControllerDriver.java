@@ -1,5 +1,6 @@
 package prop.domain;
 
+import prop.ErrorString;
 import prop.PropException;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class AlgorithmControllerDriver {
         AlgorithmController ac = null;
         ListController listController = new ListController();
         RelationController relationController = new RelationControllerStub();
+        ArrayList<String> log = null;
 
         Scanner in = new Scanner(System.in);
         int i = -1;
@@ -41,22 +43,32 @@ public class AlgorithmControllerDriver {
                     int algorithm = in.nextInt();
                     int k = in.nextInt();
                     try {
-                        ArrayList<String> log = ac.execute(title, algorithm, k, listController, relationController);
-                        for (String s : log)
-                            System.out.print(s);
-                        System.out.print("\n");
+                        log = ac.execute(title, algorithm, k, listController, relationController);
+                        System.out.println(log.get(log.size() - 1));
                     }
                     catch (PropException|NullPointerException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 4:
-                    int id = in.nextInt();
-                    System.out.print(listController.getListString(id));
+                    try {
+                        for (String s : log)
+                            System.out.print(s);
+                        System.out.print("\n");
+                    }
+                    catch (NullPointerException e) {
+                        System.out.print(ErrorString.ALGORITHM_NOT_EXECUTED);
+                    }
                     break;
                 case 5:
-                    System.out.print(listController.getListSetString());
+                    int id = in.nextInt();
+                    System.out.println(listController.getListString(id));
                     break;
+                case 6:
+                    System.out.println(listController.getListSetString());
+                    break;
+                default:
+                    printInfo();
             }
 
         }
@@ -68,8 +80,9 @@ public class AlgorithmControllerDriver {
         sb.append("1:  info\n");
         sb.append("2:  AlgorithmController()\n");
         sb.append("3:  ArrayList<String> execute(String title, int algorithm, int k)\n");
-        sb.append("4:  String getListString(int id)\n");
-        sb.append("5:  String getListSetString()\n");
+        sb.append("4:  void printLog()\n");
+        sb.append("5:  String getListString(int id)\n");
+        sb.append("6:  String getListSetString()\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

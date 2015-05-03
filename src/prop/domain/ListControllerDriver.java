@@ -59,7 +59,12 @@ public class ListControllerDriver {
                     break;
                 case 7:
                     id = in.nextInt();
-                    listController.removeList(id);
+                    try {
+                        listController.removeList(id);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 8:
                     title = in.next();
@@ -67,18 +72,28 @@ public class ListControllerDriver {
                     try {
                         listController.createRandomList(title, n, songController);
                     }
-                    catch (PropException e) {
+                    catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 9:
                     id = in.nextInt();
                     title = in.next();
-                    listController.setListTitle(id, title);
+                    try {
+                        listController.setListTitle(id, title);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 10:
                     id = in.nextInt();
-                    System.out.println(listController.getListTitle(id) + "\n");
+                    try {
+                        System.out.println(listController.getListTitle(id) + "\n");
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 11:
                     id = in.nextInt();
@@ -86,7 +101,8 @@ public class ListControllerDriver {
                     artist = in.next();
                     try {
                         listController.addSong(id,title,artist,songController);
-                    } catch (PropException e) {
+                    }
+                    catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -94,18 +110,33 @@ public class ListControllerDriver {
                     id = in.nextInt();
                     title = in.next();
                     artist = in.next();
-                    listController.removeSong(id, title, artist);
+                    try {
+                        listController.removeSong(id, title, artist);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 13:
                     id = in.nextInt();
                     pos = in.nextInt();
-                    listController.removeSong(id,pos);
+                    try {
+                        listController.removeSong(id, pos);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 14:
                     id = in.nextInt();
                     pos1 = in.nextInt();
                     pos2 = in.nextInt();
-                    listController.swapSongs(id,pos1,pos2);
+                    try {
+                        listController.swapSongs(id, pos1, pos2);
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 15:
                     id = in.nextInt();
@@ -127,12 +158,22 @@ public class ListControllerDriver {
                     break;
                 case 18:
                     id = in.nextInt();
-                    List list = listController.getList(id);
-                    System.out.println(list.toString());
+                    try {
+                        List list = listController.getList(id);
+                        System.out.println(list.toString());
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 19:
                     id = in.nextInt();
-                    System.out.println(listController.getListString(id));
+                    try {
+                        System.out.println(listController.getListString(id));
+                    }
+                    catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 20:
                     System.out.println(listController.getListSetString());
@@ -155,6 +196,8 @@ public class ListControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
+                default:
+                    printInfo();
             }
         }
     }

@@ -207,11 +207,13 @@ public class ListController {
      * @return      a string representing the list
      */
     public String getListString(int id) {
+        List list = listSet.getList(id);
+        ArrayList<Song> songs = list.obtainSongs();
         StringBuilder sb = new StringBuilder();
-        ArrayList<Song> songs = listSet.getList(id).obtainSongs();
+        sb.append(id + "  " + list.obtainTitle() + "\n");
         for (int i = 0; i < songs.size(); ++i) {
             Song s = songs.get(i);
-            sb.append(i + "  " + s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
+            sb.append("    " + i + "  " + s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
                     " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration() + "\n");
         }
         return sb.toString();

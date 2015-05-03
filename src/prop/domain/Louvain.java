@@ -146,7 +146,7 @@ public class Louvain extends Algorithm {
             //Returns the node and move the node if there's a possible change
             comms[idNode] = tmp;
             if (comDest != comms[idNode]) {
-                log.add("Moving node " + idNode + " from " + comms[idNode] + " to " + comDest + ": " + maxModGain + "\n");
+                log.add("Moving node " + idNode + " from " + comms[idNode] + " to " + comDest + " : " + maxModGain + "\n");
                 moveMode(idNode, comms[idNode], comDest, comms);
                 roundMoved = true;
                 moved = true;
@@ -413,16 +413,3 @@ public class Louvain extends Algorithm {
         return sum / 2;
     }
 }
-
-
-/*
-8 8
-3 0 1
-0 1 1
-0 2 1
-1 2 1
-3 5 1
-3 4 1
-4 5 1
-4 6 1
- */

@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -26,6 +28,8 @@ public class RelationDriver {
         Relation r = null;
         Relation r1 = null;
         Relation r2 = null;
+
+        printInfoComplete();
         
         int i = -1;
         while (i != 0) {
@@ -56,28 +60,33 @@ public class RelationDriver {
                         r2 = r;
                         break;
                     case 8:
-                        System.out.println(r.evaluateSongs(s1,s2));
+                        try {
+                            System.out.println(r.evaluateSongs(s1, s2));
+                        } catch (PropException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 9:
-                        System.out.println(r.evaluateUser(u));
+                        try {
+                            System.out.println(r.evaluateUser(u));
+                        } catch (PropException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 10:
-                        System.out.println("End with ;");
-                        in.useDelimiter(";");
-                        s1 = Song.valueOf(in.next());
-                        in.useDelimiter(" ");
+                        s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),
+                                Genre.getGenreById(in.nextInt()), in.nextInt());
                         break;
                     case 11:
-                        System.out.println("End with ;");
-                        in.useDelimiter(";");
-                        s2 = Song.valueOf(in.next());
-                        in.useDelimiter(" ");
+                        s2 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),
+                                Genre.getGenreById(in.nextInt()), in.nextInt());
                         break;
                     case 12:
                         u = new User(in.next(), Gender.valueOf(in.next()), birthday, CountryCode.getByCode(in.next()));
                         break;
                     case 13:
                         birthday.set(in.nextInt(), in.nextInt(), in.nextInt());
+                        break;
                     default:
                         printInfoComplete();
                 }
@@ -100,11 +109,11 @@ public class RelationDriver {
         sb.append("7:  r2 = r\n");
         sb.append("8:  r.evaluateSongs(s1,s2)\n");
         sb.append("9:  r.evaluateUser(u)\n");
-        sb.append("10:  s1 = Song.valueOf(String origen)\n");
-        sb.append("11:  s2 = Song.valueOf(String origen)\n");
+        sb.append("10:  s1 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
+        sb.append("11:  s2 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
         sb.append("12:  u = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
         sb.append("13:  birthday.set(int year,int month,int date)\n");
-        sb.append("Gender must be MALE or FEMALE or OTHER, and Country needs to be introduced by CountryCode\n");
+        sb.append("Gender must be MALE or FEMALE or OTHER, Country needs to be introduced by CountryCode (ex: ES, FR...) and Genre by number\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

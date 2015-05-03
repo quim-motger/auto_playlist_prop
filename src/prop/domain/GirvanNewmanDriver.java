@@ -91,6 +91,8 @@ public class GirvanNewmanDriver {
                         System.out.println(ErrorString.ALGORITHM_NOT_EXECUTED);
                     }
                     break;
+                default:
+                    printInfo();
             }
         }
     }
