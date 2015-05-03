@@ -13,9 +13,6 @@ import java.util.Scanner;
  */
 public class RelationControllerDriver {
 
-    private static Song song0 = new Song("title0","artist0","album0",2000,Genre.getGenreById(0),Genre.getGenreById(0),000);
-    private static Song song1 = new Song("title0","artist0","album1",2001,Genre.getGenreById(1),Genre.getGenreById(1),111);
-
     public static void main(String[] args) {
         System.out.println("**********************************************************");
         System.out.println("** Relation Controller");
@@ -140,8 +137,10 @@ public class RelationControllerDriver {
                         uc.addUser(
                                 in.next(),
                                 in.next(),
-                                in.nextLong(),
-                                in.nextInt()
+                                in.nextInt(),
+                                in.nextInt(),
+                                in.nextInt(),
+                                in.next()
                         );
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -182,7 +181,8 @@ public class RelationControllerDriver {
                 " title artist album YYYY id_genre id_subgenre duration(seconds)\n"
                 + "7:   sc.removeSong(String title, String artist): title artist\n"
                 + "USER CONTROLLER METHODS\n"
-                + "8:   uc.addUser(String name, Gender gender, long birthday, int countryCode):\n"
+                + "8:   uc.addUser(String name, Gender gender, long birthday, int countryCode): name MALE/FEMALE/OTHER YYYY " +
+                "MM DD countryCode\n"
                 + "9:   uc.removeUser(String name): userName\n"
                 + "10:  uc.associateListToUser(ListController lc, int listId, String userName): listId userName\n"
                 + "LIST CONTROLLER METHODS\n"
