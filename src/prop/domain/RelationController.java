@@ -47,6 +47,10 @@ public class RelationController {
 
     }
 
+    /**
+     * add relations between songs related by its playback time
+     * @param playbacks
+     */
     private void addPlaybackRelation(TreeSet<Playback> playbacks) {
         for(Playback playback : playbacks) {
             for(Playback test : playbacks) {
@@ -58,12 +62,23 @@ public class RelationController {
         }
         
     }
-    
+
+    /**
+     * obtain the time from a playback
+     * @param playback
+     * @return  the time of the playback
+     */
     private long obtainTimeFromPlayBack(Playback playback) {
         return playback.getDate().getTime().getTime();
         
     }
 
+    /**
+     * add relations between songs related by an specific song relation expression
+     * @param simpRel   the set of simple relations that compose the expression
+     * @param exp       the expression to evaluate
+     * @throws PropException
+     */
     public void addSongRelation(String simpRel, String exp) throws PropException{
         Relation rsongs = parsing(simpRel, exp);
         ArrayList<Song> songs = graph.getOriginalVertices();
@@ -76,6 +91,13 @@ public class RelationController {
         }
     }
 
+    /**
+     * add relations between songs of the list of the users that match with the specified relation
+     * @param simpRel       the set of simple relations that compose the expression
+     * @param exp           the expression to evaluate
+     * @param userController    the userController that contains the users
+     * @throws PropException
+     */
     public void addUserRelation(String simpRel, String exp, UserController userController) throws PropException{
         Relation rusers = parsing(simpRel, exp);
         for (User u : userController.obtainUserSet()) {
@@ -93,6 +115,12 @@ public class RelationController {
         }
     }
 
+    /**
+     * parses an expression into a Relation
+     * @param simpRels  the set of simple relations that compose the expression
+     * @param exp       the expression to evaluate
+     * @return
+     */
     private Relation parsing(String simpRels, String exp) {
         //s contains a list of all the simple relations
         //p contains de combination of relations by its index
@@ -144,12 +172,6 @@ public class RelationController {
             r = new OR(r,AND.get(i));
         }
         return r;
-    }
-    
-    public Relation parsing2(String simRel, String exp) {
-        ExpressionTree expressionTree = new ExpressionTree();
-        expressionTree.parse(exp,simRel);
-        return expressionTree.evaluate();
     }
 
 }

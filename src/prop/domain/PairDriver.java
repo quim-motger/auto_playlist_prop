@@ -13,7 +13,6 @@ public class PairDriver {
         System.out.print("\n");
         printInfoComplete();
 
-        ComplexRelation complexRelation = null;
         Scanner in = new Scanner(System.in);
 
         int i = -1;
@@ -37,6 +36,13 @@ public class PairDriver {
                     String seconds = in.next();
                     p = Pair.create(firsts, seconds);
                     System.out.print("First: " + p.first + "\nSecond: " + p.second + "\n");
+                    break;
+                case 4:
+                    double firstd = in.nextDouble();
+                    double secondd = in.nextDouble();
+                    p = Pair.create(firstd, secondd);
+                    System.out.print("First: " + p.first + "\nSecond: " + p.second + "\n");
+                    break;
                 default:
                     printInfoComplete();
             }
@@ -48,8 +54,9 @@ public class PairDriver {
         StringBuilder sb = new StringBuilder();
         sb.append("0:  terminate program\n");
         sb.append("1:  printInfoComplete\n");
-        sb.append("2:  create(int first, int second)\n");
-        sb.append("3:  create(String first, String second)\n");
+        sb.append("2:  create(int first, int second): first second\n");
+        sb.append("3:  create(String first, String second): first second\n");
+        sb.append("4:  create(double first, double second): first second\n");
         System.out.print(sb.toString());
     }
 
