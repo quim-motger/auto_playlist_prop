@@ -167,24 +167,6 @@ public enum Genre {
         return id;
     }
 
-    private static HashMap<String,Genre> genres;
-
-    static {
-        genres = new HashMap<String, Genre>();
-        for (Genre genre : values()) {
-            genres.put(genre.getName(), genre);
-        }
-    }
-
-    /**
-     * Get the genre by name
-     * @param name  the genre name
-     * @return      the genre
-     */
-    public static Genre getGenreByName(String name) {
-        return genres.get(name);
-    }
-
     /**
      * Get the genre by ID
      * @param id    the genre ID

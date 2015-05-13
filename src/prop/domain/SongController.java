@@ -102,10 +102,12 @@ public class SongController {
                     song.setYear(Integer.parseInt(pair.second));
                     break;
                 case "genre":
-                    song.setGenre(Genre.getGenreByName(pair.second));
+                    // Modified
+                    song.setGenre(Genre.getGenreById(Integer.parseInt(pair.second)));
                     break;
                 case "subgenre":
-                    song.setSubgenre(Genre.getGenreByName(pair.second));
+                    // Modified
+                    song.setSubgenre(Genre.getGenreById(Integer.parseInt(pair.second)));
                     break;
                 case "duration":
                     song.setDuration(Integer.parseInt(pair.second));
