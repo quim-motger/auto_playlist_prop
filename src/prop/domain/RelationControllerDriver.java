@@ -158,6 +158,7 @@ public class RelationControllerDriver {
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
+                    break;
                 case 13:
                     try {
                         lc.createRandomList(in.next(), in.nextInt(), sc);

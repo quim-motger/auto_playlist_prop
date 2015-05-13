@@ -1,6 +1,5 @@
 package prop.domain;
 
-import prop.ExpressionTree;
 import prop.PropException;
 
 import java.util.ArrayList;
@@ -37,6 +36,11 @@ public class RelationController {
         return graph;
     }
 
+    /**
+     * Adds Edges between each song played within 10 min of each other
+     *
+     * @param userController Contains all users and its playbacks
+     */
     public void playbackRelations(UserController userController) {
         UserSet userSet = userController.obtainUserSet();
         for(User u : userSet) {
@@ -48,7 +52,7 @@ public class RelationController {
 
     /**
      * add relations between songs related by its playback time
-     * @param playbacks
+     * @param playbacks Array of playbacks
      */
     private void addPlaybackRelation(TreeSet<Playback> playbacks) {
         for(Playback playback : playbacks) {
