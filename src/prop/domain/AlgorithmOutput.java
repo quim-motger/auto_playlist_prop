@@ -23,9 +23,9 @@ public class AlgorithmOutput {
      * @param communities
      * @param log
      */
-    public AlgorithmOutput(ArrayList<Graph> communities, ArrayList<String> log) {
-        this.communities = communities;
-        this.log = log;
+    public AlgorithmOutput(ArrayList<Graph> communities1, ArrayList<String> log1) {
+        communities = communities1;
+        log = log1;
     }
 
     /**

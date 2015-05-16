@@ -33,10 +33,10 @@ public class User {
      * User default constructor. Its members have to be set before using it.
      * */
     public User() {
-        this.name = "Default";
-        this.gender = Gender.MALE;
-        this.birthdate = Calendar.getInstance();
-        this.country = CountryCode.AD;
+        name = "Default";
+        gender = Gender.MALE;
+        birthdate = Calendar.getInstance();
+        country = CountryCode.AD;
         playbackRegister = new TreeSet<>();
         associatedLists = new ArrayList<>();
     }
@@ -48,11 +48,11 @@ public class User {
      * @param birthdate User's birthdate
      * @param country User's country of residence
      */
-    public User(String name, Gender gender, Calendar birthdate, CountryCode country) {
-        this.name = name;
-        this.gender = gender;
-        this.birthdate = birthdate;
-        this.country = country;
+    public User(String name1, Gender gender1, Calendar birthdate1, CountryCode country1) {
+        name = name1;
+        gender = gender1;
+        birthdate = birthdate1;
+        country = country1;
         playbackRegister = new TreeSet<>();
         associatedLists = new ArrayList<>();
     }
@@ -83,34 +83,34 @@ public class User {
     }
 
     /* SETTERS */
-    public void setName(String name) {
+    public void setName(String name1) {
         if (name == null) throw new NullPointerException("name is null");
-        this.name = name;
+        name = name1;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(Gender gender1) {
         if (gender == null) throw new NullPointerException("gender is null");
-        this.gender = gender;
+        gender = gender1;
     }
 
-    public void setBirthdate(Calendar birthdate) {
+    public void setBirthdate(Calendar birthdate1) {
         if (birthdate == null) throw new NullPointerException("birthdate is null");
-        this.birthdate = birthdate;
+        birthdate = birthdate1;
     }
 
-    public void setCountry(CountryCode country) {
+    public void setCountry(CountryCode country1) {
         if (country == null) throw new NullPointerException("country is null");
-        this.country = country;
+        country = country1;
     }
 
-    public void setPlaybackRegister(TreeSet<Playback> playbackRegister) {
+    public void setPlaybackRegister(TreeSet<Playback> playbackRegister1) {
         if (playbackRegister == null) throw new NullPointerException("playbackRegister is null");
-        this.playbackRegister = playbackRegister;
+        playbackRegister = playbackRegister1;
     }
 
-    public void setAssociatedLists(ArrayList<List> associatedLists) {
+    public void setAssociatedLists(ArrayList<List> associatedLists1) {
         if (associatedLists == null) throw new NullPointerException("associatedLists is null");
-        this.associatedLists = associatedLists;
+        associatedLists = associatedLists1;
     }
 
     /* OTHER METHODS */

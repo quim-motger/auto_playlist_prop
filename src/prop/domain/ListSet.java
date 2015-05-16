@@ -32,8 +32,8 @@ public class ListSet {
      * ListSet constructor with lists
      * @param lists array of lists to form the set
      */
-    public ListSet(ArrayList<List> lists) {
-        this.lists = lists;
+    public ListSet(ArrayList<List> lists1) {
+        lists = lists1;
         nextId = 0;
     }
 
@@ -47,9 +47,9 @@ public class ListSet {
     }
 
     /* SETTERS */
-    public void setLists(ArrayList<List> lists) {
+    public void setLists(ArrayList<List> lists1) {
         if (lists == null) throw new NullPointerException("Tried to set null ArrayList<List>");
-        this.lists = lists;
+        lists = lists1;
     }
 
     public void setNextId(int nid) {
