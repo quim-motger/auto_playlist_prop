@@ -91,27 +91,22 @@ public class ListSetDriver {
                         System.out.println(l.totalTime());
                         break;
                     case 18:
-                        if (serialize.equals("")) throw new Exception("Error: must do toString before valueOf");
-                        l = ListSet.valueOf(serialize, songController);
-                        serialize = "";
-                        break;
-                    case 19:
                         song = songController.getSong(in.next(),in.next());
                         break;
-                    case 20:
+                    case 19:
                         songController.addSong(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),
                                 Genre.getGenreById(in.nextInt()), in.nextInt());
                         break;
-                    case 21:
+                    case 20:
                         list = new List(in.next());
                         break;
-                    case 22:
+                    case 21:
                         list.addSong(song);
                         break;
-                    case 23:
+                    case 22:
                         //nothing
                         break;
-                    case 24:
+                    case 23:
                         arrayList.add(list);
                         break;
                     default:
@@ -144,7 +139,6 @@ public class ListSetDriver {
         sb.add("int 	size()");
         sb.add("String 	toString()");
         sb.add("int 	totalTime()");
-        sb.add("static ListSet 	valueOf()");
         // OTHER METHODS
         sb.add("song = songController.getSong(String title, String artist)");
         sb.add("songController.addSong(String title, String artist, String album, int year, int genre, int subgenre, int duration)");

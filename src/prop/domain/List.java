@@ -16,9 +16,7 @@ import java.util.regex.Pattern;
 public class List {
 
 
-    private static final String LIST_DELIMITER = "|L|\n";
-    private static final String LIST_STRING_ID = "LIST_STRING";
-    private static final String SONG_DELIMITER = "|S|\n";
+    private static final char delimiter = ' ';
     private int id;
     private String title;
     private ArrayList<Song> songs;
@@ -49,31 +47,6 @@ public class List {
         id = -1;
         title = listTitle;
         songs = newSongs;
-    }
-
-    /**
-     * *
-     * @param origin String to be parsed
-     * @param songController SongController containing all songs
-     * @return List created parsing origin
-     * @throws PropException if origin format incorrect
-     */
-    public static List valueOf(String origin, SongController songController) throws PropException {
-        //Separates strings by delimiter
-        String[] tokens = origin.split(Pattern.quote(LIST_DELIMITER));
-        if (tokens.length < 4 || !tokens[0].equals(LIST_STRING_ID)) {
-            throw new PropException(ErrorString.INCORRECT_FORMAT);
-        }
-        List list = new List(tokens[2]);
-        list.editId(Integer.valueOf(tokens[1]));
-        int size = Integer.valueOf(tokens[3]);
-        for (int i = 4; i < 4 + size; ++i) {
-            String[] songId = tokens[i].split(Pattern.quote(SONG_DELIMITER));
-            Song song = songController.getSong(songId[0], songId[1]);
-            if (song == null) throw new PropException(ErrorString.UNEXISTING_SONG);
-            list.addSong(song);
-        }
-        return list;
     }
 
     /**
@@ -243,16 +216,16 @@ public class List {
      * Transforms a List into a String
      * @return Representation of a List into a String
      */
-    @Override
     public String toString() {
-        String ret = LIST_STRING_ID + LIST_DELIMITER;
-        ret += String.valueOf(id) + LIST_DELIMITER;
-        ret += title + LIST_DELIMITER;
-        ret += songs.size() + LIST_DELIMITER;
+        String s = "";
+        s += String.valueOf(id) + delimiter;
+        s += title + delimiter;
+        s += String.valueOf(songs.size()) + delimiter;
         for (Song song : songs) {
-            ret += song.getTitle() + SONG_DELIMITER;
-            ret += song.getArtist() + LIST_DELIMITER;
+            s += song.getTitle() + delimiter;
+            s += song.getArtist() + delimiter;
         }
-        return ret;
+        return s;
     }
+
 }

@@ -14,7 +14,9 @@ import java.util.*;
  */
 public class ListController {
 
-    ListSet listSet;
+    private static final char elemDelimiter = ' ';
+    private static final char setDelimiter = '\n';
+    private ListSet listSet;
 
     /**
      * Default constructor.
@@ -245,7 +247,29 @@ public class ListController {
      */
     public void load(String path, SongController songController) throws PropException, IOException {
         String serialized = DataController.load(path);
-        listSet = ListSet.valueOf(serialized,songController);
+        listSet = valueOf(serialized,songController);
+    }
+
+    /**
+     * Parse a string to a {@code ListSet} object.
+     * @param str               the string representing the list set
+     * @param songController    a songController instance
+     * @return                  the {@code ListSet} object created from the string
+     * @throws PropException
+     */
+    private ListSet valueOf(String str, SongController songController) throws PropException {
+        String[] lists = str.split(String.valueOf(setDelimiter));
+        ListSet listSet = new ListSet();
+        for (int i = 1; i < Integer.parseInt(lists[0])+1; ++i) {
+            String[] songs = lists[i].split(String.valueOf(elemDelimiter));
+            List list = new List(songs[1]);
+            for (int j = 3; j < Integer.parseInt(songs[2])*2+3; j += 2) {
+                Song s = songController.getSong(songs[j], songs[j+1]);
+                list.addSong(s);
+            }
+            listSet.add(list);
+        }
+        return listSet;
     }
 
 }

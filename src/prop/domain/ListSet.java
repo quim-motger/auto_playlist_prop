@@ -16,8 +16,7 @@ public class ListSet {
     private ArrayList<List> lists;
     private int nextId; // id to be assigned to a new list
 
-    private static final String DELIMITER = "|LS|\n";
-    private static final String LISTSET_ID = "LISTSET_ID";
+    private static final char delimiter = '\n';
 
     /* CONSTRUCTORS */
     /**
@@ -161,35 +160,13 @@ public class ListSet {
         nextId = 0;
     }
 
-    @Override
     public String toString() {
-        StringBuilder ret = new StringBuilder();
-        ret.append(LISTSET_ID);
-        ret.append(DELIMITER);
-        ret.append(lists.size());
-        ret.append(DELIMITER);
+        String s = "";
+        s += String.valueOf(lists.size()) + delimiter;
         for (List l : lists) {
-            ret.append(l.toString());
-            ret.append(DELIMITER);
+            s += l.toString() + delimiter;
         }
-        ret.append(nextId);
-        return ret.toString();
+        return s;
     }
 
-    public static ListSet valueOf(String origin, SongController songController) throws PropException {
-        String[] tokens = origin.split(Pattern.quote(DELIMITER));
-        if (!tokens[0].equals(LISTSET_ID) || tokens.length < 3) {
-            throw new PropException(ErrorString.INCORRECT_FORMAT);
-        }
-        ListSet ls = new ListSet();
-        ArrayList<List> lists = new ArrayList<>();
-        int i = 2;
-        int size = i + Integer.valueOf(tokens[1]);
-        for (; i < size; ++i) {
-            lists.add(List.valueOf(tokens[i], songController));
-        }
-        ls.setNextId(Integer.valueOf(tokens[i]));
-        ls.setLists(lists);
-        return ls;
-    }
 }

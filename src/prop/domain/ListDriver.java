@@ -103,19 +103,6 @@ public class ListDriver {
                     System.out.println(l.toString());
                     break;
                 case 19:
-                    try {
-                        String ret = "";
-                        String tot ="";
-                        while(!(ret = in.next()).equals(";")) {
-                            tot += ret + "\n";
-                        }
-                        l = List.valueOf(tot, sc);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        e.printStackTrace();
-                    }
-                    break;
-                case 20:
                     song = new Song(
                             in.next(),
                             in.next(),
@@ -125,14 +112,14 @@ public class ListDriver {
                             Genre.getGenreById(in.nextInt()),
                             in.nextInt());
                     break;
-                case 21:
+                case 20:
                     try {
                         song = sc.getSong(in.next(),in.next());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
-                case 22:
+                case 21:
                     try {
                         sc.addSong(in.next(),
                                 in.next(),
@@ -174,10 +161,9 @@ public class ListDriver {
         sb.append("16: void empty()\n");
         sb.append("17: void swapSongs(int index1, int index2)\n");
         sb.append("18: String toString()\n");
-        sb.append("19: void valueOf(String origin, SongController sc)\n");
-        sb.append("20: song = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        sb.append("21: song = sc.getSong(String title, String artist)\n");
-        sb.append("22: sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
+        sb.append("19: song = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
+        sb.append("20: song = sc.getSong(String title, String artist)\n");
+        sb.append("21: sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }
