@@ -20,13 +20,13 @@ public class GirvanNewman extends Algorithm {
 
     /**
      * Executes the Girvan-Newman algorithm.
-     * @param graph the graph from which communities are calculated
+     * @param _graph the graph from which communities are calculated
      * @param k     the correlation measure; the higher the value, the more correlated the elements within a
      *              community will be, but communities will be smaller
      * @return      an {@code AlgorithmOutput} object, including a list with communities and an execution log
      */
-    public AlgorithmOutput execute(Graph graph, int k) {
-        this.graph = graph;
+    public AlgorithmOutput execute(Graph _graph, int k) {
+        graph = _graph;
         n = graph.numberOfVertices();
         ArrayList<String> log = new ArrayList<>();
         components = calculateComponents();

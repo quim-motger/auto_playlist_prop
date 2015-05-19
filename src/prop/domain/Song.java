@@ -25,22 +25,22 @@ public class Song {
 
     /**
      * Constructor specifying a value for all attributes.
-     * @param title     song title
-     * @param artist    song artist
-     * @param album     song album
-     * @param year      year of release
-     * @param genre     song genre
-     * @param subgenre  song subgenre
-     * @param duration  song duration in seconds
+     * @param _title     song title
+     * @param _artist    song artist
+     * @param _album     song album
+     * @param _year      year of release
+     * @param _genre     song genre
+     * @param _subgenre  song subgenre
+     * @param _duration  song duration in seconds
      */
-    public Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) {
-        this.title = title;
-        this.artist = artist;
-        this.album = album;
-        this.year = year;
-        this.genre = genre;
-        this.subgenre = subgenre;
-        this.duration = duration;
+    public Song(String _title, String _artist, String _album, int _year, Genre _genre, Genre _subgenre, int _duration) {
+        title = _title;
+        artist = _artist;
+        album = _album;
+        year = _year;
+        genre = _genre;
+        subgenre = _subgenre;
+        duration = _duration;
     }
 
     public String getTitle() {
@@ -71,32 +71,32 @@ public class Song {
         return duration;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String _title) {
+        title = _title;
     }
 
-    public void setArtist(String artist) {
-        this.artist = artist;
+    public void setArtist(String _artist) {
+        artist = _artist;
     }
 
-    public void setAlbum(String album) {
-        this.album = album;
+    public void setAlbum(String _album) {
+        album = _album;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setYear(int _year) {
+        year = _year;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setGenre(Genre _genre) {
+        genre = _genre;
     }
 
-    public void setSubgenre(Genre subgenre) {
-        this.subgenre = subgenre;
+    public void setSubgenre(Genre _subgenre) {
+        subgenre = _subgenre;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setDuration(int _duration) {
+        duration = _duration;
     }
 
     /**
