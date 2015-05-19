@@ -89,7 +89,7 @@ public class NOTRelation extends ComplexRelation {
 public class InputController {
 
 	public Graph makeGraph(ArrayList<Relation> relations);
-	private void relationToEdges(Relation relation, Graph graph);
+	private void relationToEdges(Relation relation, Graph mGraph);
 
 }
 
@@ -97,7 +97,7 @@ public class Graph <T> {
 	/* Ha de permetre tenir m�ltiples arestes entre un parell de v�rtexs,
 	   i cada aresta ha de tenir un pes */
 
-	private ArrayList< ArrayList<T> > graph;
+	private ArrayList< ArrayList<T> > mGraph;
 
 	public Graph(ArrayList<T> vertices);
 	public void addEdge(T v1, T v2);

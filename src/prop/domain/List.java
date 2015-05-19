@@ -1,10 +1,6 @@
 package prop.domain;
 
-import prop.ErrorString;
-import prop.PropException;
-
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * Sorted set of songs
@@ -16,36 +12,36 @@ import java.util.regex.Pattern;
 public class List {
 
 
-    private static final char delimiter = ' ';
+    private static final String DELIMITER = " ";
     private int id;
-    private String title;
+    private String mTitle;
     private ArrayList<Song> songs;
 
 
     public List (){
-        title = null;
+        mTitle = null;
         id=-1;
         songs = new ArrayList<>();
     }
 
     /**
-     * Creates an empty list with the designated title
+     * Creates an empty list with the designated mTitle
      * @param listTitle   Title of the list
      */
     public List(String listTitle) {
         id=-1;
-        title = listTitle;
+        mTitle = listTitle;
         songs = new ArrayList<>();
     }
 
     /**
-     * Creates a list with the designated title and the designated songs
+     * Creates a list with the designated mTitle and the designated songs
      * @param listTitle   Title of the list
      * @param newSongs   Array of initial songs for the list
      */
     public List(String listTitle, ArrayList<Song> newSongs) {
         id = -1;
-        title = listTitle;
+        mTitle = listTitle;
         songs = newSongs;
     }
 
@@ -58,11 +54,11 @@ public class List {
     }
 
     /**
-     * Obtain <code>List</code> title
-     * @return title of the <code>List</code>
+     * Obtain <code>List</code> mTitle
+     * @return mTitle of the <code>List</code>
      */
     public String obtainTitle() {
-        return title;
+        return mTitle;
     }
 
     /**
@@ -92,7 +88,7 @@ public class List {
 
     /**
      * Obtains the position of a song inside the list
-     * @param title     the title of the searched song
+     * @param title     the mTitle of the searched song
      * @param artist    the artist of the searched song
      * @return the position of the first time the song appears in the list or -1 if the song is not in the list
      */
@@ -119,7 +115,7 @@ public class List {
 
     /**
      *Check if a song is included in the list
-     * @param title     the title of the wanted song
+     * @param title     the mTitle of the wanted song
      * @param artist    the artist of the wanted song
      * @return <code>true</code> if the song is in the list
      */
@@ -136,11 +132,11 @@ public class List {
     }
 
     /**
-     *  Modifier of the List title
+     *  Modifier of the List mTitle
      * @param title String that we want the list to be named
      */
     public void editTitle(String title) {
-        this.title = title;
+        mTitle = title;
     }
 
     /**
@@ -157,7 +153,7 @@ public class List {
      *  @see Song
      */
     public void addSong(Song song) {
-        if (song != null) songs.add(song);
+        songs.add(song);
     }
 
     /**
@@ -173,7 +169,7 @@ public class List {
 
     /**
      * Modifier that deletes a song from the List
-     * @param title title of the song
+     * @param title mTitle of the song
      * @param artist artist of the song
      */
     public void removeSong(String title, String artist) {
@@ -217,13 +213,13 @@ public class List {
      * @return Representation of a List into a String
      */
     public String toString() {
-        String s = "";
-        s += String.valueOf(id) + delimiter;
-        s += title + delimiter;
-        s += String.valueOf(songs.size()) + delimiter;
+        String ret = "";
+        ret += String.valueOf(id) + DELIMITER;
+        ret += mTitle + DELIMITER;
+        ret += songs.size() + DELIMITER;
         for (Song song : songs) {
-            s += song.getTitle() + delimiter;
-            s += song.getArtist() + delimiter;
+            ret += song.getTitle() + DELIMITER;
+            ret += song.getArtist() + DELIMITER;
         }
         return s;
     }

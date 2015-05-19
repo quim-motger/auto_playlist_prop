@@ -9,25 +9,25 @@ package prop.domain;
  * @see prop.domain.Algorithm
  */
 public class AlgorithmInput {
-    private Graph<Song> graph;
-    private int nCommunities;
+    private Graph<Song> mGraph;
+    private int nCom;
 
     /**
-     * Gets main graph that will be treated in the Algorithm
+     * Gets main mGraph that will be treated in the Algorithm
      *
-     * @return input graph
+     * @return input mGraph
      */
     public Graph<Song> getGraph() {
-        return graph;
+        return mGraph;
     }
 
     /**
-     * Sets main graph that will be treated in the Algorithm
+     * Sets main mGraph that will be treated in the Algorithm
      *
-     * @param graph input graph
+     * @param mGraph input mGraph
      */
     public void setGraph(Graph<Song> graph) {
-        this.graph = graph;
+        mGraph = graph;
     }
 
     /**
@@ -35,16 +35,16 @@ public class AlgorithmInput {
      *
      * @return maximum communities that the algorithm can output
      */
-    public int getnCommunities() {
-        return nCommunities;
+    public int getNumberCommunities() {
+        return nCom;
     }
 
     /**
      * Sets number of maximum communities that the algorithm can output
      *
-     * @param nCommunities maximum communities that the algorithm can output
+     * @param nCom maximum communities that the algorithm can output
      */
-    public void setnCommunities(int nCommunities) {
-        this.nCommunities = nCommunities;
+    public void setNumberComunities(int nCommunities) {
+        nCom = nCommunities;
     }
 }

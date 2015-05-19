@@ -7,8 +7,9 @@ import java.util.TreeSet;
 
 /**
  * Relation Controller
- * @author  gerard.casas.saez
- * @author  joaquim.motger
+ *
+ * @author gerard.casas.saez
+ * @author joaquim.motger
  */
 public class RelationController {
 
@@ -176,5 +177,42 @@ public class RelationController {
         }
         return r;
     }
+
+    /**
+     **
+     * @param simpleRelations Array of simple relations
+     * @param expression & -> AND
+     *                   | -> OR
+     *                   ! -> NOT                   
+     * @return
+     *//*
+    private Relation parse(SimpleRelation[] simpleRelations, String expression) throws PropException {
+        if(!expression.contains("((") && !expression.contains("))")){
+            if(expression.length()>5) throw new PropException(ErrorString.WRONG_EXPRESSION);
+            
+            if(expression.contains("&")){
+                int idxRel1 = (int) expression.charAt(1) - '0';
+                int idxRel2 = (int) expression.charAt(3) - '0';
+                return new AND(simpleRelations[idxRel1],simpleRelations[idxRel2]);
+            } else if (expression.contains("|")) {
+                int idxRel1 = (int) expression.charAt(1) - '0';
+                int idxRel2 = (int) expression.charAt(3) - '0';
+                return new OR(simpleRelations[idxRel1], simpleRelations[idxRel2]);
+            } else if (expression.contains("!")) {
+                if (expression.length()>4) throw new PropException(ErrorString.WRONG_EXPRESSION);
+                int idxRel = (int) expression.charAt(2) - '0';
+                return new NOT(simpleRelations[idxRel]);
+            } else {
+                if (expression.length()>3) throw new PropException(ErrorString.WRONG_EXPRESSION);
+                int idxRel = (int) expression.charAt(1) - '0';
+                return simpleRelations[idxRel];
+            }
+        }
+        
+        
+        
+    }
+    */
+    
 
 }

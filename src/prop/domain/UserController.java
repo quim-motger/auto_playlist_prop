@@ -93,24 +93,22 @@ public class UserController {
      */
     public void editUser(String name, Pair<String, String> attributeValue) throws PropException {
         User user = userSet.getUserByName(name);
-        if(user!=null) {
-            switch (attributeValue.first()) {
-                case (NAME):
-                    user.setName(attributeValue.second());
-                    break;
-                case (GENDER):
-                    user.setGender(Gender.valueOf(attributeValue.second()));
-                    break;
-                case (BIRTHDAY):
-                    user.setBirthdate(getCalendarFromLong(
-                            Long.valueOf(attributeValue.second())
-                    ));
-                    break;
-                case (COUNTRY_CODE):
-                    user.setCountry(
-                            CountryCode.getByCode(attributeValue.second())
-                    );
-            }
+        switch (attributeValue.first()) {
+            case (NAME):
+                user.setName(attributeValue.second());
+                break;
+            case (GENDER):
+                user.setGender(Gender.valueOf(attributeValue.second()));
+                break;
+            case (BIRTHDAY):
+                user.setBirthdate(getCalendarFromLong(
+                        Long.valueOf(attributeValue.second())
+                ));
+                break;
+            case (COUNTRY_CODE):
+                user.setCountry(
+                        CountryCode.getByCode(attributeValue.second())
+                );
         }
         
     }

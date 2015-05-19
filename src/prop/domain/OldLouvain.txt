@@ -7,24 +7,24 @@
         
         //Indicates if a node can be moved in the next round
         boolean nodeMove = true;
-        while (nCommunities >1 && nodeMove) {
+        while (nCom >1 && nodeMove) {
             //Optimizes modularity of communities
             nodeMove = modularityOptimization();
             
             //Save previous state
             clustering.add(community);
-            nAgregatedGraph = graph;
+            nAgregatedGraph = mGraph;
             
-            //Creates new graph agregating all nodes in a community
-            //graph = communityAgregation(nAgregatedGraph);
-            //initSingletonCommunities(graph);
+            //Creates new mGraph agregating all nodes in a community
+            //mGraph = communityAgregation(nAgregatedGraph);
+            //initSingletonCommunities(mGraph);
         }
     }
     
     
     private Graph communityAgregation() {
-        //Graph<Integer,Edge<Integer>> graph = new Graph<>();
-        //return graph;
+        //Graph<Integer,Edge<Integer>> mGraph = new Graph<>();
+        //return mGraph;
         return null;
     }
 
@@ -65,7 +65,7 @@
             double modImprov = - modularityGain(idNode, community[idNode]);
             
             //For each edge that goes from idNode out
-            for(Pair<Integer,Integer> edge:graph[idNode]){
+            for(Pair<Integer,Integer> edge:mGraph[idNode]){
                 if(community[idNode]!= community[edge.first]) {
                     
                     //Adds up the modularity improvement to add the node to the community
@@ -123,16 +123,16 @@
         for(int i: community){
             if(i==comOrig) destroyCom = false;
         }
-        if(destroyCom) --nCommunities;
+        if(destroyCom) --nCom;
     }
 
 
     /**
-     * Creates a community for each node of the graph
+     * Creates a community for each node of the mGraph
      */
-    private int[] initSingletonCommunities(Graph<Song> graph) {
-        int[] comms = new int[graph.numberOfVertices()];
-        int n = graph.numberOfVertices();
+    private int[] initSingletonCommunities(Graph<Song> mGraph) {
+        int[] comms = new int[mGraph.numberOfVertices()];
+        int n = mGraph.numberOfVertices();
         for (int i = 0; i<n; ++i){
             comms[i]=i;
         }
@@ -143,22 +143,22 @@
     /****IN/OUT*******/
 
     /**
-     * TEMPORAL: Reads graph 
+     * TEMPORAL: Reads mGraph
      */
     public void readGraph() {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
         int m = in.nextInt();
-        graph = (ArrayList<Pair<Integer,Integer>>[])new ArrayList[n];
+        mGraph = (ArrayList<Pair<Integer,Integer>>[])new ArrayList[n];
         for (int i = 0; i < n; ++i)
-            graph[i] = new ArrayList<>();
+            mGraph[i] = new ArrayList<>();
         int a, b, w;
         for (int i = 0; i < m; ++i) {
             a = in.nextInt();
             b = in.nextInt();
             w = in.nextInt();
-            graph[a].add(new Pair<>(b,w));
-            graph[b].add(new Pair<>(a,w));
+            mGraph[a].add(new Pair<>(b,w));
+            mGraph[b].add(new Pair<>(a,w));
         }
     }
 
@@ -167,7 +167,7 @@
      */
     public void writeGraph() {
         System.out.println("Adjacency list:");
-        for (ArrayList<Pair<Integer,Integer>> l : graph) {
+        for (ArrayList<Pair<Integer,Integer>> l : mGraph) {
             for (Pair<Integer,Integer> v : l) {
                 System.out.print(v.first + " ");
             }
@@ -185,14 +185,14 @@
 
     /**
      * All edges added 
-     * @return Addition of the weight of all edges in the graph
+     * @return Addition of the weight of all edges in the mGraph
      */
-    private int sumEdges(Graph graph) {
+    private int sumEdges(Graph mGraph) {
         int sum = 0;
-        for(int i=0;i<graph.numberOfVertices();++i) {
-            LinkedHashSet l = graph.adjacentVertices(i);
+        for(int i=0;i<mGraph.numberOfVertices();++i) {
+            LinkedHashSet l = mGraph.adjacentVertices(i);
             for (Object j: l) {
-                sum+=graph.weight((int)j,i);
+                sum+=mGraph.weight((int)j,i);
             }
         }
         return sum/2;
@@ -206,7 +206,7 @@
      */
     private int sEdgesBetweenNC(int idNode, int comDest) {
         int sum = 0;
-        for (Pair<Integer,Integer> edge:graph[idNode])
+        for (Pair<Integer,Integer> edge:mGraph[idNode])
             if(community[edge.first]==comDest)
                 sum+=edge.second;
         return sum;
@@ -219,7 +219,7 @@
      */
     private int sEdgesIncidentNode(int idNode) {
         int sum=0;
-        for (Pair<Integer,Integer> edge:graph[idNode])
+        for (Pair<Integer,Integer> edge:mGraph[idNode])
             sum+=edge.second;
         return sum;
     }
@@ -231,9 +231,9 @@
      */
     private int sEdgesIncidentCom(int comDest) {
         int sum = 0;
-        for(int i=0;i<graph.length;++i) {
+        for(int i=0;i<mGraph.length;++i) {
             if(community[i]==comDest)
-                for(Pair<Integer,Integer> edge : graph[i])
+                for(Pair<Integer,Integer> edge : mGraph[i])
                     if(community[edge.first]!=comDest)
                         sum+=edge.second;
         }
@@ -247,9 +247,9 @@
      */
     private int sEdgesInCom(int comDest) {
         int sum = 0;
-        for(int i=0;i<graph.length;++i) {
+        for(int i=0;i<mGraph.length;++i) {
             if(community[i]==comDest)
-                for(Pair<Integer,Integer> edge : graph[i])
+                for(Pair<Integer,Integer> edge : mGraph[i])
                     if(community[edge.first]==comDest)
                         sum+=edge.second;
         }
