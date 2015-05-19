@@ -85,21 +85,14 @@ public class UserSetDriver {
                     System.out.print(s + "\n");
                     break;
                 case 8:
-                    try {
-                        userSet = UserSet.valueOf(s, lc, sc);
-                    } catch(Exception e) {
-                        System.err.println(e.getMessage());
-                    }
-                    break;
-                case 9:
                     String title = in.next();
                     lc.addList(title);
                     break;
-                case 10:
+                case 9:
                     int id = in.nextInt();
                     lc.removeList(id);
                     break;
-                case 11:
+                case 10:
                     String title2 = in.next();
                     String artist = in.next();
                     String album = in.next();
@@ -113,7 +106,7 @@ public class UserSetDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 12:
+                case 11:
                     String title3 = in.next();
                     String artist2 = in.next();
                     try {
@@ -139,12 +132,11 @@ public class UserSetDriver {
                 + "5:   void removeUser(String name): name\n"
                 + "6:   User getUserByName(String name): name\n"
                 + "7:   String toString()\n"
-                + "8:   UserSet valueOf(String s)\n"
-                + "9:   lc.addList(String title): title\n"
-                + "10:   lc.removeList(int id): id\n"
-                + "11:  sc.addSong(String title, String artist, String album, int year,Genre genre, Genre subgenre, int duration)" +
+                + "8:   lc.addList(String title): title\n"
+                + "9:   lc.removeList(int id): id\n"
+                + "10:  sc.addSong(String title, String artist, String album, int year,Genre genre, Genre subgenre, int duration)" +
                 " title artist album YYYY id_genre id_subgenre duration(seconds)\n"
-                + "12:  sc.removeSong(String title, String artist): title artist\n");
+                + "11:  sc.removeSong(String title, String artist): title artist\n");
     }
 
     private static void printInfoBrief() {

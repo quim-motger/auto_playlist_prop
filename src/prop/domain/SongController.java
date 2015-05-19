@@ -116,6 +116,7 @@ public class SongController {
                     throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
             }
         }
+        else throw new PropException(ErrorString.UNEXISTING_SONG);
     }
     /**
      * Get the songSet in String

@@ -24,11 +24,9 @@ public class Playback implements Comparable<Playback>{
      * @param d     play <3 code>date</code>
      * @throws PropException
      */
-    public Playback(Song s, Calendar d) throws PropException {
-        if (song != null && date != null) {
-            song = s;
-            date = d;
-        } else throw new PropException(ErrorString.NULL);
+    public Playback(Song s, Calendar d) {
+        song = s;
+        date = d;
     }
 
     /**
@@ -68,9 +66,8 @@ public class Playback implements Comparable<Playback>{
      * @param   s   <b>song</b>
      * @throws  Exception
      */
-    public void setSong (Song s) throws Exception {
-        if (song != null) song = s;
-        else throw new Exception(ErrorString.NULL);
+    public void setSong (Song s) {
+        song = s;
     }
 
     /**
@@ -86,9 +83,8 @@ public class Playback implements Comparable<Playback>{
      * @param   d    play <b>date</b>
      * @throws Exception
      */
-    public void setDate(Calendar d) throws Exception {
-        if (date != null) date = d;
-        else throw new Exception(ErrorString.NULL);
+    public void setDate(Calendar d) {
+        date = d;
     }
 
     /**
