@@ -162,8 +162,8 @@ public class List {
      *  @see Song
      */
     public void addSongs(ArrayList<Song> newSongs) {
-        for (int i = 0; i < newSongs.size(); ++i) {
-            songs.add(newSongs.get(i));
+        for (Song newSong : newSongs) {
+            songs.add(newSong);
         }
     }
 
@@ -221,7 +221,7 @@ public class List {
             ret += song.getTitle() + DELIMITER;
             ret += song.getArtist() + DELIMITER;
         }
-        return s;
+        return ret;
     }
 
 }
