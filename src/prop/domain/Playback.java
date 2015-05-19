@@ -20,14 +20,14 @@ public class Playback implements Comparable<Playback>{
 
     /**
      * <code>Playback</code> class constructor
-     * @param song      <code>song</code> played
-     * @param date      play <3 code>date</code>
+     * @param s      <code>song</code> played
+     * @param d     play <3 code>date</code>
      * @throws PropException
      */
-    public Playback(Song song, Calendar date) throws PropException {
+    public Playback(Song s, Calendar d) throws PropException {
         if (song != null && date != null) {
-            this.song = song;
-            this.date = date;
+            song = s;
+            date = d;
         } else throw new PropException(ErrorString.NULL);
     }
 
@@ -65,11 +65,11 @@ public class Playback implements Comparable<Playback>{
 
     /**
      * Setter method of the <b>song</b> played
-     * @param   song    <b>song</b>
+     * @param   s   <b>song</b>
      * @throws  Exception
      */
-    public void setSong (Song song) throws Exception {
-        if (song != null) this.song = song;
+    public void setSong (Song s) throws Exception {
+        if (song != null) song = s;
         else throw new Exception(ErrorString.NULL);
     }
 
@@ -83,11 +83,11 @@ public class Playback implements Comparable<Playback>{
 
     /**
      * Setter method of the play <b>date</b>
-     * @param   date    play <b>date</b>
+     * @param   d    play <b>date</b>
      * @throws Exception
      */
-    public void setDate(Calendar date) throws Exception {
-        if (date != null) this.date = date;
+    public void setDate(Calendar d) throws Exception {
+        if (date != null) date = d;
         else throw new Exception(ErrorString.NULL);
     }
 
@@ -97,9 +97,9 @@ public class Playback implements Comparable<Playback>{
      * @return true if this playback's date is before p playback's date
      */
     public int compareTo(Playback p) {
-        boolean b = this.date.before(p.getDate());
+        boolean b = date.before(p.getDate());
         if (b) return -1;
-        b = this.date.after(p.getDate());
+        b = date.after(p.getDate());
         if (b) return 1;
         else return 0;
     }

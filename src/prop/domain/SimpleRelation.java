@@ -19,14 +19,14 @@ public class SimpleRelation extends Relation {
 
     /**
      * Simple class constructor
-     * @param   type        type of relation (USER/SONG)
-     * @param   attribute   attribute name
-     * @param   value       value of attribute
+     * @param   t       type of relation (USER/SONG)
+     * @param   attr    attribute name
+     * @param   val     value of attribute
      */
-    public SimpleRelation(String type, String attribute, String value) {
-        this.type = type;
-        this.attribute = attribute;
-        this.value = value;
+    public SimpleRelation(String t, String attr, String val) {
+        type = t;
+        attribute = attr;
+        value = val;
     }
 
     /**

@@ -15,7 +15,7 @@ public class SongSet {
 
     private ArrayList<Song> songSet;
 
-    private static final String delimiter = "\n\n";
+    private static final String delimiter = "\n";
 
     /**
      * Default constructor.
@@ -77,7 +77,7 @@ public class SongSet {
     public ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids) throws PropException {
         ArrayList<Song> songList = new ArrayList<Song>();
         for (Pair<String,String>id : ids) {
-            Song c = getSong(id.first,id.second);
+            Song c = getSong(id.first(),id.second());
             if (c != null)
                 songList.add(c);
         }
@@ -167,7 +167,7 @@ public class SongSet {
         for (Song song : songSet) {
             boolean valid = true;
             for (Pair<String,String> condition : conditions) {
-                if (!satisfies(song,condition.first,condition.second)) {
+                if (!satisfies(song,condition.first(),condition.second())) {
                     valid = false;
                     break;
                 }
@@ -220,21 +220,6 @@ public class SongSet {
         }
         if (!songSet.isEmpty()) s += songSet.get(i);
         return s;
-    }
-
-    /**
-     * Parse a string to a {@code SongSet} object.
-     * @param s the string representing the song set
-     * @return  the {@code SongSet} object created from the String
-     * @throws  PropException
-     */
-    public static SongSet valueOf(String s) throws PropException {
-        String[] songs = s.split(Pattern.quote(delimiter));
-        SongSet ss = new SongSet();
-        for (String r : songs) {
-            ss.addSong(Song.valueOf(r));
-        }
-        return ss;
     }
 
 }

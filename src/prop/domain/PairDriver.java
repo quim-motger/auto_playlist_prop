@@ -29,19 +29,19 @@ public class PairDriver {
                     int first = in.nextInt();
                     int second = in.nextInt();
                     p = Pair.create(first, second);
-                    System.out.print("First: " + p.first + "\nSecond: " + p.second + "\n");
+                    System.out.print("First: " + p.first() + "\nSecond: " + p.second() + "\n");
                     break;
                 case 3:
                     String firsts = in.next();
                     String seconds = in.next();
                     p = Pair.create(firsts, seconds);
-                    System.out.print("First: " + p.first + "\nSecond: " + p.second + "\n");
+                    System.out.print("First: " + p.first() + "\nSecond: " + p.second() + "\n");
                     break;
                 case 4:
                     double firstd = in.nextDouble();
                     double secondd = in.nextDouble();
                     p = Pair.create(firstd, secondd);
-                    System.out.print("First: " + p.first + "\nSecond: " + p.second + "\n");
+                    System.out.print("First: " + p.first() + "\nSecond: " + p.second()+ "\n");
                     break;
                 default:
                     printInfoComplete();

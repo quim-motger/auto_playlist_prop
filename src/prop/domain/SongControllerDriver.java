@@ -116,10 +116,18 @@ public class SongControllerDriver {
                 case 12:
                     System.out.print(songController.listGenres());
                 case 13:
-                    songController.save(in.next());
+                    try {
+                        songController.save(in.next());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 14:
-                    songController.load(in.next());
+                    try {
+                        songController.load(in.next());
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 default:
                     printInfoComplete();

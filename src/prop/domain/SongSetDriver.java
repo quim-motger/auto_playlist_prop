@@ -145,17 +145,6 @@ public class SongSetDriver {
                     System.out.println(serialized);
                     System.out.print("\n");
                     break;
-                case 14:
-                    try {
-                        SongSet ss = SongSet.valueOf(serialized);
-                        for (Song s : ss.getSongSet())
-                            printSong(s);
-                        System.out.print("\n");
-                    }
-                    catch (PropException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
                 default:
                     printInfo();
             }
@@ -178,7 +167,6 @@ public class SongSetDriver {
         sb.append("11: int getTotalDuration()\n");
         sb.append("12: ArrayList<Song> searchSongs(ArrayList<Pair<String,String>> conditions)\n");
         sb.append("13: String toString()\n");
-        sb.append("14: SongSet valueOf(String s)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

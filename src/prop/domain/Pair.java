@@ -7,20 +7,28 @@ package prop.domain;
 
 public class Pair<F,S> {
 
-    public F first;
-    public S second;
+    private F first;
+    private S second;
 
     /**
      * Pair class constructor
-     * @param   first   the first object in Pair
-     * @param   second  the second object in Pair
+     * @param   f  the first object in Pair
+     * @param   s  the second object in Pair
      */
-    public Pair(F first, S second) {
-        this.first = first;
-        this.second = second;
+    public Pair(F f, S s) {
+        first = f;
+        second = s;
     }
 
     public static <A,B> Pair<A,B> create(A a, B b) {
-        return new Pair<A, B>(a, b);
+        return new Pair<>(a, b);
     }
+
+    public F first() {return first;}
+
+    public S second() {return second;}
+
+    public void setFirst(F f) {first = f;}
+
+    public void setSecond(S s) {second = s;}
 }

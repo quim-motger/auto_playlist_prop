@@ -91,13 +91,13 @@ public class GirvanNewman extends Algorithm {
         }
         entry.append("\n");
 
-        entry.append("Edge removed: (" + mbEdge.first + "," + mbEdge.second + ")\n");
-        graph.removeEdge(mbEdge.first,mbEdge.second);
+        entry.append("Edge removed: (" + mbEdge.first() + "," + mbEdge.second() + ")\n");
+        graph.removeEdge(mbEdge.first(),mbEdge.second());
 
         parents = floydWarshall();
         // If there's no path between the vertices of the edge we've just removed,
         // then there's one more connected component
-        if (parents[mbEdge.first][mbEdge.second] == -1)
+        if (parents[mbEdge.first()][mbEdge.second()] == -1)
             ++components;
         entry.append("Components: " + components + "\n");
     }
@@ -194,12 +194,12 @@ public class GirvanNewman extends Algorithm {
                 int k = parents[i][j];
                 if (j >= k) {
                     edgeScores[j][k] += 1;
-                    if (edgeScores[j][k] > edgeScores[mbEdge.first][mbEdge.second])
+                    if (edgeScores[j][k] > edgeScores[mbEdge.first()][mbEdge.second()])
                         mbEdge = new Pair<>(j,k);
                 }
                 else {
                     edgeScores[k][j] += 1;
-                    if (edgeScores[k][j] > edgeScores[mbEdge.first][mbEdge.second])
+                    if (edgeScores[k][j] > edgeScores[mbEdge.first()][mbEdge.second()])
                         mbEdge = new Pair<>(k,j);
                 }
                 processEdge(i, k);

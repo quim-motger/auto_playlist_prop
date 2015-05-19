@@ -20,12 +20,12 @@ public class CliquePercolation extends Algorithm {
 
     /**
      * Executes the CliquePercolationMethod to find communities
-     * @param graph the graph from which communities are calculated
+     * @param g the graph from which communities are calculated
      * @param k     number of max communities desired
      * @return      an <code>AlgorithmOutput</code> object, including a list with communities and an execution log
      */
-    public AlgorithmOutput execute(Graph graph, int k) {
-        this.graph = graph;
+    public AlgorithmOutput execute(Graph g, int k) {
+        graph = g;
         n = graph.numberOfVertices();
         ArrayList<String> log = new ArrayList<>();
         //R: list of vertices that may compose a clique

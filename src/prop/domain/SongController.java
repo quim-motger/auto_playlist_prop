@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Song Controller
@@ -20,7 +21,8 @@ public class SongController {
 
     SongSet songSet;
 
-    private final static String delimiter = "\n\n";
+    private final static String delimiter1 = "\n";
+    private final static String delimiter2 = " ";
 
     /**
      * Song Controller constructor
@@ -88,29 +90,27 @@ public class SongController {
     public void editSong(String title, String artist, Pair<String, String> pair) throws PropException {
         Song song = songSet.getSong(title, artist);
         if (song != null) {
-            switch(pair.first) {
+            switch(pair.first()) {
                 case "title":
-                    song.setTitle(pair.second);
+                    song.setTitle(pair.second());
                     break;
                 case "artist":
-                    song.setArtist(pair.second);
+                    song.setArtist(pair.second());
                     break;
                 case "album":
-                    song.setAlbum(pair.second);
+                    song.setAlbum(pair.second());
                     break;
                 case "year":
-                    song.setYear(Integer.parseInt(pair.second));
+                    song.setYear(Integer.parseInt(pair.second()));
                     break;
                 case "genre":
-                    // Modified
-                    song.setGenre(Genre.getGenreById(Integer.parseInt(pair.second)));
+                    song.setGenre(Genre.getGenreById(Integer.parseInt(pair.second())));
                     break;
                 case "subgenre":
-                    // Modified
-                    song.setSubgenre(Genre.getGenreById(Integer.parseInt(pair.second)));
+                    song.setSubgenre(Genre.getGenreById(Integer.parseInt(pair.second())));
                     break;
                 case "duration":
-                    song.setDuration(Integer.parseInt(pair.second));
+                    song.setDuration(Integer.parseInt(pair.second()));
                     break;
                 default:
                     throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
@@ -125,7 +125,7 @@ public class SongController {
         StringBuilder sb = new StringBuilder();
         ArrayList<Song> songs = songSet.getSongSet();
         for (Song song : songs) {
-            sb.append(song.toString()+delimiter);
+            sb.append(song.toString()+delimiter1);
         }
         return sb.toString();
     }
@@ -183,26 +183,26 @@ public class SongController {
      * Save the songSet in the specified path
      * @param path      path to save the songSet
      */
-    public void save(String path) {
-        try {
+    public void save(String path) throws Exception {
             DataController.save(getSongSetString(), path);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     /**
      * Load the songSet in the specified path
      * @param path      path to load the songSet
      */
-    public void load(String path) {
-        String s;
-        try {
-            s = DataController.load(path);
-            this.songSet = SongSet.valueOf(s);
-        } catch (PropException|IOException e) {
-            System.out.println(e.getMessage());
+    public void load(String path) throws Exception {
+        String s = DataController.load(path);
+        songSet = new SongSet();
+        String[] songs = s.split(Pattern.quote(delimiter1));
+        for (String p : songs) {
+            String[] tokens = p.split(Pattern.quote(delimiter2));
+            Song song = new Song(tokens[0],tokens[1],tokens[2],
+                    Integer.parseInt(tokens[3]),
+                    Genre.getGenreById(Integer.parseInt(tokens[4])),
+                    Genre.getGenreById(Integer.parseInt(tokens[5])),
+                    Integer.parseInt(tokens[6]));
+            songSet.addSong(song);
         }
     }
 }

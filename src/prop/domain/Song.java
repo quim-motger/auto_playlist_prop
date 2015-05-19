@@ -16,7 +16,7 @@ public class Song {
     private Genre subgenre;
     private int duration;
 
-    private static final String delimiter = "|S|\n";
+    private static final String delimiter = " ";
 
     /**
      * Default constructor.
@@ -114,17 +114,6 @@ public class Song {
         s += String.valueOf(duration);
 
         return s;
-    }
-
-    /**
-     * Parse a {@code String} to a {@code Song} object.
-     * @param s the {@code String} representing the song
-     * @return  the {@code Song} object created from the {@code String}
-     */
-    public static Song valueOf(String s) {
-        String[] t = s.split(Pattern.quote(delimiter));
-        return new Song(t[0],t[1],t[2],Integer.parseInt(t[3]),Genre.getGenreById(Integer.parseInt(t[4])),
-                Genre.getGenreById(Integer.parseInt(t[5])),Integer.parseInt(t[6]));
     }
 
 }

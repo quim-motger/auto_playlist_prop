@@ -123,11 +123,6 @@ public class SongDriver {
                 case 18:
                     serialized = song.toString();
                     break;
-                case 19:
-                    Song s = Song.valueOf(serialized);
-                    System.out.println(s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
-                    " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration() + "\n");
-                    break;
                 default:
                     printInfo();
             }
@@ -155,7 +150,6 @@ public class SongDriver {
         sb.append("16: Genre setSubgenre(Genre subgenre)\n");
         sb.append("17: int setDuration(int duration)\n");
         sb.append("18: public String toString()\n");
-        sb.append("19: public static Song valueOf(String s)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }
