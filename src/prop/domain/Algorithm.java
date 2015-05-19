@@ -5,6 +5,15 @@ package prop.domain;
  *
  */
 public abstract class Algorithm {
+
+    /**
+     * @param input Algorithm Input Class with the desired parameters
+     * @return Algorithm output with the steps of the algorithm and an array with the output communities
+     */
+    public AlgorithmOutput execute(AlgorithmInput input) {
+        return execute(input.getGraph(), input.getnCommunities());
+    }
+    
     /**
      * Executes Community Detection Algorithm
      *
