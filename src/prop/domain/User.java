@@ -154,6 +154,10 @@ public class User implements Comparable<User> {
         return playbackRegister.add(play);
     }
 
+    public boolean remove(Playback play) {
+        return playbackRegister.remove(play);
+    }
+
     /**
      * Associates list to the user
      * @param list List to be associated.

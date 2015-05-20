@@ -40,7 +40,6 @@ public class Graph<T> {
      * @param v T vertex to add (not null)
      */
     public void addVertex(T v) {
-        if (v == null) throw new NullPointerException("Tried to add a null vertex");
         if (!T_to_Int.containsKey(v)) {
             /* If the graph doesn't already contain v, associate v with a new integer and add it */
             T_to_Int.put(v, vertices.size());
@@ -65,7 +64,6 @@ public class Graph<T> {
      * @return integer vertex
      */
     public int getVertex(T v) {
-        if (v == null) throw new NullPointerException("Tried to get a null vertex");
         checkVertexT(v);
         return T_to_Int.get(v);
     }
@@ -76,7 +74,6 @@ public class Graph<T> {
      * @return True if found, false otherwise
      */
     public boolean contains(T v) {
-        if (v == null) throw new NullPointerException("Null vertex");
         return T_to_Int.containsKey(v);
     }
 
@@ -121,8 +118,6 @@ public class Graph<T> {
      * @param v2 vertex 2 (not null)
      */
     public void addEdgeT(T v1, T v2, double weight) {
-        if (v1 == null) throw new NullPointerException("Null vertex");
-        if (v2 == null) throw new NullPointerException("Null vertex");
         checkVertexT(v1);
         checkVertexT(v2);
         int vi1 = T_to_Int.get(v1);

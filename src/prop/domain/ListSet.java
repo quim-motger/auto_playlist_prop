@@ -1,10 +1,7 @@
 package prop.domain;
 
-import prop.ErrorString;
-import prop.PropException;
 
-import java.util.ArrayList;
-import java.util.regex.Pattern;
+import java.util.TreeSet;
 
 /**
  * Class ListSet, represents a set of playlists.
@@ -13,7 +10,7 @@ import java.util.regex.Pattern;
  */
 public class ListSet {
     //It assigns unique ids to lists as they are added.
-    private ArrayList<List> lists;
+    private TreeSet<List> lists;
     private int nextId; // id to be assigned to a new list
 
     private static final char delimiter = '\n';
@@ -23,7 +20,7 @@ public class ListSet {
      * ListSet default constructor. Creates a ListSet with 0 lists
      */
     public ListSet() {
-        lists = new ArrayList<>();
+        lists = new TreeSet<List>();
         nextId = 0;
     }
 
@@ -31,13 +28,13 @@ public class ListSet {
      * ListSet constructor with lists
      * @param lists array of lists to form the set
      */
-    public ListSet(ArrayList<List> lists1) {
+    public ListSet(TreeSet<List> lists1) {
         lists = lists1;
         nextId = 0;
     }
 
     /* GETTERS */
-    public ArrayList<List> getLists() {
+    public TreeSet<List> getLists() {
         return lists;
     }
 
@@ -46,8 +43,7 @@ public class ListSet {
     }
 
     /* SETTERS */
-    public void setLists(ArrayList<List> lists1) {
-        if (lists == null) throw new NullPointerException("Tried to set null ArrayList<List>");
+    public void setLists(TreeSet<List> lists1) {
         lists = lists1;
     }
 
@@ -63,7 +59,6 @@ public class ListSet {
      * @param list list to be added (not null)
      */
     public void add(List list) {
-        if (list == null) throw new NullPointerException("Tried to add a null list");
         list.editId(nextId);
         lists.add(list);
         ++nextId;
@@ -88,7 +83,6 @@ public class ListSet {
      * @return true if the list was found and removed, false otherwise
      */
     public boolean remove(List list) {
-        if (list == null) throw new NullPointerException("Tried to remove a null list");
         return lists.remove(list);
     }
 
@@ -98,9 +92,9 @@ public class ListSet {
      * @return true if the list was found and removed, false otherwise
      */
     public boolean remove(int id) {
-        for (int i = 0; i < lists.size(); ++i) {
-            if (lists.get(i).obtainId() == id) {
-                lists.remove(i);
+        for (List l : lists) {
+            if (l.obtainId() == id) {
+                lists.remove(l);
                 return true;
             }
         }
