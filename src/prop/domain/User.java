@@ -14,17 +14,15 @@ import java.util.regex.Pattern;
  * @author Carles Garcia Cabot
  */
 public class User {
-    private String name;
-    private Gender gender;
-    private Calendar birthdate;
-    private CountryCode country;
-    private TreeSet<Playback> playbackRegister; // Ordered from oldest to newest
-    private ArrayList<List> associatedLists; // Can't contain repeated lists
-
     private static final String USER_DELIMITER = "|U|\n";
     private static final String USER_ID = "USER_ID";
     private static final String PLAYBACK_DELIMITER = "|P|\n";
     private static final String LIST_DELIMITER = "|ID|\n";
+    private String name;
+    private Gender gender;
+    private Calendar birthdate;
+    private TreeSet<Playback> playbackRegister; // Ordered from oldest to newest
+    private ArrayList<List> associatedLists; // Can't contain repeated lists
 
 
     /* CONSTRUCTORS */
@@ -36,25 +34,52 @@ public class User {
         name = "Default";
         gender = Gender.MALE;
         birthdate = Calendar.getInstance();
-        country = CountryCode.AD;
         playbackRegister = new TreeSet<>();
         associatedLists = new ArrayList<>();
     }
 
     /**
      * User constructor with personal data. The playbackRegister and the associatedLists are empty.
-     * @param name String which contains the User's name
-     * @param gender User's gender
-     * @param birthdate User's birthdate
-     * @param country User's country of residence
+     * @param name1 String which contains the User's name
+     * @param gender1 User's gender
+     * @param birthdate1 User's birthdate
      */
-    public User(String name1, Gender gender1, Calendar birthdate1, CountryCode country1) {
+    public User(String name1, Gender gender1, Calendar birthdate1) {
         name = name1;
         gender = gender1;
         birthdate = birthdate1;
-        country = country1;
         playbackRegister = new TreeSet<>();
         associatedLists = new ArrayList<>();
+    }
+
+    public static User valueOf(String origin, ListController listController, SongController songController)
+            throws Exception {
+        String[] tokens = origin.split(Pattern.quote(USER_DELIMITER));
+        if (!tokens[0].equals(USER_ID) || tokens.length < 9) {
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
+        }
+        User u = new User();
+        TreeSet<Playback> plays = new TreeSet<>();
+        ArrayList<List> lists = new ArrayList<>();
+        u.setName(tokens[1]);
+        u.setGender(Gender.valueOf(tokens[2]));
+        Calendar d = Calendar.getInstance();
+        d.set(Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]));
+        u.setBirthdate(d);
+        /// u.setCountry(CountryCode.valueOf(tokens[6]));
+        int i = 8;
+        int size = i + Integer.valueOf(tokens[7]);
+        for (; i < size; ++i) {
+            plays.add(Playback.valueOf(tokens[i], songController));
+        }
+        u.setPlaybackRegister((plays));
+        size = i + 1 + Integer.valueOf(tokens[i]);
+        ++i;
+        for (; i < size; ++i) {
+            lists.add(listController.getList(Integer.parseInt(tokens[i])));
+        }
+        u.setAssociatedLists(lists);
+        return u;
     }
 
     /* GETTERS */
@@ -62,45 +87,13 @@ public class User {
         return associatedLists;
     }
 
+    public void setAssociatedLists(ArrayList<List> associatedLists1) {
+        if (associatedLists == null) throw new NullPointerException("associatedLists is null");
+        associatedLists = associatedLists1;
+    }
+
     public TreeSet<Playback> getPlaybackRegister() {
         return playbackRegister;
-    }
-
-    public CountryCode getCountry() {
-        return country;
-    }
-
-    public Calendar getBirthdate() {
-        return birthdate;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    /* SETTERS */
-    public void setName(String name1) {
-        if (name == null) throw new NullPointerException("name is null");
-        name = name1;
-    }
-
-    public void setGender(Gender gender1) {
-        if (gender == null) throw new NullPointerException("gender is null");
-        gender = gender1;
-    }
-
-    public void setBirthdate(Calendar birthdate1) {
-        if (birthdate == null) throw new NullPointerException("birthdate is null");
-        birthdate = birthdate1;
-    }
-
-    public void setCountry(CountryCode country1) {
-        if (country == null) throw new NullPointerException("country is null");
-        country = country1;
     }
 
     public void setPlaybackRegister(TreeSet<Playback> playbackRegister1) {
@@ -108,12 +101,35 @@ public class User {
         playbackRegister = playbackRegister1;
     }
 
-    public void setAssociatedLists(ArrayList<List> associatedLists1) {
-        if (associatedLists == null) throw new NullPointerException("associatedLists is null");
-        associatedLists = associatedLists1;
+    public Calendar getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Calendar birthdate1) {
+        if (birthdate == null) throw new NullPointerException("birthdate is null");
+        birthdate = birthdate1;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender1) {
+        if (gender == null) throw new NullPointerException("gender is null");
+        gender = gender1;
+    }
+
+    public String getName() {
+        return name;
     }
 
     /* OTHER METHODS */
+
+    /* SETTERS */
+    public void setName(String name1) {
+        if (name == null) throw new NullPointerException("name is null");
+        name = name1;
+    }
 
     /**
      * Returns the user's current age
@@ -195,7 +211,7 @@ public class User {
         ret.append(USER_DELIMITER);
         ret.append(birthdate.get(Calendar.DAY_OF_MONTH));
         ret.append(USER_DELIMITER);
-        ret.append(country.toString());
+        // ret.append(country.toString());
         ret.append(USER_DELIMITER);
         ret.append(playbackRegister.size());
         ret.append(USER_DELIMITER);
@@ -214,35 +230,5 @@ public class User {
             ret.append(associatedLists.get(i).obtainId());
         }
         return ret.toString();
-    }
-
-    public static User valueOf(String origin, ListController listController, SongController songController)
-            throws Exception {
-        String[] tokens = origin.split(Pattern.quote(USER_DELIMITER));
-        if (!tokens[0].equals(USER_ID) || tokens.length < 9) {
-            throw new PropException(ErrorString.INCORRECT_FORMAT);
-        }
-        User u = new User();
-        TreeSet<Playback> plays = new TreeSet<>();
-        ArrayList<List> lists = new ArrayList<>();
-        u.setName(tokens[1]);
-        u.setGender(Gender.valueOf(tokens[2]));
-        Calendar d = Calendar.getInstance();
-        d.set(Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]));
-        u.setBirthdate(d);
-        u.setCountry(CountryCode.valueOf(tokens[6]));
-        int i = 8;
-        int size = i + Integer.valueOf(tokens[7]);
-        for (; i < size; ++i) {
-            plays.add(Playback.valueOf(tokens[i], songController));
-        }
-        u.setPlaybackRegister((plays));
-        size = i+1 + Integer.valueOf(tokens[i]);
-        ++i;
-        for (; i < size; ++i) {
-            lists.add(listController.getList(Integer.parseInt(tokens[i])));
-        }
-        u.setAssociatedLists(lists);
-        return u;
     }
 }
