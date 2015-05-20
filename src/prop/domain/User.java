@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * by them and a list of playlists associated to them.
  * @author Carles Garcia Cabot
  */
-public class User {
+public class User implements Comparable<User> {
     private static final String USER_DELIMITER = "|U|\n";
     private static final String USER_ID = "USER_ID";
     private static final String PLAYBACK_DELIMITER = "|P|\n";
@@ -197,6 +197,10 @@ public class User {
         associatedLists.clear();
     }
 
+    public int compareTo(User compareUser) {
+        return this.getName().compareTo(compareUser.getName());
+    }
+    
     public String toString() {
         StringBuilder ret = new StringBuilder();
         ret.append(USER_ID);
