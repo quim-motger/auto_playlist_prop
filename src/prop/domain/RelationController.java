@@ -1,5 +1,6 @@
 package prop.domain;
 
+import prop.ErrorString;
 import prop.PropException;
 
 import java.util.ArrayList;
@@ -183,9 +184,10 @@ public class RelationController {
      * @param simpleRelations Array of simple relations
      * @param expression & -> AND
      *                   | -> OR
-     *                   ! -> NOT                   
+     *                   ! -> NOT
+     *                   EX: (((1&2)|3)&(!1|2))
      * @return
-     *//*
+     */
     private Relation parse(SimpleRelation[] simpleRelations, String expression) throws PropException {
         if(!expression.contains("((") && !expression.contains("))")){
             if(expression.length()>5) throw new PropException(ErrorString.WRONG_EXPRESSION);
@@ -199,20 +201,48 @@ public class RelationController {
                 int idxRel2 = (int) expression.charAt(3) - '0';
                 return new OR(simpleRelations[idxRel1], simpleRelations[idxRel2]);
             } else if (expression.contains("!")) {
-                if (expression.length()>4) throw new PropException(ErrorString.WRONG_EXPRESSION);
-                int idxRel = (int) expression.charAt(2) - '0';
+                if (expression.length() > 2) throw new PropException(ErrorString.WRONG_EXPRESSION);
+                int idxRel = (int) expression.charAt(1) - '0';
                 return new NOT(simpleRelations[idxRel]);
             } else {
-                if (expression.length()>3) throw new PropException(ErrorString.WRONG_EXPRESSION);
-                int idxRel = (int) expression.charAt(1) - '0';
+                if (expression.length() > 1) throw new PropException(ErrorString.WRONG_EXPRESSION);
+                int idxRel = (int) expression.charAt(0) - '0';
                 return simpleRelations[idxRel];
             }
         }
-        
-        
-        
+
+        int middle = findMiddle(expression);
+        String subExpEsq = expression.substring(1, middle);
+        String subExpDre = expression.substring(middle + 1, expression.length() - 1);
+        char operator = expression.charAt(middle);
+
+        Relation rel1 = parse(simpleRelations, subExpEsq);
+        Relation rel2 = parse(simpleRelations, subExpDre);
+        if (operator == '&') {
+            return new AND(rel1, rel2);
+        } else if (operator == '|') {
+            return new OR(rel1, rel2);
+        }
+        throw new PropException(ErrorString.WRONG_EXPRESSION);
     }
-    */
-    
+
+    /**
+     * From a complex expression, finds the position of the middle operator
+     *
+     * @param expression expression to evaluate
+     * @return position of the middle operator in expression
+     * @throws PropException Not a Complex expression
+     */
+    private int findMiddle(String expression) throws PropException {
+        int cont = 0;
+        for (int i = 0; i < expression.length(); ++i) {
+            char c = expression.charAt(i);
+            if (c == '(') ++cont;
+            else if (c == ')') --cont;
+            else if ((c == '&' || c == '|') & cont == 1) return i;
+        }
+        throw new PropException(ErrorString.WRONG_EXPRESSION);
+    }
+
 
 }
