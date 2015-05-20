@@ -98,9 +98,9 @@ public class ListController {
         }
 
         List list = new List(title);
-        Iterator<Integer> it = positions.iterator();
-        while (it.hasNext()) {
-            list.addSong(songController.getSong(it.next()));
+        ArrayList<Song> songs = songController.getSongs();
+        for (int pos : positions) {
+            list.addSong(songs.get(pos));
         }
         listSet.add(list);
     }

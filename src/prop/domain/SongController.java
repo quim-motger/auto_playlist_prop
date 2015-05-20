@@ -45,6 +45,10 @@ public class SongController {
      */
     public SongSet getSongSet() { return songSet;}
 
+    public ArrayList<Song> getSongs() {
+        return songSet.getSongSet();
+    }
+
     /**
      * Add a new <code>song</code> to the set
      * @param title     song title
@@ -123,6 +127,7 @@ public class SongController {
      * @return  string with all songs in songSet
      */
     public String getSongSetString() {
+        // todo: WTF? Already implemented in SongSet.toString()
         StringBuilder sb = new StringBuilder();
         ArrayList<Song> songs = songSet.getSongSet();
         for (Song song : songs) {
@@ -185,7 +190,7 @@ public class SongController {
      * @param path      path to save the songSet
      */
     public void save(String path) throws Exception {
-            DataController.save(getSongSetString(), path);
+        DataController.save(getSongSetString(), path);
     }
 
     /**

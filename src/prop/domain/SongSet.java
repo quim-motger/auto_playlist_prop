@@ -4,7 +4,7 @@ import prop.ErrorString;
 import prop.PropException;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
+import java.util.HashMap;
 
 /**
  * A set of songs.
@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class SongSet {
 
-    private ArrayList<Song> songSet;
+    private HashMap<String,Song> songSet;
 
     private static final String delimiter = "\n";
 
@@ -21,7 +21,7 @@ public class SongSet {
      * Default constructor.
      */
     public SongSet() {
-        songSet = new ArrayList<Song>();
+        songSet = new HashMap<String,Song>();
     }
 
     /**
@@ -37,7 +37,7 @@ public class SongSet {
      * @return  the set of songs
      */
     public ArrayList<Song> getSongSet() {
-        return songSet;
+        return new ArrayList<Song>(songSet.values());
     }
 
     /**
@@ -48,11 +48,10 @@ public class SongSet {
      * @throws PropException    if the song is not present
      */
     public Song getSong(String title, String artist) throws PropException {
-        for (Song song : songSet) {
-            if (song.getTitle().equals(title) && song.getArtist().equals(artist))
-                return song;
-        }
-        throw new PropException(ErrorString.UNEXISTING_SONG);
+        String key = getKey(title,artist);
+        Song s = songSet.get(key);
+        if (s == null) throw new PropException(ErrorString.UNEXISTING_SONG);
+        return s;
     }
 
     /**
@@ -62,10 +61,7 @@ public class SongSet {
      * @throws PropException    if the song is not present
      */
     public Song getSong(int i) throws PropException {
-        if (i < songSet.size())
-            return songSet.get(i);
-        else
-            throw new PropException(ErrorString.UNEXISTING_SONG);
+        return null;
     }
 
     /**
@@ -91,8 +87,11 @@ public class SongSet {
      */
     public void addSong(Song song) throws PropException {
         if (song != null) {
-            if (!contains(song.getTitle(), song.getArtist())) {
-                songSet.add(song);
+            String title = song.getTitle();
+            String artist = song.getArtist();
+            if (!contains(title,artist)) {
+                String key = getKey(title,artist);
+                songSet.put(key,song);
             }
             else throw new PropException(ErrorString.EXISTING_SONG);
         }
@@ -106,11 +105,8 @@ public class SongSet {
      * @throws PropException    if the song is not present in the set
      */
     public void removeSong(String title, String artist) throws PropException {
-        int i = getSongIndex(title,artist);
-        if (i != -1)
-            songSet.remove(i);
-        else
-            throw new PropException(ErrorString.UNEXISTING_SONG);
+        String key = getKey(title,artist);
+        songSet.remove(key);
     }
 
     /**
@@ -121,11 +117,8 @@ public class SongSet {
      *                  false if not present
      */
     public boolean contains(String title, String artist) {
-        for (Song song : songSet) {
-            if (song.getTitle().equals(title) && song.getArtist().equals(artist))
-                return true;
-        }
-        return false;
+        String key = getKey(title,artist);
+        return songSet.containsKey(key);
     }
 
     /**
@@ -134,26 +127,10 @@ public class SongSet {
      */
     public int getTotalDuration() {
         int sum = 0;
-        for (Song song : songSet) {
+        for (Song song : songSet.values()) {
             sum += song.getDuration();
         }
         return sum;
-    }
-
-    /**
-     * Get the song index within the song set.
-     * @param title     the title of the song to search
-     * @param artist    the artist of the song to search
-     * @return          the index of the song in the set if present,
-     *                  -1 if not present
-     */
-    private int getSongIndex(String title, String artist) {
-        for (int i = 0; i < songSet.size(); ++i) {
-            Song song = songSet.get(i);
-            if (song.getTitle().equals(title) && song.getArtist().equals(artist))
-                return i;
-        }
-        return -1;
     }
 
     /**
@@ -164,7 +141,7 @@ public class SongSet {
      */
     public ArrayList<Song> searchSongs(ArrayList<Pair<String,String>> conditions) throws PropException {
         ArrayList<Song> songs = new ArrayList<Song>();
-        for (Song song : songSet) {
+        for (Song song : songSet.values()) {
             boolean valid = true;
             for (Pair<String,String> condition : conditions) {
                 if (!satisfies(song,condition.first(),condition.second())) {
@@ -214,12 +191,14 @@ public class SongSet {
      */
     public String toString() {
         String s = "";
-        int i;
-        for (i = 0; i < songSet.size()-1; ++i) {
-            s += songSet.get(i).toString() + delimiter;
+        for (Song song : songSet.values()) {
+            s += song.toString() + delimiter;
         }
-        if (!songSet.isEmpty()) s += songSet.get(i);
         return s;
+    }
+
+    private String getKey(String title, String artist) {
+        return title + ":" + artist;
     }
 
 }
