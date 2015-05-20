@@ -45,6 +45,10 @@ public class SongController {
      */
     public SongSet getSongSet() { return songSet;}
 
+    /**
+     * Get the songs in the set
+     * @return  the songs in the set
+     */
     public ArrayList<Song> getSongs() {
         return songSet.getSongSet();
     }
@@ -154,6 +158,7 @@ public class SongController {
      * @throws PropException    if the song is not present
      */
     public Song getSong(int i) throws PropException {
+        // todo: Deprecated
         return songSet.getSong(i);
     }
 

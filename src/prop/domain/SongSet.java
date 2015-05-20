@@ -37,6 +37,7 @@ public class SongSet {
      * @return  the set of songs
      */
     public ArrayList<Song> getSongSet() {
+        // This is a shallow copy, so the songs are not duplicated
         return new ArrayList<Song>(songSet.values());
     }
 
