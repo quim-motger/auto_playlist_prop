@@ -62,17 +62,6 @@ public class SongSetDriver {
                     }
                     break;
                 case 6:
-                    n = in.nextInt();
-                    try {
-                        Song s = songSet.getSong(n);
-                        printSong(s);
-                        System.out.print("\n");
-                    }
-                    catch (PropException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 7:
                     ArrayList<Pair<String, String>> ids = new ArrayList<>();
                     n = in.nextInt();
                     for (int j = 0; j < n; ++j)
@@ -87,7 +76,7 @@ public class SongSetDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 8:
+                case 7:
                     title = in.next();
                     artist = in.next();
                     album = in.next();
@@ -103,7 +92,7 @@ public class SongSetDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 9:
+                case 8:
                     title = in.next();
                     artist = in.next();
                     try {
@@ -113,7 +102,7 @@ public class SongSetDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 10:
+                case 9:
                     title = in.next();
                     artist = in.next();
                     if (songSet.contains(title,artist))
@@ -122,10 +111,10 @@ public class SongSetDriver {
                         System.out.println("No");
                     System.out.print("\n");
                     break;
-                case 11:
+                case 10:
                     System.out.println(songSet.getTotalDuration() + "\n");
                     break;
-                case 12:
+                case 11:
                     ArrayList<Pair<String, String>> conditions = new ArrayList<>();
                     n = in.nextInt();
                     for (int j = 0; j < n; ++j)
@@ -140,7 +129,7 @@ public class SongSetDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 13:
+                case 12:
                     serialized = songSet.toString();
                     System.out.println(serialized);
                     System.out.print("\n");
@@ -159,14 +148,13 @@ public class SongSetDriver {
         sb.append("3:  int size()\n");
         sb.append("4:  ArrayList<Song> getSongSet()\n");
         sb.append("5:  Song getSong(String title, String artist)\n");
-        sb.append("6:  Song getSong(int i)\n");
-        sb.append("7:  ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids)\n");
-        sb.append("8:  void addSong(Song song)\n");
-        sb.append("9:  void removeSong(String title, String artist)\n");
-        sb.append("10: boolean contains(String title, String artist)\n");
-        sb.append("11: int getTotalDuration()\n");
-        sb.append("12: ArrayList<Song> searchSongs(ArrayList<Pair<String,String>> conditions)\n");
-        sb.append("13: String toString()\n");
+        sb.append("6:  ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids)\n");
+        sb.append("7:  void addSong(Song song)\n");
+        sb.append("8:  void removeSong(String title, String artist)\n");
+        sb.append("9: boolean contains(String title, String artist)\n");
+        sb.append("10: int getTotalDuration()\n");
+        sb.append("11: ArrayList<Song> searchSongs(ArrayList<Pair<String,String>> conditions)\n");
+        sb.append("12: String toString()\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }
