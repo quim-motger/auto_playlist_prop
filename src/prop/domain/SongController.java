@@ -131,13 +131,7 @@ public class SongController {
      * @return  string with all songs in songSet
      */
     public String getSongSetString() {
-        // todo: WTF? Already implemented in SongSet.toString()
-        StringBuilder sb = new StringBuilder();
-        ArrayList<Song> songs = songSet.getSongSet();
-        for (Song song : songs) {
-            sb.append(song.toString()+delimiter1);
-        }
-        return sb.toString();
+        return songSet.toString();
     }
 
     /**
@@ -149,17 +143,6 @@ public class SongController {
      */
     public Song getSong(String title, String artist) throws PropException {
         return songSet.getSong(title, artist);
-    }
-
-    /**
-     * Get a song by position
-     * @param i             the position of the song to get
-     * @return              the song if present
-     * @throws PropException    if the song is not present
-     */
-    public Song getSong(int i) throws PropException {
-        // todo: Deprecated
-        return songSet.getSong(i);
     }
 
     /**
@@ -184,7 +167,8 @@ public class SongController {
     public String listGenres() {
         StringBuilder sb = new StringBuilder();
         int i;
-        for (i = 0; i < 132; ++i) {
+        int m = Genre.values().length;
+        for (i = 0; i < m; ++i) {
             sb.append(Genre.getGenreById(i).getId() + ": " + Genre.getGenreById(i).getName() + "\n");
         }
         return sb.toString();

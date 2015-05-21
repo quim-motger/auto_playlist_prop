@@ -92,6 +92,7 @@ public class Playback implements Comparable<Playback>{
      * @param p     playback to compare
      * @return true if this playback's date is before p playback's date
      */
+    @Override
     public int compareTo(Playback p) {
         boolean b = date.before(p.getDate());
         if (b) return -1;

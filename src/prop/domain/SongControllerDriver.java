@@ -89,16 +89,6 @@ public class SongControllerDriver {
                     }
                     break;
                 case 10:
-                    try {
-                        song = songController.getSong(in.nextInt());
-                        System.out.print(song.getTitle() + " " + song.getArtist() + " " + song.getAlbum() + " " + song.getYear() +
-                                " " + song.getGenre().getName() + " " + song.getSubgenre().getName() + " " + song.getDuration() + "\n");
-
-                    } catch (Exception e) {
-                        System.err.println(e.getMessage());
-                    }
-                    break;
-                case 11:
                     int n = in.nextInt();
                     ArrayList< Pair<String,String>> l = new ArrayList<>();
                     while (n > 0) {
@@ -113,16 +103,16 @@ public class SongControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 12:
+                case 11:
                     System.out.print(songController.listGenres());
-                case 13:
+                case 12:
                     try {
                         songController.save(in.next());
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 14:
+                case 13:
                     try {
                         songController.load(in.next());
                     } catch (Exception e) {
@@ -132,7 +122,7 @@ public class SongControllerDriver {
                 default:
                     printInfoComplete();
             }
-            if (i > 1 && i < 15) printInfoBrief();
+            if (i > 1 && i < 14) printInfoBrief();
         }
     }
 
@@ -148,11 +138,10 @@ public class SongControllerDriver {
                 + "7:   void editSong(String title, String artist, Pair<String, String> pair): title artist attribute new_value\n"
                 + "8:   String getSongSetString()\n"
                 + "9:   Song getSong(String title, String artist): title artist\n"
-                + "10:   Song getSong(int i): index\n"
-                + "11:   String searchSongs(ArrayList< Pair<String, String> > l): n_criteria [attribute, value]\n"
-                + "12:   listGenres()\n"
-                + "13:   void save(String path): path\n"
-                + "14:   void load(String path): path\n");
+                + "10:   String searchSongs(ArrayList< Pair<String, String> > l): n_criteria [attribute, value]\n"
+                + "11:   listGenres()\n"
+                + "12:   void save(String path): path\n"
+                + "13:   void load(String path): path\n");
     }
 
     private static void printInfoBrief() {
