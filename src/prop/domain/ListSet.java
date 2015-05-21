@@ -1,6 +1,7 @@
 package prop.domain;
 
 
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
@@ -26,7 +27,7 @@ public class ListSet {
 
     /**
      * ListSet constructor with lists
-     * @param lists array of lists to form the set
+     * @param lists1 array of lists to form the set
      */
     public ListSet(TreeSet<List> lists1) {
         lists = lists1;
@@ -34,8 +35,8 @@ public class ListSet {
     }
 
     /* GETTERS */
-    public TreeSet<List> getLists() {
-        return lists;
+    public ArrayList<List> getLists() {
+        return new ArrayList<List>(lists);
     }
 
     public int getNextId() {

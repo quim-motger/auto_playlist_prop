@@ -87,16 +87,13 @@ public class SongSet {
      * @throws PropException    if the song already exists or if the {@code song} parameter is null
      */
     public void addSong(Song song) throws PropException {
-        if (song != null) {
-            String title = song.getTitle();
-            String artist = song.getArtist();
-            if (!contains(title,artist)) {
-                String key = getKey(title,artist);
-                songSet.put(key,song);
-            }
-            else throw new PropException(ErrorString.EXISTING_SONG);
+        String title = song.getTitle();
+        String artist = song.getArtist();
+        if (!contains(title,artist)) {
+            String key = getKey(title,artist);
+            songSet.put(key,song);
         }
-        else throw new PropException(ErrorString.NULL);
+        else throw new PropException(ErrorString.EXISTING_SONG);
     }
 
     /**
