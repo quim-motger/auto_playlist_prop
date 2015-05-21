@@ -56,16 +56,6 @@ public class SongSet {
     }
 
     /**
-     * Get a song by position.
-     * @param i                 the position of the song to get
-     * @return                  the song if present
-     * @throws PropException    if the song is not present
-     */
-    public Song getSong(int i) throws PropException {
-        return null;
-    }
-
-    /**
      * Get a group of songs.
      * @param ids   the identifications of the songs to get; the first element of a pair is the {@code title}
      *              and the second element is the {@code artist} of the song
