@@ -94,7 +94,10 @@ public class SongSet {
      */
     public void removeSong(String title, String artist) throws PropException {
         String key = getKey(title,artist);
-        songSet.remove(key);
+        if (contains(title,artist)) {
+            songSet.remove(key);
+        }
+        else throw new PropException(ErrorString.UNEXISTING_SONG);
     }
 
     /**
