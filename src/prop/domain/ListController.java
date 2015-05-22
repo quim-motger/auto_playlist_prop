@@ -195,7 +195,7 @@ public class ListController {
     }
 
     /**
-     * Get a list
+     * Get a list.
      * @param id    the identification of the list.
      * @return      the list
      */
@@ -222,6 +222,14 @@ public class ListController {
     }
 
     /**
+     * Get all the lists in the set.
+     * @return an array of lists
+     */
+    public ArrayList<List> getLists() {
+        return listSet.getLists();
+    }
+
+    /**
      * Get all the lists in string format.
      * @return  a string with the lists titles and their identifiers
      */
@@ -231,6 +239,18 @@ public class ListController {
         for (List list : lists)
             sb.append(list.obtainId() + "  " + list.obtainTitle() + "\n");
         return sb.toString();
+    }
+
+    /**
+     * Get all the list in array of strings format.
+     * @return  an array of strings with the lists titles and their identifiers
+     */
+    public ArrayList<String> getListSetStringArray() {
+        ArrayList<String> result = new ArrayList<>();
+        ArrayList<List> lists = listSet.getLists();
+        for (List list : lists)
+            result.add(list.obtainId() + "  " + list.obtainTitle());
+        return result;
     }
 
     /**
