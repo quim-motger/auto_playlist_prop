@@ -161,7 +161,7 @@ public class SongController {
     }
 
     public String findSongsByName(String prefix) {
-        ArrayList<Song> songs = songSet.findSongsByName(prefix);
+        ArrayList<Song> songs = songSet.findSongs(prefix);
         String p = "";
         for (Song song : songs) {
             p += song.getTitle() + " " + song.getArtist();

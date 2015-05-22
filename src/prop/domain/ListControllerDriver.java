@@ -191,6 +191,9 @@ public class ListControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
+                case 22:
+                    System.out.print(listController.findLists(in.next()));
+                    break;
                 default:
                     printInfo();
             }
@@ -221,6 +224,7 @@ public class ListControllerDriver {
         sb.append("19: String getListSetString()\n");
         sb.append("20: void save(String path)\n");
         sb.append("21: void load(String path)\n");
+        sb.append("22: String findLists(String prefix)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

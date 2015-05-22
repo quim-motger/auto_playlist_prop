@@ -4,6 +4,7 @@ import prop.PropException;
 import prop.data.DataController;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -222,6 +223,15 @@ public class UserController {
         String data;
         data = DataController.load(path);
         userSet = UserSet.valueOf(data, lc, sc);
+    }
+
+    public String findUsers(String prefix) {
+        ArrayList<User> l = userSet.findUsers(prefix);
+        String p = "";
+        for (User user: l) {
+            p += user.getName() + "\n";
+        }
+        return p;
     }
     
     /*PRIVATE METHODS*/

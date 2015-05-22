@@ -146,7 +146,7 @@ public class SongSet {
         return songs;
     }
 
-    public ArrayList<Song> findSongsByName(String prefix) {
+    public ArrayList<Song> findSongs(String prefix) {
         return songSet.matchPrefix(prefix);
     }
 

@@ -74,6 +74,10 @@ public class UserSet {
         else throw new PropException(ErrorString.UNEXISTING_USER);
     }
 
+    public ArrayList<User> findUsers(String prefix) {
+        return users.matchPrefix(prefix);
+    }
+
     /**
      * Remove <code>user</code> with name <code>name</code> from <code>users</code>
      * @params  name    <code>user</code> name

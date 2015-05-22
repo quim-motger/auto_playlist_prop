@@ -191,6 +191,15 @@ public class ListController {
         return listSet.getList(name);
     }
 
+    public String findLists(String prefix) {
+        ArrayList<List> l = listSet.findLists(prefix);
+        String p = "";
+        for (List list : l) {
+            p += list.obtainTitle() + "\n";
+        }
+        return p;
+    }
+
     /**
      * Get a list in string format.
      * @param name  list name

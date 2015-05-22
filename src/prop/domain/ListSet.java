@@ -51,6 +51,10 @@ public class ListSet {
         throw new IllegalArgumentException("The list with this id isn't contained in the ListSet");
     }
 
+    public ArrayList<List> findLists(String prefix) {
+        return lists.matchPrefix(prefix);
+    }
+
     /**
      * Removes the list with this id from the set
      * @param name int id of the list to be removed
