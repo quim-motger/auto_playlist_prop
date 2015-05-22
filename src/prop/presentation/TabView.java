@@ -10,7 +10,9 @@ public abstract class TabView extends JPanel {
 
     private JPanel rightPanel;
     private JScrollPane leftListView;
+    private JList leftList;
     private JToolBar actionBar;
+    private JTextField searchField;
 
     /**
      * Creates new form MainPanel
@@ -19,23 +21,31 @@ public abstract class TabView extends JPanel {
         initComponents();
     }
 
-    private void initComponents() {
+    public void setRightPanel(JPanel jPanel) {
+        rightPanel = jPanel;
+    }
+
+    public JList getLeftList() {
+        return leftList;
+    }
+
+    public JTextField getSearchField() {
+        return searchField;
+    }
+
+    public void initComponents() {
         leftListView = new JScrollPane();
+        leftList = new JList();
+        leftListView.setViewportView(leftList);
+
         actionBar = new JToolBar();
-
-
-        leftListView.setViewportView(createLeftList());
+        actionBar.setRollover(true);
+        searchField = new JTextField();
+        actionBar.add(searchField);
 
         rightPanel = createRightPanel();
 
-        actionBar.setRollover(true);
-
-        JTextField searchField = createSearchField();
-
-        actionBar.add(searchField);
-
         ArrayList<JButton> buttons = setActionBarButtons();
-
         for (JButton button : buttons) {
             actionBar.add(button);
         }
@@ -61,13 +71,8 @@ public abstract class TabView extends JPanel {
         );
     }
 
-    protected abstract JTextField createSearchField();
-
     protected abstract JPanel createRightPanel();
 
     protected abstract ArrayList<JButton> setActionBarButtons();
-
-    public abstract JList createLeftList();
-
 
 }

@@ -27,10 +27,10 @@ public class MainView extends JFrame {
     private void initComponents() {
 
         TabbedPane = new JTabbedPane();
-        jPanel1 = new JPanel();
-        jPanel2 = new JPanel();
-        jPanel3 = new JPanel();
-        jPanel4 = new JPanel();
+        UserPanel = new JPanel();
+        SongPanel = new JPanel();
+        ListPanel = new ListTabView();
+        AlgorithmPanel = new JPanel();
         MenuBar = new JMenuBar();
         FileMenu = new JMenu();
         SaveMenuItem = new JMenuItem();
@@ -41,8 +41,8 @@ public class MainView extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
 
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
+        GroupLayout jPanel1Layout = new GroupLayout(UserPanel);
+        UserPanel.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGap(0, 395, Short.MAX_VALUE)
@@ -52,10 +52,10 @@ public class MainView extends JFrame {
                         .addGap(0, 251, Short.MAX_VALUE)
         );
 
-        TabbedPane.addTab("Users", jPanel1);
+        TabbedPane.addTab("Users", UserPanel);
 
-        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
+        GroupLayout jPanel2Layout = new GroupLayout(SongPanel);
+        SongPanel.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
                 jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGap(0, 395, Short.MAX_VALUE)
@@ -65,23 +65,12 @@ public class MainView extends JFrame {
                         .addGap(0, 251, Short.MAX_VALUE)
         );
 
-        TabbedPane.addTab("Songs", jPanel2);
+        TabbedPane.addTab("Songs", SongPanel);
 
-        GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 395, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 251, Short.MAX_VALUE)
-        );
+        TabbedPane.addTab("Lists", ListPanel);
 
-        TabbedPane.addTab("Lists", jPanel3);
-
-        GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
+        GroupLayout jPanel4Layout = new GroupLayout(AlgorithmPanel);
+        AlgorithmPanel.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
                 jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGap(0, 395, Short.MAX_VALUE)
@@ -91,7 +80,7 @@ public class MainView extends JFrame {
                         .addGap(0, 251, Short.MAX_VALUE)
         );
 
-        TabbedPane.addTab("Algorithms", jPanel4);
+        TabbedPane.addTab("Algorithms", AlgorithmPanel);
 
         FileMenu.setText("File");
 
@@ -160,10 +149,10 @@ public class MainView extends JFrame {
     private JMenuItem ExitMenuItem;
     private JMenuItem SaveMenuItem;
     private JMenuItem LoadMenuItem;
-    private JPanel jPanel1;
-    private JPanel jPanel2;
-    private JPanel jPanel3;
-    private JPanel jPanel4;
+    private JPanel UserPanel;
+    private JPanel SongPanel;
+    private JPanel ListPanel;
+    private JPanel AlgorithmPanel;
     private JTabbedPane TabbedPane;
     // End of variables declaration//GEN-END:variables
 }
