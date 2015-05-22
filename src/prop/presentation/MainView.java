@@ -2,21 +2,21 @@ package prop.presentation;
 
 public class MainView extends javax.swing.JFrame {
 
-    private UserPresentationController userPresentationController;
-    private SongPresentationController songPresentationController;
-    private ListPresentationController listPresentationController;
-    private AlgorithmPresentationController algorithmPresentationController;
+    private UserPController userPController;
+    private SongPController songPController;
+    private ListPController listPController;
+    private AlgorithmPController algorithmPController;
 
     public MainView(
-            UserPresentationController upc,
-            SongPresentationController spc,
-            ListPresentationController lpc,
-            AlgorithmPresentationController apc
+            UserPController upc,
+            SongPController spc,
+            ListPController lpc,
+            AlgorithmPController apc
     ) {
-        userPresentationController = upc;
-        songPresentationController = spc;
-        listPresentationController = lpc;
-        algorithmPresentationController = apc;
+        userPController = upc;
+        songPController = spc;
+        listPController = lpc;
+        algorithmPController = apc;
         initComponents();
     }
 

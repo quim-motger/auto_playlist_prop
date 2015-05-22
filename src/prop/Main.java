@@ -1,12 +1,12 @@
 package prop;
 
-import prop.presentation.MainPresentationController;
+import prop.presentation.MainPController;
 
 public class Main {
 
     public static void main(String[] args) {
-        MainPresentationController mainPresentationController = new MainPresentationController();
-        mainPresentationController.initPresentation();
+        MainPController mainPController = new MainPController();
+        mainPController.initPresentation();
     }
 
 }
