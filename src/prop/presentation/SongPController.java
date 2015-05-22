@@ -2,11 +2,11 @@ package prop.presentation;
 
 import prop.domain.SongController;
 
-public class SongPresentationController {
+public class SongPController {
 
     private SongController songController;
 
-    public SongPresentationController() {
+    public SongPController() {
         songController = new SongController();
     }
 

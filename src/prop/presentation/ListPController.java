@@ -2,11 +2,11 @@ package prop.presentation;
 
 import prop.domain.ListController;
 
-public class UserPresentationController {
+public class ListPController {
 
     private ListController listController;
 
-    public UserPresentationController() {
+    public ListPController() {
         listController = new ListController();
     }
 
