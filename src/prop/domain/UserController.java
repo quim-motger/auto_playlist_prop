@@ -184,6 +184,8 @@ public class UserController {
     public UserSet obtainUserSet() {
         return userSet;
     }
+
+    public ArrayList<User> obtainUsers() { return userSet.getUsers();}
         
     /**
      *

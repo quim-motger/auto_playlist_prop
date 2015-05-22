@@ -38,11 +38,10 @@ public class UserSetDriver {
                     break;
                 case 3:
                     ArrayList<User> users = userSet.getUsers();
-                   /* for (User u : users) {
+                   for (User u : users) {
                         System.out.print(u.getName() + " " + u.getGender() + " " + u.getBirthdate().get(Calendar.DAY_OF_MONTH) +
-                                "/" + u.getBirthdate().get(Calendar.MONTH) + "/" + u.getBirthdate().get(Calendar.YEAR) +
-                                " " + u.getCountry().toString() + "\n");
-                    }*/
+                                "/" + u.getBirthdate().get(Calendar.MONTH) + "/" + u.getBirthdate().get(Calendar.YEAR) + "\n");
+                    }
                     break;
                 case 4:
                     String name3 = in.next();

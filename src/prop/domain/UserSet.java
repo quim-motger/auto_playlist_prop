@@ -13,9 +13,10 @@ import java.util.regex.Pattern;
  * @author  joaquim.motger
  */
 
-public class UserSet implements Iterable<User>{
+public class UserSet {
 
-    private HashMap<String, User> users;
+    private TernarySearchTree<User> users;
+    int size;
     private static final String delimiter = "\n\n";
 
 
@@ -23,7 +24,8 @@ public class UserSet implements Iterable<User>{
      * <code>UsersSet</code> class constructor
      */
     public UserSet() {
-        users = new HashMap<>();
+        users = new TernarySearchTree<>();
+        size = 0;
     }
 
     /**
@@ -31,7 +33,7 @@ public class UserSet implements Iterable<User>{
      * @return      users
      */
     public ArrayList<User> getUsers() {
-        return new ArrayList<>(users.values());
+        return users.matchPrefix(null);
     }
 
     /**
@@ -39,7 +41,7 @@ public class UserSet implements Iterable<User>{
      * @return      users size
      */
     public int getSize() {
-        return users.size();
+        return size;
     }
 
     /**
@@ -51,6 +53,7 @@ public class UserSet implements Iterable<User>{
         String name = user.getName();
         if (!contains(name)) {
             users.put(name,user);
+            ++size;
         } else throw new PropException(ErrorString.EXISTING_USER);
     }
 
@@ -61,7 +64,7 @@ public class UserSet implements Iterable<User>{
      *                  false if not present
      */
     public boolean contains(String name) {
-        return users.containsKey(name);
+        return users.contains(name);
     }
 
     /**
@@ -80,7 +83,10 @@ public class UserSet implements Iterable<User>{
      * @throws  Exception
      */
     public void removeUser (String name) throws Exception {
-        if (contains(name)) users.remove(name);
+        if (contains(name)) {
+            users.remove(name);
+            --size;
+        }
         else throw new Exception(ErrorString.UNEXISTING_USER);
     }
 
@@ -90,11 +96,9 @@ public class UserSet implements Iterable<User>{
      */
     public String toString() {
         String s = "";
-        int i;
-        for (i = 0; i < users.size()-1; ++i) {
-            s += users.get(i).toString() + delimiter;
+        for (User user : users.matchPrefix("")) {
+            s += user.toString() + delimiter;
         }
-        if (!users.isEmpty()) s += users.get(i).toString();
         return s;
     }
 
@@ -115,7 +119,7 @@ public class UserSet implements Iterable<User>{
             return us;
         }
     }
-    
+    /*
     public Iterator<User> iterator() {
         return new userIterator();
     }
@@ -143,5 +147,5 @@ public class UserSet implements Iterable<User>{
         public void remove() {
             users.remove(i);
         }
-    }
+    }*/
 }

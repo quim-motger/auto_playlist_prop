@@ -44,7 +44,7 @@ public class RelationController {
      * @param userController Contains all users and its playbacks
      */
     public void playbackRelations(UserController userController) {
-        UserSet userSet = userController.obtainUserSet();
+        ArrayList<User> userSet = userController.obtainUsers();
         for(User u : userSet) {
             TreeSet<Playback> playbacks = u.getPlaybackRegister();
             addPlaybackRelation(playbacks);
@@ -105,7 +105,7 @@ public class RelationController {
      */
     public void addUserRelation(String simpRel, String exp, UserController userController) throws PropException{
         Relation rusers = parsing(simpRel, exp);
-        for (User u : userController.obtainUserSet()) {
+        for (User u : userController.obtainUsers()) {
             if (rusers.evaluateUser(u)) {
                 ArrayList<List> lists = u.getAssociatedLists();
                 for (List l : lists) {
