@@ -26,17 +26,17 @@ public class MainView extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new JTabbedPane();
+        TabbedPane = new JTabbedPane();
         jPanel1 = new JPanel();
         jPanel2 = new JPanel();
         jPanel3 = new JPanel();
         jPanel4 = new JPanel();
-        jMenuBar1 = new JMenuBar();
-        jMenu1 = new JMenu();
-        jMenuItem2 = new JMenuItem();
-        jMenuItem3 = new JMenuItem();
-        jMenuItem1 = new JMenuItem();
-        jMenu2 = new JMenu();
+        MenuBar = new JMenuBar();
+        FileMenu = new JMenu();
+        SaveMenuItem = new JMenuItem();
+        LoadMenuItem = new JMenuItem();
+        ExitMenuItem = new JMenuItem();
+        HelpMenu = new JMenu();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -52,7 +52,7 @@ public class MainView extends JFrame {
                         .addGap(0, 251, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Users", jPanel1);
+        TabbedPane.addTab("Users", jPanel1);
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -65,7 +65,7 @@ public class MainView extends JFrame {
                         .addGap(0, 251, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Songs", jPanel2);
+        TabbedPane.addTab("Songs", jPanel2);
 
         GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -78,7 +78,7 @@ public class MainView extends JFrame {
                         .addGap(0, 251, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Lists", jPanel3);
+        TabbedPane.addTab("Lists", jPanel3);
 
         GroupLayout jPanel4Layout = new GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -91,51 +91,51 @@ public class MainView extends JFrame {
                         .addGap(0, 251, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Algorithms", jPanel4);
+        TabbedPane.addTab("Algorithms", jPanel4);
 
-        jMenu1.setText("File");
+        FileMenu.setText("File");
 
-        jMenuItem2.setText("Save");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        SaveMenuItem.setText("Save");
+        SaveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        FileMenu.add(SaveMenuItem);
 
-        jMenuItem3.setText("Load");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        LoadMenuItem.setText("Load");
+        LoadMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        FileMenu.add(LoadMenuItem);
 
-        jMenuItem1.setText("Exit");
-        jMenuItem1.setIconTextGap(15);
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        ExitMenuItem.setText("Exit");
+        ExitMenuItem.setIconTextGap(15);
+        ExitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        FileMenu.add(ExitMenuItem);
 
-        jMenuBar1.add(jMenu1);
+        MenuBar.add(FileMenu);
 
-        jMenu2.setText("Help");
-        jMenuBar1.add(jMenu2);
+        HelpMenu.setText("Help");
+        MenuBar.add(HelpMenu);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(MenuBar);
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(jTabbedPane1)
+                        .addComponent(TabbedPane)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(jTabbedPane1)
+                        .addComponent(TabbedPane)
         );
 
         pack();
@@ -154,17 +154,17 @@ public class MainView extends JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JMenu jMenu1;
-    private JMenu jMenu2;
-    private JMenuBar jMenuBar1;
-    private JMenuItem jMenuItem1;
-    private JMenuItem jMenuItem2;
-    private JMenuItem jMenuItem3;
+    private JMenu FileMenu;
+    private JMenu HelpMenu;
+    private JMenuBar MenuBar;
+    private JMenuItem ExitMenuItem;
+    private JMenuItem SaveMenuItem;
+    private JMenuItem LoadMenuItem;
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JPanel jPanel4;
-    private JTabbedPane jTabbedPane1;
+    private JTabbedPane TabbedPane;
     // End of variables declaration//GEN-END:variables
 }
 
