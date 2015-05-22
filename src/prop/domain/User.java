@@ -76,7 +76,7 @@ public class User implements Comparable<User> {
         size = i + 1 + Integer.valueOf(tokens[i]);
         ++i;
         for (; i < size; ++i) {
-            lists.add(listController.getList(Integer.parseInt(tokens[i])));
+            lists.add(listController.getList(tokens[i]));
         }
         u.setAssociatedLists(lists);
         return u;
@@ -232,10 +232,10 @@ public class User implements Comparable<User> {
             ret.append(USER_DELIMITER);
             int i = 0;
             for (; i < associatedLists.size() - 1; ++i) {
-                ret.append(associatedLists.get(i).obtainId());
+                ret.append(associatedLists.get(i).obtainTitle());
                 ret.append(USER_DELIMITER);
             }
-            ret.append(associatedLists.get(i).obtainId());
+            ret.append(associatedLists.get(i).obtainTitle());
         }
         return ret.toString();
     }

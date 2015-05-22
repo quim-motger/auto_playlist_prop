@@ -146,7 +146,7 @@ public class RelationControllerDriver {
                     break;
                 case 11:
                     try {
-                        uc.associateListToUser(lc,in.nextInt(),in.next());
+                        uc.associateListToUser(lc,in.next(),in.next());
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
@@ -169,7 +169,7 @@ public class RelationControllerDriver {
                     System.out.println(lc.getListSetString());
                     break;
                 case 15:
-                    System.out.println(lc.getListString(in.nextInt()));
+                    System.out.println(lc.getListString(in.next()));
                     break;
                 default:
                     printInfoComplete();

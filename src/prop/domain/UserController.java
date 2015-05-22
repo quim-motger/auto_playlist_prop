@@ -108,11 +108,11 @@ public class UserController {
     /**
      * Associate List to an specified User
      * @param listController listController
-     * @param listId Id of a list included in the listController
+     * @param title     list title
      * @param userName Valid name of an existing user
      */
-    public void associateListToUser(ListController listController, int listId, String userName) throws PropException {
-        List list = listController.getList(listId);
+    public void associateListToUser(ListController listController, String title, String userName) throws PropException {
+        List list = listController.getList(title);
         associateListToUser(list,userName);
     }
 
@@ -129,11 +129,11 @@ public class UserController {
     /**
      * Disassociate List to an specified User
      * @param listController listController
-     * @param listId Id of a list included in the listController
+     * @param title     list title
      * @param userName Valid name of an existing user
      */
-    public void disassociateListFromUser(ListController listController, int listId, String userName) throws PropException {
-        List list = listController.getList(listId);
+    public void disassociateListFromUser(ListController listController, String title, String userName) throws PropException {
+        List list = listController.getList(title);
         userSet.getUserByName(userName).disassociate(list);
     }
 

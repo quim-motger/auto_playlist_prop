@@ -44,65 +44,58 @@ public class ListDriver {
                     System.out.println(l.obtainTitle());
                     break;
                 case 5:
-                    System.out.println(l.obtainId());
-                    break;
-                case 6:
                     int pos = in.nextInt();
                     System.out.println(l.obtainSong(pos).toString());
                     break;
-                case 7:
+                case 6:
                     ArrayList<Song> a = l.obtainSongs();
                     for (Song s : a) {
                         System.out.println(s.toString());
                     }
                     break;
-                case 8:
+                case 7:
                     String titl, artist;
                     titl = in.next();
                     artist = in.next();
                     System.out.println(l.obtainSongPosition(titl,artist));
                     break;
-                case 9:
+                case 8:
                     System.out.println(l.obtainTotalTime());
                     break;
-                case 10:
+                case 9:
                     String titl2, artist2;
                     titl2 = in.next();
                     artist2 = in.next();
                     System.out.println(l.contains(titl2,artist2));
                     break;
-                case 11:
+                case 10:
                     System.out.println(l.isEmpty());
                     break;
-                case 12:
+                case 11:
                     String title2 = in.next();
                     l.editTitle(title2);
                     break;
-                case 13:
-                    int id = in.nextInt();
-                    l.editId(id);
-                    break;
-                case 14:
+                case 12:
                     l.addSong(song);
                     break;
-                case 15:
+                case 13:
                     String sTitle = in.next();
                     String sArtist = in.next();
                     l.removeSong(sTitle,sArtist);
                     break;
-                case 16:
+                case 14:
                     l.empty();
                     break;
-                case 17:
+                case 15:
                     int i1,i2;
                     i1 = in.nextInt();
                     i2 = in.nextInt();
                     l.swapSongs(i1,i2);
                     break;
-                case 18:
+                case 16:
                     System.out.println(l.toString());
                     break;
-                case 19:
+                case 17:
                     song = new Song(
                             in.next(),
                             in.next(),
@@ -112,14 +105,14 @@ public class ListDriver {
                             Genre.getGenreById(in.nextInt()),
                             in.nextInt());
                     break;
-                case 20:
+                case 18:
                     try {
                         song = sc.getSong(in.next(),in.next());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
-                case 21:
+                case 19:
                     try {
                         sc.addSong(in.next(),
                                 in.next(),
@@ -147,23 +140,21 @@ public class ListDriver {
         sb.append("2:  List(String listTitle)\n");
         sb.append("3:  int size()\n");
         sb.append("4:  String obtainTitle()\n");
-        sb.append("5:  int obtainId()\n");
-        sb.append("6:  Song obtainSong(int position)\n");
-        sb.append("7:  ArrayList<Song> obtainSongs()\n");
-        sb.append("8:  int obtainSongPosition(String title, String artist)\n");
-        sb.append("9:  int obtainTotalTime()\n");
-        sb.append("10: boolean contains(String title, String artist)\n");
-        sb.append("11: boolean isEmpty()\n");
-        sb.append("12: void editTitle(String title)\n");
-        sb.append("13: void editId(int listId)\n");
-        sb.append("14: void addSong(Song song)\n");
-        sb.append("15: void removeSong(String title, String artist)\n");
-        sb.append("16: void empty()\n");
-        sb.append("17: void swapSongs(int index1, int index2)\n");
-        sb.append("18: String toString()\n");
-        sb.append("19: song = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        sb.append("20: song = sc.getSong(String title, String artist)\n");
-        sb.append("21: sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
+        sb.append("5:  Song obtainSong(int position)\n");
+        sb.append("6:  ArrayList<Song> obtainSongs()\n");
+        sb.append("7:  int obtainSongPosition(String title, String artist)\n");
+        sb.append("8:  int obtainTotalTime()\n");
+        sb.append("9: boolean contains(String title, String artist)\n");
+        sb.append("10: boolean isEmpty()\n");
+        sb.append("11: void editTitle(String title)\n");
+        sb.append("12: void addSong(Song song)\n");
+        sb.append("13: void removeSong(String title, String artist)\n");
+        sb.append("14: void empty()\n");
+        sb.append("15: void swapSongs(int index1, int index2)\n");
+        sb.append("16: String toString()\n");
+        sb.append("17: song = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
+        sb.append("18: song = sc.getSong(String title, String artist)\n");
+        sb.append("19: sc.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

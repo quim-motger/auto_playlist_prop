@@ -52,62 +52,56 @@ public class ListSetDriver {
                         l.clear();
                         break;
                     case 6:
-                        System.out.println(l.contains(in.nextInt()));
+                        System.out.println(l.contains(in.next()));
                         break;
                     case 7:
                         System.out.println(l.contains(list));
                         break;
                     case 8:
-                        System.out.println(l.contains(in.next()));
-                        break;
-                    case 9:
-                        List gl = l.getList(in.nextInt());
+                        List gl = l.getList(in.next());
                         if (gl == null) System.out.println("The list with this id doesn't exist");
                         else System.out.println(gl);
                         break;
-                    case 10:
+                    case 9:
                         ArrayList<List> al = l.getLists();
                         for (List li : al) System.out.println(li);
                         break;
-                    case 11:
-                        System.out.println(l.remove(in.nextInt()));
+                    case 10:
+                        l.remove(in.next());
                         break;
-                    case 12:
+                    case 11:
                        // System.out.println(l.remove(list));
                         break;
-                    case 13:
+                    case 12:
                      //   l.setLists(arrayList);
                         break;
-                    case 14:
-                        l.setNextId(in.nextInt());
-                        break;
-                    case 15:
+                    case 13:
                         System.out.println(l.size());
                         break;
-                    case 16:
+                    case 14:
                         serialize = l.toString();
                         System.out.println(serialize);
                         break;
-                    case 17:
+                    case 15:
                         System.out.println(l.totalTime());
                         break;
-                    case 18:
+                    case 16:
                         song = songController.getSong(in.next(),in.next());
                         break;
-                    case 19:
+                    case 17:
                         songController.addSong(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),
                                 Genre.getGenreById(in.nextInt()), in.nextInt());
                         break;
-                    case 20:
+                    case 18:
                         list = new List(in.next());
                         break;
-                    case 21:
+                    case 19:
                         list.addSong(song);
                         break;
-                    case 22:
+                    case 20:
                         //nothing
                         break;
-                    case 23:
+                    case 21:
                         arrayList.add(list);
                         break;
                     default:
@@ -130,13 +124,11 @@ public class ListSetDriver {
         sb.add("void 	clear()");
         sb.add("boolean 	contains(int id)");
         sb.add("boolean 	contains(list)");
-        sb.add("boolean 	contains(String title)");
         sb.add("List 	getList(int id)");
         sb.add("ArrayList<List> 	getLists()");
         sb.add("boolean 	remove(int id)");
         sb.add("boolean 	remove(list)");
         sb.add("void 	setLists(arrayList)");
-        sb.add("void 	setNextId(int nid)");
         sb.add("int 	size()");
         sb.add("String 	toString()");
         sb.add("int 	totalTime()");

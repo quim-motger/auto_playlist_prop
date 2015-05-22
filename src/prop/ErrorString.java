@@ -24,5 +24,7 @@ public class ErrorString {
     public static final String NULL_GRAPH = "The graph is null\n";
     public static final String UNEXISTING_ALGORITHM = "Invalid algorithm argument\n";
     public static final String UNEXISTING_GENRE = "The genre does not exist\n";
+    public static final String EXISTING_LIST = "The list with the specified name already exists\n";
+    public static final String UNEXISTING_LIST = "The list does not exist\n";
     public static final String WRONG_EXPRESSION = "Wrong expression. Unable to parse\n";
 }

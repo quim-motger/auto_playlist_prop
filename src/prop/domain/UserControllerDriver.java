@@ -121,14 +121,14 @@ public class UserControllerDriver {
                     break;
                 case 13:
                     try {
-                        userController.associateListToUser(listController, in.nextInt(), in.next());
+                        userController.associateListToUser(listController, in.next(), in.next());
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 14:
                     try {
-                        userController.disassociateListFromUser(listController, in.nextInt(), in.next());
+                        userController.disassociateListFromUser(listController, in.next(), in.next());
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
@@ -141,7 +141,11 @@ public class UserControllerDriver {
                     }
                     break;
                 case 16:
-                    listController.addList(in.next());
+                    try {
+                        listController.addList(in.next());
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 17:
                     System.out.println(listController.getListSetString());

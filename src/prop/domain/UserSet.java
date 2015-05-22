@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 public class UserSet {
 
     private TernarySearchTree<User> users;
-    int size;
     private static final String delimiter = "\n\n";
 
 
@@ -25,7 +24,6 @@ public class UserSet {
      */
     public UserSet() {
         users = new TernarySearchTree<>();
-        size = 0;
     }
 
     /**
@@ -33,7 +31,7 @@ public class UserSet {
      * @return      users
      */
     public ArrayList<User> getUsers() {
-        return users.matchPrefix(null);
+        return users.getList();
     }
 
     /**
@@ -41,7 +39,7 @@ public class UserSet {
      * @return      users size
      */
     public int getSize() {
-        return size;
+        return users.getSize();
     }
 
     /**
@@ -53,7 +51,6 @@ public class UserSet {
         String name = user.getName();
         if (!contains(name)) {
             users.put(name,user);
-            ++size;
         } else throw new PropException(ErrorString.EXISTING_USER);
     }
 
@@ -85,7 +82,6 @@ public class UserSet {
     public void removeUser (String name) throws Exception {
         if (contains(name)) {
             users.remove(name);
-            --size;
         }
         else throw new Exception(ErrorString.UNEXISTING_USER);
     }
@@ -96,7 +92,7 @@ public class UserSet {
      */
     public String toString() {
         String s = "";
-        for (User user : users.matchPrefix("")) {
+        for (User user : users.getList()) {
             s += user.toString() + delimiter;
         }
         return s;
