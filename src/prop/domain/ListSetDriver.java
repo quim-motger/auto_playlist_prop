@@ -2,6 +2,7 @@ package prop.domain;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 /**
  * ListSetDriver
@@ -26,7 +27,7 @@ public class ListSetDriver {
             SongController songController = new SongController();
             String serialize = null;
             List list = null;
-            ArrayList<List> arrayList = new ArrayList<>();
+            TreeSet<List> arrayList = new TreeSet<>();
             ListSet l = null;
             Scanner in = new Scanner(System.in);
             int i = -1;

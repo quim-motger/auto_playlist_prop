@@ -106,8 +106,6 @@ public class SimpleRelation extends Relation {
                     return u.getName().equals(value);
                 case "gender":
                     return u.getGender().toString().equals(value);
-                case "country":
-                    return u.getCountry().getName().equals(value);
                 case "ageless":
                     return u.age() < Integer.parseInt(value);
                 case "ageequal":

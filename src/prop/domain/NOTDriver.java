@@ -66,7 +66,7 @@ public class NOTDriver {
                             Genre.valueOf(in.next()), in.nextInt());
                     break;
                 case 7:
-                    u = new User(in.next(), Gender.valueOf(in.next()), birthday, CountryCode.getByCode(in.next()));
+                    u = new User(in.next(), Gender.valueOf(in.next()), birthday);
                     break;
                 case 8:
                     birthday.set(in.nextInt(), in.nextInt(), in.nextInt());

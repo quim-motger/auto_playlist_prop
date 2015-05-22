@@ -81,8 +81,7 @@ public class SimpleRelationDriver {
                     int month = in.nextInt();
                     int year = in.nextInt();
                     GregorianCalendar date = new GregorianCalendar(year, month, day);
-                    CountryCode country = CountryCode.getByCode(in.nextInt());
-                    u = new User(name, gender, date, country);
+                    u = new User(name, gender, date);
                     break;
                 default:
                     printInfoComplete();

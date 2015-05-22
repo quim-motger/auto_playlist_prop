@@ -82,7 +82,7 @@ public class RelationDriver {
                                 Genre.getGenreById(in.nextInt()), in.nextInt());
                         break;
                     case 12:
-                        u = new User(in.next(), Gender.valueOf(in.next()), birthday, CountryCode.getByCode(in.next()));
+                        u = new User(in.next(), Gender.valueOf(in.next()), birthday);
                         break;
                     case 13:
                         birthday.set(in.nextInt(), in.nextInt(), in.nextInt());

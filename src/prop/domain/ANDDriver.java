@@ -89,8 +89,7 @@ public class ANDDriver {
                     s2 = new Song(title2,artist2,album2,y2,genre2,subgenre2,duration2);
                     break;
                 case 9:
-                    u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()),
-                            CountryCode.valueOf(in.next()));
+                    u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()));
                 default:
                     printInfoComplete();
             }

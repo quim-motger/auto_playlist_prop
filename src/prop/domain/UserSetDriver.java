@@ -38,11 +38,11 @@ public class UserSetDriver {
                     break;
                 case 3:
                     ArrayList<User> users = userSet.getUsers();
-                    for (User u : users) {
+                   /* for (User u : users) {
                         System.out.print(u.getName() + " " + u.getGender() + " " + u.getBirthdate().get(Calendar.DAY_OF_MONTH) +
                                 "/" + u.getBirthdate().get(Calendar.MONTH) + "/" + u.getBirthdate().get(Calendar.YEAR) +
                                 " " + u.getCountry().toString() + "\n");
-                    }
+                    }*/
                     break;
                 case 4:
                     String name3 = in.next();
@@ -53,8 +53,7 @@ public class UserSetDriver {
                     int month = in.nextInt();
                     int day = in.nextInt();
                     birthdate.set(year, month, day);
-                    CountryCode country = CountryCode.valueOf(in.next());
-                    user = new User(name3, gender, birthdate, country);
+                    user = new User(name3, gender, birthdate);
                     try {
                         userSet.addUser(user);
                     } catch (Exception e) {
@@ -71,14 +70,14 @@ public class UserSetDriver {
                     break;
                 case 6:
                     String name2 = in.next();
-                    try {
+                    /*try {
                         user = userSet.getUserByName(name2);
                         System.out.print(user.getName() + " " + user.getGender() + " " + user.getBirthdate().get(Calendar.DAY_OF_MONTH) +
                                 "/" + user.getBirthdate().get(Calendar.MONTH) + "/" + user.getBirthdate().get(Calendar.YEAR) + " " +
                                 user.getCountry().toString() + "\n");
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
-                    }
+                    }*/
                     break;
                 case 7:
                     s = userSet.toString();

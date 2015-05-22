@@ -55,12 +55,11 @@ public class UserController {
      * @param countryCode Country where the user is from
      * @see prop.domain.User
      */
-    public void addUser(String name, String gender, int year, int month, int date, String countryCode) throws Exception {
+    public void addUser(String name, String gender, int year, int month, int date) throws Exception {
         Gender userGender = Gender.valueOf(gender);
-        CountryCode userCountry = CountryCode.getByCode(countryCode);
         Calendar userBirthday = Calendar.getInstance();
         userBirthday.set(year, month, date);
-        User user = new User(name, userGender, userBirthday, userCountry);
+        User user = new User(name, userGender, userBirthday);
         userSet.addUser(user);
     }
 
@@ -105,10 +104,6 @@ public class UserController {
                         Long.valueOf(attributeValue.second())
                 ));
                 break;
-            case (COUNTRY_CODE):
-                user.setCountry(
-                        CountryCode.getByCode(attributeValue.second())
-                );
         }
         
     }

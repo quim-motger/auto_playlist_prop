@@ -50,8 +50,7 @@ public class UserDriver {
                         u = new User();
                         break;
                     case 3: {
-                        u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()),
-                                CountryCode.valueOf(in.next()));
+                        u = new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt()));
                         break;
                     }
                     case 4:
@@ -84,7 +83,7 @@ public class UserDriver {
                         System.out.println(d.get(Calendar.YEAR) + " " + d.get(Calendar.MONTH) + " " + d.get(Calendar.DAY_OF_MONTH));
                         break;
                     case 13:
-                        System.out.println(u.getCountry());
+                        // nothing
                         break;
                     case 14:
                         System.out.println(u.getGender());
@@ -106,7 +105,7 @@ public class UserDriver {
                         u.setBirthdate(date);
                         break;
                     case 20:
-                        u.setCountry(CountryCode.valueOf(in.next()));
+                        // nothing
                         break;
                     case 21:
                         u.setGender(Gender.valueOf(in.next()));
@@ -182,14 +181,14 @@ public class UserDriver {
         sb.add("nothing");
         sb.add("ArrayList<List> 	getAssociatedLists()");
         sb.add("Calendar 	getBirthdate()");
-        sb.add("CountryCode 	getCountry()");
+        sb.add("nothing");
         sb.add("Gender 	getGender()");
         sb.add("String 	getName()");
         sb.add("TreeSet<Playback> 	getPlaybackRegister()");
         sb.add("boolean 	hasList(list)");
         sb.add("nothing");
         sb.add("void 	setBirthdate(date)");
-        sb.add("void 	setCountry(CountryCode country)");
+        sb.add("nothing");
         sb.add("void 	setGender(Gender gender)");
         sb.add("void 	setName(String name)");
         sb.add("nothing");
