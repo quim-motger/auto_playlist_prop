@@ -128,6 +128,10 @@ public class TernarySearchTree<E> {
         return matchPrefix(p, defaultNumReturnValues);
     }
 
+    public ArrayList<E> matchPrefix(String prefix) {
+        return matchPrefix(prefix, defaultNumReturnValues);
+    }
+
     public ArrayList<E> getList() {
         ArrayList<E> list = new ArrayList<>();
         char c = 'A';

@@ -122,11 +122,11 @@ public class ListSetDriver {
         sb.add("ListSet(arrayList)");
         sb.add("void 	add(list)");
         sb.add("void 	clear()");
-        sb.add("boolean 	contains(int id)");
+        sb.add("boolean 	contains(String name)");
         sb.add("boolean 	contains(list)");
-        sb.add("List 	getList(int id)");
+        sb.add("List 	getList(String name)");
         sb.add("ArrayList<List> 	getLists()");
-        sb.add("boolean 	remove(int id)");
+        sb.add("boolean 	remove(String name)");
         sb.add("boolean 	remove(list)");
         sb.add("void 	setLists(arrayList)");
         sb.add("int 	size()");

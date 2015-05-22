@@ -146,6 +146,10 @@ public class SongSet {
         return songs;
     }
 
+    public ArrayList<Song> findSongsByName(String prefix) {
+        return songSet.matchPrefix(prefix);
+    }
+
     /**
      * Returns true if the {@code song} has the specified {@code value} for the specified {@code attribute}.
      * @param song              the song to validate
