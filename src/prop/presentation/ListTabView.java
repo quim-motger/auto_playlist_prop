@@ -1,6 +1,7 @@
 package prop.presentation;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListDataListener;
 import java.util.ArrayList;
 
@@ -19,7 +20,8 @@ public class ListTabView extends TabView {
     @Override
     protected ArrayList<JButton> setActionBarButtons() {
         ArrayList<JButton> buttons = new ArrayList<JButton>();
-        buttons.add(new JButton("Button"));
+        JButton button = new JButton("Button");
+        buttons.add(button);
         return buttons;
     }
 
