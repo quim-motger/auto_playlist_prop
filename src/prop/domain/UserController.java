@@ -22,7 +22,7 @@ public class UserController {
     public static final String NAME="name";
     public static final String GENDER="gender";
     public static final String BIRTHDAY="birthday";
-    public static final String COUNTRY_CODE="countryCode";
+
     private UserSet userSet;
 
     /**
@@ -40,9 +40,7 @@ public class UserController {
     public static String obtainAttributes(String delimiter) {
         return NAME + delimiter +
                 GENDER + delimiter +
-                BIRTHDAY + delimiter +
-                COUNTRY_CODE + delimiter;
-
+                BIRTHDAY + delimiter;
     }
 
     /**
@@ -52,7 +50,6 @@ public class UserController {
      * @param year year of the user birthday
      * @param month month of the user birthday
      * @param date date of the user birthday
-     * @param countryCode Country where the user is from
      * @see prop.domain.User
      */
     public void addUser(String name, String gender, int year, int month, int date) throws Exception {

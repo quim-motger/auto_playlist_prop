@@ -44,8 +44,7 @@ public class UserControllerDriver {
                                 in.next(),
                                 in.nextInt(),
                                 in.nextInt(),
-                                in.nextInt(),
-                                in.next()
+                                in.nextInt()
                         );
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
