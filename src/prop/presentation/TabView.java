@@ -1,7 +1,6 @@
 package prop.presentation;
 
 import javax.swing.*;
-import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -40,15 +39,17 @@ public abstract class TabView extends JPanel {
         leftListView = new JScrollPane();
         leftList = new JList();
         leftListView.setViewportView(leftList);
-        leftListView.setPreferredSize(new Dimension(200,200));
+        leftListView.setPreferredSize(new Dimension(200, 200));
 
         rightScrollPanel = new JScrollPane();
         JPanel rightPanel = createRightPanel();
         rightScrollPanel.setViewportView(rightPanel);
 
         actionBar = new JToolBar();
+        actionBar.setFloatable(false);
         actionBar.setRollover(true);
         searchField = new JTextField();
+        searchField.setMaximumSize(new Dimension(150, 200));
         actionBar.add(searchField);
 
         ArrayList<JButton> buttons = setActionBarButtons();
@@ -61,7 +62,7 @@ public abstract class TabView extends JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(leftListView, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(leftListView, GroupLayout.DEFAULT_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rightScrollPanel, GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
                         .addComponent(actionBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
