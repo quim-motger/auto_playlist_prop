@@ -43,7 +43,7 @@ public class ListSetDriver {
                         l = new ListSet();
                         break;
                     case 3:
-                        l = new ListSet(arrayList);
+                       // l = new ListSet(arrayList);
                         break;
                     case 4:
                         l.add(list);
@@ -73,10 +73,10 @@ public class ListSetDriver {
                         System.out.println(l.remove(in.nextInt()));
                         break;
                     case 12:
-                        System.out.println(l.remove(list));
+                       // System.out.println(l.remove(list));
                         break;
                     case 13:
-                        l.setLists(arrayList);
+                     //   l.setLists(arrayList);
                         break;
                     case 14:
                         l.setNextId(in.nextInt());

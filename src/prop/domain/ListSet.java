@@ -1,8 +1,7 @@
 package prop.domain;
 
 
-import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Class ListSet, represents a set of playlists.
@@ -11,7 +10,7 @@ import java.util.TreeSet;
  */
 public class ListSet {
     //It assigns unique ids to lists as they are added.
-    private TreeSet<List> lists;
+    private HashMap<Integer,List> lists;
     private int nextId; // id to be assigned to a new list
 
     private static final char delimiter = '\n';
@@ -21,22 +20,13 @@ public class ListSet {
      * ListSet default constructor. Creates a ListSet with 0 lists
      */
     public ListSet() {
-        lists = new TreeSet<List>();
-        nextId = 0;
-    }
-
-    /**
-     * ListSet constructor with lists
-     * @param lists1 array of lists to form the set
-     */
-    public ListSet(TreeSet<List> lists1) {
-        lists = lists1;
+        lists = new HashMap<Integer,List>();
         nextId = 0;
     }
 
     /* GETTERS */
     public ArrayList<List> getLists() {
-        return new ArrayList<List>(lists);
+        return new ArrayList<List>(lists.values());
     }
 
     public int getNextId() {
@@ -44,9 +34,6 @@ public class ListSet {
     }
 
     /* SETTERS */
-    public void setLists(TreeSet<List> lists1) {
-        lists = lists1;
-    }
 
     public void setNextId(int nid) {
         if (nid < nextId) throw new IllegalArgumentException("nextId can't be set to an inferior number to the current");
@@ -61,7 +48,7 @@ public class ListSet {
      */
     public void add(List list) {
         list.editId(nextId);
-        lists.add(list);
+        lists.put(nextId, list);
         ++nextId;
     }
 
@@ -71,20 +58,8 @@ public class ListSet {
      * @return Returns the list
      */
     public List getList(int id) {
-        for (List list: lists) {
-            if (list.obtainId() == id)
-                return list;
-        }
-        throw new NullPointerException("The list with this id isn't contained in the ListSet");
-    }
-
-    /**
-     * Removes the list from the set
-     * @param list list to be removed (not null)
-     * @return true if the list was found and removed, false otherwise
-     */
-    public boolean remove(List list) {
-        return lists.remove(list);
+        if (lists.containsKey(id)) return lists.get(id);
+        throw new IllegalArgumentException("The list with this id isn't contained in the ListSet");
     }
 
     /**
@@ -93,9 +68,9 @@ public class ListSet {
      * @return true if the list was found and removed, false otherwise
      */
     public boolean remove(int id) {
-        for (List l : lists) {
-            if (l.obtainId() == id) {
-                lists.remove(l);
+        for (Map.Entry<Integer,List> entry : lists.entrySet()) {
+            if (id == entry.getValue().obtainId()) {
+                lists.remove(entry.getKey());
                 return true;
             }
         }
@@ -108,7 +83,7 @@ public class ListSet {
      * @return true if found, false otherwise
      */
     public boolean contains(List list) {
-        return lists.contains(list);
+        return lists.containsValue(list);
     }
 
     /**
@@ -117,7 +92,8 @@ public class ListSet {
      * @return true if found, false otherwise
      */
     public boolean contains(String title) {
-        for (List l : lists) if (l.obtainTitle().equals(title)) return true;
+        for (List l : lists.values())
+            if (l.obtainTitle().equals(title)) return true;
         return false;
     }
 
@@ -127,7 +103,7 @@ public class ListSet {
      * @return true if found, false otherwise
      */
     public boolean contains(int id) {
-        for (List l : lists) if (l.obtainId() == id) return true;
+        for (List l : lists.values()) if (l.obtainId() == id) return true;
         return false;
     }
 
@@ -137,7 +113,7 @@ public class ListSet {
      */
     public int totalTime() {
         int time = 0;
-        for (List l : lists) time += l.obtainTotalTime();
+        for (List l : lists.values()) time += l.obtainTotalTime();
         return time;
     }
 
@@ -158,7 +134,7 @@ public class ListSet {
     public String toString() {
         String s = "";
         s += String.valueOf(lists.size()) + delimiter;
-        for (List l : lists) {
+        for (List l : lists.values()) {
             s += l.toString() + delimiter;
         }
         return s;
