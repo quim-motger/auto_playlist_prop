@@ -18,7 +18,9 @@ public class ListTabView extends TabView {
 
     @Override
     protected ArrayList<JButton> setActionBarButtons() {
-        return new ArrayList<JButton>();
+        ArrayList<JButton> buttons = new ArrayList<JButton>();
+        buttons.add(new JButton("Button"));
+        return buttons;
     }
 
     private void initListComponents() {
