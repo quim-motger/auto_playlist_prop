@@ -1,6 +1,8 @@
 package prop.presentation;
 
 import javax.swing.*;
+import javax.swing.plaf.DimensionUIResource;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -38,6 +40,7 @@ public abstract class TabView extends JPanel {
         leftListView = new JScrollPane();
         leftList = new JList();
         leftListView.setViewportView(leftList);
+        leftListView.setPreferredSize(new Dimension(200,200));
 
         rightScrollPanel = new JScrollPane();
         JPanel rightPanel = createRightPanel();
