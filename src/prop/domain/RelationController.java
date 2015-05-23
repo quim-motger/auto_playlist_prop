@@ -5,6 +5,7 @@ import prop.PropException;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 /**
  * Relation Controller
@@ -15,13 +16,17 @@ import java.util.TreeSet;
 public class RelationController {
 
     private static final long EPSILON =  600000; //10 min
+    SongController songController;
+    UserController userController;
     Graph<Song> graph;
     
     public RelationController() {
         graph = new Graph();
     }
 
-    public void initGraph(SongController sc) {
+    public void initGraph(SongController sc, UserController uc) {
+        songController = sc;
+        userController = uc;
         graph = new Graph<>();
         ArrayList<Song> ss = sc.getSongSet().getSongSet();
         for (Song s : ss) {
@@ -79,22 +84,30 @@ public class RelationController {
     }
 
     /**
-     * add relations between songs related by an specific song relation expression
+     * add relations between songs related by an specific relation expression
      * @param simpRel   the set of simple relations that compose the expression
      * @param exp       the expression to evaluate
      * @throws PropException
      */
-    /**public void addSongRelation(String simpRel, String exp) throws PropException{
-        Relation rsongs = parsing(simpRel, exp);
-        ArrayList<Song> songs = graph.getOriginalVertices();
+    public void addRelation(String simpRel, String exp, int n) throws PropException{
+        SimpleRelation[] simpRelArray = new SimpleRelation[n];
+        String[] rel = simpRel.split(Pattern.quote("\n"));
+        int i = 0;
+        for (String s : rel) {
+            String[] parts = s.split(Pattern.quote(" "));
+            SimpleRelation r = new SimpleRelation(songController.getSongSet(),userController.obtainUserSet(),parts[0],parts[1]);
+            simpRelArray[i] = r;
+            i += 1;
+        }
+        Relation relation = parse(simpRelArray, exp);
+        ArrayList<Song> songs = relation.evaluate();
         for (Song s1 : songs) {
             for (Song s2 : songs) {
-                if (!(s1.getTitle().equals(s2.getTitle()) && s1.getArtist().equals(s2.getArtist()))
-                        && rsongs.evaluateSongs(s1,s2))
+                if (!(s1.getTitle().equals(s2.getTitle()) && s1.getArtist().equals(s2.getArtist())))
                     graph.addEdgeT(s1, s2, 1);
             }
         }
-    }*/
+    }
 
     /**
      * add relations between songs of the list of the users that match with the specified relation
@@ -188,7 +201,6 @@ public class RelationController {
      *                   EX: (((1&2)|3)&(!1|2))
      * @return
      */
-    /*
     private Relation parse(SimpleRelation[] simpleRelations, String expression) throws PropException {
         if(!expression.contains("((") && !expression.contains("))")){
             if(expression.length()>5) throw new PropException(ErrorString.WRONG_EXPRESSION);
@@ -204,7 +216,7 @@ public class RelationController {
             } else if (expression.contains("!")) {
                 if (expression.length() > 2) throw new PropException(ErrorString.WRONG_EXPRESSION);
                 int idxRel = (int) expression.charAt(1) - '0';
-                return new NOT(simpleRelations[idxRel]);
+                return new NOT(simpleRelations[idxRel],songController.getSongSet());
             } else {
                 if (expression.length() > 1) throw new PropException(ErrorString.WRONG_EXPRESSION);
                 int idxRel = (int) expression.charAt(0) - '0';
