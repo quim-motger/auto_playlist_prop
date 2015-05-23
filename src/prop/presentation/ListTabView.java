@@ -1,8 +1,12 @@
 package prop.presentation;
 
+import prop.ErrorString;
+import prop.PropException;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,9 +15,14 @@ public class ListTabView extends TabView {
 
     private ListPController listPController;
     private JPanel emptyPanel;
-    private AddList addList;
+    private AddList addListPanel;
+    private AddSong addSongPanel;
+    private ShowList showListPanel;
     private JList listSet;
     private DefaultListModel listSetModel;
+    private JButton addListButton;
+    private JButton removeListButton;
+    private JButton addSongButton;
 
     public ListTabView(ListPController lpc) {
         super();
@@ -30,17 +39,17 @@ public class ListTabView extends TabView {
     protected ArrayList<JButton> setActionBarButtons() {
         ArrayList<JButton> buttons = new ArrayList<JButton>();
 
-        JButton addListButton = new JButton("Add List");
+        addListButton = new JButton("Add List");
         addListButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         addListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setRightPanel(addList);
+                setRightPanel(addListPanel);
             }
         });
         buttons.add(addListButton);
 
-        JButton removeListButton = new JButton("Remove List");
+        removeListButton = new JButton("Remove List");
         removeListButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         removeListButton.addActionListener(new ActionListener() {
             @Override
@@ -53,6 +62,16 @@ public class ListTabView extends TabView {
             }
         });
         buttons.add(removeListButton);
+
+        addSongButton = new JButton("Add Song");
+        addSongButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        addSongButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setRightPanel(addSongPanel);
+            }
+        });
+        buttons.add(addSongButton);
 
         return buttons;
     }
@@ -68,11 +87,13 @@ public class ListTabView extends TabView {
                 if (!listSet.isSelectionEmpty()) {
                     String value = (String) listSet.getSelectedValue();
                     int id = Integer.parseInt(value.split(" ", 2)[0]);
-                    setRightPanel(new ShowList(id));
+                    showListPanel = new ShowList(id);
+                    setRightPanel(showListPanel);
                 }
             }
         });
-        addList = new AddList();
+        addListPanel = new AddList();
+        addSongPanel = new AddSong();
     }
 
     private void updateListSetModel() {
@@ -86,7 +107,7 @@ public class ListTabView extends TabView {
     private class AddList extends JPanel {
 
         /**
-         * Creates new form addList
+         * Creates new form addListPanel
          */
         public AddList() {
             initComponents();
@@ -107,7 +128,7 @@ public class ListTabView extends TabView {
             jTextField1 = new JTextField();
             jButton1 = new JButton();
 
-            jLabel1.setText("Add new List");
+            jLabel1.setText("Add new list");
 
             jLabel2.setText("Title: ");
 
@@ -134,6 +155,7 @@ public class ListTabView extends TabView {
                                                     .addGap(0, 0, Short.MAX_VALUE)
                                                     .addComponent(jButton1))
                                             .addGroup(layout.createSequentialGroup()
+                                                    .addGap(10,10,10)
                                                     .addComponent(jLabel2)
                                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                     .addComponent(jTextField1)))
@@ -172,7 +194,7 @@ public class ListTabView extends TabView {
         // End of variables declaration
     }
 
-    public class ShowList extends JPanel {
+    private class ShowList extends JPanel {
 
         /**
          * Creates new form ShowList
@@ -246,6 +268,145 @@ public class ListTabView extends TabView {
         private JSeparator jSeparator1;
         private DefaultListModel listModel;
         private int id;
+        // End of variables declaration                   
+    }
+
+    public class AddSong extends JPanel {
+
+        /**
+         * Creates new form AddSong2
+         */
+        public AddSong() {
+            initComponents();
+        }
+
+        /**
+         * This method is called from within the constructor to initialize the form.
+         * WARNING: Do NOT modify this code. The content of this method is always
+         * regenerated by the Form Editor.
+         */
+        @SuppressWarnings("unchecked")
+        // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+        private void initComponents() {
+
+            jLabel5 = new JLabel();
+            jSeparator2 = new JSeparator();
+            jLabel6 = new JLabel();
+            jTextField3 = new JTextField();
+            jLabel7 = new JLabel();
+            jTextField4 = new JTextField();
+            jLabel8 = new JLabel();
+            jButton2 = new JButton();
+
+            jLabel5.setText("Add new song to");
+
+            jLabel6.setText("Title: ");
+
+            jLabel7.setText("Artist: ");
+
+            jLabel8.setText("Error:");
+            jLabel8.setForeground(Color.RED);
+            jLabel8.setVisible(false);
+
+            jButton2.setText("Add");
+            jButton2.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    addButtonActionPerformed(e);
+                }
+            });
+
+            GroupLayout layout = new GroupLayout(this);
+            this.setLayout(layout);
+            layout.setHorizontalGroup(
+                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jLabel5)
+                                                    .addGap(0, 0, Short.MAX_VALUE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jSeparator2, GroupLayout.Alignment.TRAILING)
+                                                            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                    .addGap(0, 0, Short.MAX_VALUE)
+                                                                    .addComponent(jButton2))
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                    .addGap(10, 10, 10)
+                                                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                            .addComponent(jLabel7)
+                                                                            .addComponent(jLabel6))
+                                                                    .addGap(18, 18, 18)
+                                                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                            .addGroup(layout.createSequentialGroup()
+                                                                                    .addComponent(jLabel8)
+                                                                                    .addGap(0, 291, Short.MAX_VALUE))
+                                                                            .addComponent(jTextField4)
+                                                                            .addComponent(jTextField3))))
+                                                    .addContainerGap())))
+            );
+            layout.setVerticalGroup(
+                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jSeparator2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jTextField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton2)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                                    .addComponent(jLabel8)
+                                    .addContainerGap())
+            );
+        }// </editor-fold>                        
+
+        private void addButtonActionPerformed(ActionEvent evt) {
+            try {
+                String value = (String) listSet.getSelectedValue();
+                int id = Integer.parseInt(value.split(" ", 2)[0]);
+                String title = jTextField4.getText();
+                String artist = jTextField3.getText();
+                listPController.addSong(id, title, artist);
+                showListPanel.updateListModel();
+                setRightPanel(showListPanel);
+                jTextField3.setText("");
+                jTextField4.setText("");
+            }
+            catch (Exception e) {
+                if (e instanceof PropException)
+                    jLabel8.setText(ErrorString.UNEXISTING_SONG);
+                else if (e instanceof NullPointerException)
+                    jLabel8.setText("There is no list selected");
+                jLabel8.setVisible(true);
+                ActionListener listener = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        jLabel8.setVisible(false);
+                    }
+                };
+                Timer timer = new Timer(3000, listener);
+                timer.start();
+            }
+        }
+
+        // Variables declaration - do not modify                     
+        private JButton jButton2;
+        private JLabel jLabel5;
+        private JLabel jLabel6;
+        private JLabel jLabel7;
+        private JLabel jLabel8;
+        private JSeparator jSeparator2;
+        private JTextField jTextField3;
+        private JTextField jTextField4;
         // End of variables declaration                   
     }
 

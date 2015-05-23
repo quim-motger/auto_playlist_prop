@@ -1,16 +1,19 @@
 package prop.presentation;
 
-import prop.domain.List;
+import prop.PropException;
 import prop.domain.ListController;
+import prop.domain.SongController;
 
 import java.util.ArrayList;
 
 public class ListPController {
 
     private ListController listController;
+    private SongController songController;
 
-    public ListPController() {
+    public ListPController(SongController sc) {
         listController = new ListController();
+        songController = sc;
     }
 
     public void addList(String title) {
@@ -27,6 +30,10 @@ public class ListPController {
 
     public ArrayList<String> getListStringArray(int id) {
         return listController.getListStringArray(id);
+    }
+
+    public void addSong(int id, String title, String artist) throws PropException {
+        listController.addSong(id,title,artist,songController);
     }
 
 }
