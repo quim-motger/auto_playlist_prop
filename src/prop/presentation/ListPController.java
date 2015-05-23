@@ -25,4 +25,8 @@ public class ListPController {
         listController.removeList(id);
     }
 
+    public ArrayList<String> getListStringArray(int id) {
+        return listController.getListStringArray(id);
+    }
+
 }

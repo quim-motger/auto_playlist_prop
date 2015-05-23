@@ -222,6 +222,23 @@ public class ListController {
     }
 
     /**
+     * Get a list in array of strings format.
+     * @param id    the identification of the list
+     * @return      a string representing the list
+     */
+    public ArrayList<String> getListStringArray(int id){
+        ArrayList<String> result = new ArrayList<String>();
+        List list = listSet.getList(id);
+        ArrayList<Song> songs = list.obtainSongs();
+        result.add(list.obtainTitle());
+        for (Song s : songs) {
+            result.add(s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
+                    " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration());
+        }
+        return result;
+    }
+
+    /**
      * Get all the lists in the set.
      * @return an array of lists
      */
