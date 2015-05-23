@@ -92,12 +92,11 @@ public class RelationController {
     public void addRelation(String simpRel, String exp, int n) throws PropException{
         SimpleRelation[] simpRelArray = new SimpleRelation[n];
         String[] rel = simpRel.split(Pattern.quote("\n"));
-        int i = 0;
-        for (String s : rel) {
-            String[] parts = s.split(Pattern.quote(" "));
+        int i;
+        for (i = 0; i < n; ++i) {
+            String[] parts = rel[i].split(Pattern.quote(" "));
             SimpleRelation r = new SimpleRelation(songController.getSongSet(),userController.obtainUserSet(),parts[0],parts[1]);
             simpRelArray[i] = r;
-            i += 1;
         }
         Relation relation = parse(simpRelArray, exp);
         ArrayList<Song> songs = relation.evaluate();
@@ -107,89 +106,6 @@ public class RelationController {
                     graph.addEdgeT(s1, s2, 1);
             }
         }
-    }
-
-    /**
-     * add relations between songs of the list of the users that match with the specified relation
-     * @param simpRel       the set of simple relations that compose the expression
-     * @param exp           the expression to evaluate
-     * @param userController    the userController that contains the users
-     * @throws PropException
-     */
-    /*public void addUserRelation(String simpRel, String exp, UserController userController) throws PropException{
-        Relation rusers = parsing(simpRel, exp);
-        for (User u : userController.obtainUsers()) {
-            if (rusers.evaluateUser(u)) {
-                ArrayList<List> lists = u.getAssociatedLists();
-                for (List l : lists) {
-                    for (Song s1 : l.obtainSongs()) {
-                        for (Song s2 : l.obtainSongs()) {
-                            if (!(s1.getTitle().equals(s2.getTitle()) && s1.getArtist().equals(s2.getArtist())))
-                                graph.addEdgeT(s1, s2, 1);
-                        }
-                    }
-                }
-            }
-        }
-    }*/
-
-    /**
-     * parses an expression into a Relation
-     * @param simpRels  the set of simple relations that compose the expression
-     * @param exp       the expression to evaluate
-     * @return
-     */
-    /*private Relation parsing(String simpRels, String exp) {
-        //s contains a list of all the simple relations
-        //p contains de combination of relations by its index
-        Relation r;
-        String[] ss = simpRels.split("\n");
-        int i;
-        ArrayList<SimpleRelation> rl = new ArrayList<>();
-        //Get an arrayList with all simple relations
-        for (i = 0; i < ss.length; ++i) {
-            String[] sr = ss[i].split(" ");
-            rl.add(new SimpleRelation(sr[0], sr[1]));
-        }
-        for (i = 0; i < ss.length; ++i) {
-            System.out.print(rl.get(i).getAttribute() + " " + rl.get(i).getValue() + "\n");
-        }
-        String[] sc = exp.split(" or ");
-        ArrayList<Relation> AND = new ArrayList<>();
-        //Split by "or" so we get sets of relations connected by an AND relation
-        for (i = 0; i < sc.length; ++i) {
-            String[] cc = sc[i].split(" and ");
-            int j;
-            Relation rand;
-            int n_rel;
-            if (cc[0].length() > 1) {
-                n_rel = Integer.parseInt(cc[0].substring(3));
-                rand = new NOT(rl.get(n_rel));
-            }
-            else {
-                n_rel = Integer.parseInt(cc[0]);
-                rand = rl.get(n_rel);
-            }
-            //Set all relations connected by AND into a ComplexRelation
-            for (j = 1; j < cc.length; ++j) {
-                Relation rr;
-                if (cc[0].length() > 1) {
-                    n_rel = Integer.parseInt(cc[0].substring(3));
-                    rr = new NOT(rl.get(n_rel));
-                }
-                else {
-                    n_rel = Integer.parseInt(cc[0]);
-                    rr = rl.get(n_rel);
-                }
-                rand = new AND(rand, rr);
-            }
-            AND.add(rand);
-        }
-        r = AND.get(0);
-        for (i = 1; i < sc.length; ++i) {
-            r = new OR(r,AND.get(i));
-        }
-        return r;
     }
 
     /**

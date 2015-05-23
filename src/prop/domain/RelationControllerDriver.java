@@ -52,27 +52,23 @@ public class RelationControllerDriver {
                     System.out.println("    Example: not0 and 1 or 0 and not2 and 3 or 4 ;");
                     StringBuilder sb = new StringBuilder();
                     int n = in.nextInt();
-                    while (n > 0) {
+                    int m = 0;
+                    while (m < n) {
                         sb.append(in.next() + " " + in.next() + "\n");
-                        --n;
+                        ++m;
                     }
 
-                    StringBuilder sp = new StringBuilder();
                     String p = in.next();
-                    sp.append(p);
-                    while (!(p = in.next()).equals(";")) {
-                        sp.append(" " + p);
-                    }
                     try {
-                        rc.addRelation(sb.toString(),sp.toString(),n);
+                        rc.addRelation(sb.toString(),p,n);
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
                     break;
-                case 6:
+                case 5:
                     rc.playbackRelations(uc);
                     break;
-                case 7:
+                case 6:
                     String title2 = in.next();
                     String artist2 = in.next();
                     String album2 = in.next();
@@ -86,7 +82,7 @@ public class RelationControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 8:
+                case 7:
                     String title = in.next();
                     String artist = in.next();
                     try {
@@ -95,7 +91,7 @@ public class RelationControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 9:
+                case 8:
                     try {
                         uc.addUser(
                                 in.next(),
@@ -108,44 +104,44 @@ public class RelationControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 10:
+                case 9:
                     try {
                         uc.removeUser(in.next());
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 11:
+                case 10:
                     try {
                         uc.associateListToUser(lc, in.next(), in.next());
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
                     break;
-                case 12:
+                case 11:
                     try {
                         uc.playSong(in.next(), in.next(), in.next(), sc);
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 13:
+                case 12:
                     try {
                         lc.createRandomList(in.next(), in.nextInt(), sc);
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
                     break;
-                case 14:
+                case 13:
                     System.out.println(lc.getListSetString());
                     break;
-                case 15:
+                case 14:
                     System.out.println(lc.getListString(in.next()));
                     break;
                 default:
                     printInfoComplete();
             }
-            if (i > 0 && i < 13) printInfoBrief();
+            if (i > 0 && i < 15) printInfoBrief();
         }
     }
 
