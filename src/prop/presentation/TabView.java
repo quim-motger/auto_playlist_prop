@@ -1,6 +1,7 @@
 package prop.presentation;
 
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public abstract class TabView extends JPanel {
      * Creates new form MainPanel
      */
     public TabView() {
+        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         initComponents();
     }
 
@@ -38,8 +40,9 @@ public abstract class TabView extends JPanel {
     private void initComponents() {
         leftListView = new JScrollPane();
         leftList = new JList();
+        leftList.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         leftListView.setViewportView(leftList);
-        leftListView.setPreferredSize(new Dimension(200, 200));
+        leftListView.setPreferredSize(new Dimension(195, 200));
 
         rightScrollPanel = new JScrollPane();
         JPanel rightPanel = createRightPanel();
@@ -48,9 +51,17 @@ public abstract class TabView extends JPanel {
         actionBar = new JToolBar();
         actionBar.setFloatable(false);
         actionBar.setRollover(true);
+
         searchField = new JTextField();
         searchField.setMaximumSize(new Dimension(150, 200));
         actionBar.add(searchField);
+
+        JButton searchButton = new JButton("Search");
+        searchButton.setBorder(BorderFactory.createEmptyBorder(10,3,10,3));
+        actionBar.add(Box.createHorizontalStrut(4));
+        actionBar.add(searchButton);
+        actionBar.add(Box.createHorizontalStrut(1));
+        actionBar.addSeparator();
 
         ArrayList<JButton> buttons = setActionBarButtons();
         for (JButton button : buttons) {
@@ -62,16 +73,16 @@ public abstract class TabView extends JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(leftListView, GroupLayout.DEFAULT_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(leftListView, GroupLayout.DEFAULT_SIZE, leftListView.getPreferredSize().width, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rightScrollPanel, GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
+                                .addComponent(rightScrollPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(actionBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(actionBar, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                                .addGap(8, 8, 8)
+                                .addGap(5, 5, 5)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(leftListView, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                                         .addComponent(rightScrollPanel)))
@@ -81,6 +92,5 @@ public abstract class TabView extends JPanel {
     protected abstract JPanel createRightPanel();
 
     protected abstract ArrayList<JButton> setActionBarButtons();
-
 
 }
