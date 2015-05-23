@@ -3,8 +3,6 @@ package prop.domain;
 import prop.ErrorString;
 import prop.PropException;
 
-import java.lang.Integer;
-
 /**
  * Simple Relation
  * @author  joaquim.motger
@@ -87,7 +85,6 @@ public class SimpleRelation extends Relation {
         }
         else throw new PropException(ErrorString.WRONG_RELATION_TYPE);
     }
-
 
 
     /**

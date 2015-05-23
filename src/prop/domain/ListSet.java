@@ -4,7 +4,7 @@ package prop.domain;
 import prop.ErrorString;
 import prop.PropException;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Class ListSet, represents a set of playlists.
@@ -12,10 +12,9 @@ import java.util.*;
  * @see List
  */
 public class ListSet {
+    private static final char delimiter = '\n';
     //It assigns unique ids to lists as they are added.
     private TernarySearchTree<List> lists;
-
-    private static final char delimiter = '\n';
 
     /* CONSTRUCTORS */
     /**
@@ -60,11 +59,10 @@ public class ListSet {
      * @param name int id of the list to be removed
      * @return true if the list was found and removed, false otherwise
      */
-    public void remove(String name) throws PropException{
+    public void remove(String name) throws PropException {
         if (lists.contains(name)) {
             lists.remove(name);
-        }
-        else throw new PropException(ErrorString.UNEXISTING_LIST);
+        } else throw new PropException(ErrorString.UNEXISTING_LIST);
     }
 
     /**
@@ -96,7 +94,9 @@ public class ListSet {
      * Returns the number of lists contained in the set
      * @return int size
      */
-    public int size() { return lists.getSize(); }
+    public int size() {
+        return lists.getSize();
+    }
 
     /**
      * Removes ALL lists from the set

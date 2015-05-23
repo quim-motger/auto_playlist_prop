@@ -146,7 +146,7 @@ public class RelationControllerDriver {
                     break;
                 case 11:
                     try {
-                        uc.associateListToUser(lc,in.next(),in.next());
+                        uc.associateListToUser(lc, in.next(), in.next());
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }

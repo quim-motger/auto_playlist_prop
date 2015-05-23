@@ -20,6 +20,19 @@ public class TernarySearchTree<E> {
         size = 0;
     }
 
+    private static int compareCharsAlphabetically(char cCompare, char cRef) {
+        return (alphabetizeChar(cCompare) - alphabetizeChar(cRef));
+    }
+
+    private static int alphabetizeChar(char c) {
+        if (c < 65) return c;
+        if (c < 89) return (2 * c) - 65;
+        if (c < 97) return c + 24;
+        if (c < 121) return (2 * c) - 128;
+
+        return c;
+    }
+
     public int getSize() {
         return size;
     }
@@ -345,18 +358,5 @@ public class TernarySearchTree<E> {
             this.splitchar = splitchar;
             relatives[PARENT] = parent;
         }
-    }
-
-    private static int compareCharsAlphabetically(char cCompare, char cRef) {
-        return (alphabetizeChar(cCompare) - alphabetizeChar(cRef));
-    }
-
-    private static int alphabetizeChar(char c) {
-        if (c < 65) return c;
-        if (c < 89) return (2 * c) - 65;
-        if (c < 97) return c + 24;
-        if (c < 121) return (2 * c) - 128;
-
-        return c;
     }
 }

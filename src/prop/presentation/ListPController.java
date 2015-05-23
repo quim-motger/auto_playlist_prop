@@ -16,7 +16,7 @@ public class ListPController {
         songController = sc;
     }
 
-    public void addList(String title) {
+    public void addList(String title) throws PropException {
         listController.addList(title);
     }
 
@@ -24,16 +24,16 @@ public class ListPController {
         return listController.getListSetStringArray();
     }
 
-    public void removeList(int id) {
-        listController.removeList(id);
+    public void removeList(String title) throws PropException {
+        listController.removeList(title);
     }
 
-    public ArrayList<String> getListStringArray(int id) {
-        return listController.getListStringArray(id);
+    public ArrayList<String> getListStringArray(String title) {
+        return listController.getListStringArray(title);
     }
 
-    public void addSong(int id, String title, String artist) throws PropException {
-        listController.addSong(id,title,artist,songController);
+    public void addSong(String listTitle, String title, String artist) throws PropException {
+        listController.addSong(listTitle, title, artist, songController);
     }
 
 }

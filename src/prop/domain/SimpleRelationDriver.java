@@ -52,7 +52,7 @@ public class SimpleRelationDriver {
                     String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    r = new SimpleRelation(attribute,value);
+                    r = new SimpleRelation(attribute, value);
                     break;
                 case 5:
                     String title = in.next();

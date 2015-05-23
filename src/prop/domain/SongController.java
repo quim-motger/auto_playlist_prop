@@ -4,9 +4,6 @@ import prop.ErrorString;
 import prop.PropException;
 import prop.data.DataController;
 
-import java.io.IOException;
-import java.lang.String;
-import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -19,10 +16,9 @@ import java.util.regex.Pattern;
 
 public class SongController {
 
-    SongSet songSet;
-
     private final static String delimiter1 = "\n";
     private final static String delimiter2 = " ";
+    SongSet songSet;
 
     /**
      * Song Controller constructor
@@ -160,7 +156,7 @@ public class SongController {
         return s;
     }
 
-    public ArrayList<Song> searchSongsList(ArrayList< Pair<String, String>> l) throws PropException {
+    public ArrayList<Song> searchSongsList(ArrayList<Pair<String, String>> l) throws PropException {
         return songSet.searchSongs(l);
     }
 

@@ -95,7 +95,7 @@ public class ListControllerDriver {
                     String title_song = in.next();
                     artist = in.next();
                     try {
-                        listController.addSong(title,title_song,artist,songController);
+                        listController.addSong(title, title_song, artist, songController);
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -137,7 +137,7 @@ public class ListControllerDriver {
                     title = in.next();
                     String title_song3 = in.next();
                     artist = in.next();
-                    if (listController.containsSong(title,title_song3,artist))
+                    if (listController.containsSong(title, title_song3, artist))
                         System.out.println("Yes");
                     else
                         System.out.println("No");
@@ -152,7 +152,7 @@ public class ListControllerDriver {
                     System.out.println(listController.getListDuration(title) + "\n");
                     break;
                 case 17:
-                   title = in.next();
+                    title = in.next();
                     try {
                         List list = listController.getList(title);
                         System.out.println(list.toString());

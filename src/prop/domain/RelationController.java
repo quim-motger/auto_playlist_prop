@@ -139,7 +139,7 @@ public class RelationController {
             rl.add(new SimpleRelation(sr[0], sr[1]));
         }
         for (i = 0; i < ss.length; ++i) {
-            System.out.print(rl.get(i).getAttribute() + " " + rl.get(i).getValue() + "\n" );
+            System.out.print(rl.get(i).getAttribute() + " " + rl.get(i).getValue() + "\n");
         }
         String[] sc = exp.split(" or ");
         ArrayList<Relation> AND = new ArrayList<>();

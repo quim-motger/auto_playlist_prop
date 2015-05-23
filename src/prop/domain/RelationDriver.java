@@ -42,7 +42,7 @@ public class RelationDriver {
                         printInfoComplete();
                         break;
                     case 2:
-                        r = new SimpleRelation(in.next(),in.next());
+                        r = new SimpleRelation(in.next(), in.next());
                         break;
                     case 3:
                         r = new AND(r1, r2);

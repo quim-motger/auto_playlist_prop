@@ -4,8 +4,6 @@ import prop.ErrorString;
 import prop.PropException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.regex.Pattern;
 
 /**
@@ -15,8 +13,8 @@ import java.util.regex.Pattern;
 
 public class UserSet {
 
-    private TernarySearchTree<User> users;
     private static final String delimiter = "\n\n";
+    private TernarySearchTree<User> users;
 
 
     /**
@@ -24,6 +22,24 @@ public class UserSet {
      */
     public UserSet() {
         users = new TernarySearchTree<>();
+    }
+
+    /**
+     * Get the value of the String <code>s</code> that contains a UserSet in the specified format
+     * @param s     the String that contains the UserSet
+     * @return a UserSet
+     * @throws Exception
+     */
+    public static UserSet valueOf(String s, ListController lc, SongController sc) throws Exception {
+        if (s == null) throw new Exception(ErrorString.NULL);
+        else {
+            String[] users = s.split(Pattern.quote(delimiter));
+            UserSet us = new UserSet();
+            for (String r : users) {
+                us.addUser(User.valueOf(r, lc, sc));
+            }
+            return us;
+        }
     }
 
     /**
@@ -100,24 +116,6 @@ public class UserSet {
             s += user.toString() + delimiter;
         }
         return s;
-    }
-
-    /**
-     * Get the value of the String <code>s</code> that contains a UserSet in the specified format
-     * @param s     the String that contains the UserSet
-     * @return      a UserSet
-     * @throws      Exception
-     */
-    public static UserSet valueOf(String s, ListController lc, SongController sc) throws Exception {
-        if (s == null) throw new Exception(ErrorString.NULL);
-        else {
-            String[] users = s.split(Pattern.quote(delimiter));
-            UserSet us = new UserSet();
-            for (String r : users) {
-                us.addUser(User.valueOf(r, lc, sc));
-            }
-            return us;
-        }
     }
     /*
     public Iterator<User> iterator() {

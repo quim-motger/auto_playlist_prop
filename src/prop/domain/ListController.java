@@ -4,7 +4,10 @@ import prop.PropException;
 import prop.data.DataController;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * The controller for {@code List} and {@code ListSet}.
@@ -23,16 +26,6 @@ public class ListController {
      */
     public ListController() {
         listSet = new ListSet();
-    }
-
-    /**
-     * Indicates if the list with this id is contained in the set.
-     * @param id    the id of the list to look up
-     * @return      true if present,
-     *              false if not present
-     */
-    public boolean contains(int id) {
-        return listSet.contains(id);
     }
 
     /**
@@ -230,12 +223,12 @@ public class ListController {
 
     /**
      * Get a list in array of strings format.
-     * @param id    the identification of the list
+     * @param title    the identification of the list
      * @return      a string representing the list
      */
-    public ArrayList<String> getListStringArray(int id){
+    public ArrayList<String> getListStringArray(String title) {
         ArrayList<String> result = new ArrayList<String>();
-        List list = listSet.getList(id);
+        List list = listSet.getList(title);
         ArrayList<Song> songs = list.obtainSongs();
         result.add(list.obtainTitle());
         for (Song s : songs) {

@@ -60,13 +60,13 @@ public class ANDDriver {
                     String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    r1 = new SimpleRelation(attribute,value);
+                    r1 = new SimpleRelation(attribute, value);
                     break;
                 case 6:
                     String type2 = in.next();
                     String attribute2 = in.next();
                     String value2 = in.next();
-                    r2 = new SimpleRelation(attribute2,value2);
+                    r2 = new SimpleRelation(attribute2, value2);
                     break;
                 case 7:
                     String title = in.next();

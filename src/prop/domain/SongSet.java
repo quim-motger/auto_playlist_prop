@@ -4,7 +4,6 @@ import prop.ErrorString;
 import prop.PropException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A set of songs.
@@ -13,9 +12,8 @@ import java.util.HashMap;
  */
 public class SongSet {
 
-    private TernarySearchTree<Song> songSet;
-
     private static final String delimiter = "\n";
+    private TernarySearchTree<Song> songSet;
 
     /**
      * Default constructor.

@@ -120,7 +120,7 @@ public class SongControllerDriver {
                     }
                     break;
                 case 14:
-                    System.out.print(songController.findSongsByName(in.next())+"\n");
+                    System.out.print(songController.findSongsByName(in.next()) + "\n");
                     break;
                 default:
                     printInfoComplete();
