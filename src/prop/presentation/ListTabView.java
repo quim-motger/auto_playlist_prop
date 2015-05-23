@@ -19,6 +19,8 @@ public class ListTabView extends TabView {
     private ShowList showListPanel;
     private JList listSet;
     private DefaultListModel listSetModel;
+    private JTextField searchField;
+    private JButton searchButton;
     private JButton addListButton;
     private JButton removeListButton;
     private JButton addSongButton;
@@ -98,6 +100,23 @@ public class ListTabView extends TabView {
                     String value = (String) listSet.getSelectedValue();
                     showListPanel = new ShowList(value);
                     setRightPanel(showListPanel);
+                }
+            }
+        });
+        searchField = getSearchField();
+        searchButton = getSearchButton();
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listSetModel.clear();
+                String prefix = searchField.getText();
+                if (prefix.equals(""))
+                    updateListSetModel();
+                else {
+                    ArrayList<String> lists = listPController.findLists(prefix);
+                    for (String s : lists) {
+                        listSetModel.addElement(s);
+                    }
                 }
             }
         });

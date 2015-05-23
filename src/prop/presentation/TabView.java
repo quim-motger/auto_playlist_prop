@@ -15,6 +15,7 @@ public abstract class TabView extends JPanel {
     private JScrollPane leftListView;
     private JToolBar actionBar;
     private JTextField searchField;
+    private JButton searchButton;
     private JList leftList;
 
     /**
@@ -27,6 +28,14 @@ public abstract class TabView extends JPanel {
 
     public JList getLeftList() {
         return leftList;
+    }
+
+    public JTextField getSearchField() {
+        return searchField;
+    }
+
+    public JButton getSearchButton() {
+        return searchButton;
     }
 
     protected void setLeftList(JList mLeftList) {
@@ -45,7 +54,7 @@ public abstract class TabView extends JPanel {
         leftListView.setPreferredSize(new Dimension(195, 200));
 
         rightScrollPanel = new JScrollPane();
-        JPanel rightPanel = createRightPanel();
+        rightPanel = createRightPanel();
         rightScrollPanel.setViewportView(rightPanel);
 
         actionBar = new JToolBar();
@@ -56,7 +65,7 @@ public abstract class TabView extends JPanel {
         searchField.setMaximumSize(new Dimension(150, 200));
         actionBar.add(searchField);
 
-        JButton searchButton = new JButton("Search");
+        searchButton = new JButton("Search");
         searchButton.setBorder(BorderFactory.createEmptyBorder(10,3,10,3));
         actionBar.add(Box.createHorizontalStrut(4));
         actionBar.add(searchButton);

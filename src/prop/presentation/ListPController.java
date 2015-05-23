@@ -36,4 +36,8 @@ public class ListPController {
         listController.addSong(listTitle, title, artist, songController);
     }
 
+    public ArrayList<String> findLists(String prefix) {
+        return listController.findLists(prefix);
+    }
+
 }

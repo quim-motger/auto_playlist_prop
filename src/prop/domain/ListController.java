@@ -194,13 +194,13 @@ public class ListController {
         return listSet.getList(name);
     }
 
-    public String findLists(String prefix) {
+    public ArrayList<String> findLists(String prefix) {
         ArrayList<List> l = listSet.findLists(prefix);
-        String p = "";
+        ArrayList<String> result = new ArrayList<String>();
         for (List list : l) {
-            p += list.obtainTitle() + "\n";
+            result.add(list.obtainTitle());
         }
-        return p;
+        return result;
     }
 
     /**
