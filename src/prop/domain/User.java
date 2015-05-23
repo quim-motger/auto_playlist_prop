@@ -88,7 +88,6 @@ public class User implements Comparable<User> {
     }
 
     public void setAssociatedLists(ArrayList<List> associatedLists1) {
-        if (associatedLists == null) throw new NullPointerException("associatedLists is null");
         associatedLists = associatedLists1;
     }
 
@@ -97,7 +96,6 @@ public class User implements Comparable<User> {
     }
 
     public void setPlaybackRegister(TreeSet<Playback> playbackRegister1) {
-        if (playbackRegister == null) throw new NullPointerException("playbackRegister is null");
         playbackRegister = playbackRegister1;
     }
 
@@ -106,7 +104,6 @@ public class User implements Comparable<User> {
     }
 
     public void setBirthdate(Calendar birthdate1) {
-        if (birthdate == null) throw new NullPointerException("birthdate is null");
         birthdate = birthdate1;
     }
 
@@ -115,7 +112,6 @@ public class User implements Comparable<User> {
     }
 
     public void setGender(Gender gender1) {
-        if (gender == null) throw new NullPointerException("gender is null");
         gender = gender1;
     }
 
@@ -127,7 +123,6 @@ public class User implements Comparable<User> {
 
     /* SETTERS */
     public void setName(String name1) {
-        if (name == null) throw new NullPointerException("name is null");
         name = name1;
     }
 
@@ -136,7 +131,6 @@ public class User implements Comparable<User> {
      * @return integer number that contains the user's age
      */
     public int age() {
-        if (birthdate == null) throw new NullPointerException("birthdate is null");
         Calendar now = Calendar.getInstance();
         int age = now.get(Calendar.YEAR) - birthdate.get(Calendar.YEAR);
         if (now.get(Calendar.MONTH) < birthdate.get(Calendar.MONTH)) --age;
@@ -150,7 +144,6 @@ public class User implements Comparable<User> {
      * @param play Playback to be added
      */
     public boolean add(Playback play) {
-        if (play == null) throw new NullPointerException("play is null");
         return playbackRegister.add(play);
     }
 
@@ -163,7 +156,6 @@ public class User implements Comparable<User> {
      * @param list List to be associated.
      */
     public void associate(List list) {
-        if (list == null) throw new NullPointerException("list is null");
         if (!associatedLists.contains(list)) associatedLists.add(list);
     }
 
@@ -173,7 +165,6 @@ public class User implements Comparable<User> {
      * @return true if the list was found and disassociated, false otherwise
      */
     public boolean disassociate(List list) {
-        if (list == null) throw new NullPointerException("list is null");
         return associatedLists.remove(list);
     }
 
@@ -183,7 +174,6 @@ public class User implements Comparable<User> {
      * @return true if associated, false otherwise
      */
     public boolean hasList(List list) {
-        if (list == null) throw new NullPointerException("list is null");
         return associatedLists.contains(list);
     }
 
