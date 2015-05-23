@@ -237,7 +237,7 @@ public class ListController {
         StringBuilder sb = new StringBuilder();
         ArrayList<List> lists = listSet.getLists();
         for (List list : lists)
-            sb.append(list.obtainId() + "  " + list.obtainTitle() + "\n");
+            sb.append(list.obtainId() + "   " + list.obtainTitle() + "\n");
         return sb.toString();
     }
 
@@ -249,7 +249,7 @@ public class ListController {
         ArrayList<String> result = new ArrayList<>();
         ArrayList<List> lists = listSet.getLists();
         for (List list : lists)
-            result.add(list.obtainId() + "  " + list.obtainTitle());
+            result.add(list.obtainId() + "   " + list.obtainTitle());
         return result;
     }
 

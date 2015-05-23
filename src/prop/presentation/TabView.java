@@ -62,10 +62,12 @@ public abstract class TabView extends JPanel {
         actionBar.add(searchButton);
         actionBar.add(Box.createHorizontalStrut(1));
         actionBar.addSeparator();
+        actionBar.add(Box.createHorizontalStrut(3));
 
         ArrayList<JButton> buttons = setActionBarButtons();
         for (JButton button : buttons) {
             actionBar.add(button);
+            actionBar.add(Box.createHorizontalStrut(5));
         }
 
         GroupLayout layout = new GroupLayout(this);
