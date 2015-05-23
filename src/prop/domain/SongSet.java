@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 public class SongSet {
 
-    private HashMap<String,Song> songSet;
+    private TernarySearchTree<Song> songSet;
 
     private static final String delimiter = "\n";
 
@@ -21,7 +21,7 @@ public class SongSet {
      * Default constructor.
      */
     public SongSet() {
-        songSet = new HashMap<String,Song>();
+        songSet = new TernarySearchTree<>();
     }
 
     /**
@@ -29,7 +29,7 @@ public class SongSet {
      * @return  the size of the set
      */
     public int size() {
-        return songSet.size();
+        return songSet.getSize();
     }
 
     /**
@@ -38,7 +38,7 @@ public class SongSet {
      */
     public ArrayList<Song> getSongSet() {
         // This is a shallow copy, so the songs are not duplicated
-        return new ArrayList<Song>(songSet.values());
+        return new ArrayList<Song>(songSet.getList());
     }
 
     /**
@@ -109,7 +109,7 @@ public class SongSet {
      */
     public boolean contains(String title, String artist) {
         String key = getKey(title,artist);
-        return songSet.containsKey(key);
+        return songSet.contains(key);
     }
 
     /**
@@ -118,7 +118,7 @@ public class SongSet {
      */
     public int getTotalDuration() {
         int sum = 0;
-        for (Song song : songSet.values()) {
+        for (Song song : songSet.getList()) {
             sum += song.getDuration();
         }
         return sum;
@@ -132,7 +132,7 @@ public class SongSet {
      */
     public ArrayList<Song> searchSongs(ArrayList<Pair<String,String>> conditions) throws PropException {
         ArrayList<Song> songs = new ArrayList<Song>();
-        for (Song song : songSet.values()) {
+        for (Song song : songSet.getList()) {
             boolean valid = true;
             for (Pair<String,String> condition : conditions) {
                 if (!satisfies(song,condition.first(),condition.second())) {
@@ -144,6 +144,10 @@ public class SongSet {
                 songs.add(song);
         }
         return songs;
+    }
+
+    public ArrayList<Song> findSongs(String prefix) {
+        return songSet.matchPrefix(prefix);
     }
 
     /**
@@ -182,7 +186,7 @@ public class SongSet {
      */
     public String toString() {
         String s = "";
-        for (Song song : songSet.values()) {
+        for (Song song : songSet.getList()) {
             s += song.toString() + delimiter;
         }
         return s;

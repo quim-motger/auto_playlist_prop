@@ -40,8 +40,8 @@ public class ListControllerDriver {
                     listController = new ListController();
                     break;
                 case 3:
-                    id = in.nextInt();
-                    if (listController.contains(id))
+                    title = in.next();
+                    if (listController.contains(title))
                         System.out.println("Yes");
                     else
                         System.out.println("No");
@@ -55,12 +55,16 @@ public class ListControllerDriver {
                     break;
                 case 6:
                     title = in.next();
-                    listController.addList(title);
+                    try {
+                        listController.addList(title);
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 7:
-                    id = in.nextInt();
+                    title = in.next();
                     try {
-                        listController.removeList(id);
+                        listController.removeList(title);
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -77,108 +81,99 @@ public class ListControllerDriver {
                     }
                     break;
                 case 9:
-                    id = in.nextInt();
                     title = in.next();
+                    String new_title = in.next();
                     try {
-                        listController.setListTitle(id, title);
+                        listController.setListTitle(title, new_title);
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 10:
-                    id = in.nextInt();
+                    title = in.next();
+                    String title_song = in.next();
+                    artist = in.next();
                     try {
-                        System.out.println(listController.getListTitle(id) + "\n");
+                        listController.addSong(title,title_song,artist,songController);
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 11:
-                    id = in.nextInt();
                     title = in.next();
+                    String title_song2 = in.next();
                     artist = in.next();
                     try {
-                        listController.addSong(id,title,artist,songController);
+                        listController.removeSong(title, title_song2, artist);
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 12:
-                    id = in.nextInt();
                     title = in.next();
-                    artist = in.next();
+                    pos = in.nextInt();
                     try {
-                        listController.removeSong(id, title, artist);
+                        listController.removeSong(title, pos);
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 13:
-                    id = in.nextInt();
-                    pos = in.nextInt();
+                    title = in.next();
+                    pos1 = in.nextInt();
+                    pos2 = in.nextInt();
                     try {
-                        listController.removeSong(id, pos);
+                        listController.swapSongs(title, pos1, pos2);
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 14:
-                    id = in.nextInt();
-                    pos1 = in.nextInt();
-                    pos2 = in.nextInt();
-                    try {
-                        listController.swapSongs(id, pos1, pos2);
-                    }
-                    catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 15:
-                    id = in.nextInt();
                     title = in.next();
+                    String title_song3 = in.next();
                     artist = in.next();
-                    if (listController.containsSong(id,title,artist))
+                    if (listController.containsSong(title,title_song3,artist))
                         System.out.println("Yes");
                     else
                         System.out.println("No");
                     System.out.print("\n");
                     break;
+                case 15:
+                    title = in.next();
+                    System.out.println(listController.listSize(title) + "\n");
+                    break;
                 case 16:
-                    id = in.nextInt();
-                    System.out.println(listController.listSize(id) + "\n");
+                    title = in.next();
+                    System.out.println(listController.getListDuration(title) + "\n");
                     break;
                 case 17:
-                    id = in.nextInt();
-                    System.out.println(listController.getListDuration(id) + "\n");
-                    break;
-                case 18:
-                    id = in.nextInt();
+                   title = in.next();
                     try {
-                        List list = listController.getList(id);
+                        List list = listController.getList(title);
                         System.out.println(list.toString());
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 19:
-                    id = in.nextInt();
+                case 18:
+                    title = in.next();
                     try {
-                        System.out.println(listController.getListString(id));
+                        System.out.println(listController.getListString(title));
                     }
                     catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 20:
+                case 19:
                     System.out.println(listController.getListSetString());
                     break;
-                case 21:
+                case 20:
                     path = in.next();
                     try {
                         listController.save(path);
@@ -187,7 +182,7 @@ public class ListControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 22:
+                case 21:
                     path = in.next();
                     try {
                         listController.load(path, songController);
@@ -195,6 +190,9 @@ public class ListControllerDriver {
                     catch (PropException|IOException e) {
                         System.out.println(e.getMessage());
                     }
+                    break;
+                case 22:
+                    System.out.print(listController.findLists(in.next()));
                     break;
                 default:
                     printInfo();
@@ -207,26 +205,26 @@ public class ListControllerDriver {
         sb.append("0:  terminate program\n");
         sb.append("1:  info\n");
         sb.append("2:  ListController()\n");
-        sb.append("3:  boolean contains(int id)\n");
+        sb.append("3:  boolean contains(String name)\n");
         sb.append("4:  int size()\n");
         sb.append("5:  int getTotalDuration()\n");
         sb.append("6:  void addList(String title)\n");
-        sb.append("7:  boolean removeList(int id)\n");
+        sb.append("7:  boolean removeList(String name)\n");
         sb.append("8:  void createRandomList(String title, int n)\n");
-        sb.append("9:  void setListTitle(int id, String title)\n");
-        sb.append("10: String getListTitle(int id)\n");
-        sb.append("11: void addSong(int id, String title, String artist)\n");
-        sb.append("12: void removeSong(int id, String title, String artist)\n");
-        sb.append("13: void removeSong(int id, int pos)\n");
-        sb.append("14: void swapSongs(int id, int pos1, int pos2)\n");
-        sb.append("15: boolean containsSong(int id, String title, String artist)\n");
-        sb.append("16: int listSize(int id)\n");
-        sb.append("17: int getListDuration(int id)\n");
-        sb.append("18: List getList(int id)\n");
-        sb.append("19: String getListString(int id)\n");
-        sb.append("20: String getListSetString()\n");
-        sb.append("21: void save(String path)\n");
-        sb.append("22: void load(String path)\n");
+        sb.append("9:  void setListTitle(String old_title, String new_title)\n");
+        sb.append("10: void addSong(String name, String title, String artist)\n");
+        sb.append("11: void removeSong(String name, String title, String artist)\n");
+        sb.append("12: void removeSong(int id, int pos)\n");
+        sb.append("13: void swapSongs(String name, int pos1, int pos2)\n");
+        sb.append("14: boolean containsSong(String name, String title, String artist)\n");
+        sb.append("15: int listSize(String name)\n");
+        sb.append("16: int getListDuration(String name)\n");
+        sb.append("17: List getList(String name)\n");
+        sb.append("18: String getListString(String name)\n");
+        sb.append("19: String getListSetString()\n");
+        sb.append("20: void save(String path)\n");
+        sb.append("21: void load(String path)\n");
+        sb.append("22: String findLists(String prefix)\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }

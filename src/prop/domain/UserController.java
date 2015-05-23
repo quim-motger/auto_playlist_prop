@@ -4,6 +4,7 @@ import prop.PropException;
 import prop.data.DataController;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -108,11 +109,11 @@ public class UserController {
     /**
      * Associate List to an specified User
      * @param listController listController
-     * @param listId Id of a list included in the listController
+     * @param title     list title
      * @param userName Valid name of an existing user
      */
-    public void associateListToUser(ListController listController, int listId, String userName) throws PropException {
-        List list = listController.getList(listId);
+    public void associateListToUser(ListController listController, String title, String userName) throws PropException {
+        List list = listController.getList(title);
         associateListToUser(list,userName);
     }
 
@@ -129,11 +130,11 @@ public class UserController {
     /**
      * Disassociate List to an specified User
      * @param listController listController
-     * @param listId Id of a list included in the listController
+     * @param title     list title
      * @param userName Valid name of an existing user
      */
-    public void disassociateListFromUser(ListController listController, int listId, String userName) throws PropException {
-        List list = listController.getList(listId);
+    public void disassociateListFromUser(ListController listController, String title, String userName) throws PropException {
+        List list = listController.getList(title);
         userSet.getUserByName(userName).disassociate(list);
     }
 
@@ -222,6 +223,15 @@ public class UserController {
         String data;
         data = DataController.load(path);
         userSet = UserSet.valueOf(data, lc, sc);
+    }
+
+    public String findUsers(String prefix) {
+        ArrayList<User> l = userSet.findUsers(prefix);
+        String p = "";
+        for (User user: l) {
+            p += user.getName() + "\n";
+        }
+        return p;
     }
     
     /*PRIVATE METHODS*/

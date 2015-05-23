@@ -67,7 +67,7 @@ public class AlgorithmController {
         listController.addList(list);
 
         log.addAll(ao.getLog());
-        log.add("List created:\n" + list.obtainId() + "  " + list.obtainTitle() + "\n");
+        log.add("List created:\n" + list.obtainTitle() + "\n");
 
         return log;
     }

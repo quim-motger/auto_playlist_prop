@@ -119,10 +119,13 @@ public class SongControllerDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
+                case 14:
+                    System.out.print(songController.findSongsByName(in.next())+"\n");
+                    break;
                 default:
                     printInfoComplete();
             }
-            if (i > 1 && i < 14) printInfoBrief();
+            if (i > 1 && i < 15) printInfoBrief();
         }
     }
 
@@ -141,7 +144,8 @@ public class SongControllerDriver {
                 + "10:   String searchSongs(ArrayList< Pair<String, String> > l): n_criteria [attribute, value]\n"
                 + "11:   listGenres()\n"
                 + "12:   void save(String path): path\n"
-                + "13:   void load(String path): path\n");
+                + "13:   void load(String path): path\n"
+                + "14    String findSongsByName(String prefix): prefix\n");
     }
 
     private static void printInfoBrief() {

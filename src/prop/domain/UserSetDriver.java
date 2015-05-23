@@ -84,11 +84,19 @@ public class UserSetDriver {
                     break;
                 case 8:
                     String title = in.next();
-                    lc.addList(title);
+                    try {
+                        lc.addList(title);
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 9:
-                    int id = in.nextInt();
-                    lc.removeList(id);
+                    String title5 = in.next();
+                    try {
+                        lc.removeList(title5);
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 10:
                     String title2 = in.next();

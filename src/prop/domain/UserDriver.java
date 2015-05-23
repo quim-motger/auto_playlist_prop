@@ -148,7 +148,6 @@ public class UserDriver {
                         break;
                     case 30:
                         list = new List(in.next());
-                        list.editId(nextId++);
                         listController.addList(list);
                         break;
                     case 31:

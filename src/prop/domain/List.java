@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * Sorted set of songs
- * ID -> id: int
  * @author gerard.casas.saez
  * @version 1.0
  * @see Song
@@ -13,14 +12,12 @@ public class List {
 
 
     private static final String DELIMITER = " ";
-    private int id;
     private String mTitle;
     private ArrayList<Song> songs;
 
 
     public List (){
         mTitle = null;
-        id=-1;
         songs = new ArrayList<>();
     }
 
@@ -29,7 +26,6 @@ public class List {
      * @param listTitle   Title of the list
      */
     public List(String listTitle) {
-        id=-1;
         mTitle = listTitle;
         songs = new ArrayList<>();
     }
@@ -40,7 +36,6 @@ public class List {
      * @param newSongs   Array of initial songs for the list
      */
     public List(String listTitle, ArrayList<Song> newSongs) {
-        id = -1;
         mTitle = listTitle;
         songs = newSongs;
     }
@@ -59,14 +54,6 @@ public class List {
      */
     public String obtainTitle() {
         return mTitle;
-    }
-
-    /**
-     * Obtain <code>Id</code>
-     * @return id from the List
-     */
-    public int obtainId() {
-        return id;
     }
 
     /**
@@ -140,14 +127,6 @@ public class List {
     }
 
     /**
-     * Edit List ID
-     * @param listId new ID
-     */
-    public void editId(int listId) {
-        id = listId;
-    }
-
-    /**
      *  Modifier that adds song at the end of the <code>List</code>
      *  <code>song</code> has an index of <code>size()</code> - 1
      *  @see Song
@@ -174,7 +153,7 @@ public class List {
      */
     public void removeSong(String title, String artist) {
         int pos = obtainSongPosition(title, artist);
-        if (pos > 0) {
+        if (pos >= 0) {
             removeSong(pos);
         }
     }
@@ -214,7 +193,6 @@ public class List {
      */
     public String toString() {
         String ret = "";
-        ret += String.valueOf(id) + DELIMITER;
         ret += mTitle + DELIMITER;
         ret += songs.size() + DELIMITER;
         for (Song song : songs) {

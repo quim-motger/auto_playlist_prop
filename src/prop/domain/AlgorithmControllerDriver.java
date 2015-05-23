@@ -61,8 +61,8 @@ public class AlgorithmControllerDriver {
                     }
                     break;
                 case 5:
-                    int id = in.nextInt();
-                    System.out.println(listController.getListString(id));
+                    String title2 = in.next();
+                    System.out.println(listController.getListString(title2));
                     break;
                 case 6:
                     System.out.println(listController.getListSetString());

@@ -42,7 +42,7 @@ public class RelationDriver {
                         printInfoComplete();
                         break;
                     case 2:
-                        r = new SimpleRelation(in.next(),in.next(),in.next());
+                        r = new SimpleRelation(in.next(),in.next());
                         break;
                     case 3:
                         r = new AND(r1, r2);
@@ -66,12 +66,12 @@ public class RelationDriver {
                             System.out.println(e.getMessage());
                         }
                         break;
-                    case 9:
+                    case 9:/*
                         try {
                             System.out.println(r.evaluateUser(u));
                         } catch (PropException e) {
                             System.out.println(e.getMessage());
-                        }
+                        }*/
                         break;
                     case 10:
                         s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),

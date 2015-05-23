@@ -121,14 +121,14 @@ public class UserControllerDriver {
                     break;
                 case 13:
                     try {
-                        userController.associateListToUser(listController, in.nextInt(), in.next());
+                        userController.associateListToUser(listController, in.next(), in.next());
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 14:
                     try {
-                        userController.disassociateListFromUser(listController, in.nextInt(), in.next());
+                        userController.disassociateListFromUser(listController, in.next(), in.next());
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
@@ -141,10 +141,17 @@ public class UserControllerDriver {
                     }
                     break;
                 case 16:
-                    listController.addList(in.next());
+                    try {
+                        listController.addList(in.next());
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 17:
                     System.out.println(listController.getListSetString());
+                    break;
+                case 18:
+                    System.out.print(userController.findUsers(in.next()));
                     break;
                 default:
                     printInfo();
@@ -181,6 +188,7 @@ public class UserControllerDriver {
         sb.append("15:  String obtainListsAssociated(String userName)\n");
         sb.append("16:  listController.addList(String title)\n");
         sb.append("17:  String listController.getListSetString()\n");
+        sb.append("18:  String findUsers(String prefix)\n");
         System.out.println(sb.toString());
     }
 }

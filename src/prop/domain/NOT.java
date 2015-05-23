@@ -29,9 +29,4 @@ public class NOT extends ComplexRelation {
     public boolean evaluateSongs(Song s1, Song s2) throws PropException{
         return !r1.evaluateSongs(s1, s2);
     }
-
-    @Override
-    public boolean evaluateUser(User u) throws PropException{
-        return !r1.evaluateUser(u);
-    }
 }

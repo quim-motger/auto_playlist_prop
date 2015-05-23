@@ -32,8 +32,4 @@ public class OR extends ComplexRelation {
         return r1.evaluateSongs(s1, s2) || r2.evaluateSongs(s1, s2);
     }
 
-    @Override
-    public boolean evaluateUser(User u) throws PropException{
-        return r1.evaluateUser(u) || r2.evaluateUser(u);
-    }
 }

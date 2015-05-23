@@ -19,21 +19,13 @@ public class SimpleRelation extends Relation {
 
     /**
      * Simple class constructor
-     * @param   t       type of relation (USER/SONG)
      * @param   attr    attribute name
      * @param   val     value of attribute
      */
-    public SimpleRelation(String t, String attr, String val) {
-        type = t;
+    public SimpleRelation(String attr, String val) {
         attribute = attr;
         value = val;
     }
-
-    /**
-     * Get the relation type
-     * @return  a String with the relation type (USER/SONG)
-     */
-    public String getType() { return type;}
 
     /**
      * Get the relation attribute
@@ -87,12 +79,16 @@ public class SimpleRelation extends Relation {
                 case "duration":
                     i = s1.getDuration();
                     return i == s2.getDuration() && i == Integer.parseInt(value);
+                case "name":
+
                 default:
                     throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
             }
         }
         else throw new PropException(ErrorString.WRONG_RELATION_TYPE);
     }
+
+
 
     /**
      * Evaluates s1 and s2
