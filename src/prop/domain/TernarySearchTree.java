@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * in a manner that is very similar to a HashMap.
  */
 public class TernarySearchTree<E> {
+    private final static String escape_char = "\n";
     private TSTNode<E> rootNode;
     private int defaultNumReturnValues;
     private int size;
@@ -44,7 +45,7 @@ public class TernarySearchTree<E> {
      * @param value The object to be stored in the tree.
      */
     public void put(String key, E value) {
-        getOrCreateNode(key + "-").data = value;
+        getOrCreateNode(key + escape_char).data = value;
     }
 
     /**
@@ -55,13 +56,13 @@ public class TernarySearchTree<E> {
      */
     public E get(String key) {
         ++size;
-        TSTNode<E> node = getNode(key + "-");
+        TSTNode<E> node = getNode(key + escape_char);
         if (node == null) return null;
         return node.data;
     }
 
     public boolean contains(String key) {
-        TSTNode<E> node = getNode(key + "-");
+        TSTNode<E> node = getNode(key + escape_char);
         if (node == null) return false;
         else return true;
     }
@@ -72,7 +73,7 @@ public class TernarySearchTree<E> {
      * @param key A string that indexes the object to be removed from the tree.
      */
     public E remove(String key) {
-        key += "-";
+        key += escape_char;
         --size;
         TSTNode<E> node = getNode(key);
         deleteNode(getNode(key));
