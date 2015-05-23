@@ -2,6 +2,8 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.util.ArrayList;
+
 /**
  * OR class, ComplexRelation
  * Creation Date: 30/03/15.
@@ -22,14 +24,20 @@ public class OR extends ComplexRelation {
     }
 
     /**
-     * *
-     * @param s1    Song 1 to evaluate
-     * @param s2    Song 2 to evaluate
-     * @return      <code>true</code> if s1 and s2 are related in R1 or R2
+     * Evaluates OR relation
+     * @return      the union of the two sets obtained by <code>R1</code> and <code>R2</code>
+     * @throws      PropException
      */
     @Override
-    public boolean evaluateSongs(Song s1, Song s2) throws PropException{
-        return r1.evaluateSongs(s1, s2) || r2.evaluateSongs(s1, s2);
+    public ArrayList<Song> evaluate() throws PropException{
+        ArrayList<Song> songsr2 = r2.evaluate();
+
+        ArrayList<Song> songs = r1.evaluate();
+
+        for (Song songr2 : songsr2) {
+            if (!songs.contains(songr2)) songs.add(songr2);
+        }
+        return songs;
     }
 
 }

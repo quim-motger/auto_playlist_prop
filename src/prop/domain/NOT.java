@@ -2,6 +2,8 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.util.ArrayList;
+
 /**
  * Classe NOT, relació complexe 30/03/15.
  *
@@ -11,22 +13,28 @@ import prop.PropException;
  */
 public class NOT extends ComplexRelation {
 
+    private SongSet songSet;
+
     /**
      * Class NOT creator
      * @param relation   relation to evaluate
      */
-    public NOT(Relation relation) {
+    public NOT(Relation relation, SongSet ss) {
         r1 = relation;
+        songSet = ss;
     }
 
     /**
-     * *
-     * @param s1    Song 1 to evaluate
-     * @param s2    Song 2 to evaluate
-     * @return      <code>true</code> if <code>s1</code> and <code>s2</code> are not related
+     * Evaluates NOT relation
+     * @return      the intersection of the two sets obtained by <code>R1</code> and <code>R2</code>
+     * @throws      PropException
      */
     @Override
-    public boolean evaluateSongs(Song s1, Song s2) throws PropException{
-        return !r1.evaluateSongs(s1, s2);
+    public ArrayList<Song> evaluate() throws PropException{
+        ArrayList<Song> songs = songSet.getSongSet();
+        for (Song song : r1.evaluate()) {
+            songs.remove(song);
+        }
+        return songs;
     }
 }

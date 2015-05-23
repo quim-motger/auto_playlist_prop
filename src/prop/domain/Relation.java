@@ -2,6 +2,8 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.util.ArrayList;
+
 /**
  * Abstract Relation - 30/3/2015
  * @author gerard.casas.saez
@@ -9,12 +11,10 @@ import prop.PropException;
  */
 public abstract class Relation {
 
-    /**
-     * @param s1    Song 1 to evaluate
-     * @param s2    Song 2 to evaluate
-     * @return      <code>true</code> if <code>s1</code> and <code>s2</code> are related
+    /** Evaluates the relation
+     * @return      An ArrayList with all songs that match the relation
      */
-    public abstract boolean evaluateSongs(Song s1, Song s2) throws PropException;
+    public abstract ArrayList<Song> evaluate() throws PropException;
 
 
 }

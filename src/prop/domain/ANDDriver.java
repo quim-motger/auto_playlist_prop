@@ -2,6 +2,7 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -24,6 +25,9 @@ public class ANDDriver {
         Song s1 = new Song();
         Song s2 = new Song();
         User u = new User();
+        ArrayList<Song> songs;
+        SongSet ss = new SongSet();
+        UserSet us = new UserSet();
 
         int i = -1;
         printInfoComplete();
@@ -39,12 +43,13 @@ public class ANDDriver {
                     r = new AND(r1,r2);
                     break;
                 case 3:
-                    try{
-                        boolean b = r.evaluateSongs(s1, s2);
-                        if (b) System.out.print("true\n");
-                        else System.out.print("false\n");
-                    } catch (PropException pe) {
-                        System.err.println(pe.getMessage());
+                    try {
+                        songs = r.evaluate();
+                        for (Song song : songs) {
+                            System.out.println(song.getTitle() + " " + song.getArtist());
+                        }
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case 4:/*
@@ -60,13 +65,13 @@ public class ANDDriver {
                     String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    r1 = new SimpleRelation(attribute, value);
+                    r1 = new SimpleRelation(ss,us,attribute, value);
                     break;
                 case 6:
                     String type2 = in.next();
                     String attribute2 = in.next();
                     String value2 = in.next();
-                    r2 = new SimpleRelation(attribute2, value2);
+                    r2 = new SimpleRelation(ss,us,attribute2, value2);
                     break;
                 case 7:
                     String title = in.next();

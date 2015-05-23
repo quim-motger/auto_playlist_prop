@@ -2,6 +2,8 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -27,6 +29,9 @@ public class ORDriver {
         Song s2 = null;
         User u = null;
         Calendar birthday = Calendar.getInstance();
+        SongSet ss = new SongSet();
+        UserSet us = new UserSet();
+        ArrayList<Song> songs;
 
         printInfo();
         
@@ -42,7 +47,10 @@ public class ORDriver {
                     break;
                 case 2:
                     try {
-                        System.out.println(r.evaluateSongs(s1, s2));
+                        songs = r.evaluate();
+                        for (Song song : songs) {
+                            System.out.println(song.getTitle() + " " + song.getArtist());
+                        }
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
@@ -55,10 +63,10 @@ public class ORDriver {
                     }*/
                     break;
                 case 4:
-                    r1 = new SimpleRelation(in.next(), in.next());
+                    r1 = new SimpleRelation(ss,us,in.next(), in.next());
                     break;
                 case 5:
-                    r2 = new SimpleRelation(in.next(), in.next());
+                    r2 = new SimpleRelation(ss,us,in.next(), in.next());
                     break;
                 case 6:
                     s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),

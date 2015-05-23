@@ -2,6 +2,8 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.util.ArrayList;
+
 /**
  * AND complex relation
  * @author joaquim.motger
@@ -20,15 +22,15 @@ public class AND extends ComplexRelation {
     }
 
     /**
-     * Evaluates AND relation between two songs
-     * @param s1    first <code>Song</code>
-     * @param s2    second <code>Song</code>
-     * @return      true if <code>s1</code> and <code>s2</code> are related by <code>r1</code> and <code>r2</code>; false otherwise
+     * Evaluates AND relation
+     * @return      the intersection of the two sets obtained by <code>R1</code> and <code>R2</code>
      * @throws      PropException
      */
     @Override
-    public boolean evaluateSongs(Song s1, Song s2) throws PropException{
-        return r1.evaluateSongs(s1, s2) && r2.evaluateSongs(s1, s2);
+    public ArrayList<Song> evaluate() throws PropException{
+        ArrayList<Song> songs = r1.evaluate();
+        songs.retainAll(r2.evaluate());
+        return songs;
     }
 
 }

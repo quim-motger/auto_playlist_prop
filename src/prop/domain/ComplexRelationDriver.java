@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -48,12 +49,8 @@ public class ComplexRelationDriver {
 
     private static class ComplexRelationStub extends ComplexRelation {
 
-        public boolean evaluateSongs(Song s1, Song s2) {
-            return false;
-        }
-
-        public boolean evaluateUser(User u) {
-            return false;
+        public ArrayList<Song> evaluate() {
+            return null;
         }
 
     }

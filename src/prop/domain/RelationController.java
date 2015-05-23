@@ -84,7 +84,7 @@ public class RelationController {
      * @param exp       the expression to evaluate
      * @throws PropException
      */
-    public void addSongRelation(String simpRel, String exp) throws PropException{
+    /**public void addSongRelation(String simpRel, String exp) throws PropException{
         Relation rsongs = parsing(simpRel, exp);
         ArrayList<Song> songs = graph.getOriginalVertices();
         for (Song s1 : songs) {
@@ -94,7 +94,7 @@ public class RelationController {
                     graph.addEdgeT(s1, s2, 1);
             }
         }
-    }
+    }*/
 
     /**
      * add relations between songs of the list of the users that match with the specified relation
@@ -126,7 +126,7 @@ public class RelationController {
      * @param exp       the expression to evaluate
      * @return
      */
-    private Relation parsing(String simpRels, String exp) {
+    /*private Relation parsing(String simpRels, String exp) {
         //s contains a list of all the simple relations
         //p contains de combination of relations by its index
         Relation r;
@@ -188,6 +188,7 @@ public class RelationController {
      *                   EX: (((1&2)|3)&(!1|2))
      * @return
      */
+    /*
     private Relation parse(SimpleRelation[] simpleRelations, String expression) throws PropException {
         if(!expression.contains("((") && !expression.contains("))")){
             if(expression.length()>5) throw new PropException(ErrorString.WRONG_EXPRESSION);

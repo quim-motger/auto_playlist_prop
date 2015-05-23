@@ -2,6 +2,7 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -20,6 +21,8 @@ public class NOTDriver {
         System.out.print("\n");
 
         Scanner in = new Scanner(System.in);
+        SongSet ss = new SongSet();
+        UserSet us = new UserSet();
         ComplexRelation r = null;
         SimpleRelation r1 = null;
         SimpleRelation r2 = null;
@@ -27,6 +30,7 @@ public class NOTDriver {
         Song s2 = null;
         User u = null;
         Calendar birthday = Calendar.getInstance();
+        ArrayList<Song> songs;
 
         printInfo();
 
@@ -38,11 +42,14 @@ public class NOTDriver {
                 case 0:
                     break;
                 case 1:
-                    r = new NOT(r1);
+                    r = new NOT(r1,ss);
                     break;
                 case 2:
                     try {
-                        System.out.println(r.evaluateSongs(s1, s2));
+                        songs = r.evaluate();
+                        for (Song song : songs) {
+                            System.out.println(song.getTitle() + " " + song.getArtist());
+                        }
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
@@ -55,7 +62,7 @@ public class NOTDriver {
                     }*/
                     break;
                 case 4:
-                    r1 = new SimpleRelation(in.next(), in.next());
+                    r1 = new SimpleRelation(ss, us, in.next(), in.next());
                     break;
                 case 5:
                     s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),

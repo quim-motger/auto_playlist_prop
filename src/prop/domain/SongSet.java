@@ -77,8 +77,9 @@ public class SongSet {
     public void addSong(Song song) throws PropException {
         String title = song.getTitle();
         String artist = song.getArtist();
-        if (!contains(title,artist)) {
-            String key = getKey(title,artist);
+        String key = getKey(title, artist);
+        if (!songSet.contains(key)) {
+
             songSet.put(key,song);
         }
         else throw new PropException(ErrorString.EXISTING_SONG);
@@ -91,8 +92,8 @@ public class SongSet {
      * @throws PropException    if the song is not present in the set
      */
     public void removeSong(String title, String artist) throws PropException {
-        String key = getKey(title,artist);
-        if (contains(title,artist)) {
+        String key = getKey(title, artist);
+        if (songSet.contains(key)) {
             songSet.remove(key);
         }
         else throw new PropException(ErrorString.UNEXISTING_SONG);
@@ -159,19 +160,19 @@ public class SongSet {
      */
     private boolean satisfies(Song song, String attribute, String value) throws PropException {
         switch (attribute) {
-            case "title":
+            case "song_title":
                 return song.getTitle().equals(value);
-            case "artist":
+            case "song_artist":
                 return song.getArtist().equals(value);
-            case "album":
+            case "song_album":
                 return song.getAlbum().equals(value);
-            case "year":
+            case "song_year":
                 return song.getYear() == Integer.parseInt(value);
-            case "genre":
+            case "song_genre":
                 return song.getGenre().getId() == Integer.parseInt(value);
-            case "subgenre":
+            case "song_subgenre":
                 return song.getSubgenre().getId() == Integer.parseInt(value);
-            case "duration":
+            case "song_duration":
                 return song.getDuration() == Integer.parseInt(value);
             default:
                 throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);

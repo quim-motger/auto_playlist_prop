@@ -63,11 +63,11 @@ public class RelationControllerDriver {
                     while (!(p = in.next()).equals(";")) {
                         sp.append(" " + p);
                     }
-                    try {
+                    /*try {
                         rc.addSongRelation(sb.toString(),sp.toString());
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
-                    }
+                    }*/
                     break;
                 case 5:
                     System.out.println("How to introduce relations:");

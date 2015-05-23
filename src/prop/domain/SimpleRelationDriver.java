@@ -2,6 +2,7 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
@@ -21,6 +22,9 @@ public class SimpleRelationDriver {
         Song s1 = null;
         Song s2 = null;
         User u = null;
+        ArrayList<Song> songs;
+        UserSet us = new UserSet();
+        SongSet ss = new SongSet();
 
         int i = -1;
         printInfoComplete();
@@ -34,10 +38,12 @@ public class SimpleRelationDriver {
                     break;
                 case 2:
                     try {
-                        if (r.evaluateSongs(s1, s2)) System.out.print("true\n");
-                        else System.out.print("false\n");
+                        songs = r.evaluate();
+                        for (Song song : songs) {
+                            System.out.println(song.getTitle() + " " + song.getArtist());
+                        }
                     } catch (PropException e) {
-                        System.err.println(e.getMessage());
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case 3:/*
@@ -52,7 +58,7 @@ public class SimpleRelationDriver {
                     String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    r = new SimpleRelation(attribute, value);
+                    r = new SimpleRelation(ss,us,attribute, value);
                     break;
                 case 5:
                     String title = in.next();

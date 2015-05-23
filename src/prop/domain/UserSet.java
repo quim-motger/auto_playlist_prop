@@ -94,6 +94,35 @@ public class UserSet {
         return users.matchPrefix(prefix);
     }
 
+    public ArrayList<User> searchUsers(ArrayList<Pair<String,String>> conditions) throws PropException {
+        ArrayList<User> userSet = new ArrayList<>();
+        for (User user : users.getList()) {
+            boolean valid = true;
+            for (Pair<String,String> condition : conditions) {
+                if (!satisfies(user,condition.first(),condition.second())) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid)
+                userSet.add(user);
+        }
+        return userSet;
+    }
+
+    private boolean satisfies(User user, String attribute, String value) throws PropException {
+        switch (attribute) {
+            case "user_name":
+                return user.getName().equals(value);
+            case "user_gender":
+                return user.getGender().equals(value);
+            case "user_age":
+                return user.age() == Integer.parseInt(value);
+            default:
+                throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
+        }
+    }
+
     /**
      * Remove <code>user</code> with name <code>name</code> from <code>users</code>
      * @params  name    <code>user</code> name
