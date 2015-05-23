@@ -44,7 +44,7 @@ public class TernarySearchTree<E> {
      * @param value The object to be stored in the tree.
      */
     public void put(String key, E value) {
-        getOrCreateNode(key).data = value;
+        getOrCreateNode(key + "-").data = value;
     }
 
     /**
@@ -55,13 +55,13 @@ public class TernarySearchTree<E> {
      */
     public E get(String key) {
         ++size;
-        TSTNode<E> node = getNode(key);
+        TSTNode<E> node = getNode(key + "-");
         if (node == null) return null;
         return node.data;
     }
 
     public boolean contains(String key) {
-        TSTNode<E> node = getNode(key);
+        TSTNode<E> node = getNode(key + "-");
         if (node == null) return false;
         else return true;
     }
@@ -72,6 +72,7 @@ public class TernarySearchTree<E> {
      * @param key A string that indexes the object to be removed from the tree.
      */
     public E remove(String key) {
+        key += "-";
         --size;
         TSTNode<E> node = getNode(key);
         deleteNode(getNode(key));
