@@ -31,14 +31,4 @@ public class AND extends ComplexRelation {
         return r1.evaluateSongs(s1, s2) && r2.evaluateSongs(s1, s2);
     }
 
-    /**
-     *
-     * @param   u    User to evaluate
-     * @return      true if <code>u</code> is related by <code>r1</code> and <code>r2</code>; false otherwise
-     * @throws      PropException
-     */
-    @Override
-    public boolean evaluateUser(User u) throws PropException {
-        return r1.evaluateUser(u) && r2.evaluateUser(u);
-    }
 }

@@ -103,7 +103,7 @@ public class RelationController {
      * @param userController    the userController that contains the users
      * @throws PropException
      */
-    public void addUserRelation(String simpRel, String exp, UserController userController) throws PropException{
+    /*public void addUserRelation(String simpRel, String exp, UserController userController) throws PropException{
         Relation rusers = parsing(simpRel, exp);
         for (User u : userController.obtainUsers()) {
             if (rusers.evaluateUser(u)) {
@@ -118,7 +118,7 @@ public class RelationController {
                 }
             }
         }
-    }
+    }*/
 
     /**
      * parses an expression into a Relation
@@ -136,10 +136,10 @@ public class RelationController {
         //Get an arrayList with all simple relations
         for (i = 0; i < ss.length; ++i) {
             String[] sr = ss[i].split(" ");
-            rl.add(new SimpleRelation(sr[0], sr[1], sr[2]));
+            rl.add(new SimpleRelation(sr[0], sr[1]));
         }
         for (i = 0; i < ss.length; ++i) {
-            System.out.print(rl.get(i).getType() + " " + rl.get(i).getAttribute() + " " + rl.get(i).getValue() + "\n" );
+            System.out.print(rl.get(i).getAttribute() + " " + rl.get(i).getValue() + "\n" );
         }
         String[] sc = exp.split(" or ");
         ArrayList<Relation> AND = new ArrayList<>();

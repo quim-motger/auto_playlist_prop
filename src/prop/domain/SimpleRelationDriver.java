@@ -40,19 +40,19 @@ public class SimpleRelationDriver {
                         System.err.println(e.getMessage());
                     }
                     break;
-                case 3:
+                case 3:/*
                     try {
                         if (r.evaluateUser(u)) System.out.print("true\n");
                         else System.out.print("false\n");
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
-                    }
+                    }*/
                     break;
                 case 4:
                     String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    r = new SimpleRelation(type,attribute,value);
+                    r = new SimpleRelation(attribute,value);
                     break;
                 case 5:
                     String title = in.next();

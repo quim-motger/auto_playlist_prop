@@ -47,15 +47,15 @@ public class NOTDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 3:
+                case 3:/*
                     try {
                         System.out.println(r.evaluateUser(u));
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
-                    }
+                    }*/
                     break;
                 case 4:
-                    r1 = new SimpleRelation(in.next(), in.next(), in.next());
+                    r1 = new SimpleRelation(in.next(), in.next());
                     break;
                 case 5:
                     s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),

@@ -91,12 +91,12 @@ public class RelationControllerDriver {
                     sp2.append(p2);
                     while (!(p2 = in.next()).equals(";")) {
                         sp2.append(" " + p2);
-                    }
+                    }/*
                     try {
                         rc.addUserRelation(sb2.toString(), sp2.toString(), uc);
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
-                    }
+                    }*/
                     break;
                 case 6:
                     rc.playbackRelations(uc);

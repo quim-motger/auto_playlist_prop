@@ -71,7 +71,7 @@ public class ExpressionTree {
         if (m == exp.length()-1) {
             double d = Double.parseDouble(exp.substring(1,exp.length()-1));
             String[] relParts = rels[(int)d].split(" ");
-            SimpleRelation sRel = new SimpleRelation(relParts[0],relParts[1],relParts[2]);
+            SimpleRelation sRel = new SimpleRelation(relParts[1],relParts[2]);
             node = new ExpSRelNode(sRel);
             return node;
         }
