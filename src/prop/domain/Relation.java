@@ -16,11 +16,5 @@ public abstract class Relation {
      */
     public abstract boolean evaluateSongs(Song s1, Song s2) throws PropException;
 
-    /**
-     * @param   u    User to evaluate
-     * @return      <code>true</code> if <code>u</code> is related with specified criteria
-     */
-    public abstract boolean evaluateUser(User u) throws PropException;
-
 
 }

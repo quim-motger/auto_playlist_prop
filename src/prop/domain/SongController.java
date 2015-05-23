@@ -160,6 +160,10 @@ public class SongController {
         return s;
     }
 
+    public ArrayList<Song> searchSongsList(ArrayList< Pair<String, String>> l) throws PropException {
+        return songSet.searchSongs(l);
+    }
+
     public String findSongsByName(String prefix) {
         ArrayList<Song> songs = songSet.findSongs(prefix);
         String p = "";
