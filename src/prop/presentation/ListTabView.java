@@ -3,6 +3,8 @@ package prop.presentation;
 import prop.PropException;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -103,29 +105,44 @@ public class ListTabView extends TabView {
                 }
             }
         });
+
         searchField = getSearchField();
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateListSetModel();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateListSetModel();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateListSetModel();
+            }
+        });
+
         searchButton = getSearchButton();
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listSetModel.clear();
-                String prefix = searchField.getText();
-                if (prefix.equals(""))
-                    updateListSetModel();
-                else {
-                    ArrayList<String> lists = listPController.findLists(prefix);
-                    for (String s : lists) {
-                        listSetModel.addElement(s);
-                    }
-                }
+                updateListSetModel();
             }
         });
+
         addListPanel = new AddList();
     }
 
     private void updateListSetModel() {
         listSetModel.clear();
-        ArrayList<String> lists = listPController.getListSetStringArray();
+        ArrayList<String> lists;
+        String prefix = searchField.getText();
+        if (prefix.equals(""))
+            lists = listPController.getListSetStringArray();
+        else
+            lists = listPController.findLists(prefix);
         for (String s : lists) {
             listSetModel.addElement(s);
         }
