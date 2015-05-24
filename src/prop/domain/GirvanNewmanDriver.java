@@ -1,6 +1,7 @@
 package prop.domain;
 
 import prop.ErrorString;
+import prop.PropException;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -51,7 +52,12 @@ public class GirvanNewmanDriver {
                         Genre genre = Genre.getGenreById(in.nextInt());
                         Genre subgenre = Genre.getGenreById(in.nextInt());
                         int duration = in.nextInt();
-                        Song s = new Song(title, artist, album, year, genre, subgenre, duration);
+                        Song s = null;
+                        try {
+                            s = new Song(title, artist, album, year, genre, subgenre, duration);
+                        } catch (PropException e) {
+                            System.out.println(e.getMessage());
+                        }
                         songs.add(s);
                         graph.addVertex(s);
                     }

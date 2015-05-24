@@ -107,10 +107,10 @@ public class PlaybackDriver {
                     String title = in.next();
                     String artist = in.next();
                     String album = in.next();
-                    int year = in.nextInt();
-                    int genre = in.nextInt();
-                    int subgenre = in.nextInt();
-                    int duration = in.nextInt();
+                    String year = in.next();
+                    String genre = in.next();
+                    String subgenre = in.next();
+                    String duration = in.next();
                     sc.addSong(title,artist,album,year,genre,subgenre,duration);
                     break;
                 case 11:

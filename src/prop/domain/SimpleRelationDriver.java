@@ -68,7 +68,11 @@ public class SimpleRelationDriver {
                     Genre genre = Genre.getGenreById(in.nextInt());
                     Genre subgenre = Genre.getGenreById(in.nextInt());
                     int duration = in.nextInt();
-                    s1 = new Song(title, artist, album, y, genre, subgenre, duration);
+                    try {
+                        s1 = new Song(title, artist, album, y, genre, subgenre, duration);
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 6:
                     String title2 = in.next();
@@ -78,7 +82,11 @@ public class SimpleRelationDriver {
                     Genre genre2 = Genre.getGenreById(in.nextInt());
                     Genre subgenre2 = Genre.getGenreById(in.nextInt());
                     int duration2 = in.nextInt();
-                    s2 = new Song(title2, artist2, album2, y2, genre2, subgenre2, duration2);
+                    try {
+                        s2 = new Song(title2, artist2, album2, y2, genre2, subgenre2, duration2);
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 7:
                     String name = in.next();

@@ -27,4 +27,12 @@ public class ErrorString {
     public static final String EXISTING_LIST = "The list with the specified name already exists\n";
     public static final String UNEXISTING_LIST = "The list does not exist\n";
     public static final String WRONG_EXPRESSION = "Wrong expression. Unable to parse\n";
+    public static final String GENRE_SUBGENRE_EQUAL = "The genre and subgenre cannot be the same\n";
+    public static final String INVALID_YEAR = "The specified year is not a valid year\n";
+    public static final String INVALID_DURATION = "The specified duration is not valid (min 0)\n";
+    public static final String MISSING_TITLE = "The Title field cannot be empty\n";
+    public static final String MISSING_ARTIST = "The Artist field cannot be empty\n";
+    public static final String MISSING_YEAR = "The Year field cannot be empty\n";
+    public static final String MISSING_DURATION = "The Duration field cannot be empty\n";
+    public static final String MISSING_ALBUM = "The Album field cannot be empty\n";
 }

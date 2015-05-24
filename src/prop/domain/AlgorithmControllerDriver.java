@@ -87,16 +87,16 @@ public class AlgorithmControllerDriver {
         System.out.print(sb.toString());
     }
 
-    private static class RelationControllerStub extends RelationController {
+    private static class RelationControllerStub extends RelationController{
 
         private Graph graph = null;
-        private Song song0 = new Song("title0","artist0","album0",2000,Genre.getGenreById(0),Genre.getGenreById(0),000);
+        /*private Song song0 = new Song("title0","artist0","album0",2000,Genre.getGenreById(0),Genre.getGenreById(0),000);
         private Song song1 = new Song("title1","artist1","album1",2001,Genre.getGenreById(1),Genre.getGenreById(1),111);
         private Song song2 = new Song("title2","artist2","album2",2002,Genre.getGenreById(2),Genre.getGenreById(2),222);
         private Song song3 = new Song("title3","artist3","album3",2003,Genre.getGenreById(3),Genre.getGenreById(3),333);
         private Song song4 = new Song("title4","artist4","album4",2004,Genre.getGenreById(4),Genre.getGenreById(4),444);
         private Song song5 = new Song("title5","artist5","album5",2005,Genre.getGenreById(5),Genre.getGenreById(5),555);
-        private Song song6 = new Song("title6","artist6","album6",2006,Genre.getGenreById(6),Genre.getGenreById(6),666);
+        private Song song6 = new Song("title6","artist6","album6",2006,Genre.getGenreById(6),Genre.getGenreById(6),666);*/
 
         public Graph getGraph() {
             readGraph();
@@ -105,7 +105,7 @@ public class AlgorithmControllerDriver {
 
         private void readGraph(){
             graph = new Graph<Song>();
-            graph.addVertex(song0);
+            /*graph.addVertex(song0);
             graph.addVertex(song1);
             graph.addVertex(song2);
             graph.addVertex(song3);
@@ -121,7 +121,7 @@ public class AlgorithmControllerDriver {
             graph.addEdgeT(song2, song3, 2.0);
             graph.addEdgeT(song3, song4, 2.0);
             graph.addEdgeT(song3, song4, 2.0);
-            graph.addEdgeT(song5, song6, 1.0);
+            graph.addEdgeT(song5, song6, 1.0);*/
         }
     }
 

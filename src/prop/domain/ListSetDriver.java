@@ -89,8 +89,8 @@ public class ListSetDriver {
                         song = songController.getSong(in.next(),in.next());
                         break;
                     case 17:
-                        songController.addSong(in.next(), in.next(), in.next(), in.nextInt(), in.nextInt(),
-                                in.nextInt(), in.nextInt());
+                        songController.addSong(in.next(), in.next(), in.next(), in.next(), in.next(),
+                                in.next(), in.next());
                         break;
                     case 18:
                         list = new List(in.next());

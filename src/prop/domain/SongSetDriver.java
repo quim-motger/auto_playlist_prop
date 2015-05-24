@@ -84,7 +84,12 @@ public class SongSetDriver {
                     genre = Genre.getGenreById(in.nextInt());
                     subgenre = Genre.getGenreById(in.nextInt());
                     duration = in.nextInt();
-                    Song song = new Song(title, artist, album, year, genre, subgenre, duration);
+                    Song song = null;
+                    try {
+                        song = new Song(title, artist, album, year, genre, subgenre, duration);
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     try {
                         songSet.addSong(song);
                     }

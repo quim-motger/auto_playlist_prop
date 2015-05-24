@@ -39,6 +39,15 @@ public class SongSet {
         return new ArrayList<Song>(songSet.getList());
     }
 
+    public String getSongList() {
+        ArrayList<Song> songs = songSet.getList();
+        StringBuilder sp = new StringBuilder();
+        for (Song song : songs) {
+            sp.append(song.getTitle() + " - " + song.getArtist() + "\n");
+        }
+        return String.valueOf(sp);
+    }
+
     /**
      * Get a song identified by title and artist.
      * @param title             the title of the song to get

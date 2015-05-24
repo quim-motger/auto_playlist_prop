@@ -65,12 +65,20 @@ public class NOTDriver {
                     r1 = new SimpleRelation(ss, us, in.next(), in.next());
                     break;
                 case 5:
-                    s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
-                            Genre.valueOf(in.next()), in.nextInt());
+                    try {
+                        s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
+                                Genre.valueOf(in.next()), in.nextInt());
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 6:
-                    s2 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
-                            Genre.valueOf(in.next()), in.nextInt());
+                    try {
+                        s2 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
+                                Genre.valueOf(in.next()), in.nextInt());
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 7:
                     u = new User(in.next(), Gender.valueOf(in.next()), birthday);

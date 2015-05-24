@@ -102,10 +102,10 @@ public class UserSetDriver {
                     String title2 = in.next();
                     String artist = in.next();
                     String album = in.next();
-                    int year2 = in.nextInt();
-                    int genre = in.nextInt();
-                    int subgenre = in.nextInt();
-                    int duration = in.nextInt();
+                    String year2 = in.next();
+                    String genre = in.next();
+                    String subgenre = in.next();
+                    String duration = in.next();
                     try {
                         sc.addSong(title2,artist,album,year2,genre,subgenre,duration);
                     } catch (Exception e) {

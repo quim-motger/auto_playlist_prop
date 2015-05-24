@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Created by quim_motger on 24/05/15.
@@ -31,6 +32,7 @@ public class SongTabView extends TabView{
     public SongTabView(SongPController spc) {
         super();
         songPController = spc;
+        addSongPanel = new AddSongPanel(songPController, this);
         initListComponents();
     }
 
@@ -99,20 +101,18 @@ public class SongTabView extends TabView{
                 updateSongSetModel();
             }
         });
-
-        addSongPanel = new AddSongPanel(songPController);
     }
 
-    private void updateSongSetModel() {
+    public void updateSongSetModel() {
         songSetModel.clear();
-        ArrayList<String> songs = new ArrayList<>();
+        String songs;
         String prefix = searchField.getText();
         if (prefix.equals("")) {
-
+            songs = songPController.findSongs();
         }
-        else
-            //songs = songPController.(prefix);
-        for (String s : songs) {
+        else songs = songPController.findSongsByName(prefix);
+        String[] listSongs = songs.split(Pattern.quote("\n"));
+        for (String s : listSongs) {
             songSetModel.addElement(s);
         }
     }

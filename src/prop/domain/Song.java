@@ -1,5 +1,8 @@
 package prop.domain;
 
+import prop.ErrorString;
+import prop.PropException;
+
 import java.util.regex.Pattern;
 
 /**
@@ -33,14 +36,22 @@ public class Song {
      * @param _subgenre  song subgenre
      * @param _duration  song duration in seconds
      */
-    public Song(String _title, String _artist, String _album, int _year, Genre _genre, Genre _subgenre, int _duration) {
-        title = _title;
-        artist = _artist;
-        album = _album;
-        year = _year;
-        genre = _genre;
-        subgenre = _subgenre;
-        duration = _duration;
+    public Song(String _title, String _artist, String _album, int _year, Genre _genre, Genre _subgenre, int _duration) throws PropException {
+        if (_title.length() == 0) throw new PropException(ErrorString.MISSING_TITLE);
+        else if (_artist.length() == 0) throw new PropException(ErrorString.MISSING_ARTIST);
+        else if (_album.length() == 0) throw new PropException(ErrorString.MISSING_ALBUM);
+        else if (_year < 0 || _year > 2015) throw new PropException(ErrorString.INVALID_YEAR);
+        else if (_genre.equals(_subgenre)) throw new PropException(ErrorString.GENRE_SUBGENRE_EQUAL);
+        else if (_duration < 0) throw new PropException(ErrorString.INVALID_DURATION);
+        else {
+            title = _title;
+            artist = _artist;
+            album = _album;
+            year = _year;
+            genre = _genre;
+            subgenre = _subgenre;
+            duration = _duration;
+        }
     }
 
     public String getTitle() {

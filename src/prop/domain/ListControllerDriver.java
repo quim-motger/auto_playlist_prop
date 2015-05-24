@@ -21,7 +21,11 @@ public class ListControllerDriver {
 
         ListController listController = null;
         SongController songController = new SongController();
-        initSongController(songController);
+        try {
+            initSongController(songController);
+        } catch (PropException e) {
+            System.out.println(e.getMessage());
+        }
 
         String title,artist,path;
         int id,n,pos,pos1,pos2;
@@ -229,7 +233,7 @@ public class ListControllerDriver {
         System.out.print(sb.toString());
     }
 
-    private static void initSongController(SongController songController) {
+    private static void initSongController(SongController songController) throws PropException {
         Song song0 = new Song("title0","artist0","album0",2000,Genre.getGenreById(0),Genre.getGenreById(0),000);
         Song song1 = new Song("title1","artist1","album1",2001,Genre.getGenreById(1),Genre.getGenreById(1),111);
         Song song2 = new Song("title2","artist2","album2",2002,Genre.getGenreById(2),Genre.getGenreById(2),222);

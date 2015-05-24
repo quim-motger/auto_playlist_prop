@@ -72,10 +72,10 @@ public class RelationControllerDriver {
                     String title2 = in.next();
                     String artist2 = in.next();
                     String album2 = in.next();
-                    int year2 = in.nextInt();
-                    int genre2 = in.nextInt();
-                    int subgenre2 = in.nextInt();
-                    int duration2 = in.nextInt();
+                    String year2 = in.next();
+                    String genre2 = in.next();
+                    String subgenre2 = in.next();
+                    String duration2 = in.next();
                     try {
                         sc.addSong(title2, artist2, album2, year2, genre2, subgenre2, duration2);
                     } catch (Exception e) {

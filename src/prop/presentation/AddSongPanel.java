@@ -1,7 +1,12 @@
 package prop.presentation;
 
+import prop.PropException;
+import prop.domain.Genre;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by quim_motger on 24/05/15.
@@ -9,13 +14,15 @@ import java.awt.*;
 public class AddSongPanel extends javax.swing.JPanel {
 
     SongPController songPController;
+    SongTabView songTabView;
 
     /**
      * Creates new form NewJPanel
      */
-    public AddSongPanel(SongPController spc) {
-        initComponents();
+    public AddSongPanel(SongPController spc, SongTabView stv) {
         songPController = spc;
+        songTabView = stv;
+        initComponents();
     }
 
     /**
@@ -54,12 +61,6 @@ public class AddSongPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Artist");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Album");
 
         jLabel5.setText("Year");
@@ -70,11 +71,11 @@ public class AddSongPanel extends javax.swing.JPanel {
 
         jLabel8.setText("Duration");
 
-        //String[] genres = songPController.getSongController().listGenres();
+        String[] genres = songPController.listGenres();
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(genres));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(genres));
 
         jButton1.setLabel("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -188,11 +189,35 @@ public class AddSongPanel extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        try {
+            String title = jTextField1.getText();
+            String artist = jTextField2.getText();
+            String album = jTextField3.getText();
+            String year = jTextField4.getText();
+            String genre = String.valueOf(jComboBox1.getSelectedIndex());
+            String subgenre = String.valueOf(jComboBox2.getSelectedIndex());
+            String duration = jTextField7.getText();
+            songPController.addSong(title, artist, album, year, genre, subgenre, duration);
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jComboBox1.setSelectedIndex(0);
+            jComboBox2.setSelectedIndex(0);
+            jTextField7.setText("");
+            songTabView.updateSongSetModel();
+        } catch (PropException e) {
+            jLabel9.setText(e.getMessage());
+            jLabel9.setVisible(true);
+            ActionListener listener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    jLabel9.setVisible(false);
+                }
+            };
+            Timer timer = new Timer(4000, listener);
+            timer.start();
+        }
     }
 
 

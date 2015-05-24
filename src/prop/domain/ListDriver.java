@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -96,14 +98,18 @@ public class ListDriver {
                     System.out.println(l.toString());
                     break;
                 case 17:
-                    song = new Song(
-                            in.next(),
-                            in.next(),
-                            in.next(),
-                            in.nextInt(),
-                            Genre.getGenreById(in.nextInt()),
-                            Genre.getGenreById(in.nextInt()),
-                            in.nextInt());
+                    try {
+                        song = new Song(
+                                in.next(),
+                                in.next(),
+                                in.next(),
+                                in.nextInt(),
+                                Genre.getGenreById(in.nextInt()),
+                                Genre.getGenreById(in.nextInt()),
+                                in.nextInt());
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 18:
                     try {
@@ -117,10 +123,10 @@ public class ListDriver {
                         sc.addSong(in.next(),
                                 in.next(),
                                 in.next(),
-                                in.nextInt(),
-                                in.nextInt(),
-                                in.nextInt(),
-                                in.nextInt());
+                                in.next(),
+                                in.next(),
+                                in.next(),
+                                in.next());
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                         i=0;

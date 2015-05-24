@@ -110,10 +110,10 @@ public class UserControllerDriver {
                                 in.next(),
                                 in.next(),
                                 in.next(),
-                                in.nextInt(),
-                                in.nextInt(),
-                                in.nextInt(),
-                                in.nextInt()
+                                in.next(),
+                                in.next(),
+                                in.next(),
+                                in.next()
                         );
                     } catch (Exception e) {
                         System.out.println(e.getMessage());

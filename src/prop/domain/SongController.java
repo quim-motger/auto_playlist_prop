@@ -60,8 +60,10 @@ public class SongController {
      * @param duration  song duration in seconds
      * @throws PropException
      */
-    public void addSong(String title, String artist, String album, int year, int genre, int subgenre, int duration) throws PropException {
-        Song song = new Song(title, artist, album, year, Genre.getGenreById(genre), Genre.getGenreById(subgenre), duration);
+    public void addSong(String title, String artist, String album, String year, String genre, String subgenre, String duration) throws PropException {
+        if (year.length() == 0) throw new PropException(ErrorString.MISSING_YEAR);
+        else if (duration.length() == 0) throw new PropException(ErrorString.MISSING_DURATION);
+        Song song = new Song(title, artist, album, Integer.parseInt(year), Genre.getGenreById(Integer.parseInt(genre)), Genre.getGenreById(Integer.parseInt(subgenre)), Integer.parseInt(duration));
         songSet.addSong(song);
     }
 
@@ -164,9 +166,13 @@ public class SongController {
         ArrayList<Song> songs = songSet.findSongs(prefix);
         String p = "";
         for (Song song : songs) {
-            p += song.getTitle() + " " + song.getArtist();
+            p += song.getTitle() + " " + song.getArtist() + "\n";
         }
         return p;
+    }
+
+    public String getList() {
+        return songSet.getSongList();
     }
 
     /**

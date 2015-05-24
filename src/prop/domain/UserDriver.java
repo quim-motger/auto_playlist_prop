@@ -140,8 +140,8 @@ public class UserDriver {
                         song = songController.getSong(in.next(),in.next());
                         break;
                     case 28:
-                        songController.addSong(in.next(),in.next(),in.next(),in.nextInt(),in.nextInt(),
-                                in.nextInt(),in.nextInt());
+                        songController.addSong(in.next(),in.next(),in.next(),in.next(),in.next(),
+                                in.next(),in.next());
                         break;
                     case 29:
                         date = Calendar.getInstance();
