@@ -3,6 +3,7 @@ package prop.presentation;
 import prop.PropException;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.regex.Pattern;
 
 /**
@@ -31,6 +32,7 @@ public class ShowSongPanel extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
+        jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -47,8 +49,10 @@ public class ShowSongPanel extends JPanel {
         jTextField3 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
-
-
+        jButton1 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         jLabel1.setText("Song details");
 
@@ -67,6 +71,33 @@ public class ShowSongPanel extends JPanel {
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         jLabel5.setText("Year");
+
+        jLabel9.setForeground(Color.RED);
+        jLabel9.setVisible(false);
+        jLabel9.setText("Error: ");
+
+        jButton1.setText("Edit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Save");
+        jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Cancel");
+        jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         try {
             String[] attr = songPController.getSong(title,artist).split(Pattern.quote(" "));
@@ -95,44 +126,53 @@ public class ShowSongPanel extends JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jSeparator1)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(30, 30, 30)
-                                                                .addComponent(jLabel3))
-                                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(129, 129, 129))
-                                                        .addComponent(jTextField2)
-                                                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(38, 38, 38)
                                                 .addComponent(jLabel2)
-                                                .addGap(227, 227, 227))
+                                                .addGap(239, 239, 239))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(87, 87, 87)
-                                                .addComponent(jTextField1))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                        .addComponent(jLabel8)
-                                                        .addComponent(jLabel7)
-                                                        .addComponent(jLabel6))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jTextField5)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(jLabel1)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                                        .addComponent(jLabel8)
+                                                                                        .addComponent(jLabel7)
+                                                                                        .addComponent(jLabel6))
+                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                                                                        .addComponent(jTextField5))))
                                                                 .addGap(0, 0, Short.MAX_VALUE))
-                                                        .addComponent(jTextField6))))
-                                .addContainerGap())
+                                                        .addComponent(jSeparator1)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addGap(30, 30, 30)
+                                                                                .addComponent(jLabel3))
+                                                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addGap(129, 129, 129))
+                                                                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                                                                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(87, 87, 87)
+                                                                .addComponent(jTextField1))
+                                                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                                .addComponent(jButton1)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jButton3)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jButton4)))
+                                                .addContainerGap())))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,13 +209,53 @@ public class ShowSongPanel extends JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel8)
                                         .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(50, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jButton1)
+                                        .addComponent(jButton3)
+                                        .addComponent(jButton4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9))
         );
     }// </editor-fold>
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        jTextField1.setEditable(true);
+        jTextField2.setEditable(true);
+        jTextField3.setEditable(true);
+        jTextField4.setEditable(true);
+        jTextField5.setEditable(true);
+        jTextField6.setEditable(true);
+        jTextField7.setEditable(true);
+        jButton1.setEnabled(false);
+        jButton3.setEnabled(true);
+        jButton4.setEnabled(true);
+    }
+
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
+        jTextField1.setEditable(false);
+        jTextField2.setEditable(false);
+        jTextField3.setEditable(false);
+        jTextField4.setEditable(false);
+        jTextField5.setEditable(false);
+        jTextField6.setEditable(false);
+        jTextField7.setEditable(false);
+        jButton1.setEnabled(true);
+        jButton3.setEnabled(false);
+        jButton4.setEnabled(false);
+    }
 
 
     // Variables declaration - do not modify
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -184,6 +264,7 @@ public class ShowSongPanel extends JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
