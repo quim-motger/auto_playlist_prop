@@ -60,8 +60,8 @@ public class SongController {
      * @param duration  song duration in seconds
      * @throws PropException
      */
-    public void addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration) throws PropException {
-        Song song = new Song(title, artist, album, year, genre, subgenre, duration);
+    public void addSong(String title, String artist, String album, int year, int genre, int subgenre, int duration) throws PropException {
+        Song song = new Song(title, artist, album, year, Genre.getGenreById(genre), Genre.getGenreById(subgenre), duration);
         songSet.addSong(song);
     }
 

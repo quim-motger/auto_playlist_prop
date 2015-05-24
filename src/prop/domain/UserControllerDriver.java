@@ -111,8 +111,8 @@ public class UserControllerDriver {
                                 in.next(),
                                 in.next(),
                                 in.nextInt(),
-                                Genre.getGenreById(in.nextInt()),
-                                Genre.getGenreById(in.nextInt()),
+                                in.nextInt(),
+                                in.nextInt(),
                                 in.nextInt()
                         );
                     } catch (Exception e) {

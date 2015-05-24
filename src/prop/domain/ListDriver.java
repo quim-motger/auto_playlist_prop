@@ -118,8 +118,8 @@ public class ListDriver {
                                 in.next(),
                                 in.next(),
                                 in.nextInt(),
-                                Genre.getGenreById(in.nextInt()),
-                                Genre.getGenreById(in.nextInt()),
+                                in.nextInt(),
+                                in.nextInt(),
                                 in.nextInt());
                     } catch (Exception e) {
                         System.out.println(e.getMessage());

@@ -28,7 +28,7 @@ public class MainView extends JFrame {
 
         TabbedPane = new JTabbedPane();
         UserPanel = new JPanel();
-        SongPanel = new JPanel();
+        SongPanel = new SongTabView(songPController);
         ListPanel = new ListTabView(listPController);
         AlgorithmPanel = new JPanel();
         MenuBar = new JMenuBar();
@@ -53,17 +53,6 @@ public class MainView extends JFrame {
         );
 
         TabbedPane.addTab("Users", UserPanel);
-
-        GroupLayout jPanel2Layout = new GroupLayout(SongPanel);
-        SongPanel.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 395, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 251, Short.MAX_VALUE)
-        );
 
         TabbedPane.addTab("Songs", SongPanel);
 

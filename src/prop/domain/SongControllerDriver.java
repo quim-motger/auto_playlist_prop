@@ -44,8 +44,8 @@ public class SongControllerDriver {
                     String artist = in.next();
                     String album = in.next();
                     int year = in.nextInt();
-                    Genre genre = Genre.getGenreById(in.nextInt());
-                    Genre subgenre = Genre.getGenreById(in.nextInt());
+                    int genre = in.nextInt();
+                    int subgenre = in.nextInt();
                     int duration = in.nextInt();
                     try {
                         songController.addSong(title,artist,album,year,genre,subgenre,duration);

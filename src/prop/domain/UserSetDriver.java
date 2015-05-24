@@ -103,8 +103,8 @@ public class UserSetDriver {
                     String artist = in.next();
                     String album = in.next();
                     int year2 = in.nextInt();
-                    Genre genre = Genre.getGenreById(in.nextInt());
-                    Genre subgenre = Genre.getGenreById(in.nextInt());
+                    int genre = in.nextInt();
+                    int subgenre = in.nextInt();
                     int duration = in.nextInt();
                     try {
                         sc.addSong(title2,artist,album,year2,genre,subgenre,duration);
