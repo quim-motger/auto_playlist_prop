@@ -1,12 +1,8 @@
 package prop.domain;
 
-import prop.ErrorString;
-import prop.PropException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TreeSet;
-import java.util.regex.Pattern;
 
 /**
  * Class User represents a user identity. Contains their personal information, a register of songs played
@@ -48,36 +44,6 @@ public class User implements Comparable<User> {
         birthdate = birthdate1;
         playbackRegister = new TreeSet<>();
         associatedLists = new ArrayList<>();
-    }
-
-    public static User valueOf(String origin, ListController listController, SongController songController)
-            throws Exception {
-        String[] tokens = origin.split(Pattern.quote(USER_DELIMITER));
-        if (!tokens[0].equals(USER_STRING_ID) || tokens.length < 9) {
-            throw new PropException(ErrorString.INCORRECT_FORMAT);
-        }
-        User u = new User();
-        TreeSet<Playback> plays = new TreeSet<>();
-        ArrayList<List> lists = new ArrayList<>();
-        u.setName(tokens[1]);
-        u.setGender(Gender.valueOf(tokens[2]));
-        Calendar d = Calendar.getInstance();
-        d.set(Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]));
-        u.setBirthdate(d);
-        /// u.setCountry(CountryCode.valueOf(tokens[6]));
-        int i = 8;
-        int size = i + Integer.valueOf(tokens[7]);
-        for (; i < size; ++i) {
-            plays.add(Playback.valueOf(tokens[i], songController));
-        }
-        u.setPlaybackRegister((plays));
-        size = i + 1 + Integer.valueOf(tokens[i]);
-        ++i;
-        for (; i < size; ++i) {
-            lists.add(listController.getList(tokens[i]));
-        }
-        u.setAssociatedLists(lists);
-        return u;
     }
 
     /* GETTERS */
@@ -219,4 +185,36 @@ public class User implements Comparable<User> {
         }
         return ret.toString();
     }
+    
+    /*
+    public static User valueOf(String origin, ListController listController, SongController songController)
+            throws Exception {
+        String[] tokens = origin.split(Pattern.quote(USER_DELIMITER));
+        if (!tokens[0].equals(USER_STRING_ID) || tokens.length < 9) {
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
+        }
+        User u = new User();
+        TreeSet<Playback> plays = new TreeSet<>();
+        ArrayList<List> lists = new ArrayList<>();
+        u.setName(tokens[1]);
+        u.setGender(Gender.valueOf(tokens[2]));
+        Calendar d = Calendar.getInstance();
+        d.set(Integer.parseInt(tokens[3]), Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5]));
+        u.setBirthdate(d);
+        /// u.setCountry(CountryCode.valueOf(tokens[6]));
+        int i = 8;
+        int size = i + Integer.valueOf(tokens[7]);
+        for (; i < size; ++i) {
+            plays.add(Playback.valueOf(tokens[i], songController));
+        }
+        u.setPlaybackRegister((plays));
+        size = i + 1 + Integer.valueOf(tokens[i]);
+        ++i;
+        for (; i < size; ++i) {
+            lists.add(listController.getList(tokens[i]));
+        }
+        u.setAssociatedLists(lists);
+        return u;
+    }
+     */
 }

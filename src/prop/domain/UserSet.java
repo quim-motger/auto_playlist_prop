@@ -4,7 +4,6 @@ import prop.ErrorString;
 import prop.PropException;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 /**
  * User set
@@ -22,24 +21,6 @@ public class UserSet {
      */
     public UserSet() {
         users = new TernarySearchTree<>();
-    }
-
-    /**
-     * Get the value of the String <code>s</code> that contains a UserSet in the specified format
-     * @param s     the String that contains the UserSet
-     * @return a UserSet
-     * @throws Exception
-     */
-    public static UserSet valueOf(String s, ListController lc, SongController sc) throws Exception {
-        if (s == null) throw new Exception(ErrorString.NULL);
-        else {
-            String[] users = s.split(Pattern.quote(delimiter));
-            UserSet us = new UserSet();
-            for (String r : users) {
-                us.addUser(User.valueOf(r, lc, sc));
-            }
-            return us;
-        }
     }
 
     /**
@@ -174,5 +155,23 @@ public class UserSet {
         public void remove() {
             users.remove(i);
         }
+        
+            /**
+     * Get the value of the String <code>s</code> that contains a UserSet in the specified format
+     * @param s     the String that contains the UserSet
+     * @return a UserSet
+     * @throws Exception
+     *
+    public static UserSet valueOf(String s, ListController lc, SongController sc) throws Exception {
+        if (s == null) throw new Exception(ErrorString.NULL);
+        else {
+            String[] users = s.split(Pattern.quote(delimiter));
+            UserSet us = new UserSet();
+            for (String r : users) {
+                us.addUser(User.valueOf(r, lc, sc));
+            }
+            return us;
+        }
+    }
     }*/
 }
