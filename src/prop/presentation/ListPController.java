@@ -40,4 +40,8 @@ public class ListPController {
         return listController.findLists(prefix);
     }
 
+    public void removeSong(String title, int pos) {
+        listController.removeSong(title,pos);
+    }
+
 }

@@ -30,6 +30,10 @@ public abstract class TabView extends JPanel {
         return leftList;
     }
 
+    public JPanel getRightPanel() {
+        return (JPanel) rightScrollPanel.getViewport().getView();
+    }
+
     public JTextField getSearchField() {
         return searchField;
     }

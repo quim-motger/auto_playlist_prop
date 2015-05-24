@@ -26,6 +26,7 @@ public class ListTabView extends TabView {
     private JButton addListButton;
     private JButton removeListButton;
     private JButton addSongButton;
+    private JButton removeSongButton;
 
     public ListTabView(ListPController lpc) {
         super();
@@ -77,8 +78,8 @@ public class ListTabView extends TabView {
         addSongButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String value = (String) listSet.getSelectedValue();
                 if (!listSet.isSelectionEmpty()) {
+                    String value = (String) listSet.getSelectedValue();
                     addSongPanel = new AddSong(value);
                     setRightPanel(addSongPanel);
                 }
@@ -86,6 +87,23 @@ public class ListTabView extends TabView {
             }
         });
         buttons.add(addSongButton);
+
+        removeSongButton = new JButton("Remove Song");
+        removeSongButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        removeSongButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (!listSet.isSelectionEmpty() && getRightPanel() instanceof ShowList &&
+                        !((ShowList) getRightPanel()).getSongList().isSelectionEmpty()) {
+                    ShowList showList = (ShowList) getRightPanel();
+                    String value = (String) listSet.getSelectedValue();
+                    int index = showList.getSongList().getSelectedIndex();
+                    listPController.removeSong(value, index);
+                    showList.updateListModel();
+                }
+            }
+        });
+        buttons.add(removeSongButton);
 
         return buttons;
     }
@@ -329,6 +347,10 @@ public class ListTabView extends TabView {
             for (int i = 1; i < list.size(); ++i) {
                 listModel.addElement(list.get(i));
             }
+        }
+
+        public JList getSongList() {
+            return jList1;
         }
 
         // Variables declaration - do not modify
