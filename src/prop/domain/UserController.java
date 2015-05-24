@@ -317,4 +317,16 @@ public class UserController {
         }
         return ret;
     }
+
+    public void updateUser(String id,String name, String gender, int day, int month, int year) throws Exception {
+        checkDate(year+"-"+month+"-"+day);
+        User user = userSet.getUserByName(id);
+        userSet.removeUser(id);
+        user.setName(name);
+        user.setGender(Gender.valueOf(gender));
+        Calendar cal = Calendar.getInstance();
+        cal.set(year,month,day);
+        user.setBirthdate(cal);
+        userSet.addUser(user);
+    }
 }

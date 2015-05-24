@@ -43,7 +43,6 @@ public class UserPanel extends JPanel {
     }
 
     private void initComponents() {
-
         titleText = new JLabel();
         separator = new JSeparator();
         nameLabel = new JLabel();
@@ -215,20 +214,13 @@ public class UserPanel extends JPanel {
         return (String) genderSelector.getSelectedItem();
     }
     
-    private void setEdition(boolean b){
-        genderSelector.setEnabled(b);
-        nameField.setEnabled(b);
-        yearSpinner.setEnabled(b);
-        daySpinner.setEnabled(b);
-        monthSpinner.setEnabled(b);
-    }
-    
-    protected void enableEdition() {
-        setEdition(true);        
-    }
-    
-    protected void disableEdition() {
-        setEdition(false);
+    protected void enableFieldEdition(boolean enable){
+        genderSelector.setEditable(enable);
+        genderSelector.setEnabled(enable);
+        nameField.setEditable(enable);
+        yearSpinner.setEnabled(enable);
+        daySpinner.setEnabled(enable);
+        monthSpinner.setEnabled(enable);
     }
     
     protected void setTitleText(String title) {
