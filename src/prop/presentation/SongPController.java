@@ -23,6 +23,10 @@ public class SongPController {
         songController.addSong(title,artist,album,year,genre,subgenre,duration);
     }
 
+    public void removeSong(String title, String artist) throws PropException {
+        songController.removeSong(title, artist);
+    }
+
     public String findSongsByName(String prefix) {
        return songController.findSongsByName(prefix);
     }
@@ -33,6 +37,10 @@ public class SongPController {
 
     public String[] listGenres() {
         return songController.listGenres();
+    }
+
+    public String getSong(String title, String artist) throws PropException {
+        return songController.getSongString(title, artist);
     }
 
 }

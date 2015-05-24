@@ -143,6 +143,14 @@ public class SongController {
         return songSet.getSong(title, artist);
     }
 
+    public String getSongString(String title, String artist) throws PropException {
+        Song song = songSet.getSong(title, artist);
+        String s = song.getTitle() + " " + song.getArtist() + " " + song.getAlbum() + " "
+                + song.getYear() + " " + song.getGenre().getName() + " " + song.getSubgenre() + " "
+                + song.getDuration();
+        return s;
+    }
+
     /**
      * Search songs with the defined values for specified attributes
      * @param l     list with pairs of attributes and value to define search

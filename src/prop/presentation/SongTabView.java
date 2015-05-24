@@ -28,6 +28,7 @@ public class SongTabView extends TabView{
     private JTextField searchField;
     private JButton addSongButton;
     private JButton removeSongButton;
+    private JButton editSongButton;
 
     public SongTabView(SongPController spc) {
         super();
@@ -46,7 +47,6 @@ public class SongTabView extends TabView{
         ArrayList<JButton> buttons = new ArrayList<>();
 
         addSongButton = new JButton("Add Song");
-        buttons.add(addSongButton);
         addSongButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         addSongButton.addActionListener(new ActionListener() {
             @Override
@@ -54,16 +54,27 @@ public class SongTabView extends TabView{
                 setRightPanel(addSongPanel);
             }
         });
+        buttons.add(addSongButton);
 
         removeSongButton = new JButton("Remove Song");
-        buttons.add(removeSongButton);
         removeSongButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         removeSongButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                if (!songSet.isSelectionEmpty()) {
+                    String value = (String) songSet.getSelectedValue();
+                    String[] attr = value.split(Pattern.quote(" - "));
+                    try {
+                        songPController.removeSong(attr[0], attr[1]);
+                        setRightPanel(emptyPanel);
+                        updateSongSetModel();
+                    } catch (PropException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
+        buttons.add(removeSongButton);
 
         return buttons;
     }
@@ -78,7 +89,8 @@ public class SongTabView extends TabView{
             public void valueChanged(ListSelectionEvent e) {
                 if (!songSet.isSelectionEmpty()) {
                     String value = (String) songSet.getSelectedValue();
-                    showSongPanel = new ShowSongPanel();
+                    String[] attr = value.split(Pattern.quote(" - "));
+                    showSongPanel = new ShowSongPanel(songPController,attr[0],attr[1]);
                     setRightPanel(showSongPanel);
                 }
             }
