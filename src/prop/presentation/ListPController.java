@@ -44,4 +44,7 @@ public class ListPController {
         listController.removeSong(title,pos);
     }
 
+    public ListController getListController() {
+        return listController;
+    }
 }

@@ -142,14 +142,6 @@ public class ListTabView extends TabView {
             }
         });
 
-        searchButton = getSearchButton();
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateListSetModel();
-            }
-        });
-
         addListPanel = new AddList();
     }
 

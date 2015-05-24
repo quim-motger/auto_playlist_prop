@@ -35,4 +35,5 @@ public class ErrorString {
     public static final String MISSING_YEAR = "The Year field cannot be empty\n";
     public static final String MISSING_DURATION = "The Duration field cannot be empty\n";
     public static final String MISSING_ALBUM = "The Album field cannot be empty\n";
+    public static final String INCORRECT_DATE = "Incorrect Date";
 }

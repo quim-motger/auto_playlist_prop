@@ -1,7 +1,6 @@
 package prop.presentation;
 
 import javax.swing.*;
-import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -15,7 +14,6 @@ public abstract class TabView extends JPanel {
     private JScrollPane leftListView;
     private JToolBar actionBar;
     private JTextField searchField;
-    private JButton searchButton;
     private JList leftList;
 
     /**
@@ -36,10 +34,6 @@ public abstract class TabView extends JPanel {
 
     public JTextField getSearchField() {
         return searchField;
-    }
-
-    public JButton getSearchButton() {
-        return searchButton;
     }
 
     protected void setLeftList(JList mLeftList) {
@@ -68,14 +62,8 @@ public abstract class TabView extends JPanel {
         searchField = new JTextField();
         searchField.setMaximumSize(new Dimension(150, 200));
         actionBar.add(searchField);
-
-        searchButton = new JButton("Search");
-        searchButton.setBorder(BorderFactory.createEmptyBorder(10,3,10,3));
-        actionBar.add(Box.createHorizontalStrut(4));
-        actionBar.add(searchButton);
-        actionBar.add(Box.createHorizontalStrut(1));
         actionBar.addSeparator();
-        actionBar.add(Box.createHorizontalStrut(3));
+
 
         ArrayList<JButton> buttons = setActionBarButtons();
         for (JButton button : buttons) {

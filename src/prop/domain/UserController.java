@@ -5,6 +5,8 @@ import prop.PropException;
 import prop.data.DataController;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -58,9 +60,20 @@ public class UserController {
     public void addUser(String name, String gender, int year, int month, int date) throws Exception {
         Gender userGender = Gender.valueOf(gender);
         Calendar userBirthday = Calendar.getInstance();
+        checkDate(year+"-"+month+"-"+date);
         userBirthday.set(year, month, date);
         User user = new User(name, userGender, userBirthday);
         userSet.addUser(user);
+    }
+
+    private void checkDate(String date) throws PropException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(date);
+        } catch (ParseException e) {
+            throw new PropException(ErrorString.INCORRECT_DATE);
+        }
     }
 
     /**
@@ -179,6 +192,15 @@ public class UserController {
     public String obtainUserSetToString() {
         return userSet.toString();
     }
+    
+    public String[] obtainUserSetTitles() {
+        ArrayList<User> users = userSet.getUsers();
+        String[] userTitles = new String[users.size()];
+        for(int i = 0; i<userTitles.length;++i) {
+            userTitles[i] = users.get(i).getName();
+        }
+        return  userTitles;
+    }
 
     /**
      * Obtains all users in the controller 
@@ -285,5 +307,14 @@ public class UserController {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return  cal;
+    }
+
+    public String[] obtainGenders() {
+        Gender[] genders = Gender.values();
+        String[] ret = new String[genders.length];
+        for(int i=0;i<genders.length;++i) {
+            ret[i] = genders[i].toString();
+        }
+        return ret;
     }
 }

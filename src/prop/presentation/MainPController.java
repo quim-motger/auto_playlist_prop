@@ -13,8 +13,7 @@ public class MainPController {
     private MainView mainView;
 
     public MainPController() {
-
-        userPController = new UserPController();
+        
         songPController = new SongPController();
         // Only for testing purposes  *******************************************************************
         try {
@@ -28,6 +27,10 @@ public class MainPController {
         }
         // **********************************************************************************************
         listPController = new ListPController(songPController.getSongController());
+        userPController = new UserPController(
+                listPController.getListController(),
+                songPController.getSongController()
+                );
         algorithmPController = new AlgorithmPController();
 
         /* Set the Windows look and feel */
