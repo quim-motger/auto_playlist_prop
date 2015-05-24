@@ -1,5 +1,6 @@
 package prop.domain;
 
+import prop.ErrorString;
 import prop.PropException;
 import prop.data.DataController;
 
@@ -22,6 +23,8 @@ public class UserController {
     public static final String NAME="name";
     public static final String GENDER="gender";
     public static final String BIRTHDAY="birthday";
+    private static final String elemDelimiter = " ";
+    private static final String setDelimiter = "\n";
 
     private UserSet userSet;
 
@@ -221,16 +224,59 @@ public class UserController {
     public void load(String path, ListController lc, SongController sc) throws Exception {
         String data;
         data = DataController.load(path);
-        userSet = UserSet.valueOf(data, lc, sc);
+        userSet = valueOf(data, lc, sc);
     }
 
-    public String findUsers(String prefix) {
-        ArrayList<User> l = userSet.findUsers(prefix);
-        String p = "";
-        for (User user : l) {
-            p += user.getName() + "\n";
+    private UserSet valueOf(String data, ListController lc, SongController sc) throws PropException {
+        String[] users = data.split(setDelimiter);
+        UserSet set = new UserSet();
+        for (String user : users) {
+            String[] attributes = user.split(elemDelimiter);
+            if (!attributes[0].equals(User.USER_STRING_ID))
+                throw new PropException(ErrorString.INCORRECT_FORMAT);
+            User u = new User();
+            u.setName(attributes[1]);
+            u.setGender(Gender.valueOf(attributes[2]));
+            u.setBirthdate(getCalendarFromLong(Long.valueOf(attributes[3])));
+            int nPlaybacks = Integer.valueOf(attributes[4]);
+            for (int i = 0; i < nPlaybacks; i += 9) {
+                u.add(playbackValueOf(attributes, 4 + i, sc));
+            }
+            int index = 5 + nPlaybacks * 9;
+            int nLists = Integer.valueOf(attributes[index]);
+            ++index;
+            for (int i = 0; i < nLists; ++i) {
+                u.associate(lc.getList(attributes[index + i]));
+            }
+            set.addUser(u);
         }
-        return p;
+        return set;
+    }
+
+    private Playback playbackValueOf(String[] attributes, int i, SongController sc) throws PropException {
+        if (!attributes[i].equals(Playback.PLAYBACK_STRING_ID)) {
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
+        }
+        Song song = sc.getSong(attributes[i + 1], attributes[i + 2]);
+        Calendar cal = Calendar.getInstance();
+        cal.set(
+                Integer.valueOf(attributes[i + 3]),
+                Integer.valueOf(attributes[i + 4]),
+                Integer.valueOf(attributes[i + 5]),
+                Integer.valueOf(attributes[i + 6]),
+                Integer.valueOf(attributes[i + 7]),
+                Integer.valueOf(attributes[i + 8])
+        );
+        return new Playback(song, cal);
+    }
+
+    public String[] findUsers(String prefix) {
+        ArrayList<User> l = userSet.findUsers(prefix);
+        String[] ret = new String[l.size()];
+        for (int i = 0; i < l.size(); ++i) {
+            ret[i] = l.get(i).getName();
+        }
+        return ret;
     }
     
     /*PRIVATE METHODS*/

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class UserSet {
 
-    private static final String delimiter = "\n\n";
+    private static final String delimiter = "\n";
     private TernarySearchTree<User> users;
 
 

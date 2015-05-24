@@ -151,7 +151,10 @@ public class UserControllerDriver {
                     System.out.println(listController.getListSetString());
                     break;
                 case 18:
-                    System.out.print(userController.findUsers(in.next()));
+                    String[] prints = userController.findUsers(in.next());
+                    for (String print : prints) {
+                        System.out.print(print + "\n");
+                    }
                     break;
                 default:
                     printInfo();
@@ -173,7 +176,7 @@ public class UserControllerDriver {
         sb.append("0:  terminate program\n");
         sb.append("1:  info\n");
         sb.append("2:  UserController()\n");
-        sb.append("3:  void addUser(String name, String gender, int year, int month, int date, String countryCode)\n");
+        sb.append("3:  void addUser(String name, String gender, int year, int month, int date)\n");
         sb.append("4:  void removeUser (String name)\n");
         sb.append("5:  void editUser(String name, String attribute, String value)\n");
         sb.append("6:  String obtainAttributes(String delimiter)\n");
@@ -188,7 +191,7 @@ public class UserControllerDriver {
         sb.append("15:  String obtainListsAssociated(String userName)\n");
         sb.append("16:  listController.addList(String title)\n");
         sb.append("17:  String listController.getListSetString()\n");
-        sb.append("18:  String findUsers(String prefix)\n");
+        sb.append("18:  String[] findUsers(String prefix)\n");
         System.out.println(sb.toString());
     }
 }

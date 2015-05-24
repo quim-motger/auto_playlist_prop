@@ -115,7 +115,7 @@ public class RelationController {
      *                   | -> OR
      *                   ! -> NOT
      *                   EX: (((1&2)|3)&(!1|2))
-     * @return
+     * @return parsed relation
      */
     private Relation parse(SimpleRelation[] simpleRelations, String expression) throws PropException {
         if(!expression.contains("((") && !expression.contains("))")){

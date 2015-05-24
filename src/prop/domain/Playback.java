@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 
 public class Playback implements Comparable<Playback>{
 
-    private static final String PLAYBACK_DELIMITER = "|P|\n";
-    private static final String PLAYBACK_STRING_ID = "PLAYBACK_STRING";
+    public static final String PLAYBACK_STRING_ID = "PLAYBACK_STRING";
+    private static final String PLAYBACK_DELIMITER = " ";
     private Song song;
     private Calendar date;
 
@@ -117,7 +117,7 @@ public class Playback implements Comparable<Playback>{
                 + song.getArtist() + PLAYBACK_DELIMITER
                 + date.get(Calendar.YEAR) + PLAYBACK_DELIMITER
                 + date.get(Calendar.MONTH) + PLAYBACK_DELIMITER
-                + date.get(Calendar.DAY_OF_MONTH) + PLAYBACK_DELIMITER
+                + date.get(Calendar.DATE) + PLAYBACK_DELIMITER
                 + date.get(Calendar.HOUR_OF_DAY) + PLAYBACK_DELIMITER
                 + date.get(Calendar.MINUTE) + PLAYBACK_DELIMITER
                 + date.get(Calendar.SECOND);

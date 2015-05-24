@@ -14,10 +14,8 @@ import java.util.regex.Pattern;
  * @author Carles Garcia Cabot
  */
 public class User implements Comparable<User> {
-    private static final String USER_DELIMITER = "|U|\n";
-    private static final String USER_ID = "USER_ID";
-    private static final String PLAYBACK_DELIMITER = "|P|\n";
-    private static final String LIST_DELIMITER = "|ID|\n";
+    public static final String USER_STRING_ID = "USER_STRING_ID";
+    private static final String USER_DELIMITER = " ";
     private String name;
     private Gender gender;
     private Calendar birthdate;
@@ -55,7 +53,7 @@ public class User implements Comparable<User> {
     public static User valueOf(String origin, ListController listController, SongController songController)
             throws Exception {
         String[] tokens = origin.split(Pattern.quote(USER_DELIMITER));
-        if (!tokens[0].equals(USER_ID) || tokens.length < 9) {
+        if (!tokens[0].equals(USER_STRING_ID) || tokens.length < 9) {
             throw new PropException(ErrorString.INCORRECT_FORMAT);
         }
         User u = new User();
@@ -197,19 +195,13 @@ public class User implements Comparable<User> {
     
     public String toString() {
         StringBuilder ret = new StringBuilder();
-        ret.append(USER_ID);
+        ret.append(USER_STRING_ID);
         ret.append(USER_DELIMITER);
         ret.append(name);
         ret.append(USER_DELIMITER);
         ret.append(gender.toString());
         ret.append(USER_DELIMITER);
-        ret.append(birthdate.get(Calendar.YEAR));
-        ret.append(USER_DELIMITER);
-        ret.append(birthdate.get(Calendar.MONTH));
-        ret.append(USER_DELIMITER);
-        ret.append(birthdate.get(Calendar.DAY_OF_MONTH));
-        ret.append(USER_DELIMITER);
-        // ret.append(country.toString());
+        ret.append(birthdate.getTime().getTime());
         ret.append(USER_DELIMITER);
         ret.append(playbackRegister.size());
         ret.append(USER_DELIMITER);
@@ -218,14 +210,12 @@ public class User implements Comparable<User> {
             ret.append(USER_DELIMITER);
         }
         ret.append(associatedLists.size());
+        ret.append(USER_DELIMITER);
         if (!associatedLists.isEmpty()) {
-            ret.append(USER_DELIMITER);
-            int i = 0;
-            for (; i < associatedLists.size() - 1; ++i) {
+            for (int i = 0; i < associatedLists.size(); ++i) {
                 ret.append(associatedLists.get(i).obtainTitle());
                 ret.append(USER_DELIMITER);
             }
-            ret.append(associatedLists.get(i).obtainTitle());
         }
         return ret.toString();
     }
