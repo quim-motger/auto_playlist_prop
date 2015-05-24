@@ -104,7 +104,10 @@ public class SongControllerDriver {
                     }
                     break;
                 case 11:
-                    System.out.print(songController.listGenres());
+                    String[] listGenres = songController.listGenres();
+                    for (String s : listGenres) {
+                        System.out.println(s);
+                    }
                 case 12:
                     try {
                         songController.save(in.next());

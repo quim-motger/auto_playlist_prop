@@ -173,14 +173,14 @@ public class SongController {
      * list of all Genres
      * @return  a String with the list of all genres
      */
-    public String listGenres() {
-        StringBuilder sb = new StringBuilder();
-        int i;
+    public String[] listGenres() {
         int m = Genre.values().length;
+        String[] genres = new String[m];
+        int i;
         for (i = 0; i < m; ++i) {
-            sb.append(Genre.getGenreById(i).getId() + ": " + Genre.getGenreById(i).getName() + "\n");
+            genres[i] = Genre.getGenreById(i).getName();
         }
-        return sb.toString();
+        return genres;
     }
 
     /**

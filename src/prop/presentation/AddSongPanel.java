@@ -8,11 +8,14 @@ import java.awt.*;
  */
 public class AddSongPanel extends javax.swing.JPanel {
 
+    SongPController songPController;
+
     /**
      * Creates new form NewJPanel
      */
-    public AddSongPanel() {
+    public AddSongPanel(SongPController spc) {
         initComponents();
+        songPController = spc;
     }
 
     /**
@@ -67,9 +70,11 @@ public class AddSongPanel extends javax.swing.JPanel {
 
         jLabel8.setText("Duration");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        //String[] genres = songPController.getSongController().listGenres();
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[]{}));
 
         jButton1.setLabel("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

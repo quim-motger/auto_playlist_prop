@@ -27,7 +27,6 @@ public class SongTabView extends TabView{
     private JTextField searchField;
     private JButton addSongButton;
     private JButton removeSongButton;
-    private JButton editSongButton;
 
     public SongTabView(SongPController spc) {
         super();
@@ -101,7 +100,7 @@ public class SongTabView extends TabView{
             }
         });
 
-        addSongPanel = new AddSongPanel();
+        addSongPanel = new AddSongPanel(songPController);
     }
 
     private void updateSongSetModel() {
