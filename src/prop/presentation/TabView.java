@@ -60,9 +60,9 @@ public abstract class TabView extends JPanel {
         actionBar.setRollover(true);
 
         searchField = new JTextField();
-        searchField.setMaximumSize(new Dimension(150, 200));
+        searchField.setMaximumSize(new Dimension(194, 200));
         actionBar.add(searchField);
-        actionBar.addSeparator();
+        actionBar.add(Box.createHorizontalStrut(6));
 
 
         ArrayList<JButton> buttons = setActionBarButtons();
