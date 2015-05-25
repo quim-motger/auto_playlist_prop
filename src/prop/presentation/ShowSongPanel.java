@@ -239,7 +239,7 @@ public class ShowSongPanel extends JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            if (title == jTextField1.getText() && artist == jTextField2.getText()) {
+            if (title.equals(jTextField1.getText()) && artist.equals(jTextField2.getText())) {
                 songPController.edit(title,artist,"album",jTextField3.getText());
                 songPController.edit(title,artist,"year",jTextField4.getText());
                 songPController.edit(title,artist,"genre",jTextField5.getText());
