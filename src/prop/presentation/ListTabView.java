@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 public class ListTabView extends TabView {
 
@@ -271,6 +272,7 @@ public class ListTabView extends TabView {
 
             listModel = new DefaultListModel();
             jList1.setModel(listModel);
+            jList1.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
             jScrollPane1.setViewportView(jList1);
 
             addSongButton.setText("Add Song");
@@ -517,7 +519,7 @@ public class ListTabView extends TabView {
         public void updateArtistComboBoxModel() {
             artistComboBox.removeAllItems();
             artistComboBox.addItem("");
-            for (String s : listPController.getArtists())
+            for (String s : new LinkedHashSet<>(listPController.getArtists()))
                 artistComboBox.addItem(s);
         }
 
