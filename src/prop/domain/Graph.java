@@ -14,6 +14,7 @@ public class Graph<T> {
     private ArrayList<EdgeList> vertices; // Adjacency list
     private double defaultWeight;
     private int edgeCount;
+    static final String delimiter = "\n";
 
     /* CONSTRUCTORS */
     public Graph() {
@@ -22,6 +23,21 @@ public class Graph<T> {
         vertices = new ArrayList<>();
         defaultWeight = 1;
         edgeCount = 0;
+    }
+
+    public static String GraphSongToString(Graph<Song> gr) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < gr.numberOfVertices(); ++i) {
+            for (Integer j : gr.adjacentVertices(i)) {
+                sb.append(gr.getVertexT(i).getTitle());
+                sb.append(delimiter);
+                sb.append(gr.getVertexT(i).getArtist());
+                sb.append(delimiter);
+                sb.append(gr.weight(i,j));
+                sb.append(delimiter);
+            }
+        }
+        return sb.toString();
     }
 
     /* GETTERS */
