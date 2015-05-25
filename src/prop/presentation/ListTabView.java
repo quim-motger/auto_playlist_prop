@@ -7,6 +7,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,8 @@ public class ListTabView extends TabView {
     private JTextField searchField;
     private JButton addListButton;
     private JButton removeListButton;
+    private JButton saveButton;
+    private JButton loadButton;
 
     public ListTabView(ListPController lpc) {
         super();
@@ -109,7 +112,68 @@ public class ListTabView extends TabView {
         });
         buttons.add(removeListButton);
 
+        saveButton = new JButton("Save");
+        saveButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveButtonActionPerformed(e);
+            }
+        });
+        buttons.add(saveButton);
+
+        loadButton = new JButton("Load");
+        loadButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadButtonActionPerformed(e);
+            }
+        });
+        buttons.add(loadButton);
+
         return buttons;
+    }
+
+    private void saveButtonActionPerformed(ActionEvent evt) {
+        JFileChooser c = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".lists", "lists");
+        c.setFileFilter(filter);
+        // Demonstrate "Open" dialog:
+        int rVal = c.showSaveDialog(this);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            String file = c.getSelectedFile().getName();
+            String dir = c.getCurrentDirectory().toString();
+            try {
+                String path = dir+"/"+file+".lists";
+                if(file.endsWith(".lists"))
+                    path=dir+"/"+file;
+                listPController.save(path);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
+        }
+    }
+
+    private void loadButtonActionPerformed(ActionEvent evt) {
+        JFileChooser c = new JFileChooser(){
+            @Override
+            public void approveSelection() {
+                String file = getSelectedFile().getName();
+                String dir = getCurrentDirectory().toString();
+                try {
+                    listPController.load(dir + "/" + file);
+                    updateListSetModel();
+                    super.approveSelection();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
+            }
+        };
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".lists", "lists");
+        c.setFileFilter(filter);
+        // Demonstrate "Open" dialog:
+        c.showOpenDialog(this);
     }
 
     private void updateListSetModel() {
@@ -331,14 +395,14 @@ public class ListTabView extends TabView {
             );
         }// </editor-fold>
 
-        public void addSongButtonActionPerformed(ActionEvent evt) {
+        private void addSongButtonActionPerformed(ActionEvent evt) {
             if (!listSet.isSelectionEmpty()) {
                 String value = (String) listSet.getSelectedValue();
                 setRightPanel(new AddSong(value));
             }
         }
 
-        public void removeSongButtonActionPerformed(ActionEvent evt) {
+        private void removeSongButtonActionPerformed(ActionEvent evt) {
             if (!listSet.isSelectionEmpty() && !jList1.isSelectionEmpty()) {
                 String value = (String) listSet.getSelectedValue();
                 int index = jList1.getSelectedIndex();

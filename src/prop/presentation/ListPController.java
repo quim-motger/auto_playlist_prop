@@ -5,6 +5,7 @@ import prop.domain.ListController;
 import prop.domain.Pair;
 import prop.domain.SongController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ListPController {
@@ -55,6 +56,14 @@ public class ListPController {
 
     public ArrayList<String> getTitlesFromArtists(String artist) throws PropException {
         return songController.getTitlesFromArtist(artist);
+    }
+
+    public void save(String path) throws IOException {
+        listController.save(path);
+    }
+
+    public void load(String path) throws IOException, PropException {
+        listController.load(path,songController);
     }
 
 }
