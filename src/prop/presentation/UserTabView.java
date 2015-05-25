@@ -3,6 +3,7 @@ package prop.presentation;
 import prop.ErrorString;
 import prop.presentation.basicelements.ActionBarButton;
 import prop.presentation.basicpanels.AddUserPanel;
+import prop.presentation.basicpanels.AssociateListToUserPanel;
 import prop.presentation.basicpanels.EditUserPanel;
 import prop.presentation.basicpanels.UserPanel;
 
@@ -203,4 +204,7 @@ public class UserTabView extends TabView {
         setRightPanel(new JPanel());
     }
 
+    public void showAssociatedListsPanel(String name) {
+        setRightPanel(new AssociateListToUserPanel(name,mController));
+    }
 }

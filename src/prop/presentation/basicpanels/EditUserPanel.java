@@ -19,6 +19,7 @@ import java.util.Date;
  */
 public class EditUserPanel extends UserPanel {
     private final JButton delete;
+    private final JButton listEdit;
     private JButton save;
     private UserTabView tab;
     private String name;
@@ -67,6 +68,15 @@ public class EditUserPanel extends UserPanel {
             }
         });
         addActionButton(delete);
+
+        listEdit = new JButton("Edit Associated Lists");
+        listEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                tab.showAssociatedListsPanel(name);
+            }
+        });
+        addActionButton(listEdit);
 
         cancelEdit = new JButton("Cancel");
         cancelEdit.addActionListener(new ActionListener() {

@@ -59,4 +59,22 @@ public class UserPController {
     public void load(String path) throws Exception {
         userController.load(path,listController,songController);
     }
+
+    public String[] getAllLists() {
+        String token = listController.getListSetString();
+        return token.split("\n");
+    }
+
+    public String[] getUserLists(String name) throws PropException {
+        String token = userController.obtainListsAssociated(name);
+        return token.split("\n");
+    }
+
+    public void associateList(String name, String list) throws PropException {
+        userController.associateListToUser(listController,list,name);
+    }
+
+    public void disassociateList(String name, String list) throws PropException {
+        userController.disassociateListFromUser(listController,list,name);
+    }
 }

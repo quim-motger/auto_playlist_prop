@@ -43,17 +43,11 @@ public abstract class PropPanel extends JPanel {
         separator = new JSeparator();
         buttonPanel = new JPanel();
         errorText = new JLabel();
+        errorText.setVisible(false);
         form = createFormPanel();
-        fileLabel = new JLabel();
-        path = new JTextField();
 
 
         buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.X_AXIS));
-
-        errorText.setText("");
-        errorText.setVisible(false);
-
-        fileLabel.setText("Path");
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -92,12 +86,12 @@ public abstract class PropPanel extends JPanel {
     protected abstract JPanel createFormPanel();
 
 
-    protected void setTitleText(String s){
-        titleField.setText(s);        
+    protected void setTitleText(String title){
+        titleField.setText(title);
     }
     
-    protected void throwError(String s) {
-        errorText.setText(s);
+    protected void throwError(String error) {
+        errorText.setText(error);
         errorText.setVisible(true);
         errorText.setForeground(Color.red);
     }
