@@ -265,6 +265,7 @@ public class SongController {
         String[] songs = s.split(Pattern.quote(delimiter1));
         for (String p : songs) {
             String[] tokens = p.split(Pattern.quote(delimiter2));
+            if (tokens.length != 6) throw new PropException(ErrorString.CORRUPT_FILE);
             Song song = new Song(tokens[0],tokens[1],tokens[2],
                     Integer.parseInt(tokens[3]),
                     Genre.getGenreById(Integer.parseInt(tokens[4])),
