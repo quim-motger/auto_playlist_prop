@@ -183,18 +183,22 @@ public class SongController {
         return songSet.getSongList();
     }
 
-    public ArrayList<String> getTitles() {
-        ArrayList<String> titles = new ArrayList<String>();
-        for (Song s : songSet.getSongSet())
-            titles.add(s.getTitle());
-        return titles;
-    }
-
     public ArrayList<String> getArtists() {
         ArrayList<String> artists = new ArrayList<String>();
         for (Song s : songSet.getSongSet())
             artists.add(s.getArtist());
         return artists;
+    }
+
+    public ArrayList<String> getTitlesFromArtist(String artist) throws PropException {
+        ArrayList<String> titles = new ArrayList<String>();
+        Pair<String,String> cond = new Pair<>("song_artist",artist);
+        ArrayList<Pair<String,String>> conditions = new ArrayList<>();
+        conditions.add(cond);
+        ArrayList<Song> songs = songSet.searchSongs(conditions);
+        for (Song s : songs)
+            titles.add(s.getTitle());
+        return titles;
     }
 
     /**
