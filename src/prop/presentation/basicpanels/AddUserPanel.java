@@ -40,6 +40,8 @@ public class AddUserPanel  extends UserPanel {
             }
         });
         addActionButton(add);
+        
+        enableFieldEdition(true);
     }
 
     private void submitAction(ActionEvent evt) {
@@ -54,11 +56,12 @@ public class AddUserPanel  extends UserPanel {
 
         try {
             controller.createNewUser(name,gender,day,month,year);
+            tab.updateList();
+            tab.showAddUserInRightPanel();
         } catch (Exception e) {
             e.printStackTrace();
             throwError(e.getMessage());
         }
-        tab.updateList();
-        tab.showMainPanel();
+        
     }
 }

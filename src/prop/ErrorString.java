@@ -36,4 +36,6 @@ public class ErrorString {
     public static final String MISSING_DURATION = "The Duration field cannot be empty\n";
     public static final String MISSING_ALBUM = "The Album field cannot be empty\n";
     public static final String INCORRECT_DATE = "Incorrect Date";
+    public static final String CORRUPT_FILE = "File is corrupted and can't be open.";
+    public static final String LOAD_OTHERS = "Load Lists and Songs before loading Users";
 }

@@ -18,9 +18,11 @@ import java.util.Date;
  *          Creation Date: 24/05/15
  */
 public class EditUserPanel extends UserPanel {
+    private final JButton delete;
+    private final JButton listEdit;
+    private JButton save;
     private UserTabView tab;
     private String name;
-    private JButton cancel;
     private JButton edit;
     private JButton cancelEdit;
     private UserPController controller;
@@ -37,8 +39,8 @@ public class EditUserPanel extends UserPanel {
         name = userName;
         tab = userTabView;
         
-        updatePanel();
-        setTitleText("Show user: "+name);
+        updateUserData();
+        setTitleText("User detail: "+name);
         
         edit = new JButton("Edit");
         edit.addActionListener(new ActionListener() {
@@ -49,6 +51,33 @@ public class EditUserPanel extends UserPanel {
         });
         addActionButton(edit);
         
+        save = new JButton("Save");
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveEdition();
+            }
+        });
+        addActionButton(save);
+
+        delete = new JButton("Delete");
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                deleteUser();
+            }
+        });
+        addActionButton(delete);
+
+        listEdit = new JButton("Edit Associated Lists");
+        listEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                tab.showAssociatedListsPanel(name);
+            }
+        });
+        addActionButton(listEdit);
+
         cancelEdit = new JButton("Cancel");
         cancelEdit.addActionListener(new ActionListener() {
             @Override
@@ -56,22 +85,44 @@ public class EditUserPanel extends UserPanel {
                 disableEdit();
             }
         });
-        cancelEdit.setVisible(false);
         addActionButton(cancelEdit);
-        
-        cancel = new JButton("Cancel");
-        cancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                tab.showMainPanel();
-            }
-        });
-        addActionButton(cancel);
         
         disableEdit();
     }
 
-    private void updatePanel() {
+    private void deleteUser() {
+        try {
+            controller.deleteUser(name);
+            tab.updateList();
+            tab.showMainPanel();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throwError(e.getMessage());
+        }
+    }
+
+    private void saveEdition() {
+        String newName = getNameField();
+        if(newName.equals("")){
+            throwError("Missing name");
+        }
+        String gender = getGenderSelector();
+        int day = getDaySpinner();
+        int month = getMonthSpinner();
+        int year = getYearSpinner();
+
+        try {
+            controller.updateUser(name, newName, gender, day, month, year);
+            tab.updateList();
+            tab.showMainPanel();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throwError(e.getMessage());
+        }
+        
+    }
+
+    private void updateUserData() {
         String user = "";
         try {
             user = controller.getUser(name);
@@ -93,18 +144,20 @@ public class EditUserPanel extends UserPanel {
     }
 
     private void disableEdit() {
-        disableEdition();
-        edit.setVisible(true);
-        cancel.setVisible(true);
-        cancelEdit.setVisible(false);
-        updatePanel();
+        setEnableEdit(false);
+        setTitleText("User detail: "+name);
+        updateUserData();
     }
 
     private void enableEdit() {
-        enableEdition();
-        cancel.setVisible(false);
-        cancelEdit.setVisible(true);
-        edit.setVisible(false);
+        setEnableEdit(true);
         setTitleText("Edit user: "+name);
+    }
+    
+    private void setEnableEdit(boolean enable){
+        enableFieldEdition(enable);
+        cancelEdit.setVisible(enable);
+        edit.setVisible(!enable);
+        save.setVisible(enable);
     }
 }

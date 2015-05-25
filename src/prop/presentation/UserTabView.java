@@ -1,7 +1,9 @@
 package prop.presentation;
 
+import prop.ErrorString;
 import prop.presentation.basicelements.ActionBarButton;
 import prop.presentation.basicpanels.AddUserPanel;
+import prop.presentation.basicpanels.AssociateListToUserPanel;
 import prop.presentation.basicpanels.EditUserPanel;
 import prop.presentation.basicpanels.UserPanel;
 
@@ -10,8 +12,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -75,7 +79,7 @@ public class UserTabView extends TabView {
         updateList();
     }
 
-    private void showUserInRightPanel(String value) {
+    public void showUserInRightPanel(String value) {
         setRightPanel(new EditUserPanel(mController,this,value));
     }
 
@@ -113,10 +117,78 @@ public class UserTabView extends TabView {
         });
         buttons.add(addUser);
         
+        ActionBarButton save = new ActionBarButton("Save");
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                showSavePanel();
+            }
+        });
+        buttons.add(save);
+        
+        ActionBarButton load = new ActionBarButton("Load");
+        load.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                showLoadPanel();
+            }
+        });
+        buttons.add(load);
+        
         return buttons;
     }
 
-    private void showAddUserInRightPanel() {
+    private void showLoadPanel() {
+        JFileChooser c = new JFileChooser(){
+            @Override
+            public void approveSelection() {
+                String file = getSelectedFile().getName();
+                String dir = getCurrentDirectory().toString();
+                try {
+                    mController.load(dir + "/" + file);
+                    updateList();
+                    super.approveSelection();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if(e.getMessage().equals(ErrorString.INCORRECT_FORMAT)) {
+                        JOptionPane.showMessageDialog(this, ErrorString.CORRUPT_FILE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, ErrorString.LOAD_OTHERS);
+                    }
+                }
+            }
+        };
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".users", "users");
+        c.setFileFilter(filter);
+        // Demonstrate "Open" dialog:
+        c.showOpenDialog(this);
+    }
+
+    private void showErrorPanel() {
+
+    }
+
+    private void showSavePanel() {
+        JFileChooser c = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".users", "users");
+        c.setFileFilter(filter);
+        // Demonstrate "Open" dialog:
+        int rVal = c.showSaveDialog(this);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            String file = c.getSelectedFile().getName();
+            String dir = c.getCurrentDirectory().toString();
+            try {
+                String path = dir+"/"+file+".users";
+                if(file.endsWith(".users"))
+                    path=dir+"/"+file;
+                mController.save(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void showAddUserInRightPanel() {
         UserPanel u = new AddUserPanel(mController, this);
         setRightPanel(u);
     }
@@ -125,4 +197,7 @@ public class UserTabView extends TabView {
         setRightPanel(new JPanel());
     }
 
+    public void showAssociatedListsPanel(String name) {
+        setRightPanel(new AssociateListToUserPanel(name,mController));
+    }
 }
