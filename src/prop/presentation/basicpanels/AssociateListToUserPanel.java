@@ -5,8 +5,10 @@
  */
 package prop.presentation.basicpanels;
 
+import prop.ErrorString;
 import prop.PropException;
 import prop.presentation.UserPController;
+import prop.presentation.UserTabView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +23,7 @@ public class AssociateListToUserPanel extends PropPanel {
 
     private final UserPController controller;
     private final String name;
+    private final UserTabView tab;
     private JList allListsList;
     private JPanel allListsPanel;
     private JScrollPane allListsScrollPanel;
@@ -36,15 +39,25 @@ public class AssociateListToUserPanel extends PropPanel {
     private DefaultListModel<Object> associatedModel;
     private DefaultListModel<Object> allListsModel;
 
-    public AssociateListToUserPanel(String username, UserPController userPController) {
+    public AssociateListToUserPanel(String username, UserPController userPController, UserTabView userTabView) {
         super();
         name = username;
         controller = userPController;
         setTitleText("Associate Lists to "+name);
+        tab = userTabView;
 
         updateAllListsList();
         updateAssociatedListsList();
         setListeners();
+        
+        JButton back = new JButton("< Back");
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                tab.showAssociatedListsPanel(name);
+            }
+        });
+        addButton(back);
     }
 
     @Override
@@ -84,7 +97,7 @@ public class AssociateListToUserPanel extends PropPanel {
 
         allListsPanel.add(allListsScrollPanel);
 
-        mainPanel.add(allListsPanel, java.awt.BorderLayout.LINE_START);
+        mainPanel.add(allListsPanel, BorderLayout.EAST);
 
         associatedListPanel.setLayout(new BoxLayout(associatedListPanel, BoxLayout.PAGE_AXIS));
 
@@ -96,22 +109,23 @@ public class AssociateListToUserPanel extends PropPanel {
 
         associatedListPanel.add(associatedListsScrollPanel);
 
-        mainPanel.add(associatedListPanel, java.awt.BorderLayout.EAST);
+        mainPanel.add(associatedListPanel, BorderLayout.WEST);
 
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.add(spacer);
 
-        associateButton.setText(">>");
+        associateButton.setText("<<");
         associateButton.setToolTipText("Associate List");
         centerPanel.add(associateButton);
 
         centerPanel.add(new Box.Filler(new Dimension(0,10),new Dimension(0,10),new Dimension(32767,10)));
 
-        disassociateButton.setText("<<");
+        disassociateButton.setText(">>");
         disassociateButton.setToolTipText("Disassociate List");
         centerPanel.add(disassociateButton);
 
         mainPanel.add(centerPanel, java.awt.BorderLayout.CENTER);
+
         return mainPanel;
     }
 
@@ -151,7 +165,12 @@ public class AssociateListToUserPanel extends PropPanel {
         disassociateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                disassociateList();
+                try {
+                    disassociateList();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throwError(ErrorString.ITEM_NOT_SELECTED);
+                }
             }
         });
     }
@@ -177,5 +196,7 @@ public class AssociateListToUserPanel extends PropPanel {
             throwError(e.getMessage());
         }
     }
+    
+    
 
 }

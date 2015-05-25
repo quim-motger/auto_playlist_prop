@@ -2,10 +2,7 @@ package prop.presentation;
 
 import prop.ErrorString;
 import prop.presentation.basicelements.ActionBarButton;
-import prop.presentation.basicpanels.AddUserPanel;
-import prop.presentation.basicpanels.AssociateListToUserPanel;
-import prop.presentation.basicpanels.EditUserPanel;
-import prop.presentation.basicpanels.UserPanel;
+import prop.presentation.basicpanels.*;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -27,13 +24,15 @@ import java.util.ArrayList;
  */
 public class UserTabView extends TabView {
 
+    private final MainView mView;
     private UserPController mController;
     private DefaultListModel userListModel;
     private JList leftList;
 
-    public UserTabView( UserPController controller) {
+    public UserTabView( UserPController controller, MainView mainView) {
         super();
         mController = controller;
+        mView = mainView;
         
         initUserTabComponents();
     }
@@ -198,6 +197,14 @@ public class UserTabView extends TabView {
     }
 
     public void showAssociatedListsPanel(String name) {
-        setRightPanel(new AssociateListToUserPanel(name,mController));
+        setRightPanel(new ShowAssociatedLists(mController,name,this));
+    }
+
+    public void editAssociatedLists(String name) {
+        setRightPanel(new AssociateListToUserPanel(name,mController,this));
+    }
+
+    public void showList(String list) {
+        mView.showList(list);
     }
 }

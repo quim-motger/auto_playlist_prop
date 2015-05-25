@@ -192,6 +192,8 @@ public class UserPanel extends JPanel {
     
     protected void addActionButton(JButton button) {
         buttonsPanel.add(button);
+        buttonsPanel.add(new Box.Filler(new Dimension(5,0), new Dimension(5,0), new java.awt.Dimension(5,32767)));
+
     }
 
     protected String getNameField() {

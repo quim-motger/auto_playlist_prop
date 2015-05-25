@@ -125,6 +125,10 @@ public class ListTabView extends TabView {
         }
     }
 
+    public void showList(String list) {
+        setRightPanel(new ShowList(list));
+    }
+
     private class AddList extends JPanel {
 
         /**

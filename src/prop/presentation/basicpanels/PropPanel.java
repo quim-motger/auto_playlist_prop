@@ -102,5 +102,6 @@ public abstract class PropPanel extends JPanel {
     
     public void addButton(JButton button) {
         buttonPanel.add(button);
+        buttonPanel.add(new Box.Filler(new Dimension(10,0), new Dimension(10,0), new java.awt.Dimension(10,32767)));
     }
 }
