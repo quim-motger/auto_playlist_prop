@@ -52,4 +52,8 @@ public class SongPController {
         songController.load(path);
     }
 
+    public void edit(String title, String artist, String attr, String val) throws PropException {
+        songController.editSong(title,artist,attr,val);
+    }
+
 }

@@ -203,7 +203,7 @@ public class SongSet {
     }
 
     private String getKey(String title, String artist) {
-        return title + ":" + artist;
+        return title + " - " + artist;
     }
 
 }

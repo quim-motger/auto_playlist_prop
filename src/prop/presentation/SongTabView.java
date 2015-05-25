@@ -114,8 +114,7 @@ public class SongTabView extends TabView{
                 if (!songSet.isSelectionEmpty()) {
                     String value = (String) songSet.getSelectedValue();
                     String[] attr = value.split(Pattern.quote(" - "));
-                    showSongPanel = new ShowSongPanel(songPController, attr[0], attr[1]);
-                    setRightPanel(showSongPanel);
+                    setShowSongPanel(attr[0],attr[1]);
                 }
             }
         });
@@ -139,6 +138,10 @@ public class SongTabView extends TabView{
         });
     }
 
+    public void setShowSongPanel(String a, String b) {
+        setRightPanel(new ShowSongPanel(songPController,this,a,b));
+    }
+
     private void showLoadPanel() {
         JFileChooser c = new JFileChooser(){
             @Override
@@ -150,11 +153,7 @@ public class SongTabView extends TabView{
                     updateSongSetModel();
                     super.approveSelection();
                 } catch (Exception e) {
-                    if(e.getMessage().equals(ErrorString.INCORRECT_FORMAT)) {
-                        JOptionPane.showMessageDialog(this, ErrorString.CORRUPT_FILE);
-                    } else {
-                        JOptionPane.showMessageDialog(this, ErrorString.LOAD_OTHERS);
-                    }
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                 }
             }
         };

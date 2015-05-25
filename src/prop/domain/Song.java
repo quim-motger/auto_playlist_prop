@@ -3,6 +3,7 @@ package prop.domain;
 import prop.ErrorString;
 import prop.PropException;
 
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 /**
@@ -40,7 +41,7 @@ public class Song {
         if (_title.length() == 0) throw new PropException(ErrorString.MISSING_TITLE);
         else if (_artist.length() == 0) throw new PropException(ErrorString.MISSING_ARTIST);
         else if (_album.length() == 0) throw new PropException(ErrorString.MISSING_ALBUM);
-        else if (_year < 0 || _year > 2015) throw new PropException(ErrorString.INVALID_YEAR);
+        else if (_year < 0) throw new PropException(ErrorString.INVALID_YEAR);
         else if (_duration < 0) throw new PropException(ErrorString.INVALID_DURATION);
         else {
             title = _title;

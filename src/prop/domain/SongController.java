@@ -74,7 +74,23 @@ public class SongController {
         } catch (Exception e) {
             throw new PropException(ErrorString.INVALID_DURATION);
         }
-        Song song = new Song(title.trim(), artist.trim(), album.trim(), y, Genre.getGenreById(Integer.parseInt(genre.trim())), Genre.getGenreById(Integer.parseInt(subgenre)), dur);
+        Genre gr;
+        Genre subgr;
+        try {
+            gr = Genre.getGenreByName(genre.trim());
+            subgr = Genre.getGenreByName(subgenre.trim());
+        } catch (Exception e) {
+            gr = Genre.getGenreById(Integer.parseInt(genre.trim()));
+            subgr = Genre.getGenreById(Integer.parseInt(subgenre.trim()));
+        }
+        Song song = new Song(
+                title.trim(),
+                artist.trim(),
+                album.trim(),
+                y,
+                gr,
+                subgr,
+                dur);
         songSet.addSong(song);
     }
 
@@ -190,7 +206,7 @@ public class SongController {
         ArrayList<Song> songs = songSet.findSongs(prefix);
         String p = "";
         for (Song song : songs) {
-            p += song.getTitle() + " " + song.getArtist() + "\n";
+            p += song.getTitle() + " - " + song.getArtist() + "\n";
         }
         return p;
     }
