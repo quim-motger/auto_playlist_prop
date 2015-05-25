@@ -100,7 +100,7 @@ public class ShowSongPanel extends JPanel {
         });
 
         try {
-            String[] attr = songPController.getSong(title,artist).split(Pattern.quote(" "));
+            String[] attr = songPController.getSong(title,artist).split(Pattern.quote("|"));
             jTextField1.setText(attr[0]);
             jTextField2.setText(attr[1]);
             jTextField3.setText(attr[2]);

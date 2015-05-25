@@ -90,33 +90,38 @@ public class SongController {
      * Edit an attribute of a song
      * @param title     song title
      * @param artist    song artist
-     * @param pair      a pair defining attribute and new value
+     * @param attr
+     * @param val
      * @throws  PropException
      */
-    public void editSong(String title, String artist, Pair<String, String> pair) throws PropException {
+    public void editSong(String title, String artist, String attr, String val) throws PropException {
         Song song = songSet.getSong(title, artist);
         if (song != null) {
-            switch(pair.first()) {
+            switch(attr) {
                 case "title":
-                    song.setTitle(pair.second());
+                    songSet.removeSong(title,artist);
+                    song.setTitle(val);
+                    songSet.addSong(song);
                     break;
                 case "artist":
-                    song.setArtist(pair.second());
+                    songSet.removeSong(title,artist);
+                    song.setArtist(val);
+                    songSet.addSong(song);
                     break;
                 case "album":
-                    song.setAlbum(pair.second());
+                    song.setAlbum(val);
                     break;
                 case "year":
-                    song.setYear(Integer.parseInt(pair.second()));
+                    song.setYear(Integer.parseInt(val));
                     break;
                 case "genre":
-                    song.setGenre(Genre.getGenreById(Integer.parseInt(pair.second())));
+                    song.setGenre(Genre.getGenreByName(val));
                     break;
                 case "subgenre":
-                    song.setSubgenre(Genre.getGenreById(Integer.parseInt(pair.second())));
+                    song.setSubgenre(Genre.getGenreByName(val));
                     break;
                 case "duration":
-                    song.setDuration(Integer.parseInt(pair.second()));
+                    song.setDuration(Integer.parseInt(val));
                     break;
                 default:
                     throw new PropException(ErrorString.UNEXISTING_ATTRIBUTE);
@@ -145,8 +150,8 @@ public class SongController {
 
     public String getSongString(String title, String artist) throws PropException {
         Song song = songSet.getSong(title, artist);
-        String s = song.getTitle() + " " + song.getArtist() + " " + song.getAlbum() + " "
-                + song.getYear() + " " + song.getGenre().getName() + " " + song.getSubgenre() + " "
+        String s = song.getTitle() + "|" + song.getArtist() + "|" + song.getAlbum() + "|"
+                + song.getYear() + "|" + song.getGenre().getName() + "|" + song.getSubgenre().getName() + "|"
                 + song.getDuration();
         return s;
     }

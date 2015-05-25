@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class SongSet {
 
     private static final String delimiter = "\n";
+    private static final char token = 254;
     private TernarySearchTree<Song> songSet;
 
     /**
@@ -20,6 +21,7 @@ public class SongSet {
      */
     public SongSet() {
         songSet = new TernarySearchTree<>();
+        songSet.put(String.valueOf(token), new Song());
     }
 
     /**

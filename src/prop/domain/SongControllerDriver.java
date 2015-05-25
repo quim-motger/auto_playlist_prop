@@ -67,9 +67,8 @@ public class SongControllerDriver {
                     String artist3 = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    Pair<String,String> pair = new Pair<>(attribute, value);
                     try {
-                        songController.editSong(title3, artist3, pair);
+                        songController.editSong(title3, artist3, attribute, value);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }

@@ -149,13 +149,28 @@ public class TernarySearchTree<E> {
 
     public ArrayList<E> getList() {
         ArrayList<E> list = new ArrayList<>();
-        char c = 'A';
+        char c = 33;
+        for (int i = 0; i < 32; ++i) {
+            list.addAll(matchPrefix(c));
+            c += 1;
+        }
+        c = 'A';
         char d = 'a';
         for (int i = 0; i < 26; ++i) {
             list.addAll(matchPrefix(c));
             list.addAll(matchPrefix(d));
             c += 1;
             d += 1;
+        }
+        c = 91;
+        for (int i = 0; i < 6; ++i) {
+            list.addAll(matchPrefix(c));
+            c += 1;
+        }
+        c = 123;
+        for (int i = 0; i < 131; ++i) {
+            list.addAll(matchPrefix(c));
+            c += 1;
         }
         return list;
     }

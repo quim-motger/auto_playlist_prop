@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class ListSet {
     private static final char delimiter = '\n';
-    //It assigns unique ids to lists as they are added.
+    private static final char token = 254;
     private TernarySearchTree<List> lists;
 
     /* CONSTRUCTORS */
@@ -22,6 +22,7 @@ public class ListSet {
      */
     public ListSet() {
         lists = new TernarySearchTree<>();
+        lists.put(String.valueOf(token),new List());
     }
 
     /* GETTERS */

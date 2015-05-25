@@ -177,4 +177,16 @@ public enum Genre {
             return values()[id];
         }
     }
+
+    public static Genre getGenreByName(String name) {
+        int i;
+        Genre genre = null;
+        for (i = 0; i < values().length; ++i) {
+            if (values()[i].getName().equals(name)) {
+                genre = values()[i];
+                break;
+            }
+        }
+        return genre;
+    }
 }
