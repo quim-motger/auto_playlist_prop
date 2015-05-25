@@ -74,22 +74,13 @@ public class SongController {
         } catch (Exception e) {
             throw new PropException(ErrorString.INVALID_DURATION);
         }
-        Genre gr;
-        Genre subgr;
-        try {
-            gr = Genre.getGenreByName(genre.trim());
-            subgr = Genre.getGenreByName(subgenre.trim());
-        } catch (Exception e) {
-            gr = Genre.getGenreById(Integer.parseInt(genre.trim()));
-            subgr = Genre.getGenreById(Integer.parseInt(subgenre.trim()));
-        }
         Song song = new Song(
                 title.trim(),
                 artist.trim(),
                 album.trim(),
                 y,
-                gr,
-                subgr,
+                Genre.getGenreById(Integer.parseInt(genre)),
+                Genre.getGenreById(Integer.parseInt(subgenre)),
                 dur);
         songSet.addSong(song);
     }
@@ -142,10 +133,10 @@ public class SongController {
                     song.setYear(Integer.parseInt(val));
                     break;
                 case "genre":
-                    song.setGenre(Genre.getGenreByName(val));
+                    song.setGenre(Genre.getGenreById(Integer.parseInt(val)));
                     break;
                 case "subgenre":
-                    song.setSubgenre(Genre.getGenreByName(val));
+                    song.setSubgenre(Genre.getGenreById(Integer.parseInt(val)));
                     break;
                 case "duration":
                     song.setDuration(Integer.parseInt(val));
@@ -178,7 +169,7 @@ public class SongController {
     public String getSongString(String title, String artist) throws PropException {
         Song song = songSet.getSong(title, artist);
         String s = song.getTitle() + "|" + song.getArtist() + "|" + song.getAlbum() + "|"
-                + song.getYear() + "|" + song.getGenre().getName() + "|" + song.getSubgenre().getName() + "|"
+                + song.getYear() + "|" + song.getGenre().getId() + "|" + song.getSubgenre().getId() + "|"
                 + song.getDuration();
         return s;
     }
