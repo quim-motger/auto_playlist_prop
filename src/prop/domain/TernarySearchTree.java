@@ -45,6 +45,7 @@ public class TernarySearchTree<E> {
      * @param value The object to be stored in the tree.
      */
     public void put(String key, E value) {
+        ++size;
         getOrCreateNode(key + escape_char).data = value;
     }
 
@@ -55,7 +56,6 @@ public class TernarySearchTree<E> {
      * @return Object The object retrieved from the TernarySearchTree.
      */
     public E get(String key) {
-        ++size;
         TSTNode<E> node = getNode(key + escape_char);
         if (node == null) return null;
         return node.data;
