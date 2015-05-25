@@ -263,7 +263,7 @@ public class ListController {
      * @return  an array of strings with the lists titles and their identifiers
      */
     public ArrayList<String> getListSetStringArray() {
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<String>();
         ArrayList<List> lists = listSet.getLists();
         for (List list : lists)
             result.add(list.obtainTitle());

@@ -17,21 +17,54 @@ public class ListTabView extends TabView {
     private ListPController listPController;
     private JPanel emptyPanel;
     private AddList addListPanel;
-    private AddSong addSongPanel;
     private ShowList showListPanel;
     private JList listSet;
     private DefaultListModel listSetModel;
     private JTextField searchField;
-    private JButton searchButton;
     private JButton addListButton;
     private JButton removeListButton;
-    private JButton addSongButton;
-    private JButton removeSongButton;
 
     public ListTabView(ListPController lpc) {
         super();
         listPController = lpc;
         initListComponents();
+    }
+
+    private void initListComponents() {
+        emptyPanel = new JPanel();
+        listSetModel = new DefaultListModel();
+        listSet = getLeftList();
+        listSet.setModel(listSetModel);
+        listSet.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!listSet.isSelectionEmpty()) {
+                    String value = (String) listSet.getSelectedValue();
+                    showListPanel = new ShowList(value);
+                    setRightPanel(showListPanel);
+                }
+            }
+        });
+
+        searchField = getSearchField();
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateListSetModel();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateListSetModel();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateListSetModel();
+            }
+        });
+
+        addListPanel = new AddList();
     }
 
     @Override
@@ -73,76 +106,7 @@ public class ListTabView extends TabView {
         });
         buttons.add(removeListButton);
 
-        addSongButton = new JButton("Add Song");
-        addSongButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
-        addSongButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!listSet.isSelectionEmpty()) {
-                    String value = (String) listSet.getSelectedValue();
-                    addSongPanel = new AddSong(value);
-                    setRightPanel(addSongPanel);
-                }
-
-            }
-        });
-        buttons.add(addSongButton);
-
-        removeSongButton = new JButton("Remove Song");
-        removeSongButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
-        removeSongButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                if (!listSet.isSelectionEmpty() && getRightPanel() instanceof ShowList &&
-                        !((ShowList) getRightPanel()).getSongList().isSelectionEmpty()) {
-                    ShowList showList = (ShowList) getRightPanel();
-                    String value = (String) listSet.getSelectedValue();
-                    int index = showList.getSongList().getSelectedIndex();
-                    listPController.removeSong(value, index);
-                    showList.updateListModel();
-                }
-            }
-        });
-        buttons.add(removeSongButton);
-
         return buttons;
-    }
-
-    private void initListComponents() {
-        emptyPanel = new JPanel();
-        listSetModel = new DefaultListModel();
-        listSet = getLeftList();
-        listSet.setModel(listSetModel);
-        listSet.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!listSet.isSelectionEmpty()) {
-                    String value = (String) listSet.getSelectedValue();
-                    showListPanel = new ShowList(value);
-                    setRightPanel(showListPanel);
-                }
-            }
-        });
-
-        searchField = getSearchField();
-        searchField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                updateListSetModel();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                updateListSetModel();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                updateListSetModel();
-            }
-        });
-
-        addListPanel = new AddList();
     }
 
     private void updateListSetModel() {
@@ -180,15 +144,15 @@ public class ListTabView extends TabView {
             jSeparator1 = new JSeparator();
             jLabel2 = new JLabel();
             jTextField1 = new JTextField();
-            jButton1 = new JButton();
+            addButton = new JButton();
             jLabel3 = new javax.swing.JLabel();
 
             jLabel1.setText("Add new list");
 
             jLabel2.setText("Title: ");
 
-            jButton1.setText("Add");
-            jButton1.addActionListener(new ActionListener() {
+            addButton.setText("Add");
+            addButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     addButtonActionPerformed(e);
@@ -212,7 +176,7 @@ public class ListTabView extends TabView {
                                                     .addGap(0, 319, Short.MAX_VALUE))
                                             .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                     .addGap(0, 0, Short.MAX_VALUE)
-                                                    .addComponent(jButton1))
+                                                    .addComponent(addButton))
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(10, 10, 10)
                                                     .addComponent(jLabel2)
@@ -236,7 +200,7 @@ public class ListTabView extends TabView {
                                             .addComponent(jLabel2)
                                             .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
-                                    .addComponent(jButton1)
+                                    .addComponent(addButton)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                                     .addComponent(jLabel3)
                                     .addContainerGap())
@@ -265,7 +229,7 @@ public class ListTabView extends TabView {
         }
 
         // Variables declaration - do not modify
-        private JButton jButton1;
+        private JButton addButton;
         private JLabel jLabel1;
         private JLabel jLabel2;
         private JLabel jLabel3;
@@ -294,10 +258,12 @@ public class ListTabView extends TabView {
         // <editor-fold defaultstate="collapsed" desc="Generated Code">
         private void initComponents() {
 
-            jLabel1 = new JLabel();
-            jSeparator1 = new JSeparator();
-            jScrollPane1 = new JScrollPane();
-            jList1 = new JList();
+            jLabel1 = new javax.swing.JLabel();
+            jSeparator1 = new javax.swing.JSeparator();
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jList1 = new javax.swing.JList();
+            addSongButton = new javax.swing.JButton();
+            removeSongButton = new javax.swing.JButton();
 
             jLabel1.setText("List title");
 
@@ -305,32 +271,71 @@ public class ListTabView extends TabView {
             jList1.setModel(listModel);
             jScrollPane1.setViewportView(jList1);
 
-            GroupLayout layout = new GroupLayout(this);
+            addSongButton.setText("Add Song");
+            addSongButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    addSongButtonActionPerformed(e);
+                }
+            });
+
+            removeSongButton.setText("Remove Song");
+            removeSongButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    removeSongButtonActionPerformed(e);
+                }
+            });
+
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
             this.setLayout(layout);
             layout.setHorizontalGroup(
-                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                     .addContainerGap()
-                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jScrollPane1)
-                                            .addComponent(jSeparator1, GroupLayout.Alignment.LEADING)
-                                            .addGroup(GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                    .addComponent(jLabel1)
-                                                    .addGap(0, 343, Short.MAX_VALUE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jSeparator1)
+                                            .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jLabel1)
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                    .addComponent(addSongButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                    .addGap(18, 18, 18)
+                                                                    .addComponent(removeSongButton)))
+                                                    .addGap(0, 160, Short.MAX_VALUE)))
                                     .addContainerGap())
             );
             layout.setVerticalGroup(
-                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                     .addContainerGap()
                                     .addComponent(jLabel1)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(addSongButton)
+                                            .addComponent(removeSongButton))
                                     .addContainerGap())
             );
         }// </editor-fold>
+
+        public void addSongButtonActionPerformed(ActionEvent evt) {
+            String value = (String) listSet.getSelectedValue();
+            setRightPanel(new AddSong(value));
+        }
+
+        public void removeSongButtonActionPerformed(ActionEvent evt) {
+            if (!listSet.isSelectionEmpty() && !jList1.isSelectionEmpty()) {
+                String value = (String) listSet.getSelectedValue();
+                int index = jList1.getSelectedIndex();
+                listPController.removeSong(value, index);
+                updateListModel();
+            }
+        }
 
         public void updateListModel() {
             listModel.clear();
@@ -341,18 +346,16 @@ public class ListTabView extends TabView {
             }
         }
 
-        public JList getSongList() {
-            return jList1;
-        }
-
         // Variables declaration - do not modify
-        private JLabel jLabel1;
-        private JList jList1;
-        private JScrollPane jScrollPane1;
-        private JSeparator jSeparator1;
+        private javax.swing.JButton addSongButton;
+        private javax.swing.JButton removeSongButton;
+        private javax.swing.JLabel jLabel1;
+        private javax.swing.JList jList1;
+        private javax.swing.JScrollPane jScrollPane1;
+        private javax.swing.JSeparator jSeparator1;
         private DefaultListModel listModel;
         private String id;
-        // End of variables declaration                   
+        // End of variables declaration
     }
 
     public class AddSong extends JPanel {
@@ -381,7 +384,7 @@ public class ListTabView extends TabView {
             jLabel7 = new JLabel();
             jTextField4 = new JTextField();
             jLabel8 = new JLabel();
-            jButton2 = new JButton();
+            addButton = new JButton();
 
             jLabel5.setText("Add new song to " + id);
 
@@ -393,8 +396,8 @@ public class ListTabView extends TabView {
             jLabel8.setForeground(Color.RED);
             jLabel8.setVisible(false);
 
-            jButton2.setText("Add");
-            jButton2.addActionListener(new ActionListener() {
+            addButton.setText("Add");
+            addButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     addButtonActionPerformed(e);
@@ -416,7 +419,7 @@ public class ListTabView extends TabView {
                                                             .addComponent(jSeparator2, GroupLayout.Alignment.TRAILING)
                                                             .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                                     .addGap(0, 0, Short.MAX_VALUE)
-                                                                    .addComponent(jButton2))
+                                                                    .addComponent(addButton))
                                                             .addGroup(layout.createSequentialGroup()
                                                                     .addGap(10, 10, 10)
                                                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -447,7 +450,7 @@ public class ListTabView extends TabView {
                                             .addComponent(jLabel7)
                                             .addComponent(jTextField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
-                                    .addComponent(jButton2)
+                                    .addComponent(addButton)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                                     .addComponent(jLabel8)
                                     .addContainerGap())
@@ -480,7 +483,7 @@ public class ListTabView extends TabView {
         }
 
         // Variables declaration - do not modify
-        private JButton jButton2;
+        private JButton addButton;
         private JLabel jLabel5;
         private JLabel jLabel6;
         private JLabel jLabel7;

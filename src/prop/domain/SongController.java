@@ -183,6 +183,20 @@ public class SongController {
         return songSet.getSongList();
     }
 
+    public ArrayList<String> getTitles() {
+        ArrayList<String> titles = new ArrayList<String>();
+        for (Song s : songSet.getSongSet())
+            titles.add(s.getTitle());
+        return titles;
+    }
+
+    public ArrayList<String> getArtists() {
+        ArrayList<String> artists = new ArrayList<String>();
+        for (Song s : songSet.getSongSet())
+            artists.add(s.getArtist());
+        return artists;
+    }
+
     /**
      * list of all Genres
      * @return  a String with the list of all genres

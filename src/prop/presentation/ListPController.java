@@ -47,4 +47,12 @@ public class ListPController {
     public ListController getListController() {
         return listController;
     }
+
+    public ArrayList<String> getSongTitles() {
+        return songController.getTitles();
+    }
+
+    public ArrayList<String> getSongArtists() {
+        return songController.getArtists();
+    }
 }
