@@ -154,8 +154,8 @@ public class TernarySearchTree<E> {
             list.addAll(matchPrefix(c));
             c += 1;
         }
-        c = 'A';
         char d = 'a';
+        c = 'A';
         for (int i = 0; i < 26; ++i) {
             list.addAll(matchPrefix(c));
             list.addAll(matchPrefix(d));

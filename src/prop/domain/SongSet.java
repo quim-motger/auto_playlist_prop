@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class SongSet {
 
     private static final String delimiter = "\n";
-    private static final char token = 254;
+    private static final char token = 255-1;
     private TernarySearchTree<Song> songSet;
 
     /**
