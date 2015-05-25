@@ -2,6 +2,7 @@ package prop.presentation;
 
 import prop.PropException;
 import prop.domain.ListController;
+import prop.domain.Pair;
 import prop.domain.SongController;
 
 import java.util.ArrayList;
@@ -48,11 +49,12 @@ public class ListPController {
         return listController;
     }
 
-    public ArrayList<String> getSongTitles() {
-        return songController.getTitles();
-    }
-
-    public ArrayList<String> getSongArtists() {
+    public ArrayList<String> getArtists() {
         return songController.getArtists();
     }
+
+    public ArrayList<String> getTitlesFromArtists(String artist) throws PropException {
+        return songController.getTitlesFromArtist(artist);
+    }
+
 }

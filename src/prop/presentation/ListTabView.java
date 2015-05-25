@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 public class ListTabView extends TabView {
 
@@ -43,6 +44,8 @@ public class ListTabView extends TabView {
                     showListPanel = new ShowList(value);
                     setRightPanel(showListPanel);
                 }
+                else
+                    setRightPanel(emptyPanel);
             }
         });
 
@@ -269,6 +272,7 @@ public class ListTabView extends TabView {
 
             listModel = new DefaultListModel();
             jList1.setModel(listModel);
+            jList1.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
             jScrollPane1.setViewportView(jList1);
 
             addSongButton.setText("Add Song");
@@ -324,8 +328,10 @@ public class ListTabView extends TabView {
         }// </editor-fold>
 
         public void addSongButtonActionPerformed(ActionEvent evt) {
-            String value = (String) listSet.getSelectedValue();
-            setRightPanel(new AddSong(value));
+            if (!listSet.isSelectionEmpty()) {
+                String value = (String) listSet.getSelectedValue();
+                setRightPanel(new AddSong(value));
+            }
         }
 
         public void removeSongButtonActionPerformed(ActionEvent evt) {
@@ -361,7 +367,7 @@ public class ListTabView extends TabView {
     public class AddSong extends JPanel {
 
         /**
-         * Creates new form AddSong2
+         * Creates new form AddSong
          */
         public AddSong(String title) {
             id = title;
@@ -380,17 +386,17 @@ public class ListTabView extends TabView {
             jLabel5 = new JLabel();
             jSeparator2 = new JSeparator();
             jLabel6 = new JLabel();
-            jTextField3 = new JTextField();
             jLabel7 = new JLabel();
-            jTextField4 = new JTextField();
             jLabel8 = new JLabel();
             addButton = new JButton();
+            artistComboBox = new JComboBox<String>();
+            titleComboBox = new JComboBox<String>();
 
             jLabel5.setText("Add new song to " + id);
 
-            jLabel6.setText("Title: ");
+            jLabel6.setText("Artist: ");
 
-            jLabel7.setText("Artist: ");
+            jLabel7.setText("Title: ");
 
             jLabel8.setText("Error:");
             jLabel8.setForeground(Color.RED);
@@ -403,6 +409,14 @@ public class ListTabView extends TabView {
                     addButtonActionPerformed(e);
                 }
             });
+
+            artistComboBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    artistComboBoxActionPerformed(e);
+                }
+            });
+            updateArtistComboBoxModel();
 
             GroupLayout layout = new GroupLayout(this);
             this.setLayout(layout);
@@ -429,9 +443,9 @@ public class ListTabView extends TabView {
                                                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                             .addGroup(layout.createSequentialGroup()
                                                                                     .addComponent(jLabel8)
-                                                                                    .addGap(0, 200, Short.MAX_VALUE))
-                                                                            .addComponent(jTextField4)
-                                                                            .addComponent(jTextField3))))
+                                                                                    .addGap(0, 0, Short.MAX_VALUE))
+                                                                            .addComponent(artistComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                            .addComponent(titleComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                                     .addContainerGap())))
             );
             layout.setVerticalGroup(
@@ -444,11 +458,11 @@ public class ListTabView extends TabView {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel6)
-                                            .addComponent(jTextField4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(artistComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel7)
-                                            .addComponent(jTextField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(titleComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
                                     .addComponent(addButton)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
@@ -459,14 +473,11 @@ public class ListTabView extends TabView {
 
         private void addButtonActionPerformed(ActionEvent evt) {
             try {
-                if (id == null) throw new NullPointerException();
-                String title = jTextField4.getText();
-                String artist = jTextField3.getText();
+                String artist = String.valueOf(artistComboBox.getSelectedItem());
+                String title = String.valueOf(titleComboBox.getSelectedItem());
                 listPController.addSong(id, title, artist);
                 showListPanel.updateListModel();
                 setRightPanel(showListPanel);
-                jTextField3.setText("");
-                jTextField4.setText("");
             }
             catch (PropException e) {
                 jLabel8.setText(e.getMessage());
@@ -482,15 +493,45 @@ public class ListTabView extends TabView {
             }
         }
 
+        private void artistComboBoxActionPerformed(ActionEvent evt) {
+            titleComboBox.removeAllItems();
+            String artist = String.valueOf(artistComboBox.getSelectedItem());
+            if (!artist.equals("")) {
+                try {
+                    ArrayList<String> titles = listPController.getTitlesFromArtists(artist);
+                    for (String s : titles)
+                        titleComboBox.addItem(s);
+                } catch (PropException e) {
+                    jLabel8.setText(e.getMessage());
+                    jLabel8.setVisible(true);
+                    ActionListener listener = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            jLabel8.setVisible(false);
+                        }
+                    };
+                    Timer timer = new Timer(3000, listener);
+                    timer.start();
+                }
+            }
+        }
+
+        public void updateArtistComboBoxModel() {
+            artistComboBox.removeAllItems();
+            artistComboBox.addItem("");
+            for (String s : new LinkedHashSet<>(listPController.getArtists()))
+                artistComboBox.addItem(s);
+        }
+
         // Variables declaration - do not modify
         private JButton addButton;
+        private JComboBox<String> artistComboBox;
+        private JComboBox<String> titleComboBox;
         private JLabel jLabel5;
         private JLabel jLabel6;
         private JLabel jLabel7;
         private JLabel jLabel8;
         private JSeparator jSeparator2;
-        private JTextField jTextField3;
-        private JTextField jTextField4;
         private String id;
         // End of variables declaration                   
     }
