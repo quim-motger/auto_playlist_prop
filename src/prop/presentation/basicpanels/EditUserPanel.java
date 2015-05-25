@@ -69,7 +69,7 @@ public class EditUserPanel extends UserPanel {
         });
         addActionButton(delete);
 
-        listEdit = new JButton("Edit Associated Lists");
+        listEdit = new JButton("Associated Lists");
         listEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

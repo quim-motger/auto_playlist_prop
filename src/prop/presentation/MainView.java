@@ -15,9 +15,9 @@ public class MainView extends JFrame {
     private JMenuItem ExitMenuItem;
     private JMenuItem SaveMenuItem;
     private JMenuItem LoadMenuItem;
-    private JPanel UserPanel;
-    private JPanel SongPanel;
-    private JPanel ListPanel;
+    private UserTabView UserPanel;
+    private SongTabView SongPanel;
+    private ListTabView ListPanel;
     private JPanel AlgorithmPanel;
     private JTabbedPane TabbedPane;
 
@@ -32,7 +32,7 @@ public class MainView extends JFrame {
     private void initComponents() {
 
         TabbedPane = new JTabbedPane();
-        UserPanel = new UserTabView(userPController);
+        UserPanel = new UserTabView(userPController,this);
         SongPanel = new SongTabView(songPController);
         ListPanel = new ListTabView(listPController);
         AlgorithmPanel = new JPanel();
@@ -125,5 +125,9 @@ public class MainView extends JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    public void showList(String list) {
+        TabbedPane.setSelectedIndex(2);
+        ListPanel.showList(list);
+    }
 }
 
