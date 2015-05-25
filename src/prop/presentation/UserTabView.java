@@ -150,25 +150,18 @@ public class UserTabView extends TabView {
                     super.approveSelection();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(this, ErrorString.CORRUPT_FILE);
+                    if(e.getMessage().equals(ErrorString.INCORRECT_FORMAT)) {
+                        JOptionPane.showMessageDialog(this, ErrorString.CORRUPT_FILE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, ErrorString.LOAD_OTHERS);
+                    }
                 }
             }
         };
         FileNameExtensionFilter filter = new FileNameExtensionFilter(".users", "users");
         c.setFileFilter(filter);
         // Demonstrate "Open" dialog:
-        int rVal = c.showOpenDialog(this);
-        if (rVal == JFileChooser.APPROVE_OPTION) {
-            String file = c.getSelectedFile().getName();
-            String dir = c.getCurrentDirectory().toString();
-            try {
-                mController.load(dir + "/" + file);
-                updateList();
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-        }
+        c.showOpenDialog(this);
     }
 
     private void showErrorPanel() {
