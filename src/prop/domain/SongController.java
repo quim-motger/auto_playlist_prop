@@ -63,7 +63,18 @@ public class SongController {
     public void addSong(String title, String artist, String album, String year, String genre, String subgenre, String duration) throws PropException {
         if (year.length() == 0) throw new PropException(ErrorString.MISSING_YEAR);
         else if (duration.length() == 0) throw new PropException(ErrorString.MISSING_DURATION);
-        Song song = new Song(title, artist, album, Integer.parseInt(year), Genre.getGenreById(Integer.parseInt(genre)), Genre.getGenreById(Integer.parseInt(subgenre)), Integer.parseInt(duration));
+        int y; int dur;
+        try {
+            y = Integer.parseInt(year.trim());
+        } catch (Exception e) {
+            throw new PropException(ErrorString.INVALID_YEAR);
+        }
+        try {
+            dur = Integer.parseInt(duration.trim());
+        } catch (Exception e) {
+            throw new PropException(ErrorString.INVALID_DURATION);
+        }
+        Song song = new Song(title.trim(), artist.trim(), album.trim(), y, Genre.getGenreById(Integer.parseInt(genre.trim())), Genre.getGenreById(Integer.parseInt(subgenre)), dur);
         songSet.addSong(song);
     }
 

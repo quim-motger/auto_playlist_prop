@@ -49,7 +49,7 @@ public class ListController {
      * @param title the title of the list
      */
     public void addList(String title) throws PropException {
-        List list = new List(title);
+        List list = new List(title.trim());
         listSet.add(list);
     }
 

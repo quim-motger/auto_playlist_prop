@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class ListSet {
     private static final char delimiter = '\n';
-    private static final char token = 255-1;
+    private static final char token = 254;
     private TernarySearchTree<List> lists;
 
     /* CONSTRUCTORS */

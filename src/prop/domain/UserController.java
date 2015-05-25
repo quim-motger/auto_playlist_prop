@@ -58,11 +58,11 @@ public class UserController {
      * @see prop.domain.User
      */
     public void addUser(String name, String gender, int year, int month, int date) throws Exception {
-        Gender userGender = Gender.valueOf(gender);
+        Gender userGender = Gender.valueOf(gender.trim());
         Calendar userBirthday = Calendar.getInstance();
         checkDate(year+"-"+month+"-"+date);
         userBirthday.set(year, month, date);
-        User user = new User(name, userGender, userBirthday);
+        User user = new User(name.trim(), userGender, userBirthday);
         userSet.addUser(user);
     }
 

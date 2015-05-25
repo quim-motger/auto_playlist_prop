@@ -4,6 +4,7 @@ import prop.PropException;
 import prop.domain.Genre;
 import prop.domain.SongController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SongPController {
@@ -41,6 +42,14 @@ public class SongPController {
 
     public String getSong(String title, String artist) throws PropException {
         return songController.getSongString(title, artist);
+    }
+
+    public void save(String path) throws Exception {
+        songController.save(path);
+    }
+
+    public void load(String path) throws Exception {
+        songController.load(path);
     }
 
 }
