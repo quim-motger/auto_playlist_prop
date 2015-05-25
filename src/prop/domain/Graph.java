@@ -27,15 +27,27 @@ public class Graph<T> {
 
     public static String GraphSongToString(Graph<Song> gr) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < gr.numberOfVertices(); ++i) {
+        int i;
+        for (i = 0; i < gr.numberOfVertices()-1; ++i) {
             for (Integer j : gr.adjacentVertices(i)) {
                 sb.append(gr.getVertexT(i).getTitle());
+                sb.append(" (" + gr.getVertexT(i).getArtist() + ")");
                 sb.append(delimiter);
-                sb.append(gr.getVertexT(i).getArtist());
+                sb.append(gr.getVertexT(j).getTitle());
+                sb.append(" (" + gr.getVertexT(j).getArtist() + ")");
                 sb.append(delimiter);
                 sb.append(gr.weight(i,j));
                 sb.append(delimiter);
             }
+        }
+        for (Integer j : gr.adjacentVertices(i)) {
+            sb.append(gr.getVertexT(i).getTitle());
+            sb.append(" (" + gr.getVertexT(i).getArtist() + ")");
+            sb.append(delimiter);
+            sb.append(gr.getVertexT(j).getTitle());
+            sb.append(" (" + gr.getVertexT(j).getArtist() + ")");
+            sb.append(delimiter);
+            sb.append(gr.weight(i,j));
         }
         return sb.toString();
     }
