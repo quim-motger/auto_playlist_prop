@@ -208,14 +208,15 @@ public class AddSongPanel extends javax.swing.JPanel {
             int d = (Integer) jSpinner1.getValue();
             String duration = String.valueOf(d);
             songPController.addSong(title, artist, album, year, genre, subgenre, duration);
-            jTextField1.setText("");
+            /*jTextField1.setText("");
             jTextField2.setText("");
             jTextField3.setText("");
             jTextField4.setText("");
             jComboBox1.setSelectedIndex(0);
             jComboBox2.setSelectedIndex(0);
-            jTextField7.setText("");
+            jTextField7.setText("");*/
             songTabView.updateSongSetModel();
+            songTabView.setShowSongPanel(title,artist);
         } catch (PropException e) {
             jLabel9.setText(e.getMessage());
             jLabel9.setVisible(true);

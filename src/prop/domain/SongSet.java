@@ -58,7 +58,7 @@ public class SongSet {
      * @throws PropException    if the song is not present
      */
     public Song getSong(String title, String artist) throws PropException {
-        String key = getKey(title,artist);
+        String key = getKey(title, artist);
         Song s = songSet.get(key);
         if (s == null) throw new PropException(ErrorString.UNEXISTING_SONG);
         return s;
@@ -150,8 +150,9 @@ public class SongSet {
                     break;
                 }
             }
-            if (valid)
+            if (valid) {
                 songs.add(song);
+            }
         }
         return songs;
     }

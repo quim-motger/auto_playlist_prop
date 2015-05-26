@@ -53,7 +53,11 @@ public class SongPController {
     }
 
     public void edit(String title, String artist, String attr, String val) throws PropException {
-        songController.editSong(title,artist,attr,val);
+        songController.editSong(title, artist, attr, val);
+    }
+
+    public String searchSongs(String p) throws PropException {
+        return songController.searchSongs(p);
     }
 
 }

@@ -88,7 +88,7 @@ public class SongControllerDriver {
                     }
                     break;
                 case 10:
-                    int n = in.nextInt();
+                    /*int n = in.nextInt();
                     ArrayList< Pair<String,String>> l = new ArrayList<>();
                     while (n > 0) {
                         Pair<String,String> p = new Pair<>(in.next(),in.next());
@@ -100,7 +100,7 @@ public class SongControllerDriver {
                         System.out.print(p);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
-                    }
+                    }*/
                     break;
                 case 11:
                     String[] listGenres = songController.listGenres();

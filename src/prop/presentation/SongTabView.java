@@ -25,12 +25,12 @@ public class SongTabView extends TabView{
     private JPanel emptyPanel;
 
     private AddSongPanel addSongPanel;
-    private ShowSongPanel showSongPanel;
+    private SearchSongsPanel searchSongsPanel;
     private DefaultListModel songSetModel;
     private JList songSet;
     private JTextField searchField;
     private JButton addSongButton;
-    private JButton removeSongButton;
+    private JButton searchSongsButton;
     private JButton loadSongSet;
     private JButton saveSongSet;
 
@@ -38,6 +38,7 @@ public class SongTabView extends TabView{
         super();
         songPController = spc;
         addSongPanel = new AddSongPanel(songPController, this);
+        searchSongsPanel = new SearchSongsPanel(songPController, this);
         initListComponents();
     }
 
@@ -60,25 +61,15 @@ public class SongTabView extends TabView{
         });
         buttons.add(addSongButton);
 
-        removeSongButton = new JButton("Remove Song");
-        removeSongButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
-        removeSongButton.addActionListener(new ActionListener() {
+        searchSongsButton = new JButton("Search Songs");
+        searchSongsButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        searchSongsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (!songSet.isSelectionEmpty()) {
-                    String value = (String) songSet.getSelectedValue();
-                    String[] attr = value.split(Pattern.quote(" - "));
-                    try {
-                        songPController.removeSong(attr[0], attr[1]);
-                        setRightPanel(emptyPanel);
-                        updateSongSetModel();
-                    } catch (PropException e) {
-                        e.printStackTrace();
-                    }
-                }
+                setRightPanel(searchSongsPanel);
             }
         });
-        buttons.add(removeSongButton);
+        buttons.add(searchSongsButton);
 
         saveSongSet = new JButton("Save");
         saveSongSet.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
@@ -151,6 +142,7 @@ public class SongTabView extends TabView{
                 try {
                     songPController.load(dir + "/" + file);
                     updateSongSetModel();
+                    setRightPanel(emptyPanel);
                     super.approveSelection();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(this, e.getMessage());

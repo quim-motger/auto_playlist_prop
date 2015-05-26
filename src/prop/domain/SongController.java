@@ -176,15 +176,21 @@ public class SongController {
 
     /**
      * Search songs with the defined values for specified attributes
-     * @param l     list with pairs of attributes and value to define search
+     * @param criteria    list with pairs of attributes and value to define search
      * @return      string with all the songs that match the search
      */
-    public String searchSongs(ArrayList< Pair<String, String> > l) throws PropException {
+    public String searchSongs(String criteria) throws PropException {
+        String[] p = criteria.split(Pattern.quote("\n"));
+        ArrayList<Pair<String, String>> l = new ArrayList<>();
+        for (String s : p) {
+            String[] pp = s.split(Pattern.quote("|"));
+            l.add(new Pair<>(pp[0],pp[1]));
+        }
         ArrayList<Song> songs = songSet.searchSongs(l);
         String s = "";
         for (Song song : songs) {
-            s += song.getTitle() + " " + song.getArtist() + " " + song.getAlbum() + " " + song.getYear() +
-                    " " + song.getGenre().getName() + " " + song.getSubgenre().getName() + " " + song.getDuration() + "\n";
+            s += song.getTitle() + " | " + song.getArtist() + " | " + song.getAlbum() + " | " + song.getYear() +
+                    " | " + song.getGenre().getName() + " | " + song.getSubgenre().getName() + " | " + song.getDuration() + "\n";
         }
         return s;
     }
