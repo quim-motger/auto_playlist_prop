@@ -47,6 +47,7 @@ public abstract class TabView extends JPanel {
     private void initComponents() {
         leftListView = new JScrollPane();
         leftList = new JList();
+        leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         leftList.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         leftListView.setViewportView(leftList);
         leftListView.setPreferredSize(new Dimension(195, 200));

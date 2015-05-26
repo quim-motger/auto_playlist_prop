@@ -95,6 +95,13 @@ public abstract class PropPanel extends JPanel {
         errorText.setVisible(true);
         errorText.setForeground(Color.red);
     }
+    
+    protected void showInfo(String info) {
+        errorText.setText(info);
+        errorText.setVisible(true);
+        errorText.setForeground(Color.black);
+        
+    }
 
     public void setFormPanel(JPanel form) {
         this.form = form;

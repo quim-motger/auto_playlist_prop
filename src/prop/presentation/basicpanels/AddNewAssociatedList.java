@@ -9,61 +9,51 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
- * ShowAssociatedLists in prop.presentation.basicpanels
+ * AddNewAssociatedList in prop.presentation.basicpanels
  *
  * @author gerard.casas.saez
  * @version 1.0
- *          Creation Date: 25/05/15
+ *          Creation Date: 26/05/15
  */
-public class ShowAssociatedLists extends PropPanel {
+public class AddNewAssociatedList extends PropPanel {
     private final UserPController controller;
     private final String name;
     private final UserTabView tab;
-    private final JButton showList;
+    private final JButton associate;
     private JScrollPane listWrapper;
     private JList listOfLists;
     private DefaultListModel<String> listOfListsModel;
-
-    public ShowAssociatedLists(UserPController userPController, String userName, UserTabView userTabView) {
+    
+    public AddNewAssociatedList (String userName, UserPController userPController, UserTabView userTabView) {
         super();
-        name = userName;
         controller = userPController;
+        name = userName;
         tab = userTabView;
-        updateListOfLists();
-        setTitleText("Associated Lists from "+name);
-        
-        listOfLists.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        setTitleText("Associate new lists to " + name);
+        updatePanel();
 
         JButton back = new JButton("< Back");
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                tab.showUserInRightPanel(name);
+                tab.showAssociatedListsPanel(name);
             }
         });
         addButton(back);
         
-        JButton associate = new JButton("Add more Lists");
+        associate = new JButton("Associate Lists");
         associate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                tab.editAssociatedLists(name);
+                List<String> lists = listOfLists.getSelectedValuesList();
+                associateLists(lists);
             }
         });
         addButton(associate);
-        
-        showList = new JButton("Show List");
-        showList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                String list = (String) listOfLists.getSelectedValue();
-                tab.showList(list);
-            }
-        });
-        addButton(showList);
-        showList.setVisible(false);
+        associate.setVisible(false);
         
         listOfLists.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -74,7 +64,21 @@ public class ShowAssociatedLists extends PropPanel {
     }
 
     private void startEditMode() {
-        showList.setVisible(true);
+        associate.setVisible(true);
+    }
+
+    private void associateLists(List<String> lists) {
+        try {
+            for (String list : lists) {
+                controller.associateList(name, list);
+            }
+            showInfo("Lists associated");
+            associate.setVisible(false);
+        } catch (PropException e) {
+            e.printStackTrace();
+            throwError(e.getMessage());
+        }
+        updatePanel();
     }
 
     @Override
@@ -82,7 +86,9 @@ public class ShowAssociatedLists extends PropPanel {
         JPanel panel = new JPanel();
         listWrapper = new JScrollPane();
         listOfLists = new JList();
+        listOfLists.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         listOfListsModel = new DefaultListModel<>();
+        listOfLists.setModel(listOfListsModel);
         listWrapper.setViewportView(listOfLists);
 
         GroupLayout layout = new GroupLayout(panel);
@@ -103,11 +109,11 @@ public class ShowAssociatedLists extends PropPanel {
         );
         return panel;
     }
-
-    private void updateListOfLists() {
-        listOfListsModel.clear();
+    
+    private void updatePanel() {
         try {
-            String[] lists = controller.getUserLists(name);
+            listOfListsModel.clear();
+            String[] lists = controller.getNotUserLists(name);
             for(String list : lists) {
                 listOfListsModel.addElement(list);
             }
@@ -115,10 +121,5 @@ public class ShowAssociatedLists extends PropPanel {
             e.printStackTrace();
             throwError(e.getMessage());
         }
-        
-        listOfLists.setModel(listOfListsModel);
-
     }
-    
-    
 }

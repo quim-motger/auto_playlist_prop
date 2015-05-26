@@ -77,4 +77,17 @@ public class UserPController {
     public void disassociateList(String name, String list) throws PropException {
         userController.disassociateListFromUser(listController,list,name);
     }
+
+    public String[] getNotUserLists(String name) throws PropException {
+        String [] allLists = getAllLists();
+        ArrayList<String> usersLists = new ArrayList<>(Arrays.asList(getUserLists(name)));
+        
+        ArrayList<String> ret = new ArrayList<>();
+        for(String list : allLists) {
+            if(!usersLists.contains(list)){
+                ret.add(list);
+            }
+        }
+        return ret.toArray(new String[ret.size()]);
+    }
 }

@@ -150,6 +150,7 @@ public class ListTabView extends TabView {
                     path=dir+"/"+file;
                 listPController.save(path);
             } catch (Exception e) {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(this, e.getMessage());
             }
         }
@@ -166,6 +167,7 @@ public class ListTabView extends TabView {
                     updateListSetModel();
                     super.approveSelection();
                 } catch (Exception e) {
+                    e.printStackTrace();
                     JOptionPane.showMessageDialog(this, e.getMessage());
                 }
             }
