@@ -9,16 +9,16 @@ import prop.presentation.UserPController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 
 /**
  *
  * @author casassg
  */
-public class UserPanel extends JPanel {
+public class UserPanel extends PropPanel {
 
     private UserPController controller;
-    private JLabel errorField;
     private JComboBox genderSelector;
     private JLabel dayLabel;
     private JLabel monthLabel;
@@ -26,48 +26,48 @@ public class UserPanel extends JPanel {
     private JLabel genderLabel;
     private JLabel birthdayLabel;
     private JLabel yearLabel;
-    private JSeparator separator;
     private JSpinner daySpinner;
     private JSpinner monthSpinner;
     private JSpinner yearSpinner;
     private JTextField nameField;
-    private JLabel titleText;
-    private JPanel buttonsPanel;
+    private ActionListener defaultActionListener;
 
     /**
      * Creates new form AddSongPanel
      */
     public UserPanel(UserPController userController) {
         controller = userController;
-        initComponents();
+        updatePanel();
     }
 
-    private void initComponents() {
-        titleText = new JLabel();
-        separator = new JSeparator();
+    protected void updatePanel() {
+        genderSelector.setModel(new DefaultComboBoxModel(controller.getGenres()));
+        nameField.addActionListener(defaultActionListener);
+        genderSelector.addActionListener(defaultActionListener);
+    }
+    
+    @Override
+    protected JPanel createFormPanel() {
+        JPanel panel = new JPanel();
         nameLabel = new JLabel();
         nameField = new JTextField();
         genderLabel = new JLabel();
         birthdayLabel = new JLabel();
         genderSelector = new JComboBox();
-        
-        buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel,BoxLayout.X_AXIS));
-        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        
-        
+        daySpinner = new JSpinner();
+        monthSpinner = new JSpinner();
+        yearSpinner = new JSpinner();
+        dayLabel = new JLabel();
+        monthLabel = new JLabel();
+        yearLabel = new JLabel();
+
         Calendar cal = Calendar.getInstance();
         SpinnerNumberModel dayModel = new SpinnerNumberModel(cal.get(Calendar.DATE),1,31,1);
         daySpinner = new JSpinner(dayModel);
         SpinnerNumberModel monthModel = new SpinnerNumberModel(cal.get(Calendar.MONTH),1,12,1);
         monthSpinner = new JSpinner(monthModel);
-        
         SpinnerNumberModel yearModel = new SpinnerNumberModel(cal.get(Calendar.YEAR),1,999999999,1);
         yearSpinner = new JSpinner(yearModel);
-        errorField = new JLabel();
-        dayLabel = new JLabel();
-        monthLabel = new JLabel();
-        yearLabel = new JLabel();
 
         nameLabel.setFont(new Font("Noto Sans", 1, 12)); // NOI18N
         nameLabel.setText("Name");
@@ -77,32 +77,26 @@ public class UserPanel extends JPanel {
 
         birthdayLabel.setFont(new Font("Noto Sans", 1, 12)); // NOI18N
         birthdayLabel.setText("Birthday");
-
-        genderSelector.setModel(new DefaultComboBoxModel(controller.getGenres()));
-
-        errorField.setVisible(false);
+        
 
 
         dayLabel.setFont(new Font("Noto Sans", 2, 12)); // NOI18N
         dayLabel.setText("Day");
-        
+
 
         monthLabel.setFont(new Font("Noto Sans", 2, 12)); // NOI18N
         monthLabel.setText("Month");
 
         yearLabel.setFont(new Font("Noto Sans", 2, 12)); // NOI18N
         yearLabel.setText("Year");
-
-
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
+        
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(buttonsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(separator)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
@@ -112,7 +106,7 @@ public class UserPanel extends JPanel {
                                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addComponent(nameField)
-                                                        .addComponent(genderSelector, 0, 315, Short.MAX_VALUE)))
+                                                        .addComponent(genderSelector, 0, 316, Short.MAX_VALUE)))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
@@ -127,9 +121,7 @@ public class UserPanel extends JPanel {
                                                                         .addComponent(monthSpinner, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
                                                                         .addComponent(daySpinner, GroupLayout.Alignment.LEADING)
                                                                         .addComponent(yearSpinner)))
-                                                        .addComponent(titleText)
-                                                        .addComponent(birthdayLabel)
-                                                        .addComponent(errorField))
+                                                        .addComponent(birthdayLabel))
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
         );
@@ -137,10 +129,6 @@ public class UserPanel extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(titleText)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(separator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(nameField)
                                         .addComponent(nameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -162,17 +150,9 @@ public class UserPanel extends JPanel {
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(yearSpinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(yearLabel))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                                .addComponent(errorField)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
         );
-    }
-
-    protected void throwError(String s) {
-        errorField.setText(s);
-        errorField.setVisible(true);
-        errorField.setForeground(Color.red);
+        return panel;
     }
 
     protected void setNameField(String name) {
@@ -188,12 +168,6 @@ public class UserPanel extends JPanel {
         yearSpinner.setValue(year);
         monthSpinner.setValue(month);
         
-    }
-    
-    protected void addActionButton(JButton button) {
-        buttonsPanel.add(button);
-        buttonsPanel.add(new Box.Filler(new Dimension(5,0), new Dimension(5,0), new java.awt.Dimension(5,32767)));
-
     }
 
     protected String getNameField() {
@@ -216,6 +190,11 @@ public class UserPanel extends JPanel {
         return (String) genderSelector.getSelectedItem();
     }
     
+    protected void setDefaultActionListener(ActionListener actionListener) {
+        defaultActionListener = actionListener;
+        
+    }
+    
     protected void enableFieldEdition(boolean enable){
         genderSelector.setEditable(enable);
         genderSelector.setEnabled(enable);
@@ -223,9 +202,5 @@ public class UserPanel extends JPanel {
         yearSpinner.setEnabled(enable);
         daySpinner.setEnabled(enable);
         monthSpinner.setEnabled(enable);
-    }
-    
-    protected void setTitleText(String title) {
-        titleText.setText(title);
     }
 }

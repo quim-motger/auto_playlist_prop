@@ -1,5 +1,6 @@
 package prop.presentation.basicpanels;
 
+import prop.ErrorString;
 import prop.presentation.UserPController;
 import prop.presentation.UserTabView;
 
@@ -31,6 +32,15 @@ public class AddUserPanel  extends UserPanel {
         controller = userController;
         tab = userTabView;
         
+        setDefaultActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                submitAction(actionEvent);
+            }
+        });
+        
+        updatePanel();
+        
         setTitleText("Add new User");
         
         add = new JButton("Add");
@@ -39,7 +49,7 @@ public class AddUserPanel  extends UserPanel {
                 submitAction(evt);
             }
         });
-        addActionButton(add);
+        addButton(add);
         
         enableFieldEdition(true);
     }
@@ -47,7 +57,8 @@ public class AddUserPanel  extends UserPanel {
     private void submitAction(ActionEvent evt) {
         String name = getNameField();
         if(name.equals("")){
-            throwError("Missing name");
+            throwError(ErrorString.MISSING_NAME);
+            return;
         }
         String gender = getGenderSelector();
         int day = getDaySpinner();

@@ -32,6 +32,15 @@ public class ShowAssociatedLists extends PropPanel {
         tab = userTabView;
         updateListOfLists();
         setTitleText("Associated Lists from "+name);
+
+        JButton back = new JButton("< Back");
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                tab.showUserInRightPanel(name);
+            }
+        });
+        addButton(back);
         
         JButton associate = new JButton("Edit");
         associate.addActionListener(new ActionListener() {
@@ -41,6 +50,8 @@ public class ShowAssociatedLists extends PropPanel {
             }
         });
         addButton(associate);
+
+
         
         listOfLists.addListSelectionListener(new ListSelectionListener() {
             @Override

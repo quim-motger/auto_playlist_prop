@@ -1,5 +1,6 @@
 package prop.presentation.basicpanels;
 
+import prop.ErrorString;
 import prop.PropException;
 import prop.presentation.UserPController;
 import prop.presentation.UserTabView;
@@ -38,6 +39,8 @@ public class EditUserPanel extends UserPanel {
         controller = userController;
         name = userName;
         tab = userTabView;
+
+        updatePanel();
         
         updateUserData();
         setTitleText("User detail: "+name);
@@ -49,16 +52,6 @@ public class EditUserPanel extends UserPanel {
                 enableEdit();
             }
         });
-        addActionButton(edit);
-        
-        save = new JButton("Save");
-        save.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                saveEdition();
-            }
-        });
-        addActionButton(save);
 
         delete = new JButton("Delete");
         delete.addActionListener(new ActionListener() {
@@ -67,8 +60,15 @@ public class EditUserPanel extends UserPanel {
                 deleteUser();
             }
         });
-        addActionButton(delete);
-
+        
+        save = new JButton("Save");
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                saveEdition();
+            }
+        });
+        
         listEdit = new JButton("Associated Lists");
         listEdit.addActionListener(new ActionListener() {
             @Override
@@ -76,16 +76,21 @@ public class EditUserPanel extends UserPanel {
                 tab.showAssociatedListsPanel(name);
             }
         });
-        addActionButton(listEdit);
 
-        cancelEdit = new JButton("Cancel");
+        cancelEdit = new JButton("< Back");
         cancelEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 disableEdit();
             }
         });
-        addActionButton(cancelEdit);
+        
+        addButton(cancelEdit);
+        addButton(save);
+        addButton(edit);
+        addButton(delete);
+        addButton(listEdit);
+
         
         disableEdit();
     }
@@ -104,7 +109,7 @@ public class EditUserPanel extends UserPanel {
     private void saveEdition() {
         String newName = getNameField();
         if(newName.equals("")){
-            throwError("Missing name");
+            throwError(ErrorString.MISSING_NAME);
         }
         String gender = getGenderSelector();
         int day = getDaySpinner();
@@ -114,7 +119,7 @@ public class EditUserPanel extends UserPanel {
         try {
             controller.updateUser(name, newName, gender, day, month, year);
             tab.updateList();
-            tab.showMainPanel();
+            tab.showUserInRightPanel(name);
         } catch (Exception e) {
             e.printStackTrace();
             throwError(e.getMessage());
@@ -159,5 +164,7 @@ public class EditUserPanel extends UserPanel {
         cancelEdit.setVisible(enable);
         edit.setVisible(!enable);
         save.setVisible(enable);
+        delete.setVisible(!enable);
+        listEdit.setVisible(!enable);
     }
 }
