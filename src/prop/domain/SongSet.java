@@ -27,8 +27,7 @@ public class SongSet {
      * @return  the size of the set
      */
     public int size() {
-        // TODO
-        return songSet.getSize()-1;
+        return songSet.getSize();
     }
 
     /**
