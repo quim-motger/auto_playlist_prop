@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class UserSet {
 
     private static final String delimiter = "\n";
-    private static final char token = 254;
     private TernarySearchTree<User> users;
 
 
@@ -22,7 +21,6 @@ public class UserSet {
      */
     public UserSet() {
         users = new TernarySearchTree<>();
-        users.put(String.valueOf(token), new User());
     }
 
     /**

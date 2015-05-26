@@ -31,6 +31,7 @@ public class SongTabView extends TabView{
     private JTextField searchField;
     private JButton addSongButton;
     private JButton searchSongsButton;
+    private JButton removeAllSongsButton;
     private JButton loadSongSet;
     private JButton saveSongSet;
 
@@ -70,6 +71,16 @@ public class SongTabView extends TabView{
             }
         });
         buttons.add(searchSongsButton);
+
+        removeAllSongsButton = new JButton("Remove all Songs");
+        removeAllSongsButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        removeAllSongsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //setRightPanel(searchSongsPanel);
+            }
+        });
+        buttons.add(removeAllSongsButton);
 
         saveSongSet = new JButton("Save");
         saveSongSet.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));

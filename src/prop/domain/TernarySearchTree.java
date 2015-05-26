@@ -12,13 +12,15 @@ import java.util.ArrayList;
  */
 public class TernarySearchTree<E> {
     private final static String escape_char = "\n";
+    private static final char token = 254;
     private TSTNode<E> rootNode;
     private int defaultNumReturnValues;
     private int size;
 
     public TernarySearchTree() {
         defaultNumReturnValues = -1;
-        size = 0;
+        size = -1;
+        put(String.valueOf(token),null);
     }
 
     private static int compareCharsAlphabetically(char cCompare, char cRef) {

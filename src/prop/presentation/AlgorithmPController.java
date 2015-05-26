@@ -1,12 +1,12 @@
 package prop.presentation;
 
-import edu.uci.ics.jung.graph.UndirectedSparseGraph;
+//import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import prop.domain.AlgorithmController;
 import prop.domain.RelationController;
 
 public class AlgorithmPController {
 
-    private AlgorithmController algorithmController;
+   /* private AlgorithmController algorithmController;
     private RelationController relationController;
     private UndirectedSparseGraph<String,Double> gr;
     static final String delimiter = "\n";
@@ -23,6 +23,6 @@ public class AlgorithmPController {
             gr.addVertex(vertices[i+1]);
             gr.addEdge(Double.parseDouble(vertices[i+2]),vertices[i],vertices[i+1]);
         }
-    }
+    }*/
 
 }
