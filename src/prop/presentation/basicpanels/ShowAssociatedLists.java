@@ -22,6 +22,7 @@ public class ShowAssociatedLists extends PropPanel {
     private final String name;
     private final UserTabView tab;
     private final JButton showList;
+    private final JButton dissasociate;
     private JScrollPane listWrapper;
     private JList listOfLists;
     private DefaultListModel<String> listOfListsModel;
@@ -65,6 +66,17 @@ public class ShowAssociatedLists extends PropPanel {
         addButton(showList);
         showList.setVisible(false);
         
+        dissasociate = new JButton("Disassociate List");
+        dissasociate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String list = (String) listOfLists.getSelectedValue();
+                dissasociateList(list);
+            }
+        });
+        addButton(dissasociate);
+        dissasociate.setVisible(false);
+        
         listOfLists.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
@@ -73,8 +85,21 @@ public class ShowAssociatedLists extends PropPanel {
         });
     }
 
+    private void dissasociateList(String list) {
+        try {
+            controller.disassociateList(name,list);
+            updateListOfLists();
+            showInfo("Disassociated List");
+            stopEditMode();
+        } catch (PropException e) {
+            e.printStackTrace();
+            throwError(e.getMessage());
+        }
+    }
+
     private void startEditMode() {
         showList.setVisible(true);
+        dissasociate.setVisible(true);
     }
 
     @Override
@@ -119,6 +144,11 @@ public class ShowAssociatedLists extends PropPanel {
         listOfLists.setModel(listOfListsModel);
 
     }
-    
-    
+
+    private void stopEditMode() {
+        showList.setVisible(false);
+        dissasociate.setVisible(false);
+    }
+
+
 }
