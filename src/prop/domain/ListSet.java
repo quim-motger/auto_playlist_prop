@@ -108,8 +108,9 @@ public class ListSet {
 
     @Override
     public String toString() {
+        // TODO
         String s = "";
-        s += String.valueOf(lists.getSize()) + delimiter;
+        s += String.valueOf(lists.getSize()-1) + delimiter;
         for (List l : lists.getList()) {
             s += l.toString() + delimiter;
         }

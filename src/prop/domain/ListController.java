@@ -299,8 +299,8 @@ public class ListController {
         ListSet listSet = new ListSet();
         for (int i = 1; i < Integer.parseInt(lists[0])+1; ++i) {
             String[] songs = lists[i].split(String.valueOf(elemDelimiter));
-            List list = new List(songs[1]);
-            for (int j = 3; j < Integer.parseInt(songs[2])*2+3; j += 2) {
+            List list = new List(songs[0]);
+            for (int j = 2; j < Integer.parseInt(songs[1])*2+2; j += 2) {
                 Song s = songController.getSong(songs[j], songs[j+1]);
                 list.addSong(s);
             }
