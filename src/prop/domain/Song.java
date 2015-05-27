@@ -20,7 +20,7 @@ public class Song {
     private Genre subgenre;
     private int duration;
 
-    private static final String delimiter = " ";
+    private static final String delimiter = "|";
 
     /**
      * Default constructor.

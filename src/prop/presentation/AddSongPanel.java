@@ -1,7 +1,6 @@
 package prop.presentation;
 
 import prop.PropException;
-import prop.domain.Genre;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +13,8 @@ import java.util.Calendar;
  */
 public class AddSongPanel extends javax.swing.JPanel {
 
-    SongPController songPController;
-    SongTabView songTabView;
+    private SongPController songPController;
+    private SongTabView songTabView;
 
     /**
      * Creates new form NewJPanel
@@ -54,13 +53,13 @@ public class AddSongPanel extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
 
-        SpinnerNumberModel durationModel = new SpinnerNumberModel(1,1,999999,1);
-        jSpinner2 = new javax.swing.JSpinner(durationModel);
-
-
         Calendar cal = Calendar.getInstance();
         SpinnerNumberModel yearModel = new SpinnerNumberModel(cal.get(Calendar.YEAR),1,999999999,1);
         jSpinner1 = new JSpinner(yearModel);
+
+        SpinnerNumberModel durationModel = new SpinnerNumberModel(1,1,999999,1);
+        jSpinner2 = new javax.swing.JSpinner(durationModel);
+
 
         jLabel1.setText("Add new Song");
 
@@ -208,13 +207,6 @@ public class AddSongPanel extends javax.swing.JPanel {
             int d = (Integer) jSpinner1.getValue();
             String duration = String.valueOf(d);
             songPController.addSong(title, artist, album, year, genre, subgenre, duration);
-            /*jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField3.setText("");
-            jTextField4.setText("");
-            jComboBox1.setSelectedIndex(0);
-            jComboBox2.setSelectedIndex(0);
-            jTextField7.setText("");*/
             songTabView.updateSongSetModel();
             songTabView.setShowSongPanel(title,artist);
         } catch (PropException e) {

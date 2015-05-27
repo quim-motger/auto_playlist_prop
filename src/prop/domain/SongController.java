@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class SongController {
 
     private final static String delimiter1 = "\n";
-    private final static String delimiter2 = " ";
+    private final static String delimiter2 = "|";
     SongSet songSet;
 
     /**

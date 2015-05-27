@@ -88,7 +88,6 @@ public class SongSet {
         String artist = song.getArtist();
         String key = getKey(title, artist);
         if (!songSet.contains(key)) {
-
             songSet.put(key,song);
         }
         else throw new PropException(ErrorString.EXISTING_SONG);

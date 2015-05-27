@@ -273,20 +273,19 @@ public class ShowSongPanel extends JPanel {
         try {
             int y = (Integer) jSpinner1.getValue();
             int d = (Integer) jSpinner2.getValue();
-            if (title.equals(jTextField1.getText()) && artist.equals(jTextField2.getText())) {
-                songPController.edit(title,artist,"album",jTextField3.getText());
-                songPController.edit(title,artist,"year",String.valueOf(y));
-                songPController.edit(title,artist,"genre",String.valueOf(jComboBox1.getSelectedIndex()));
-                songPController.edit(title,artist,"subgenre",String.valueOf(jComboBox2.getSelectedIndex()));
-                songPController.edit(title,artist,"duration",String.valueOf(d));
+            if (title != jTextField1.getText().trim()) {
+                songPController.edit(title,artist,"title",jTextField1.getText().trim());
+                title = jTextField1.getText().trim();
             }
-            else {
-                songPController.addSong(jTextField1.getText(), jTextField2.getText(), jTextField3.getText(), String.valueOf(y),
-                        String.valueOf(jComboBox1.getSelectedIndex()), String.valueOf(jComboBox2.getSelectedIndex()),String.valueOf(d));
-                songPController.removeSong(title, artist);
-                title = jTextField1.getText();
-                artist = jTextField2.getText();
+            if (artist != jTextField2.getText().trim()) {
+                songPController.edit(title,artist,"artist",jTextField2.getText().trim());
+                artist = jTextField2.getText().trim();
             }
+            songPController.edit(title,artist,"album",jTextField3.getText());
+            songPController.edit(title,artist,"year",String.valueOf(y));
+            songPController.edit(title, artist, "genre", String.valueOf(jComboBox1.getSelectedIndex()));
+            songPController.edit(title,artist,"subgenre",String.valueOf(jComboBox2.getSelectedIndex()));
+            songPController.edit(title,artist,"duration",String.valueOf(d));
             jTextField1.setEditable(false);
             jTextField2.setEditable(false);
             jTextField3.setEditable(false);
@@ -299,7 +298,6 @@ public class ShowSongPanel extends JPanel {
             saveButton.setEnabled(false);
             cancelButton.setEnabled(false);
             songTabView.updateSongSetModel();
-
         } catch (PropException e) {
             errorText.setText(e.getMessage());
             errorText.setVisible(true);
