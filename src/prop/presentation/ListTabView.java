@@ -386,7 +386,8 @@ public class ListTabView extends TabView {
                 if (title.equals(newTitle))
                     throw new PropException(ErrorString.EDIT_LIST_SAME_TITLE);
                 listPController.setListTitle(title, newTitle);
-                setRightPanel(emptyPanel);
+                showListPanel = new ShowList(newTitle);
+                setRightPanel(showListPanel);
                 updateListSetModel();
             }
             catch (PropException e) {
