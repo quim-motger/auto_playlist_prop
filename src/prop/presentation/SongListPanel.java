@@ -33,7 +33,7 @@ public class SongListPanel extends JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
 
-        jLabel1.setText("Songs finded");
+        jLabel1.setText("Songs found");
 
         final String[] songs = list.split(Pattern.quote("\n"));
 

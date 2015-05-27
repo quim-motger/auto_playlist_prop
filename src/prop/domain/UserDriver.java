@@ -131,7 +131,8 @@ public class UserDriver {
                         if (serialized.equals("")) throw new Exception("Error: must do toString before valueOf");
                         u = User.valueOf(serialized, listController, songController);
                         serialized = "";
-                        break;*/
+                        */
+                        break;
                     case 26:
                         if (song == null) throw new NullPointerException("song is null. Create a song first");
                         playback = new Playback(song,date);

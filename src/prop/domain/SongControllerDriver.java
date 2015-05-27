@@ -29,6 +29,7 @@ public class SongControllerDriver {
                     break;
                 case 2:
                     songController = new SongController();
+                    break;
                 case 3:
                     System.out.print(songController.size() + "\n");
                     break;
@@ -88,25 +89,26 @@ public class SongControllerDriver {
                     }
                     break;
                 case 10:
-                    /*int n = in.nextInt();
-                    ArrayList< Pair<String,String>> l = new ArrayList<>();
+                    int n = in.nextInt();
+                    String s = "";
                     while (n > 0) {
                         Pair<String,String> p = new Pair<>(in.next(),in.next());
-                        l.add(p);
+                        s += p.first() + "|" + p.second() + "\n";
                         --n;
                     }
                     try {
-                        String p = songController.searchSongs(l);
+                        String p = songController.searchSongs(s);
                         System.out.print(p);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
-                    }*/
+                    }
                     break;
                 case 11:
                     String[] listGenres = songController.listGenres();
-                    for (String s : listGenres) {
-                        System.out.println(s);
+                    for (String sss : listGenres) {
+                        System.out.println(sss);
                     }
+                    break;
                 case 12:
                     try {
                         songController.save(in.next());

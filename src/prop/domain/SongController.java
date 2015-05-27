@@ -27,6 +27,10 @@ public class SongController {
         songSet = new SongSet();
     }
 
+    public void removeAllSongs() {
+        songSet = new SongSet();
+    }
+
     /**
      * Get the size of the set
      * @return  the size of the set

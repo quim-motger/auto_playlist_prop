@@ -77,7 +77,8 @@ public class SongTabView extends TabView{
         removeAllSongsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                //setRightPanel(searchSongsPanel);
+                songPController.removeAllSongs();
+                updateSongSetModel();
             }
         });
         buttons.add(removeAllSongsButton);

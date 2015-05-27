@@ -60,4 +60,8 @@ public class SongPController {
         return songController.searchSongs(p);
     }
 
+    public void removeAllSongs() {
+        songController.removeAllSongs();
+    }
+
 }

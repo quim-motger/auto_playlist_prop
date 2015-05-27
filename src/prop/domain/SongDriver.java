@@ -122,6 +122,7 @@ public class SongDriver {
                     break;
                 case 18:
                     serialized = song.toString();
+                    System.out.println(serialized);
                     break;
                 default:
                     printInfo();

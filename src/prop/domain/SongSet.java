@@ -69,7 +69,7 @@ public class SongSet {
      * @return      list of present songs
      */
     public ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids) throws PropException {
-        ArrayList<Song> songList = new ArrayList<Song>();
+        ArrayList<Song> songList = new ArrayList<>();
         for (Pair<String,String>id : ids) {
             Song c = getSong(id.first(),id.second());
             if (c != null)
