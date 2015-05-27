@@ -1,5 +1,6 @@
 package prop.domain;
 
+import prop.ErrorString;
 import prop.PropException;
 import prop.data.DataController;
 
@@ -104,12 +105,15 @@ public class ListController {
      */
     public void setListTitle(String title_old, String title_new) throws PropException {
         if (listSet.contains(title_old)) {
-            List l = listSet.getList(title_old);
-            listSet.remove(title_old);
-            l.editTitle(title_new);
-            listSet.add(l);
+            if (!listSet.contains(title_new)) {
+                List l = listSet.getList(title_old);
+                listSet.remove(title_old);
+                l.editTitle(title_new);
+                listSet.add(l);
+            }
+            else
+                throw new PropException(ErrorString.EXISTING_LIST);
         }
-
     }
 
     /**

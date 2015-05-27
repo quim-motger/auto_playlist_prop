@@ -38,4 +38,5 @@ public class ErrorString {
     public static final String ITEM_NOT_SELECTED = "Item from the list must be selected before applyin this action";
     public static final String MISSING_NAME = "Missing name";
     public static final String NAME_SPACES = "Incorrect name, spaces are not accepted for a name";
+    public static final String EDIT_LIST_SAME_TITLE = "The new title must be different from the old one";
 }

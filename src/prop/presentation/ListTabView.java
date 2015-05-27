@@ -1,5 +1,6 @@
 package prop.presentation;
 
+import prop.ErrorString;
 import prop.PropException;
 
 import javax.swing.*;
@@ -382,6 +383,8 @@ public class ListTabView extends TabView {
             String title = (String) listSet.getSelectedValue();
             String newTitle = jTextField1.getText();
             try {
+                if (title.equals(newTitle))
+                    throw new PropException(ErrorString.EDIT_LIST_SAME_TITLE);
                 listPController.setListTitle(title, newTitle);
                 setRightPanel(emptyPanel);
                 updateListSetModel();
@@ -422,6 +425,7 @@ public class ListTabView extends TabView {
         private void initComponents() {
 
             jLabel1 = new JLabel();
+            //jLabel2 = new JLabel();
             jSeparator1 = new JSeparator();
             jScrollPane1 = new JScrollPane();
             jList1 = new JList();
@@ -430,6 +434,10 @@ public class ListTabView extends TabView {
             swapSongsButton = new JButton();
 
             jLabel1.setText("List title");
+
+            /*jLabel2.setText("Error: ");
+            jLabel2.setForeground(Color.RED);
+            jLabel2.setVisible(false);*/
 
             listModel = new DefaultListModel();
             jList1.setModel(listModel);
@@ -477,7 +485,8 @@ public class ListTabView extends TabView {
                                                                     .addGap(18, 18, 18)
                                                                     .addComponent(removeSongButton)
                                                                     .addGap(18, 18, 18)
-                                                                    .addComponent(swapSongsButton,GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)))
+                                                                    .addComponent(swapSongsButton, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE))
+                                                            /*.addComponent(jLabel2)*/)
                                                     .addGap(0, 43, Short.MAX_VALUE)))
                                     .addContainerGap())
             );
@@ -489,12 +498,14 @@ public class ListTabView extends TabView {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(addSongButton)
                                             .addComponent(removeSongButton)
                                             .addComponent(swapSongsButton))
+                                    /*.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel2)*/
                                     .addContainerGap())
             );
         }// </editor-fold>
@@ -538,6 +549,7 @@ public class ListTabView extends TabView {
         private JButton removeSongButton;
         private JButton swapSongsButton;
         private JLabel jLabel1;
+        //private JLabel jLabel2;
         private JList jList1;
         private JScrollPane jScrollPane1;
         private JSeparator jSeparator1;
@@ -749,7 +761,7 @@ public class ListTabView extends TabView {
 
             jLabel2.setText("Title: ");
 
-            numberModel = new SpinnerNumberModel(1,1,listPController.songSetSize(),1);
+            numberModel = new SpinnerNumberModel(listPController.songSetSize(),1,listPController.songSetSize(),1);
             jSpinner1.setModel(numberModel);
 
             addButton.setText("Add");
