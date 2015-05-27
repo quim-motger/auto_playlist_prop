@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * The controller for {@code List} and {@code ListSet}.
@@ -17,7 +18,7 @@ import java.util.Set;
  */
 public class ListController {
 
-    private static final char elemDelimiter = ' ';
+    private static final char elemDelimiter = '|';
     private static final char setDelimiter = '\n';
     private ListSet listSet;
 
@@ -295,10 +296,10 @@ public class ListController {
      * @throws PropException
      */
     private ListSet valueOf(String str, SongController songController) throws PropException {
-        String[] lists = str.split(String.valueOf(setDelimiter));
+        String[] lists = str.split(Pattern.quote(String.valueOf(setDelimiter)));
         ListSet listSet = new ListSet();
         for (int i = 1; i < Integer.parseInt(lists[0])+1; ++i) {
-            String[] songs = lists[i].split(String.valueOf(elemDelimiter));
+            String[] songs = lists[i].split(Pattern.quote(String.valueOf(elemDelimiter)));
             List list = new List(songs[0]);
             for (int j = 2; j < Integer.parseInt(songs[1])*2+2; j += 2) {
                 Song s = songController.getSong(songs[j], songs[j+1]);

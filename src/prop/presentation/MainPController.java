@@ -15,7 +15,7 @@ public class MainPController {
     public MainPController() {
         
         songPController = new SongPController();
-        /*// Only for testing purposes  *******************************************************************
+        // Only for testing purposes  *******************************************************************
         try {
             songPController.addSong("title0", "artist0", "album0", "2000", "0", "0", "000");
             songPController.addSong("title1", "artist1", "album1", "2001", "1", "1", "111");

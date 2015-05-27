@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class List {
 
 
-    private static final String DELIMITER = " ";
+    private static final String DELIMITER = "|";
     private String mTitle;
     private ArrayList<Song> songs;
 
