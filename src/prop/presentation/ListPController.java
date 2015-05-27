@@ -74,4 +74,12 @@ public class ListPController {
         return songController.size();
     }
 
+    public void swapSongs(String title, int pos1, int pos2) {
+        listController.swapSongs(title,pos1,pos2);
+    }
+
+    public void setListTitle(String oldTitle, String newTitle) throws PropException {
+        listController.setListTitle(oldTitle,newTitle);
+    }
+
 }

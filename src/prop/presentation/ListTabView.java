@@ -29,6 +29,7 @@ public class ListTabView extends TabView {
     private JButton saveButton;
     private JButton loadButton;
     private JButton randomButton;
+    private JButton editButton;
 
     public ListTabView(ListPController lpc) {
         super();
@@ -104,7 +105,17 @@ public class ListTabView extends TabView {
         });
         buttons.add(removeListButton);
 
-        randomButton = new JButton("Random");
+        editButton = new JButton("Edit List");
+        editButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editButtonActionPerformed(e);
+            }
+        });
+        buttons.add(editButton);
+
+        randomButton = new JButton("Random List");
         randomButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         randomButton.addActionListener(new ActionListener() {
             @Override
@@ -212,6 +223,12 @@ public class ListTabView extends TabView {
         }
     }
 
+    private void editButtonActionPerformed(ActionEvent evt) {
+        if (!listSet.isSelectionEmpty()) {
+            setRightPanel(new EditList());
+        }
+    }
+
     public void showList(String list) {
         setRightPanel(new ShowList(list));
     }
@@ -232,7 +249,7 @@ public class ListTabView extends TabView {
          */
         @SuppressWarnings("unchecked")
         // <editor-fold defaultstate="collapsed" desc="Generated Code">
-        private void initComponents() {
+        protected void initComponents() {
 
             jLabel1 = new JLabel();
             jSeparator1 = new JSeparator();
@@ -301,7 +318,7 @@ public class ListTabView extends TabView {
             );
         }// </editor-fold>
 
-        private void addButtonActionPerformed(ActionEvent evt) {
+        protected void addButtonActionPerformed(ActionEvent evt) {
             String title = jTextField1.getText();
             try {
                 listPController.addList(title);
@@ -323,13 +340,65 @@ public class ListTabView extends TabView {
         }
 
         // Variables declaration - do not modify
-        private JButton addButton;
-        private JLabel jLabel1;
+        protected JButton addButton;
+        protected JLabel jLabel1;
         private JLabel jLabel2;
-        private JLabel jLabel3;
+        protected JLabel jLabel3;
         private JSeparator jSeparator1;
-        private JTextField jTextField1;
+        protected JTextField jTextField1;
         // End of variables declaration
+    }
+
+    private class EditList extends AddList {
+
+        protected void initComponents() {
+            super.initComponents();
+            jLabel1.setText("Edit " + (String) listSet.getSelectedValue());
+            addButton.setText("Save");
+            jTextField1.setText((String)listSet.getSelectedValue());
+            jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    setText(jTextField1.getText());
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    setText(jTextField1.getText());
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    setText(jTextField1.getText());
+                }
+
+                private void setText(String title) {
+                    jLabel1.setText("Edit " + title);
+                }
+            });
+        }
+
+        protected void addButtonActionPerformed(ActionEvent evt) {
+            String title = (String) listSet.getSelectedValue();
+            String newTitle = jTextField1.getText();
+            try {
+                listPController.setListTitle(title, newTitle);
+                setRightPanel(emptyPanel);
+                updateListSetModel();
+            }
+            catch (PropException e) {
+                jLabel3.setText(e.getMessage());
+                jLabel3.setVisible(true);
+                ActionListener listener = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        jLabel3.setVisible(false);
+                    }
+                };
+                Timer timer = new Timer(3000, listener);
+                timer.start();
+            }
+        }
     }
 
     private class ShowList extends JPanel {
@@ -358,6 +427,7 @@ public class ListTabView extends TabView {
             jList1 = new JList();
             addSongButton = new JButton();
             removeSongButton = new JButton();
+            swapSongsButton = new JButton();
 
             jLabel1.setText("List title");
 
@@ -382,6 +452,14 @@ public class ListTabView extends TabView {
                 }
             });
 
+            swapSongsButton.setText("Swap Songs");
+            swapSongsButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    swapSongsButtonActionPerformed(e);
+                }
+            });
+
             GroupLayout layout = new GroupLayout(this);
             this.setLayout(layout);
             layout.setHorizontalGroup(
@@ -395,10 +473,12 @@ public class ListTabView extends TabView {
                                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                             .addComponent(jLabel1)
                                                             .addGroup(layout.createSequentialGroup()
-                                                                    .addComponent(addSongButton, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+                                                                    .addComponent(addSongButton, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
                                                                     .addGap(18, 18, 18)
-                                                                    .addComponent(removeSongButton)))
-                                                    .addGap(0, 160, Short.MAX_VALUE)))
+                                                                    .addComponent(removeSongButton)
+                                                                    .addGap(18, 18, 18)
+                                                                    .addComponent(swapSongsButton,GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)))
+                                                    .addGap(0, 43, Short.MAX_VALUE)))
                                     .addContainerGap())
             );
             layout.setVerticalGroup(
@@ -413,7 +493,8 @@ public class ListTabView extends TabView {
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(addSongButton)
-                                            .addComponent(removeSongButton))
+                                            .addComponent(removeSongButton)
+                                            .addComponent(swapSongsButton))
                                     .addContainerGap())
             );
         }// </editor-fold>
@@ -434,6 +515,15 @@ public class ListTabView extends TabView {
             }
         }
 
+        private void swapSongsButtonActionPerformed(ActionEvent evt) {
+            int selectedSongs[] = jList1.getSelectedIndices();
+            if (!listSet.isSelectionEmpty() && selectedSongs.length == 2) {
+                String title = (String) listSet.getSelectedValue();
+                listPController.swapSongs(title, selectedSongs[0],selectedSongs[1]);
+                updateListModel();
+            }
+        }
+
         public void updateListModel() {
             listModel.clear();
             ArrayList<String> list = listPController.getListStringArray(id);
@@ -446,6 +536,7 @@ public class ListTabView extends TabView {
         // Variables declaration - do not modify
         private JButton addSongButton;
         private JButton removeSongButton;
+        private JButton swapSongsButton;
         private JLabel jLabel1;
         private JList jList1;
         private JScrollPane jScrollPane1;
