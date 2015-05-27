@@ -5,9 +5,12 @@
  */
 package prop.presentation.basicpanels;
 
+import prop.ErrorString;
 import prop.presentation.UserPController;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -38,6 +41,28 @@ public class UserPanel extends PropPanel {
     public UserPanel(UserPController userController) {
         controller = userController;
         updatePanel();
+        nameField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+                checkSpaces();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+                checkSpaces();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+                checkSpaces();
+            }
+        });
+    }
+
+    private void checkSpaces() {
+        if(nameField.getText().contains(" ")) {
+            throwError(ErrorString.NAME_SPACES);
+        }
     }
 
     protected void updatePanel() {

@@ -115,6 +115,16 @@ public class UserTabView extends TabView {
             }
         });
         buttons.add(addUser);
+
+        ActionBarButton removeAll = new ActionBarButton("Remove All");
+        removeAll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mController.removeAll();
+                updateList();
+            }
+        });
+        buttons.add(removeAll);
         
         ActionBarButton save = new ActionBarButton("Save");
         save.addActionListener(new ActionListener() {

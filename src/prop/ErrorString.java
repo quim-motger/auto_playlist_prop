@@ -37,4 +37,5 @@ public class ErrorString {
     public static final String LOAD_OTHERS = "Load Lists and Songs before loading Users\n";
     public static final String ITEM_NOT_SELECTED = "Item from the list must be selected before applyin this action";
     public static final String MISSING_NAME = "Missing name";
+    public static final String NAME_SPACES = "Incorrect name, spaces are not accepted for a name";
 }

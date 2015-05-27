@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TreeSet;
 
 /**
  * UserController in prop.domain
@@ -334,4 +335,19 @@ public class UserController {
             throw e;
         }
     }
+    
+    public String[] obtainPlaybacks(String name) throws PropException {
+        User user = userSet.getUserByName(name);
+        TreeSet<Playback> playbacks = user.getPlaybackRegister();
+        ArrayList<String> ret = new ArrayList<>();
+        for(Playback playback:playbacks) {
+            ret.add(playback.toString());
+        }
+        return ret.toArray(new String[ret.size()]);
+    }
+
+    public void removeAll() {
+        userSet = new UserSet();
+    }
+
 }

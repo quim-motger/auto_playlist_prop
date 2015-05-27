@@ -128,24 +128,25 @@ public class EditUserPanel extends UserPanel {
     }
 
     private void updateUserData() {
-        String user = "";
+
         try {
-            user = controller.getUser(name);
+            String user = controller.getUser(name);
+            String tokens[] = user.split(" ");
+            setNameField(tokens[1]);
+            setGenderSelector(tokens[2]);
+            Date date = new Date(Long.valueOf(tokens[3]));
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            setBirthday(
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DATE)
+            );
         } catch (PropException e) {
             e.printStackTrace();
             throwError(e.getMessage());
         }
-        String tokens[] = user.split(" ");
-        setNameField(tokens[1]);
-        setGenderSelector(tokens[2]);
-        Date date = new Date(Long.valueOf(tokens[3]));
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        setBirthday(
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DATE)
-        );
+        
     }
 
     private void disableEdit() {

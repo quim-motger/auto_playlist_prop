@@ -30,7 +30,7 @@ public class AddUserPanel  extends UserPanel {
     public AddUserPanel(UserPController userController, UserTabView userTabView) {
         super(userController);
         controller = userController;
-        tab = userTabView;
+        tab = (UserTabView) getParent();
         
         setDefaultActionListener(new ActionListener() {
             @Override
@@ -51,6 +51,8 @@ public class AddUserPanel  extends UserPanel {
         });
         addButton(add);
         
+        
+        
         enableFieldEdition(true);
     }
 
@@ -58,6 +60,10 @@ public class AddUserPanel  extends UserPanel {
         String name = getNameField();
         if(name.equals("")){
             throwError(ErrorString.MISSING_NAME);
+            return;
+        }
+        if(name.contains(" ")){
+            throwError(ErrorString.NAME_SPACES);
             return;
         }
         String gender = getGenderSelector();

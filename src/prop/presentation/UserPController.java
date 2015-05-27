@@ -90,4 +90,12 @@ public class UserPController {
         }
         return ret.toArray(new String[ret.size()]);
     }
+
+    public void removeAll() {
+        userController.removeAll();
+    }
+
+    public String[] getUserPlays(String name) throws PropException {
+        return userController.obtainPlaybacks(name);
+    }
 }
