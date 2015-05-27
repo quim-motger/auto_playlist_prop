@@ -66,4 +66,12 @@ public class ListPController {
         listController.load(path,songController);
     }
 
+    public void createRandomList(String title, int n) throws PropException {
+        listController.createRandomList(title,n,songController);
+    }
+
+    public int songSetSize() {
+        return songController.size();
+    }
+
 }
