@@ -24,6 +24,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 
 public class GraphPanel extends JPanel{
         private UndirectedSparseGraph<String, Double> graph;
@@ -32,51 +33,30 @@ public class GraphPanel extends JPanel{
 
         public GraphPanel() {
             graph = new UndirectedSparseGraph<String, Double>();
-            String[] v = createVertices(500);
+            String[] v = createVertices(50);
             createEdges(v);
 
             Layout<String, Double> layout = new KKLayout<>(graph);
-            layout.setSize(new Dimension(1800,1600));
+            layout.setSize(new Dimension(800,600));
             vv =  new VisualizationViewer<String, Double>(layout);
 
             vv.setPreferredSize(new Dimension(800, 600));
-            vv.addPostRenderPaintable(new VisualizationViewer.Paintable() {
-                int x;
-                int y;
-                Font font;
-                FontMetrics metrics;
-                int swidth;
-                int sheight;
-
-                public void paint(Graphics g) {
-                    Dimension d = vv.getSize();
-                    if (font == null) {
-                        font = new Font(g.getFont().getName(), Font.BOLD, 30);
-                        metrics = g.getFontMetrics(font);
-
-                        sheight = metrics.getMaxAscent() + metrics.getMaxDescent();
-                        x = (d.width - swidth) / 2;
-                        y = (int) (d.height - sheight * 1.5);
-                    }
-                    g.setFont(font);
-                    Color oldColor = g.getColor();
-                    g.setColor(Color.white);
-
-                    g.setColor(oldColor);
+            Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
+                public Paint transform(String i) {
+                    if(i.equals("V0")) return Color.GREEN;
+                    return Color.MAGENTA;
                 }
-
-                public boolean useTransform() {
-                    return false;
+            };
+            Transformer<String, Shape> vertexSize = new Transformer<String, Shape>(){
+                public Shape transform(String i){
+                    Ellipse2D circle = new Ellipse2D.Double(-10, -10, 10, 10);
+                    // in this case, the vertex is twice as large
+                    //if(i == 2) return AffineTransform.getScaleInstance(2, 2).createTransformedShape(circle);
+                    return circle;
                 }
-            });
-
-
-            vv.getRenderer().setVertexRenderer(
-                    new GradientVertexRenderer<String, Double>(
-                            Color.blue, Color.cyan,
-                            Color.white, Color.blue,
-                            vv.getPickedVertexState(),
-                            false));
+            };
+            vv.getRenderContext().setVertexFillPaintTransformer(vertexColor);
+            vv.getRenderContext().setVertexShapeTransformer(vertexSize);
             vv.getRenderContext().setEdgeDrawPaintTransformer(new ConstantTransformer(Color.BLACK));
             vv.getRenderContext().setArrowFillPaintTransformer(new ConstantTransformer(Color.BLACK));
             vv.getRenderContext().setArrowDrawPaintTransformer(new ConstantTransformer(Color.BLACK));
