@@ -785,7 +785,7 @@ public class ListTabView extends TabView {
 
             jLabel2.setText("Title: ");
 
-            numberModel = new SpinnerNumberModel(listPController.songSetSize(),1,listPController.songSetSize(),1);
+            numberModel = new SpinnerNumberModel(listPController.songSetSize(),0,listPController.songSetSize(),1);
             jSpinner1.setModel(numberModel);
 
             addButton.setText("Add");
