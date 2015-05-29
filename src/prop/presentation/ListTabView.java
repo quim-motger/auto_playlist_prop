@@ -463,6 +463,7 @@ public class ListTabView extends TabView {
                         String[] id = listPController.getSongId(listIndex,songIndex);
                         songTabView.showSong(id[0],id[1]);
                         tabbedPane.setSelectedIndex(1);
+                        listSet.clearSelection();
                     }
                 }
             });
