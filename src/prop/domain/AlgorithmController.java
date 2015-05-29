@@ -18,6 +18,7 @@ import java.util.Locale;
 public class AlgorithmController {
 
     private ArrayList<String> log;
+    private static final String delimiter = "\n";
 
     /**
      * Executes the selected algorithm for generating a song list that will be added to the set.
@@ -151,4 +152,30 @@ public class AlgorithmController {
         return sb.toString();
     }
 
+    public static String GraphSongToString(Graph<Song> gr) {
+        StringBuilder sb = new StringBuilder();
+        int i;
+        for (i = 0; i < gr.numberOfVertices()-1; ++i) {
+            for (Integer j : gr.adjacentVertices(i)) {
+                sb.append(gr.getVertexT(i).getTitle());
+                sb.append(" (" + gr.getVertexT(i).getArtist() + ")");
+                sb.append(delimiter);
+                sb.append(gr.getVertexT(j).getTitle());
+                sb.append(" (" + gr.getVertexT(j).getArtist() + ")");
+                sb.append(delimiter);
+                sb.append(gr.weight(i,j));
+                sb.append(delimiter);
+            }
+        }
+        for (Integer j : gr.adjacentVertices(i)) {
+            sb.append(gr.getVertexT(i).getTitle());
+            sb.append(" (" + gr.getVertexT(i).getArtist() + ")");
+            sb.append(delimiter);
+            sb.append(gr.getVertexT(j).getTitle());
+            sb.append(" (" + gr.getVertexT(j).getArtist() + ")");
+            sb.append(delimiter);
+            sb.append(gr.weight(i,j));
+        }
+        return sb.toString();
+    }
 }

@@ -35,7 +35,7 @@ public class MainView extends JFrame {
         UserPanel = new UserTabView(userPController,this);
         SongPanel = new SongTabView(songPController);
         ListPanel = new ListTabView(listPController);
-        AlgorithmPanel = new JPanel();
+        AlgorithmPanel = new AlgorithmTabView();
         MenuBar = new JMenuBar();
         FileMenu = new JMenu();
         SaveMenuItem = new JMenuItem();
@@ -51,17 +51,6 @@ public class MainView extends JFrame {
         TabbedPane.addTab("Songs", SongPanel);
 
         TabbedPane.addTab("Lists", ListPanel);
-
-        GroupLayout jPanel4Layout = new GroupLayout(AlgorithmPanel);
-        AlgorithmPanel.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-                jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 395, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-                jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGap(0, 251, Short.MAX_VALUE)
-        );
 
         TabbedPane.addTab("Algorithms", AlgorithmPanel);
 
