@@ -10,13 +10,15 @@ public class AlgorithmPController {
     private RelationController relationController;
     private UndirectedSparseGraph<String,Double> gr;
     static final String delimiter = "\n";
+
+
     public AlgorithmPController() {
         algorithmController = new AlgorithmController();
         relationController = new RelationController();
         gr = new UndirectedSparseGraph<>();
     }
 
-    public void createGraph(String graph) {
+    private void createGraph(String graph) {
         String[] vertices = graph.split(delimiter);
         for (int i = 0; i < vertices.length; i += 3) {
             gr.addVertex(vertices[i]);

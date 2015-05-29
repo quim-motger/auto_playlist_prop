@@ -1,8 +1,10 @@
 package prop.presentation;
 
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.KKLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
+import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
 import edu.uci.ics.jung.visualization.Layer;
@@ -24,36 +26,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GraphPanel extends JPanel{
+        private UndirectedSparseGraph<String, Double> graph;
+        //the visual component and renderer for the graph
+        private VisualizationViewer<String, Double> vv;
 
-         /**
-         * the graph
-         */
-        DirectedSparseGraph<String, Number> graph;
-
-        /**
-         * the visual component and renderer for the graph
-         */
-        VisualizationViewer<String, Number> vv;
-
-        /**
-         * create an instance of a simple graph with controls to
-         * demo the zoom features.
-         *
-         */
         public GraphPanel() {
-
-            // create a simple graph for the demo
-            graph = new DirectedSparseGraph<String, Number>();
-            String[] v = createVertices(100);
+            graph = new UndirectedSparseGraph<String, Double>();
+            String[] v = createVertices(500);
             createEdges(v);
 
+            Layout<String, Double> layout = new KKLayout<>(graph);
+            layout.setSize(new Dimension(1800,1600));
+            vv =  new VisualizationViewer<String, Double>(layout);
 
-            Layout<String, Number> layout = new KKLayout(graph);
-            layout.setSize(new Dimension(800,600));
-            vv =  new VisualizationViewer<String,Number>(layout);
-
-            vv.setPreferredSize(new Dimension(800,600));
-            vv.addPostRenderPaintable(new VisualizationViewer.Paintable(){
+            vv.setPreferredSize(new Dimension(800, 600));
+            vv.addPostRenderPaintable(new VisualizationViewer.Paintable() {
                 int x;
                 int y;
                 Font font;
@@ -61,16 +48,15 @@ public class GraphPanel extends JPanel{
                 int swidth;
                 int sheight;
 
-
                 public void paint(Graphics g) {
                     Dimension d = vv.getSize();
-                    if(font == null) {
+                    if (font == null) {
                         font = new Font(g.getFont().getName(), Font.BOLD, 30);
                         metrics = g.getFontMetrics(font);
 
-                        sheight = metrics.getMaxAscent()+metrics.getMaxDescent();
-                        x = (d.width-swidth)/2;
-                        y = (int)(d.height-sheight*1.5);
+                        sheight = metrics.getMaxAscent() + metrics.getMaxDescent();
+                        x = (d.width - swidth) / 2;
+                        y = (int) (d.height - sheight * 1.5);
                     }
                     g.setFont(font);
                     Color oldColor = g.getColor();
@@ -78,6 +64,7 @@ public class GraphPanel extends JPanel{
 
                     g.setColor(oldColor);
                 }
+
                 public boolean useTransform() {
                     return false;
                 }
@@ -85,37 +72,36 @@ public class GraphPanel extends JPanel{
 
 
             vv.getRenderer().setVertexRenderer(
-                    new GradientVertexRenderer<String,Number>(
-                            Color.white, Color.red,
+                    new GradientVertexRenderer<String, Double>(
+                            Color.blue, Color.cyan,
                             Color.white, Color.blue,
                             vv.getPickedVertexState(),
                             false));
-            vv.getRenderContext().setEdgeDrawPaintTransformer(new ConstantTransformer(Color.lightGray));
-            vv.getRenderContext().setArrowFillPaintTransformer(new ConstantTransformer(Color.lightGray));
-            vv.getRenderContext().setArrowDrawPaintTransformer(new ConstantTransformer(Color.lightGray));
+            vv.getRenderContext().setEdgeDrawPaintTransformer(new ConstantTransformer(Color.BLACK));
+            vv.getRenderContext().setArrowFillPaintTransformer(new ConstantTransformer(Color.BLACK));
+            vv.getRenderContext().setArrowDrawPaintTransformer(new ConstantTransformer(Color.BLACK));
 
             // add my listeners for ToolTips
             vv.setVertexToolTipTransformer(new ToStringLabeller<String>());
-            vv.setEdgeToolTipTransformer(new Transformer<Number,String>() {
-                public String transform(Number edge) {
-                    return "E"+graph.getEndpoints(edge).toString();
-                }});
+            vv.setEdgeToolTipTransformer(new Transformer<Double, String>() {
+                public String transform(Double edge) {
+                    return "E" + graph.getEndpoints(edge).toString();
+                }
+            });
 
             vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller<String>());
             vv.getRenderer().getVertexLabelRenderer().setPositioner(new InsidePositioner());
             vv.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.AUTO);
             vv.setForeground(Color.lightGray);
 
-            // create a frome to hold the graph
-            //final JFrame frame = new JFrame();
-            this.setLayout(new BorderLayout(5,5));
+
+            this.setLayout(new BorderLayout(5, 5));
             final GraphZoomScrollPane panel = new GraphZoomScrollPane(vv);
             add(panel);
-            final AbstractModalGraphMouse graphMouse = new DefaultModalGraphMouse<String,Number>();
-            vv.setGraphMouse(graphMouse);
 
+            final AbstractModalGraphMouse graphMouse = new DefaultModalGraphMouse<String,Double>();
+            vv.setGraphMouse(graphMouse);
             vv.addKeyListener(graphMouse.getModeKeyListener());
-            vv.setToolTipText("<html><center>Type 'p' for Pick mode<p>Type 't' for Transform mode");
 
             final ScalingControl scaler = new CrossoverScalingControl();
 
@@ -167,23 +153,7 @@ public class GraphPanel extends JPanel{
          * @param v an array of Vertices to connect
          */
         void createEdges(String[] v) {
-            graph.addEdge(new Double(Math.random()), v[0], v[1], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[0], v[3], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[0], v[4], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[4], v[5], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[3], v[5], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[1], v[2], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[1], v[4], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[8], v[2], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[3], v[8], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[6], v[7], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[7], v[5], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[0], v[9], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[9], v[8], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[7], v[6], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[6], v[5], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[4], v[2], EdgeType.DIRECTED);
-            graph.addEdge(new Double(Math.random()), v[5], v[4], EdgeType.DIRECTED);
+            graph.addEdge(new Double(Math.random()), v[0], v[1]);
         }
 
 }
