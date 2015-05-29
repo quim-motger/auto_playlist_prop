@@ -201,5 +201,9 @@ public class SongTabView extends TabView{
         }
     }
 
+    public void showSong(String title, String artist) {
+        setShowSongPanel(title,artist);
+    }
+
 }
 

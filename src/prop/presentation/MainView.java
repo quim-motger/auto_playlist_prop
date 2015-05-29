@@ -34,7 +34,7 @@ public class MainView extends JFrame {
         TabbedPane = new JTabbedPane();
         UserPanel = new UserTabView(userPController,this);
         SongPanel = new SongTabView(songPController);
-        ListPanel = new ListTabView(listPController);
+        ListPanel = new ListTabView(listPController,SongPanel,TabbedPane);
         AlgorithmPanel = new AlgorithmTabView();
         MenuBar = new JMenuBar();
         FileMenu = new JMenu();

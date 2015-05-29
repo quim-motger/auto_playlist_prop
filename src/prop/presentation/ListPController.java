@@ -82,4 +82,8 @@ public class ListPController {
         listController.setListTitle(oldTitle,newTitle);
     }
 
+    public String[] getSongId(int listIndex, int songIndex) {
+        return listController.getSongId(listIndex,songIndex);
+    }
+
 }

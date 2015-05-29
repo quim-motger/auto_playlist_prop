@@ -1,6 +1,7 @@
 package prop.presentation;
 
 import prop.ErrorString;
+import prop.Main;
 import prop.PropException;
 
 import javax.swing.*;
@@ -12,12 +13,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 public class ListTabView extends TabView {
 
     private ListPController listPController;
+    private SongTabView songTabView;
+    private JTabbedPane tabbedPane;
     private JPanel emptyPanel;
     private AddList addListPanel;
     private ShowList showListPanel;
@@ -32,9 +37,11 @@ public class ListTabView extends TabView {
     private JButton randomButton;
     private JButton editButton;
 
-    public ListTabView(ListPController lpc) {
+    public ListTabView(ListPController lpc, SongTabView stv, JTabbedPane tp) {
         super();
         listPController = lpc;
+        songTabView = stv;
+        tabbedPane = tp;
         initListComponents();
     }
 
@@ -446,6 +453,19 @@ public class ListTabView extends TabView {
             listModel = new DefaultListModel();
             jList1.setModel(listModel);
             jList1.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+            jList1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getClickCount() == 2) {
+                        // Double-click detected
+                        int songIndex = jList1.getSelectedIndex();
+                        int listIndex = listSet.getSelectedIndex();
+                        String[] id = listPController.getSongId(listIndex,songIndex);
+                        songTabView.showSong(id[0],id[1]);
+                        tabbedPane.setSelectedIndex(1);
+                    }
+                }
+            });
             jScrollPane1.setViewportView(jList1);
 
             addSongButton.setText("Add Song");

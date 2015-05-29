@@ -54,6 +54,20 @@ public class ListSet {
     }
 
     /**
+     * Gets the songIndex id of the songIndex in the position {@code songIndex} of the listIndex in the position {@code listIndex}
+     * @param listIndex      the position of the listIndex
+     * @param songIndex      the position of the songIndex
+     * @return          the songIndex id
+     */
+    public String[] getSongId(int listIndex, int songIndex) {
+        Song s = lists.getList().get(listIndex).obtainSong(songIndex);
+        String id[] = new String[2];
+        id[0] = s.getTitle();
+        id[1] = s.getArtist();
+        return id;
+    }
+
+    /**
      * Removes the list with this id from the set
      * @param name int id of the list to be removed
      * @return true if the list was found and removed, false otherwise

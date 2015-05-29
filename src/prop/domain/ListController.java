@@ -237,8 +237,7 @@ public class ListController {
         ArrayList<Song> songs = list.obtainSongs();
         result.add(list.obtainTitle());
         for (Song s : songs) {
-            result.add(s.getTitle() + " " + s.getArtist() + " " + s.getAlbum() + " " + s.getYear() +
-                    " " + s.getGenre().getName() + " " + s.getSubgenre().getName() + " " + s.getDuration());
+            result.add(s.getTitle() + " | " + s.getArtist());
         }
         return result;
     }
@@ -273,6 +272,10 @@ public class ListController {
         for (List list : lists)
             result.add(list.obtainTitle());
         return result;
+    }
+
+    public String[] getSongId(int listIndex, int songIndex) {
+        return listSet.getSongId(listIndex,songIndex);
     }
 
     /**
