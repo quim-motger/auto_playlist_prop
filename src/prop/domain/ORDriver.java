@@ -2,6 +2,7 @@ package prop.domain;
 
 import prop.PropException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -45,9 +46,13 @@ public class ORDriver {
                     r = new OR(r1,r2);
                     break;
                 case 2:
-                    songs = r.evaluate();
-                    for (Song song : songs) {
-                        System.out.println(song.getTitle() + " " + song.getArtist());
+                    try {
+                        songs = r.evaluate();
+                        for (Song song : songs) {
+                            System.out.println(song.getTitle() + " " + song.getArtist());
+                        }
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case 3:/*
@@ -58,18 +63,10 @@ public class ORDriver {
                     }*/
                     break;
                 case 4:
-                    try {
-                        r1 = new SimpleRelation(ss,us,in.next(), in.next());
-                    } catch (PropException e) {
-                        printError(e);
-                    }
+                    r1 = new SimpleRelation(ss,us,in.next(), in.next());
                     break;
                 case 5:
-                    try {
-                        r2 = new SimpleRelation(ss,us,in.next(), in.next());
-                    } catch (PropException e) {
-                        e.printStackTrace();
-                    }
+                    r2 = new SimpleRelation(ss,us,in.next(), in.next());
                     break;
                 case 6:
                     try {
@@ -97,10 +94,6 @@ public class ORDriver {
                     printInfo();
             }
         }
-    }
-
-    private static void printError(Exception e) {
-        System.out.println(e.getMessage());
     }
 
     private static void printInfo() {

@@ -37,9 +37,13 @@ public class SimpleRelationDriver {
                     printInfoComplete();
                     break;
                 case 2:
-                    songs = r.evaluate();
-                    for (Song song : songs) {
-                        System.out.println(song.getTitle() + " " + song.getArtist());
+                    try {
+                        songs = r.evaluate();
+                        for (Song song : songs) {
+                            System.out.println(song.getTitle() + " " + song.getArtist());
+                        }
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case 3:/*
@@ -54,11 +58,7 @@ public class SimpleRelationDriver {
                     String type = in.next();
                     String attribute = in.next();
                     String value = in.next();
-                    try {
-                        r = new SimpleRelation(ss,us,attribute, value);
-                    } catch (PropException e) {
-                        printError(e);
-                    }
+                    r = new SimpleRelation(ss,us,attribute, value);
                     break;
                 case 5:
                     String title = in.next();
@@ -102,10 +102,6 @@ public class SimpleRelationDriver {
             }
             if (i > 0 && i < 8) printInfoBrief();
         }
-    }
-
-    private static void printError(PropException e) {
-        System.out.println(e.getMessage());
     }
 
     private static void printInfoComplete() {
