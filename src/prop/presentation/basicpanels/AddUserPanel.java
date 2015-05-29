@@ -30,7 +30,7 @@ public class AddUserPanel  extends UserPanel {
     public AddUserPanel(UserPController userController, UserTabView userTabView) {
         super(userController);
         controller = userController;
-        tab = (UserTabView) getParent();
+        tab = userTabView;
         
         setDefaultActionListener(new ActionListener() {
             @Override

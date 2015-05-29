@@ -118,6 +118,7 @@ public class EditUserPanel extends UserPanel {
 
         try {
             controller.updateUser(name, newName, gender, day, month, year);
+            name = newName;
             tab.updateList();
             tab.showUserInRightPanel(name);
         } catch (Exception e) {
