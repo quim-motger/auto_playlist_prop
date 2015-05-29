@@ -29,7 +29,7 @@ public class OR extends ComplexRelation {
      * @throws      PropException
      */
     @Override
-    public ArrayList<Song> evaluate(){
+    public ArrayList<Song> evaluate() throws PropException{
         ArrayList<Song> songsr2 = r2.evaluate();
 
         ArrayList<Song> songs = r1.evaluate();

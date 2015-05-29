@@ -30,7 +30,7 @@ public class NOT extends ComplexRelation {
      * @throws      PropException
      */
     @Override
-    public ArrayList<Song> evaluate() {
+    public ArrayList<Song> evaluate() throws PropException{
         ArrayList<Song> songs = songSet.getSongSet();
         for (Song song : r1.evaluate()) {
             songs.remove(song);

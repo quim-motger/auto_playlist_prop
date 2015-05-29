@@ -350,7 +350,4 @@ public class UserController {
         userSet = new UserSet();
     }
 
-    public UserSet getSet() {
-        return userSet;
-    }
 }

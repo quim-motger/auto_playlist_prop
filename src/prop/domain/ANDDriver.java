@@ -1,5 +1,7 @@
 package prop.domain;
 
+import prop.PropException;
+
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
@@ -41,9 +43,13 @@ public class ANDDriver {
                     r = new AND(r1,r2);
                     break;
                 case 3:
-                    songs = r.evaluate();
-                    for (Song song : songs) {
-                        System.out.println(song.getTitle() + " " + song.getArtist());
+                    try {
+                        songs = r.evaluate();
+                        for (Song song : songs) {
+                            System.out.println(song.getTitle() + " " + song.getArtist());
+                        }
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case 4:/*

@@ -60,13 +60,13 @@ public class RelationControllerDriver {
 
                     String p = in.next();
                     try {
-                        rc.addRelation(sb.toString(),p);
+                        rc.addRelation(sb.toString(),p,n);
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
                     }
                     break;
                 case 5:
-                    rc.playbackRelations(uc.obtainUsers());
+                    rc.playbackRelations(uc);
                     break;
                 case 6:
                     String title2 = in.next();
