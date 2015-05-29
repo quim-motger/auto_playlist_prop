@@ -15,20 +15,6 @@ public class MainPController {
     public MainPController() {
         
         songPController = new SongPController();
-        // Only for testing purposes  *******************************************************************
-        try {
-            songPController.addSong("title0", "artist0", "album0", "2000", "0", "0", "000");
-            songPController.addSong("title1", "artist1", "album1", "2001", "1", "1", "111");
-            songPController.addSong("title2", "artist2", "album2", "2002", "2", "2", "222");
-            songPController.addSong("title3", "artist3", "album3", "2003", "3", "3", "333");
-            songPController.addSong("title4", "artist4", "album4", "2004", "4", "4", "444");
-            songPController.addSong("title5", "artist4", "album3", "2003", "3", "3", "333");
-            songPController.addSong("title6", "artist4", "album3", "2003", "3", "3", "333");
-        }
-        catch (PropException e) {
-            System.out.println(e.getMessage());
-        }
-        // ***********************************************************************************************/
         listPController = new ListPController(songPController.getSongController());
         userPController = new UserPController(
                 listPController.getListController(),

@@ -1,6 +1,11 @@
 package prop.presentation;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class MainView extends JFrame {
 
@@ -84,6 +89,12 @@ public class MainView extends JFrame {
         MenuBar.add(FileMenu);
 
         HelpMenu.setText("Help");
+        HelpMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+
+            }
+        });
         MenuBar.add(HelpMenu);
 
         setJMenuBar(MenuBar);

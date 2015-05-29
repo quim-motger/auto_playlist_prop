@@ -67,6 +67,7 @@ public class SongController {
     public void addSong(String title, String artist, String album, String year, String genre, String subgenre, String duration) throws PropException {
         if (year.length() == 0) throw new PropException(ErrorString.MISSING_YEAR);
         else if (duration.length() == 0) throw new PropException(ErrorString.MISSING_DURATION);
+        else if (title.contains("|") || artist.contains("|") || album.contains("|")) throw new PropException(ErrorString.ILLEGAL_CHARACTER);
         int y; int dur;
         try {
             y = Integer.parseInt(year.trim());

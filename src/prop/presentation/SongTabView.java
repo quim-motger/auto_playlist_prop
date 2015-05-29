@@ -142,7 +142,7 @@ public class SongTabView extends TabView{
     }
 
     public void setShowSongPanel(String a, String b) {
-        setRightPanel(new ShowSongPanel(songPController,this,a,b));
+        setRightPanel(new ShowSongPanel(songPController, this, a, b));
     }
 
     private void showLoadPanel() {
@@ -190,19 +190,19 @@ public class SongTabView extends TabView{
     public void updateSongSetModel() {
         songSetModel.clear();
         String songs;
-        String prefix = searchField.getText();
+        String prefix = getSearchField().getText();
         if (prefix.equals("")) {
             songs = songPController.findSongs();
         }
         else songs = songPController.findSongsByName(prefix);
         String[] listSongs = songs.split(Pattern.quote("\n"));
         for (String s : listSongs) {
-            songSetModel.addElement(s);
+           if (s.length() != 0) songSetModel.addElement(s);
         }
     }
 
     public void showSong(String title, String artist) {
-        setShowSongPanel(title,artist);
+        setShowSongPanel(title, artist);
     }
 
 }
