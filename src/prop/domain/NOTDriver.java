@@ -45,13 +45,9 @@ public class NOTDriver {
                     r = new NOT(r1,ss);
                     break;
                 case 2:
-                    try {
-                        songs = r.evaluate();
-                        for (Song song : songs) {
-                            System.out.println(song.getTitle() + " " + song.getArtist());
-                        }
-                    } catch (PropException e) {
-                        System.out.println(e.getMessage());
+                    songs = r.evaluate();
+                    for (Song song : songs) {
+                        System.out.println(song.getTitle() + " " + song.getArtist());
                     }
                     break;
                 case 3:/*
@@ -62,7 +58,11 @@ public class NOTDriver {
                     }*/
                     break;
                 case 4:
-                    r1 = new SimpleRelation(ss, us, in.next(), in.next());
+                    try {
+                        r1 = new SimpleRelation(ss, us, in.next(), in.next());
+                    } catch (PropException e) {
+                        printError(e);
+                    }
                     break;
                 case 5:
                     try {
@@ -90,6 +90,10 @@ public class NOTDriver {
                     printInfo();
             }
         }
+    }
+
+    private static void printError(Exception e) {
+        System.out.println(e.getMessage());
     }
 
     private static void printInfo() {

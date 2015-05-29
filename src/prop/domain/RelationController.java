@@ -16,10 +16,14 @@ import java.util.regex.Pattern;
 public class RelationController {
 
     private static final long EPSILON =  600000; //10 min
+    public static final String NOT_OPERATOR = "!";
+    public static final char AND_OPERATOR = '&';
+    public static final char OR_OPERATOR = '|';
     SongController songController;
     UserController userController;
     Graph<Song> graph;
-    
+    private ArrayList<Relation> relations;
+
     public RelationController() {
         graph = new Graph();
     }
@@ -40,16 +44,23 @@ public class RelationController {
      * @return graph with all relations
      */
     public Graph getGraph() {
+        addRelationEdges();
+        playbackRelations(userController.getSet().getUsers());
         return graph;
+    }
+
+    private void addRelationEdges() {
+        for (Relation relation : relations) {
+            addEdgesFromRelation(relation);
+        }
     }
 
     /**
      * Adds Edges between each song played within 10 min of each other
      *
-     * @param userController Contains all users and its playbacks
+     * @param userSet Contains all users and its playbacks
      */
-    public void playbackRelations(UserController userController) {
-        ArrayList<User> userSet = userController.obtainUsers();
+    public void playbackRelations(ArrayList<User> userSet) {
         for(User u : userSet) {
             TreeSet<Playback> playbacks = u.getPlaybackRegister();
             addPlaybackRelation(playbacks);
@@ -89,16 +100,27 @@ public class RelationController {
      * @param exp       the expression to evaluate
      * @throws PropException
      */
-    public void addRelation(String simpRel, String exp, int n) throws PropException{
-        SimpleRelation[] simpRelArray = new SimpleRelation[n];
+    public void addRelation(String simpRel, String exp) throws PropException {
         String[] rel = simpRel.split(Pattern.quote("\n"));
+        int n = rel.length;
+        SimpleRelation[] simpRelArray = new SimpleRelation[n];
         int i;
         for (i = 0; i < n; ++i) {
             String[] parts = rel[i].split(Pattern.quote(" "));
             SimpleRelation r = new SimpleRelation(songController.getSongSet(),userController.obtainUserSet(),parts[0],parts[1]);
             simpRelArray[i] = r;
         }
+
         Relation relation = parse(simpRelArray, exp);
+        relations.add(relation);
+    }
+
+    /**
+     * Add edges to Graph from relation
+     * @param relation
+     * @throws PropException
+     */
+    private void addEdgesFromRelation(Relation relation) {
         ArrayList<Song> songs = relation.evaluate();
         for (Song s1 : songs) {
             for (Song s2 : songs) {
@@ -108,6 +130,8 @@ public class RelationController {
         }
     }
 
+    /**** PARSING *****/
+    
     /**
      **
      * @param simpleRelations Array of simple relations
@@ -118,28 +142,20 @@ public class RelationController {
      * @return parsed relation
      */
     private Relation parse(SimpleRelation[] simpleRelations, String expression) throws PropException {
-        if(!expression.contains("((") && !expression.contains("))")){
-            if(expression.length()>5) throw new PropException(ErrorString.WRONG_EXPRESSION);
-            
-            if(expression.contains("&")){
-                int idxRel1 = (int) expression.charAt(1) - '0';
-                int idxRel2 = (int) expression.charAt(3) - '0';
-                return new AND(simpleRelations[idxRel1],simpleRelations[idxRel2]);
-            } else if (expression.contains("|")) {
-                int idxRel1 = (int) expression.charAt(1) - '0';
-                int idxRel2 = (int) expression.charAt(3) - '0';
-                return new OR(simpleRelations[idxRel1], simpleRelations[idxRel2]);
-            } else if (expression.contains("!")) {
-                if (expression.length() > 2) throw new PropException(ErrorString.WRONG_EXPRESSION);
-                int idxRel = (int) expression.charAt(1) - '0';
-                return new NOT(simpleRelations[idxRel],songController.getSongSet());
+        /** BASIC CASE **/
+        if(expression.contains("(")){
+            if(expression.length()==1) {
+                int index = extractNumber(expression.charAt(0));
+                return simpleRelations[index];
+            } else if(expression.contains(NOT_OPERATOR)) {
+                int index = extractNumber(expression.charAt(1));
+                return new NOT(simpleRelations[index], songController.getSongSet());
             } else {
-                if (expression.length() > 1) throw new PropException(ErrorString.WRONG_EXPRESSION);
-                int idxRel = (int) expression.charAt(0) - '0';
-                return simpleRelations[idxRel];
+                throw new PropException(ErrorString.WRONG_EXPRESSION);
             }
         }
 
+        /** RECURSIVE CASE **/
         int middle = findMiddle(expression);
         String subExpEsq = expression.substring(1, middle);
         String subExpDre = expression.substring(middle + 1, expression.length() - 1);
@@ -147,12 +163,21 @@ public class RelationController {
 
         Relation rel1 = parse(simpleRelations, subExpEsq);
         Relation rel2 = parse(simpleRelations, subExpDre);
-        if (operator == '&') {
+        if (operator == AND_OPERATOR) {
             return new AND(rel1, rel2);
-        } else if (operator == '|') {
+        } else if (operator == OR_OPERATOR) {
             return new OR(rel1, rel2);
         }
         throw new PropException(ErrorString.WRONG_EXPRESSION);
+    }
+
+    /**
+     * Convert from char to Integer
+     * @param c is a char that represents a  number
+     * @return the number that represents c
+     */
+    private int extractNumber(char c) {
+        return (int) c -'0';
     }
 
     /**

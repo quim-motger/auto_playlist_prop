@@ -27,7 +27,7 @@ public class AND extends ComplexRelation {
      * @throws      PropException
      */
     @Override
-    public ArrayList<Song> evaluate() throws PropException{
+    public ArrayList<Song> evaluate() {
         ArrayList<Song> songs = r1.evaluate();
         songs.retainAll(r2.evaluate());
         return songs;

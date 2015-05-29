@@ -1,7 +1,5 @@
 package prop.domain;
 
-import prop.PropException;
-
 import java.util.ArrayList;
 
 /**
@@ -14,7 +12,7 @@ public abstract class Relation {
     /** Evaluates the relation
      * @return      An ArrayList with all songs that match the relation
      */
-    public abstract ArrayList<Song> evaluate() throws PropException;
+    public abstract ArrayList<Song> evaluate();
 
 
 }

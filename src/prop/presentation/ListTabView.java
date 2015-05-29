@@ -325,6 +325,7 @@ public class ListTabView extends TabView {
                 listPController.addList(title);
                 jTextField1.setText("");
                 updateListSetModel();
+                setRightPanel(addListPanel);
             }
             catch (PropException e) {
                 jLabel3.setText(e.getMessage());
@@ -381,14 +382,16 @@ public class ListTabView extends TabView {
 
         protected void addButtonActionPerformed(ActionEvent evt) {
             String title = (String) listSet.getSelectedValue();
+            int index = listSet.getSelectedIndex();
             String newTitle = jTextField1.getText();
             try {
                 if (title.equals(newTitle))
                     throw new PropException(ErrorString.EDIT_LIST_SAME_TITLE);
                 listPController.setListTitle(title, newTitle);
+                updateListSetModel();
                 showListPanel = new ShowList(newTitle);
                 setRightPanel(showListPanel);
-                updateListSetModel();
+                listSet.setSelectedIndex(index);
             }
             catch (PropException e) {
                 jLabel3.setText(e.getMessage());
