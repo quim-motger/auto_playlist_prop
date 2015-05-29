@@ -82,7 +82,7 @@ public class AlgorithmController {
      * @param relationController    an instance of the Relation Controller
      * @return                      the input graph
      */
-    private Graph<Song> createInputGraph(int algorithm, RelationController relationController) throws NullPointerException {
+    private Graph<Song> createInputGraph(int algorithm, RelationController relationController) throws NullPointerException, PropException {
         Graph<Song> graph = new Graph<Song>();
         Graph<Song> G = relationController.getGraph();
         if (G == null) throw new NullPointerException(ErrorString.NULL_GRAPH);

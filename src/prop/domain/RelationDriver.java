@@ -62,13 +62,9 @@ public class RelationDriver {
                         r2 = r;
                         break;
                     case 8:
-                        try {
-                            songs = r.evaluate();
-                            for (Song song : songs) {
-                                System.out.println(song.getTitle() + " " + song.getArtist());
-                            }
-                        } catch (PropException e) {
-                            System.out.println(e.getMessage());
+                        songs = r.evaluate();
+                        for (Song song : songs) {
+                            System.out.println(song.getTitle() + " " + song.getArtist());
                         }
                         break;
                     case 9:

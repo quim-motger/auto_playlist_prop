@@ -3,7 +3,6 @@ package prop.domain;
 import prop.ErrorString;
 import prop.PropException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 
 public class SimpleRelation extends Relation {
 
+    private final ArrayList<Song> songs;
     private SongSet songSet;
     private UserSet userSet;
     private String attribute;
@@ -39,11 +39,12 @@ public class SimpleRelation extends Relation {
      * @param   attr    attribute name
      * @param   val     value of attribute
      */
-    public SimpleRelation(SongSet ss, UserSet us, String attr, String val) {
+    public SimpleRelation(SongSet ss, UserSet us, String attr, String val) throws PropException {
         songSet = ss;
         userSet = us;
         attribute = attr;
         value = val;
+        songs = getSongs();
     }
 
     /**
@@ -82,7 +83,11 @@ public class SimpleRelation extends Relation {
      * Evaluates the relation
      * @return      An ArrayList with all songs that match the relation
      */
-    public ArrayList<Song> evaluate() throws PropException {
+    public ArrayList<Song> evaluate() {
+        return songs;
+    }
+
+    private ArrayList<Song> getSongs() throws PropException {
         ArrayList<Song> songs = new ArrayList<>();
         ArrayList<User> users = new ArrayList<>();
         ArrayList<Pair<String, String>> l = new ArrayList<>();
