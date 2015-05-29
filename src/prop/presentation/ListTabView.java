@@ -1,7 +1,6 @@
 package prop.presentation;
 
 import prop.ErrorString;
-import prop.Main;
 import prop.PropException;
 
 import javax.swing.*;
@@ -506,11 +505,11 @@ public class ListTabView extends TabView {
                                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                             .addComponent(jLabel1)
                                                             .addGroup(layout.createSequentialGroup()
-                                                                    .addComponent(addSongButton, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+                                                                    .addComponent(addSongButton)
                                                                     .addGap(18, 18, 18)
                                                                     .addComponent(removeSongButton)
                                                                     .addGap(18, 18, 18)
-                                                                    .addComponent(swapSongsButton, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE))
+                                                                    .addComponent(swapSongsButton))
                                                             /*.addComponent(jLabel2)*/)
                                                     .addGap(0, 43, Short.MAX_VALUE)))
                                     .addContainerGap())

@@ -3,7 +3,6 @@ package prop.domain;
 import prop.ErrorString;
 import prop.PropException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
