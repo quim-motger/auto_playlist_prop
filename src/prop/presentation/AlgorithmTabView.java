@@ -7,23 +7,27 @@ public class AlgorithmTabView extends JPanel {
 
     private AlgorithmPController algorithmPController;
     private ListPController listPController;
+    private SongPController songPController;
+    private UserPController userPController;
     private AlgorithmInputView algorithmInputView;
 
-    public AlgorithmTabView(AlgorithmPController apc, ListPController lpc) {
+    public AlgorithmTabView(AlgorithmPController apc, ListPController lpc, SongPController spc, UserPController upc) {
         algorithmPController = apc;
         listPController = lpc;
+        songPController = spc;
+        userPController = upc;
         setLayout(new BorderLayout());
         initComponents();
     }
 
     private void initComponents() {
-        algorithmInputView = new AlgorithmInputView();
+        algorithmInputView = new AlgorithmInputView(songPController,userPController);
         setOutputPanel("");
     }
 
     public void setInputPanel() {
         removeAll();
-        add(algorithmInputView,BorderLayout.CENTER);
+        add(algorithmInputView, BorderLayout.CENTER);
     }
 
     public void setOutputPanel(String title) {

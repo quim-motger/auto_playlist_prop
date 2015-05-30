@@ -200,11 +200,11 @@ public class AddSongPanel extends javax.swing.JPanel {
             String title = jTextField1.getText();
             String artist = jTextField2.getText();
             String album = jTextField3.getText();
-            int y = (Integer) jSpinner2.getValue();
+            int y = (Integer) jSpinner1.getValue();
             String year = String.valueOf(y);
             String genre = String.valueOf(jComboBox1.getSelectedIndex());
             String subgenre = String.valueOf(jComboBox2.getSelectedIndex());
-            int d = (Integer) jSpinner1.getValue();
+            int d = (Integer) jSpinner2.getValue();
             String duration = String.valueOf(d);
             songPController.addSong(title, artist, album, year, genre, subgenre, duration);
             songTabView.updateSongSetModel();
