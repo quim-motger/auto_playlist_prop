@@ -9,6 +9,7 @@ public class AlgorithmOutputView extends JPanel {
 
     private AlgorithmPController algorithmPController;
     private ListPController listPController;
+    private AlgorithmTabView algorithmTabView;
     private JScrollPane rightScrollPanel;
     private GraphPanel graphPanel;
     private JTextArea textPanel;
@@ -16,16 +17,18 @@ public class AlgorithmOutputView extends JPanel {
     private JToolBar actionBar;
     private JLabel listTitle;
     private JList leftList;
-    private JButton button;
+    private JButton SwitchButton;
+    private JButton newInputButton;
     private DefaultListModel listModel;
     private Boolean isGraphVisible;
 
     /**
      * Creates new form MainPanel
      */
-    public AlgorithmOutputView(AlgorithmPController apc, ListPController lpc, String title) {
+    public AlgorithmOutputView(AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv, String title) {
         algorithmPController = apc;
         listPController = lpc;
+        algorithmTabView = atv;
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         initComponents();
         updateListModel(title);
@@ -43,7 +46,11 @@ public class AlgorithmOutputView extends JPanel {
 
         graphPanel = new GraphPanel();
         textPanel = new JTextArea();
+        textPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         textPanel.setEditable(false);
+        textPanel.setLineWrap(true);
+        textPanel.setWrapStyleWord(true);
+        textPanel.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel sollicitudin sem, quis lobortis urna. Vivamus massa massa, ultricies vitae diam fermentum, bibendum vestibulum nisi. Aliquam sodales risus quis commodo hendrerit. Nulla pulvinar ligula non viverra fermentum. Ut viverra ac mauris at iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in interdum urna. Nam facilisis finibus justo, eget congue dolor consectetur at. Nunc sed laoreet nisl.");
 
         rightScrollPanel = new JScrollPane();
         rightScrollPanel.setViewportView(graphPanel);
@@ -60,15 +67,27 @@ public class AlgorithmOutputView extends JPanel {
         actionBar.add(listTitle);
         actionBar.add(Box.createHorizontalStrut(6));
 
-        button = new JButton("Algorithm Log");
-        button.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
-        button.addActionListener(new ActionListener() {
+        SwitchButton = new JButton("Algorithm Log");
+        SwitchButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        SwitchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buttonActionPerformed(e);
+                switchButtonActionPerformed(e);
             }
         });
-        actionBar.add(button);
+        actionBar.add(SwitchButton);
+        actionBar.add(Box.createHorizontalStrut(5));
+
+        newInputButton = new JButton("New input");
+        newInputButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        newInputButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newInputButtonActionPerformed(e);
+            }
+        });
+        actionBar.add(newInputButton);
+        actionBar.add(Box.createHorizontalStrut(5));
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
@@ -91,17 +110,21 @@ public class AlgorithmOutputView extends JPanel {
         );
     }
 
-    private void buttonActionPerformed(ActionEvent evt) {
+    private void switchButtonActionPerformed(ActionEvent evt) {
         if (isGraphVisible) {
-            button.setText("Graph");
+            SwitchButton.setText("Graph");
             rightScrollPanel.setViewportView(textPanel);
             isGraphVisible = false;
         }
         else {
-            button.setText("Algorithm Log");
+            SwitchButton.setText("Algorithm Log");
             rightScrollPanel.setViewportView(graphPanel);
             isGraphVisible = true;
         }
+    }
+
+    private void newInputButtonActionPerformed(ActionEvent evt) {
+        algorithmTabView.setInputPanel();
     }
 
     public void updateListModel(String title) {
