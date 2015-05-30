@@ -32,7 +32,7 @@ public class ListSet {
 
     /**
      * Adds a list to the set
-     * @param list list to be added (not null)
+     * @param list list to be added (Precondition: the list isn't already contained and is not null)
      */
     public void add(List list) throws PropException {
         if (!contains(list.obtainTitle())) lists.put(list.obtainTitle(), list);
@@ -41,7 +41,7 @@ public class ListSet {
 
     /**
      * Searches the list with a certain id
-     * @param name name of the list to search. The list must be contained in the ListSet
+     * @param name name of the list to search (not null). The list must be contained in the ListSet
      * @return Returns the list
      */
     public List getList(String name) {
@@ -49,6 +49,12 @@ public class ListSet {
         throw new IllegalArgumentException("The list with this id isn't contained in the ListSet");
     }
 
+
+    /**
+     * Obtains Lists whose title starts by a specific prefix
+     * @param prefix (not null)
+     * @return ArrayList with the lists
+     */
     public ArrayList<List> findLists(String prefix) {
         return lists.matchPrefix(prefix);
     }
@@ -68,9 +74,8 @@ public class ListSet {
     }
 
     /**
-     * Removes the list with this id from the set
-     * @param name int id of the list to be removed
-     * @return true if the list was found and removed, false otherwise
+     * Removes the list with a specific title from the set
+     * @param name String title of the list to be removed (Precondition: the list is contained in the set and is not null)
      */
     public void remove(String name) throws PropException {
         if (lists.contains(name)) {
@@ -80,7 +85,7 @@ public class ListSet {
 
     /**
      * Indicates if a list with this title is contained in the set
-     * @param title string title of the list to look up
+     * @param title string title of the list to look up (not null)
      * @return true if found, false otherwise
      */
     public boolean contains(String title) {
@@ -88,6 +93,11 @@ public class ListSet {
         else return false;
     }
 
+    /**
+     * Indicates if a list is contained in the set
+     * @param List to look up (not null)
+     * @return true if found, false otherwise
+     */
     public boolean contains(List l) {
         if (lists.contains(l.obtainTitle())) return true;
         else return false;

@@ -42,6 +42,7 @@ public class GraphPanel extends JPanel{
             createVertices(numberOfVertices);
             createEdges();
             clusteringLayout = new AggregateLayout<String,Double>(new KKLayout<String, Double>(graph));
+            // circle layout i fr no es mofiquen al fer uncluster
             subLayoutSize = new Dimension(100,100);
             Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
