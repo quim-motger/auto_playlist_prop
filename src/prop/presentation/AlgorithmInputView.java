@@ -4,15 +4,20 @@ import prop.domain.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class AlgorithmInputView extends JPanel {
 
     private SongPController songPController;
     private UserPController userPController;
+    private ArrayList<String> simpleRelations;
+    private ArrayList<String> complexRelations;
 
     public AlgorithmInputView(SongPController spc, UserPController upc) {
         songPController = spc;
         userPController = upc;
+        simpleRelations = new ArrayList<>();
+        complexRelations = new ArrayList<>();
         initComponents();
     }
 
@@ -26,7 +31,6 @@ public class AlgorithmInputView extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        jSpinner1 = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jComboBox1 = new javax.swing.JComboBox();
@@ -53,6 +57,8 @@ public class AlgorithmInputView extends JPanel {
         jSpinner2 = new javax.swing.JSpinner();
         jTextField3 = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         jSpinner2.setVisible(false);
         jComboBox3.setVisible(false);
@@ -69,22 +75,10 @@ public class AlgorithmInputView extends JPanel {
 
         jLabel2.setText("New simple relation");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
 
-            public int getSize() {
-                return strings.length;
-            }
-
-            public Object getElementAt(int i) {
-                return strings[i];
-            }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jLabel3.setText("New complex relation");
-
-        jTextField2.setText("jTextField2");
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -100,20 +94,15 @@ public class AlgorithmInputView extends JPanel {
             }
         });
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
 
-            public int getSize() {
-                return strings.length;
-            }
-
-            public Object getElementAt(int i) {
-                return strings[i];
-            }
-        });
         jScrollPane2.setViewportView(jList2);
 
         jButton3.setText("Execute");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
         jLabel4.setText("Ex: ((0|1)&!2)");
@@ -134,13 +123,13 @@ public class AlgorithmInputView extends JPanel {
             }
         });
 
+        jLabel6.setText("List title");
+
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Girvan-Newman", "Louvain", "Clique Percolation Method"}));
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
-
-        jTextField3.setText("jTextField3");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -163,6 +152,8 @@ public class AlgorithmInputView extends JPanel {
                                 .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel6.setText("List title");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -201,21 +192,26 @@ public class AlgorithmInputView extends JPanel {
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(jLabel1)
+                                                        .addComponent(jLabel2)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel5)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(jLabel5)
+                                                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addGap(18, 18, 18)
-                                                                .addComponent(jButton3)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                        .addComponent(jComboBox2, 0, 204, Short.MAX_VALUE)
+                                                                        .addComponent(jTextField1))
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(213, 213, 213)
+                                                                                .addGap(320, 320, 320)
                                                                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(263, 263, 263)
-                                                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                                        .addComponent(jLabel2))
-                                                .addContainerGap(347, Short.MAX_VALUE))))
+                                                                                .addGap(370, 370, 370)
+                                                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                .addContainerGap(347, Short.MAX_VALUE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButton3)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,29 +255,58 @@ public class AlgorithmInputView extends JPanel {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                                 .addComponent(jLabel5)
-                                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addComponent(jButton3))
+                                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int i = jComboBox1.getSelectedIndex();
+        String s;
+        if (i == 0) s = "song_title " + jTextField3.getText().trim();
+        else if (i == 1) s = "song_artist " + jTextField3.getText().trim();
+        else if (i == 2) s = "song_album " + jTextField3.getText().trim();
+        else if (i == 3) s = "song_year " + jSpinner2.getValue().toString();
+        else if (i == 4) s = "song_genre " + jComboBox3.getSelectedIndex();
+        else if (i == 5) s = "song_subgenre " + jComboBox3.getSelectedIndex();
+        else if (i == 6) s = "song_duration " + jSpinner2.getValue().toString();
+        else if (i == 7) s = "user_name " + jTextField3.getText().trim();
+        else if (i == 8) s = "user_age " + jSpinner2.getValue().toString();
+        else {
+            s = "user_gender ";
+            if (jComboBox3.getSelectedIndex() == 0) s += "FEMALE";
+            else if (jComboBox3.getSelectedIndex() == 1) s += "MALE";
+            else s += "OTHER";
+        }
+        simpleRelations.add(s);
+        // TODO update list1
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        String s = jTextField2.getText().trim();
+        complexRelations.add(s);
+        // TODO update list2
     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        // TODO remove selected element of list1
     }
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        // TODO remove selected element of list2
+    }
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+
     }
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,7 +326,8 @@ public class AlgorithmInputView extends JPanel {
             jSpinner2.setVisible(false);
             if (jComboBox1.getSelectedIndex() == 9) {
                 jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(userPController.getGenres()));
-
+            } else {
+                jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(songPController.listGenres()));
             }
         }
         else {
@@ -336,9 +362,10 @@ public class AlgorithmInputView extends JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration
 }
