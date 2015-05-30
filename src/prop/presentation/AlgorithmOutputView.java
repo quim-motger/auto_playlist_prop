@@ -132,11 +132,11 @@ public class AlgorithmOutputView extends JPanel {
 
     public void updateListModel(String title) {
         listModel.clear();
-        /*String list[] = listPController.getListStringArray(title);
-        listTitle.setText(list[0]);*/
+        //String list[] = listPController.getListStringArray(title);
         // Only for testing purposes - delete when finish and uncomment above ****************
         String list[] = {"title","aaa","bbb","ccc","ddd"};
         // ***********************************************************************************
+        listTitle.setText(list[0]);
         for (int i = 1; i < list.length; ++i) {
             listModel.addElement(list[i]);
         }
