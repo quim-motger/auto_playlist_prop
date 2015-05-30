@@ -1,11 +1,11 @@
 package prop.presentation;
 
 import edu.uci.ics.jung.algorithms.layout.*;
+import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
-import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
-import edu.uci.ics.jung.visualization.Layer;
-import edu.uci.ics.jung.visualization.VisualizationViewer;
+import edu.uci.ics.jung.graph.util.Pair;
+import edu.uci.ics.jung.visualization.*;
 import edu.uci.ics.jung.visualization.control.AbstractModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.CrossoverScalingControl;
 import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
@@ -23,21 +23,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
+import java.lang.reflect.Constructor;
+import java.security.cert.CollectionCertStoreParameters;
+import java.util.*;
 
 public class GraphPanel extends JPanel{
         private UndirectedSparseGraph<String, Double> graph;
         //the visual component and renderer for the graph
         private VisualizationViewer<String, Double> vv;
         private int numberOfVertices = 20;
+        private AggregateLayout<String,Double> clusteringLayout;
+        private Class subLayoutType = CircleLayout.class;
+        private Dimension subLayoutSize;
         public GraphPanel() {
             graph = new UndirectedSparseGraph<String, Double>();
             createVertices(numberOfVertices);
             createEdges();
-            //possible layouts: ISOMLayout, KKLayout, FRLayout
+            clusteringLayout = new AggregateLayout<String,Double>(new FRLayout<String,Double>(graph));
+            subLayoutSize = new Dimension(100,100);
+            Dimension preferredSize = new Dimension(600,600);
+            final VisualizationModel<String,Double> visualizationModel =
+                    new DefaultVisualizationModel<String,Double>(clusteringLayout, preferredSize);
+            vv =  new VisualizationViewer<String,Double>(visualizationModel, preferredSize);
+
+          /*  //possible layouts: ISOMLayout, KKLayout, FRLayout
             Layout<String, Double> layout = new CircleLayout<>(graph);
             // layout size should scale with number of vertices
             layout.setSize(new Dimension(1000,1000));
-
+            */
             /*for (int i = 0; i < numberOfVertices; i++) {
                 layout.lock("V" + i, true);
             }*/
@@ -45,9 +59,10 @@ public class GraphPanel extends JPanel{
                 transparency.put(v, new Double(0.9));
             }
 */
-            vv =  new VisualizationViewer<String, Double>(layout);
+            //vv =  new VisualizationViewer<String, Double>(layout);
             vv.setBackground(Color.white);
-            vv.setPreferredSize(new Dimension(800, 600));
+            //vv.setPreferredSize(new Dimension(800, 600));
+
             Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
                 public Paint transform(String i) {
                     if(i.equals("V0")) return Color.GREEN;
@@ -73,7 +88,6 @@ public class GraphPanel extends JPanel{
             vv.getRenderContext().setEdgeStrokeTransformer(new Transformer<Double, Stroke>() {
                 protected final Stroke THIN = new BasicStroke(1);
                 protected final Stroke THICK = new BasicStroke(4);
-
                 public Stroke transform(Double e) {
                     if (e == 10.5)
                         return THIN;
@@ -105,14 +119,16 @@ public class GraphPanel extends JPanel{
             final GraphZoomScrollPane panel = new GraphZoomScrollPane(vv);
             add(panel);
 
-            /** MOUSE AND BUTTONS **/
+            /** MOUSE **/
             final AbstractModalGraphMouse graphMouse = new DefaultModalGraphMouse<String,Double>();
             vv.setGraphMouse(graphMouse);
             vv.addKeyListener(graphMouse.getModeKeyListener());
 
+            /** BUTTONS **/
+        /*
             final ScalingControl scaler = new CrossoverScalingControl();
 
-         /*   JButton plus = new JButton("+");
+            JButton plus = new JButton("+");
             plus.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     scaler.scale(vv, 1.1f, vv.getCenter());
@@ -140,6 +156,7 @@ public class GraphPanel extends JPanel{
             controls.add(reset);
             add(controls, BorderLayout.SOUTH);
             */
+            cluster(true);
         }
         private void createVertices(int count) {
             for (int i = 0; i < count; i++) {
@@ -159,6 +176,73 @@ public class GraphPanel extends JPanel{
             graph.addEdge(3.5, "V10", "V19");
             graph.addEdge(121.5, "V6", "V8");
             graph.addEdge(10.25, "V2", "V7");
+        }
+
+
+
+        private Layout getLayoutFor(Class layoutClass, Graph graph) throws Exception {
+            Object[] args = new Object[]{graph};
+            Constructor constructor = layoutClass.getConstructor(new Class[] {Graph.class});
+            return  (Layout)constructor.newInstance(args);
+        }
+
+        // aqui, per cada vertex de comunitat en comptes de picked
+        private void cluster(boolean state) {
+            if(state) {
+                // put the picked vertices into a new sublayout
+                Collection<String> picked = new HashSet<String>();
+                String[] cv = new String[] { "V0", "V1", "V2", "V3", "V4", "V5", "V6" }; // example vertices
+                ArrayList<String> acv = new ArrayList<String>(Arrays.asList(cv));
+                picked.addAll(acv);
+
+                Point2D center = new Point2D.Double();
+                double x = 0;
+                double y = 0;
+                for(String vertex : picked) {
+                    Point2D p = clusteringLayout.transform(vertex); // gets location of the vertex
+                    x += p.getX();
+                    y += p.getY();
+                }
+                x /= picked.size();
+                y /= picked.size();
+                center.setLocation(x,y);
+
+                //UndirectedSparseGraph<String, Double> subGraph = new UndirectedSparseGraph<>();
+                Graph<String, Double> subGraph;
+                    try {
+                        subGraph = graph.getClass().newInstance();
+                        for(String vertex : picked) {
+                            subGraph.addVertex(vertex);
+                            Collection<Double> incidentEdges = graph.getIncidentEdges(vertex);
+                            for(Double edge : incidentEdges) {
+                                Pair<String> endpoints = graph.getEndpoints(edge);
+                                if(picked.containsAll(endpoints)) {
+                                    // put this edge into the subgraph
+                                    subGraph.addEdge(edge, endpoints.getFirst(), endpoints.getSecond());
+                                }
+                            }
+                        }
+
+                        Layout<String,Double> subLayout = getLayoutFor(subLayoutType, subGraph);
+                        subLayout.setInitializer(vv.getGraphLayout());
+                        subLayout.setSize(subLayoutSize);
+                        clusteringLayout.put(subLayout,center);
+                        vv.setGraphLayout(clusteringLayout);
+
+                    }
+                    catch (NullPointerException ne) {
+                        System.out.println("nullexc");
+                        ne.printStackTrace();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            else {
+                // remove all sublayouts
+                this.clusteringLayout.removeAll();
+                vv.setGraphLayout(clusteringLayout);
+            }
         }
 
 }
