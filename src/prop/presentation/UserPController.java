@@ -20,6 +20,10 @@ public class UserPController {
         songController = songC;
         userController = new UserController();        
     }
+
+    public UserController getUserController() {
+        return userController;
+    }
     
     public ArrayList<String> getMatch(String search) {
         String[] users = userController.findUsers(search);

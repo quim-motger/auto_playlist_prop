@@ -1,8 +1,8 @@
 package prop.presentation;
 
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
-import prop.domain.AlgorithmController;
-import prop.domain.RelationController;
+import prop.PropException;
+import prop.domain.*;
 
 import java.util.ArrayList;
 
@@ -10,13 +10,26 @@ public class AlgorithmPController {
 
     private AlgorithmController algorithmController;
     private RelationController relationController;
+    private SongController songController;
+    private UserController userController;
     private ArrayList<UndirectedSparseGraph<String,Double>> communities;
+    private ArrayList<String> log;
     static final String delimiter = "\n";
 
 
-    public AlgorithmPController() {
+    public AlgorithmController getAlgorithmController() {
+        return algorithmController;
+    }
+
+    public RelationController getRelationController() {
+        return relationController;
+    }
+
+    public AlgorithmPController(SongController sc, UserController uc) {
         algorithmController = new AlgorithmController();
         relationController = new RelationController();
+        songController = sc;
+        userController = uc;
         communities = new ArrayList<>();
     }
 
@@ -50,6 +63,15 @@ public class AlgorithmPController {
         return gr;
     }
 
+    public void addRelation(String[] simpRel, String compRel, int n) throws PropException {
+        relationController.addRelation(simpRel, compRel, n);
+    }
 
+    public void initGraph() {
+       relationController.initGraph(songController, userController);
+    }
 
+    public void execute(String title, int algorithm, int k, ListController lc, RelationController rc) throws PropException {
+        log = algorithmController.execute(title, algorithm, k, lc, rc);
+    }
 }

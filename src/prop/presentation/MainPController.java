@@ -20,7 +20,7 @@ public class MainPController {
                 listPController.getListController(),
                 songPController.getSongController()
                 );
-        algorithmPController = new AlgorithmPController();
+        algorithmPController = new AlgorithmPController(songPController.getSongController(),userPController.getUserController());
 
         /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

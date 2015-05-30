@@ -89,12 +89,11 @@ public class RelationController {
      * @param exp       the expression to evaluate
      * @throws PropException
      */
-    public void addRelation(String simpRel, String exp, int n) throws PropException{
+    public void addRelation(String[] simpRel, String exp, int n) throws PropException{
         SimpleRelation[] simpRelArray = new SimpleRelation[n];
-        String[] rel = simpRel.split(Pattern.quote("\n"));
         int i;
         for (i = 0; i < n; ++i) {
-            String[] parts = rel[i].split(Pattern.quote(" "));
+            String[] parts = simpRel[i].split(Pattern.quote("|"));
             SimpleRelation r = new SimpleRelation(songController.getSongSet(),userController.obtainUserSet(),parts[0],parts[1]);
             simpRelArray[i] = r;
         }
