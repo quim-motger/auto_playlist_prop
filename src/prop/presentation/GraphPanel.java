@@ -42,9 +42,10 @@ public class GraphPanel extends JPanel{
             createEdges();
             clusteringLayout = new AggregateLayout<String,Double>(new FRLayout<String,Double>(graph));
             subLayoutSize = new Dimension(100,100);
-            Dimension preferredSize = new Dimension(600,600);
+            Dimension visualizationModelSize = new Dimension(600,600);
+            Dimension preferredSize = getSize();
             final VisualizationModel<String,Double> visualizationModel =
-                    new DefaultVisualizationModel<String,Double>(clusteringLayout, preferredSize);
+                    new DefaultVisualizationModel<String,Double>(clusteringLayout, visualizationModelSize);
             vv =  new VisualizationViewer<String,Double>(visualizationModel, preferredSize);
 
           /*  //possible layouts: ISOMLayout, KKLayout, FRLayout
@@ -125,7 +126,7 @@ public class GraphPanel extends JPanel{
             vv.addKeyListener(graphMouse.getModeKeyListener());
 
             /** BUTTONS **/
-        /*
+
             final ScalingControl scaler = new CrossoverScalingControl();
 
             JButton plus = new JButton("+");
@@ -138,6 +139,20 @@ public class GraphPanel extends JPanel{
             minus.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     scaler.scale(vv, 1 / 1.1f, vv.getCenter());
+                }
+            });
+
+            JButton cluster = new JButton("cluster");
+            cluster.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cluster(true);
+                }
+            });
+
+            JButton uncluster = new JButton("uncluster");
+            uncluster.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    cluster(false);
                 }
             });
 
@@ -154,9 +169,13 @@ public class GraphPanel extends JPanel{
             controls.add(plus);
             controls.add(minus);
             controls.add(reset);
+            controls.add(uncluster);
+            controls.add(cluster);
             add(controls, BorderLayout.SOUTH);
-            */
-            cluster(true);
+
+
+
+
         }
         private void createVertices(int count) {
             for (int i = 0; i < count; i++) {
