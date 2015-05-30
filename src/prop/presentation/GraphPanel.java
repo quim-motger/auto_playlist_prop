@@ -1,8 +1,6 @@
 package prop.presentation;
 
-import edu.uci.ics.jung.algorithms.layout.CircleLayout;
-import edu.uci.ics.jung.algorithms.layout.KKLayout;
-import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.*;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.visualization.GraphZoomScrollPane;
@@ -23,6 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 
 public class GraphPanel extends JPanel{
@@ -34,10 +33,10 @@ public class GraphPanel extends JPanel{
             graph = new UndirectedSparseGraph<String, Double>();
             createVertices(numberOfVertices);
             createEdges();
-
-            Layout<String, Double> layout = new KKLayout<>(graph);
+            //possible layouts: ISOMLayout, KKLayout, FRLayout
+            Layout<String, Double> layout = new CircleLayout<>(graph);
             // layout size should scale with number of vertices
-            layout.setSize(new Dimension(3000,3000));
+            layout.setSize(new Dimension(1000,1000));
 
             /*for (int i = 0; i < numberOfVertices; i++) {
                 layout.lock("V" + i, true);
@@ -57,17 +56,35 @@ public class GraphPanel extends JPanel{
             };
             Transformer<String, Shape> vertexSize = new Transformer<String, Shape>(){
                 public Shape transform(String i){
-                    Ellipse2D circle = new Ellipse2D.Double(-5,-5, 10, 10);
+                    Ellipse2D circle = new Ellipse2D.Double(-10,-10, 20, 20);
                     // in this case, the vertex is twice as large
                     //if(i == 2) return AffineTransform.getScaleInstance(2, 2).createTransformedShape(circle);
                     return circle;
                 }
             };
+
+            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<Double, Paint>() {
+                public Paint transform(Double e) {
+                    if (e == 10.5) return Color.RED;
+                    return Color.blue;
+                }
+            });
+
+            vv.getRenderContext().setEdgeStrokeTransformer(new Transformer<Double, Stroke>() {
+                protected final Stroke THIN = new BasicStroke(1);
+                protected final Stroke THICK = new BasicStroke(4);
+
+                public Stroke transform(Double e) {
+                    if (e == 10.5)
+                        return THIN;
+                    else
+                        return THICK;
+                }
+            });
+
             vv.getRenderContext().setVertexFillPaintTransformer(vertexColor);
             vv.getRenderContext().setVertexShapeTransformer(vertexSize);
-            vv.getRenderContext().setEdgeDrawPaintTransformer(new ConstantTransformer(Color.BLACK));
-            vv.getRenderContext().setArrowFillPaintTransformer(new ConstantTransformer(Color.BLACK));
-            vv.getRenderContext().setArrowDrawPaintTransformer(new ConstantTransformer(Color.BLACK));
+
 
             // add my listeners for ToolTips
             vv.setVertexToolTipTransformer(new ToStringLabeller<String>());
