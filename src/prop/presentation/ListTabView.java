@@ -223,7 +223,7 @@ public class ListTabView extends TabView {
         }
     }
 
-    private void updateListSetModel() {
+    public void updateListSetModel() {
         listSetModel.clear();
         String lists[];
         String prefix = searchField.getText();

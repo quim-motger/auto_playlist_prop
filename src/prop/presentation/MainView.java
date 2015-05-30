@@ -1,6 +1,8 @@
 package prop.presentation;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,6 +60,17 @@ public class MainView extends JFrame {
         TabbedPane.addTab("Lists", ListPanel);
 
         TabbedPane.addTab("Algorithms", AlgorithmPanel);
+
+        TabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int index = TabbedPane.getSelectedIndex();
+                switch (index) {
+                    case 2:
+                        ListPanel.updateListSetModel();
+                }
+            }
+        });
 
         FileMenu.setText("File");
 
