@@ -225,7 +225,7 @@ public class ListTabView extends TabView {
 
     private void updateListSetModel() {
         listSetModel.clear();
-        ArrayList<String> lists;
+        String lists[];
         String prefix = searchField.getText();
         if (prefix.equals(""))
             lists = listPController.getListSetStringArray();
@@ -565,10 +565,10 @@ public class ListTabView extends TabView {
 
         public void updateListModel() {
             listModel.clear();
-            ArrayList<String> list = listPController.getListStringArray(id);
-            jLabel1.setText(list.get(0));
-            for (int i = 1; i < list.size(); ++i) {
-                listModel.addElement(list.get(i));
+            String list[] = listPController.getListStringArray(id);
+            jLabel1.setText(list[0]);
+            for (int i = 1; i < list.length; ++i) {
+                listModel.addElement(list[i]);
             }
         }
 

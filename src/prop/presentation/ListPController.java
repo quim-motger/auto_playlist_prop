@@ -2,7 +2,6 @@ package prop.presentation;
 
 import prop.PropException;
 import prop.domain.ListController;
-import prop.domain.Pair;
 import prop.domain.SongController;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class ListPController {
         listController.addList(title);
     }
 
-    public ArrayList<String> getListSetStringArray() {
+    public String[] getListSetStringArray() {
         return listController.getListSetStringArray();
     }
 
@@ -30,7 +29,7 @@ public class ListPController {
         listController.removeList(title);
     }
 
-    public ArrayList<String> getListStringArray(String title) {
+    public String[] getListStringArray(String title) {
         return listController.getListStringArray(title);
     }
 
@@ -38,7 +37,7 @@ public class ListPController {
         listController.addSong(listTitle, title, artist, songController);
     }
 
-    public ArrayList<String> findLists(String prefix) {
+    public String[] findLists(String prefix) {
         return listController.findLists(prefix);
     }
 
