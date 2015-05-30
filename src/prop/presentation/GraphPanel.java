@@ -112,7 +112,7 @@ public class GraphPanel extends JPanel{
 
             final ScalingControl scaler = new CrossoverScalingControl();
 
-            JButton plus = new JButton("+");
+         /*   JButton plus = new JButton("+");
             plus.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     scaler.scale(vv, 1.1f, vv.getCenter());
@@ -139,8 +139,8 @@ public class GraphPanel extends JPanel{
             controls.add(minus);
             controls.add(reset);
             add(controls, BorderLayout.SOUTH);
+            */
         }
-
         private void createVertices(int count) {
             for (int i = 0; i < count; i++) {
                 graph.addVertex("V"+i);
