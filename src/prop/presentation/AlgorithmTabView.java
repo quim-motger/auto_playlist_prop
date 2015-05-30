@@ -21,13 +21,14 @@ public class AlgorithmTabView extends JPanel {
     }
 
     private void initComponents() {
-        algorithmInputView = new AlgorithmInputView(songPController,userPController);
-        setOutputPanel("");
+        algorithmInputView = new AlgorithmInputView(songPController,userPController,this);
+        setInputPanel();
     }
 
     public void setInputPanel() {
         removeAll();
         add(algorithmInputView, BorderLayout.CENTER);
+        repaint();
     }
 
     public void setOutputPanel(String title) {

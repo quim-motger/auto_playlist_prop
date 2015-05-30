@@ -10,12 +10,14 @@ public class AlgorithmInputView extends JPanel {
 
     private SongPController songPController;
     private UserPController userPController;
+    private AlgorithmTabView algorithmTabView;
     private ArrayList<String> simpleRelations;
     private ArrayList<String> complexRelations;
 
-    public AlgorithmInputView(SongPController spc, UserPController upc) {
+    public AlgorithmInputView(SongPController spc, UserPController upc, AlgorithmTabView atv) {
         songPController = spc;
         userPController = upc;
+        algorithmTabView = atv;
         simpleRelations = new ArrayList<>();
         complexRelations = new ArrayList<>();
         initComponents();
@@ -306,7 +308,7 @@ public class AlgorithmInputView extends JPanel {
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-
+        algorithmTabView.setOutputPanel("");
     }
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
