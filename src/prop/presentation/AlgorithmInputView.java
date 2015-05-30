@@ -1,5 +1,7 @@
 package prop.presentation;
 
+import prop.PropException;
+import prop.domain.Algorithm;
 import prop.domain.User;
 
 import javax.swing.*;
@@ -10,12 +12,20 @@ public class AlgorithmInputView extends JPanel {
 
     private SongPController songPController;
     private UserPController userPController;
+    private ListPController listPController;
+    private AlgorithmPController algorithmPController;
     private ArrayList<String> simpleRelations;
     private ArrayList<String> complexRelations;
+    private DefaultListModel simpleRelationsModel;
+    private DefaultListModel complexRelationsModel;
+    private AlgorithmTabView algorithmTabView;
 
-    public AlgorithmInputView(SongPController spc, UserPController upc) {
+    public AlgorithmInputView(SongPController spc, UserPController upc, AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv) {
         songPController = spc;
         userPController = upc;
+        algorithmPController = apc;
+        listPController = lpc;
+        algorithmTabView = atv;
         simpleRelations = new ArrayList<>();
         complexRelations = new ArrayList<>();
         initComponents();
@@ -59,9 +69,18 @@ public class AlgorithmInputView extends JPanel {
         jComboBox3 = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jSpinner3 = new javax.swing.JSpinner();
 
         jSpinner2.setVisible(false);
         jComboBox3.setVisible(false);
+
+        simpleRelationsModel = new DefaultListModel();
+        jList1.setModel(simpleRelationsModel);
+
+        complexRelationsModel = new DefaultListModel();
+        jList2.setModel(complexRelationsModel);
 
         jLabel1.setText("Algorithm Input");
 
@@ -155,6 +174,13 @@ public class AlgorithmInputView extends JPanel {
 
         jLabel6.setText("List title");
 
+        jTextField1.setText("jTextField1");
+
+        jLabel7.setText("Error");
+        jLabel7.setVisible(false);
+
+        jLabel8.setText("Communities");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -196,22 +222,25 @@ public class AlgorithmInputView extends JPanel {
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addComponent(jLabel5)
-                                                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(jLabel7)
+                                                                        .addComponent(jButton3)
+                                                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(jComboBox2, 0, 204, Short.MAX_VALUE)
-                                                                        .addComponent(jTextField1))
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(320, 320, 320)
-                                                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                        .addGroup(layout.createSequentialGroup()
-                                                                                .addGap(370, 370, 370)
-                                                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                                .addContainerGap(347, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButton3)
-                                                .addGap(0, 0, Short.MAX_VALUE))))
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                                        .addComponent(jComboBox2, 0, 204, Short.MAX_VALUE)
+                                                                                        .addComponent(jTextField1))
+                                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                .addGap(320, 320, 320)
+                                                                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                        .addGroup(layout.createSequentialGroup()
+                                                                                                .addGap(370, 370, 370)
+                                                                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addContainerGap(347, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,8 +292,14 @@ public class AlgorithmInputView extends JPanel {
                                         .addComponent(jLabel6)
                                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(19, 19, 19)
                                 .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>
@@ -272,29 +307,29 @@ public class AlgorithmInputView extends JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         int i = jComboBox1.getSelectedIndex();
         String s;
-        if (i == 0) s = "song_title " + jTextField3.getText().trim();
-        else if (i == 1) s = "song_artist " + jTextField3.getText().trim();
-        else if (i == 2) s = "song_album " + jTextField3.getText().trim();
-        else if (i == 3) s = "song_year " + jSpinner2.getValue().toString();
-        else if (i == 4) s = "song_genre " + jComboBox3.getSelectedIndex();
-        else if (i == 5) s = "song_subgenre " + jComboBox3.getSelectedIndex();
-        else if (i == 6) s = "song_duration " + jSpinner2.getValue().toString();
-        else if (i == 7) s = "user_name " + jTextField3.getText().trim();
-        else if (i == 8) s = "user_age " + jSpinner2.getValue().toString();
+        if (i == 0) s = "song_title|" + jTextField3.getText().trim();
+        else if (i == 1) s = "song_artist|" + jTextField3.getText().trim();
+        else if (i == 2) s = "song_album|" + jTextField3.getText().trim();
+        else if (i == 3) s = "song_year|" + jSpinner2.getValue().toString();
+        else if (i == 4) s = "song_genre|" + jComboBox3.getSelectedIndex();
+        else if (i == 5) s = "song_subgenre|" + jComboBox3.getSelectedIndex();
+        else if (i == 6) s = "song_duration|" + jSpinner2.getValue().toString();
+        else if (i == 7) s = "user_name|" + jTextField3.getText().trim();
+        else if (i == 8) s = "user_age|" + jSpinner2.getValue().toString();
         else {
-            s = "user_gender ";
+            s = "user_gender|";
             if (jComboBox3.getSelectedIndex() == 0) s += "FEMALE";
             else if (jComboBox3.getSelectedIndex() == 1) s += "MALE";
             else s += "OTHER";
         }
         simpleRelations.add(s);
-        // TODO update list1
+        updateSimpleRelationListModel();
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         String s = jTextField2.getText().trim();
         complexRelations.add(s);
-        // TODO update list2
+        updateComplexRelationListModel();
     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,7 +341,20 @@ public class AlgorithmInputView extends JPanel {
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-
+        algorithmPController.initGraph();
+        String[] simpRel = new String[simpleRelations.size()];
+        simpRel = simpleRelations.toArray(simpRel);
+        for (String s : complexRelations) {
+            try {
+                algorithmPController.addRelation(simpRel,s,simpleRelations.size());
+            } catch (PropException e) {
+            }
+        }
+        try {
+            algorithmPController.execute(jTextField1.getText().trim(), jComboBox2.getSelectedIndex(), (Integer) jSpinner3.getValue(),listPController.getListController(), algorithmPController.getRelationController());
+            algorithmTabView.setOutputPanel(jTextField1.getText().trim());
+        } catch (PropException e) {
+        }
     }
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -338,6 +386,22 @@ public class AlgorithmInputView extends JPanel {
     }
 
 
+    public void updateSimpleRelationListModel() {
+        simpleRelationsModel.clear();
+        int i;
+        for (i = 0; i < simpleRelations.size(); ++i) {
+            simpleRelationsModel.addElement("(" + i + ")" + " " + simpleRelations.get(i));
+        }
+    }
+
+    public void updateComplexRelationListModel() {
+        complexRelationsModel.clear();
+        int i;
+        for (i = 0; i < complexRelations.size(); ++i) {
+            complexRelationsModel.addElement(complexRelations.get(i));
+        }
+    }
+
     // Variables declaration - do not modify
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -367,5 +431,8 @@ public class AlgorithmInputView extends JPanel {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JSpinner jSpinner3;
     // End of variables declaration
 }
