@@ -111,6 +111,11 @@ public class User implements Comparable<User> {
         return playbackRegister.add(play);
     }
 
+    /**
+     * Removes the playback from the user's playback register
+     * @param play Playback to be removed
+     * @return true if found and removed, false otherwise
+     */
     public boolean remove(Playback play) {
         return playbackRegister.remove(play);
     }
@@ -185,7 +190,7 @@ public class User implements Comparable<User> {
         }
         return ret.toString();
     }
-    
+
     /*
     public static User valueOf(String origin, ListController listController, SongController songController)
             throws Exception {

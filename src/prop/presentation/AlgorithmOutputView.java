@@ -32,6 +32,7 @@ public class AlgorithmOutputView extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         initComponents();
         updateListModel(title);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -53,7 +54,7 @@ public class AlgorithmOutputView extends JPanel {
         textPanel.setEditable(false);
         textPanel.setLineWrap(true);
         textPanel.setWrapStyleWord(true);
-        textPanel.setText("aqui ve el log");
+        textPanel.setText(algorithmPController.getLog());
 
         rightScrollPanel = new JScrollPane();
         rightScrollPanel.setViewportView(graphPanel);

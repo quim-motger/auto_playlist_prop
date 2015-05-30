@@ -25,6 +25,15 @@ public class AlgorithmPController {
         return relationController;
     }
 
+    public String getLog() {
+        StringBuilder sb = new StringBuilder();
+        for (String s : log) {
+            sb.append(s);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     public AlgorithmPController(SongController sc, UserController uc) {
         algorithmController = new AlgorithmController();
         relationController = new RelationController();
@@ -37,9 +46,7 @@ public class AlgorithmPController {
         return communities;
     }
 
-    /** Gets the String communities from the algorithmController and converts each one to graph
-     *
-      */
+    /** Gets the String communities from the algorithmController and converts each one to graph */
     private void createCommunities() {
         String[] cs = algorithmController.getCommunities();
         for (String s : cs) {
