@@ -55,9 +55,9 @@ public class ListSet {
 
     /**
      * Gets the songIndex id of the songIndex in the position {@code songIndex} of the listIndex in the position {@code listIndex}
-     * @param listIndex      the position of the listIndex
-     * @param songIndex      the position of the songIndex
-     * @return          the songIndex id
+     * @param listIndex     the position of the listIndex
+     * @param songIndex     the position of the songIndex
+     * @return              the songIndex id
      */
     public String[] getSongId(int listIndex, int songIndex) {
         Song s = lists.getList().get(listIndex).obtainSong(songIndex);

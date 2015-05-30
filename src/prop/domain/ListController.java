@@ -199,12 +199,11 @@ public class ListController {
         return listSet.getList(name);
     }
 
-    public ArrayList<String> findLists(String prefix) {
+    public String[] findLists(String prefix) {
         ArrayList<List> l = listSet.findLists(prefix);
-        ArrayList<String> result = new ArrayList<String>();
-        for (List list : l) {
-            result.add(list.obtainTitle());
-        }
+        String result[] = new String[l.size()];
+        for (int i = 0; i < l.size(); ++i)
+            result[i] = l.get(i).obtainTitle();
         return result;
     }
 
@@ -231,14 +230,13 @@ public class ListController {
      * @param title    the identification of the list
      * @return      a string representing the list
      */
-    public ArrayList<String> getListStringArray(String title) {
-        ArrayList<String> result = new ArrayList<String>();
+    public String[] getListStringArray(String title) {
         List list = listSet.getList(title);
         ArrayList<Song> songs = list.obtainSongs();
-        result.add(list.obtainTitle());
-        for (Song s : songs) {
-            result.add(s.getTitle() + " | " + s.getArtist());
-        }
+        String result[] = new String[songs.size()+1];
+        result[0] = list.obtainTitle();
+        for (int i = 0; i < songs.size(); ++i)
+            result[i+1] = songs.get(i).getTitle() + " | " + songs.get(i).getArtist();
         return result;
     }
 
@@ -266,11 +264,11 @@ public class ListController {
      * Get all the list in array of strings format.
      * @return  an array of strings with the lists titles and their identifiers
      */
-    public ArrayList<String> getListSetStringArray() {
-        ArrayList<String> result = new ArrayList<String>();
+    public String[] getListSetStringArray() {
         ArrayList<List> lists = listSet.getLists();
-        for (List list : lists)
-            result.add(list.obtainTitle());
+        String result[] = new String[lists.size()];
+        for (int i = 0; i < lists.size(); ++i)
+            result[i] = lists.get(i).obtainTitle();
         return result;
     }
 

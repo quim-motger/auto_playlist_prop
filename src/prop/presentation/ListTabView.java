@@ -217,9 +217,15 @@ public class ListTabView extends TabView {
         setRightPanel(addRandomList);
     }
 
+    private void editButtonActionPerformed(ActionEvent evt) {
+        if (!listSet.isSelectionEmpty()) {
+            setRightPanel(new EditList());
+        }
+    }
+
     private void updateListSetModel() {
         listSetModel.clear();
-        ArrayList<String> lists;
+        String lists[];
         String prefix = searchField.getText();
         if (prefix.equals(""))
             lists = listPController.getListSetStringArray();
@@ -227,12 +233,6 @@ public class ListTabView extends TabView {
             lists = listPController.findLists(prefix);
         for (String s : lists) {
             listSetModel.addElement(s);
-        }
-    }
-
-    private void editButtonActionPerformed(ActionEvent evt) {
-        if (!listSet.isSelectionEmpty()) {
-            setRightPanel(new EditList());
         }
     }
 
@@ -302,7 +302,7 @@ public class ListTabView extends TabView {
                                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                             .addGroup(layout.createSequentialGroup()
                                                                     .addComponent(jLabel3)
-                                                                    .addGap(0, 200, Short.MAX_VALUE))
+                                                                    .addGap(0, 100, Short.MAX_VALUE))
                                                             .addComponent(jTextField1))))
                                     .addContainerGap())
             );
@@ -328,6 +328,8 @@ public class ListTabView extends TabView {
         protected void addButtonActionPerformed(ActionEvent evt) {
             String title = jTextField1.getText();
             try {
+                if (title.equals(""))
+                    throw new PropException(ErrorString.MISSING_TITLE);
                 listPController.addList(title);
                 jTextField1.setText("");
                 updateListSetModel();
@@ -391,6 +393,8 @@ public class ListTabView extends TabView {
             int index = listSet.getSelectedIndex();
             String newTitle = jTextField1.getText();
             try {
+                if (newTitle.equals(""))
+                    throw new PropException(ErrorString.MISSING_TITLE);
                 if (title.equals(newTitle))
                     throw new PropException(ErrorString.EDIT_LIST_SAME_TITLE);
                 listPController.setListTitle(title, newTitle);
@@ -561,10 +565,10 @@ public class ListTabView extends TabView {
 
         public void updateListModel() {
             listModel.clear();
-            ArrayList<String> list = listPController.getListStringArray(id);
-            jLabel1.setText(list.get(0));
-            for (int i = 1; i < list.size(); ++i) {
-                listModel.addElement(list.get(i));
+            String list[] = listPController.getListStringArray(id);
+            jLabel1.setText(list[0]);
+            for (int i = 1; i < list.length; ++i) {
+                listModel.addElement(list[i]);
             }
         }
 
@@ -826,7 +830,7 @@ public class ListTabView extends TabView {
                                                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                             .addComponent(jLabel3)
                                                                             .addComponent(jSpinner1, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE))
-                                                                    .addGap(0, 252, Short.MAX_VALUE)))))
+                                                                    .addGap(0, 100, Short.MAX_VALUE)))))
                                     .addContainerGap())
             );
             layout.setVerticalGroup(
@@ -856,6 +860,8 @@ public class ListTabView extends TabView {
             String title = jTextField1.getText();
             int n = (int)jSpinner1.getValue();
             try {
+                if (title.equals(""))
+                    throw new PropException(ErrorString.MISSING_TITLE);
                 listPController.createRandomList(title, n);
                 jTextField1.setText("");
                 updateListSetModel();
