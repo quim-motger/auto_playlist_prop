@@ -34,6 +34,7 @@ public class AlgorithmOutputView extends JPanel {
         updateListModel(title);
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
         leftListView = new JScrollPane();
         leftList = new JList();
@@ -44,7 +45,9 @@ public class AlgorithmOutputView extends JPanel {
         leftListView.setViewportView(leftList);
         leftListView.setPreferredSize(new Dimension(195, 200));
 
+        // TODO: initialize graphPanel with required arguments
         graphPanel = new GraphPanel();
+
         textPanel = new JTextArea();
         textPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         textPanel.setEditable(false);
@@ -108,7 +111,7 @@ public class AlgorithmOutputView extends JPanel {
                                         .addComponent(leftListView, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                                         .addComponent(rightScrollPanel)))
         );
-    }
+    }// </editor-fold>
 
     private void switchButtonActionPerformed(ActionEvent evt) {
         if (isGraphVisible) {
@@ -131,7 +134,9 @@ public class AlgorithmOutputView extends JPanel {
         listModel.clear();
         /*String list[] = listPController.getListStringArray(title);
         listTitle.setText(list[0]);*/
+        // Only for testing purposes - delete when finish and uncomment above ****************
         String list[] = {"title","aaa","bbb","ccc","ddd"};
+        // ***********************************************************************************
         for (int i = 1; i < list.length; ++i) {
             listModel.addElement(list[i]);
         }
