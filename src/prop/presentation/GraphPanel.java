@@ -36,17 +36,20 @@ public class GraphPanel extends JPanel{
         private AggregateLayout<String,Double> clusteringLayout;
         private Class subLayoutType = CircleLayout.class;
         private Dimension subLayoutSize;
+    ScalingControl scaler2 = new CrossoverScalingControl();
         public GraphPanel() {
             graph = new UndirectedSparseGraph<String, Double>();
             createVertices(numberOfVertices);
             createEdges();
-            clusteringLayout = new AggregateLayout<String,Double>(new FRLayout<String,Double>(graph));
+            clusteringLayout = new AggregateLayout<String,Double>(new KKLayout<String, Double>(graph));
             subLayoutSize = new Dimension(100,100);
-            Dimension visualizationModelSize = new Dimension(600,600);
+            Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
+
             final VisualizationModel<String,Double> visualizationModel =
                     new DefaultVisualizationModel<String,Double>(clusteringLayout, visualizationModelSize);
             vv =  new VisualizationViewer<String,Double>(visualizationModel, preferredSize);
+
 
           /*  //possible layouts: ISOMLayout, KKLayout, FRLayout
             Layout<String, Double> layout = new CircleLayout<>(graph);
@@ -60,9 +63,7 @@ public class GraphPanel extends JPanel{
                 transparency.put(v, new Double(0.9));
             }
 */
-            //vv =  new VisualizationViewer<String, Double>(layout);
             vv.setBackground(Color.white);
-            //vv.setPreferredSize(new Dimension(800, 600));
 
             Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
                 public Paint transform(String i) {
@@ -89,6 +90,7 @@ public class GraphPanel extends JPanel{
             vv.getRenderContext().setEdgeStrokeTransformer(new Transformer<Double, Stroke>() {
                 protected final Stroke THIN = new BasicStroke(1);
                 protected final Stroke THICK = new BasicStroke(4);
+
                 public Stroke transform(Double e) {
                     if (e == 10.5)
                         return THIN;
@@ -172,8 +174,6 @@ public class GraphPanel extends JPanel{
             controls.add(uncluster);
             controls.add(cluster);
             add(controls, BorderLayout.SOUTH);
-
-
 
 
         }
@@ -263,5 +263,19 @@ public class GraphPanel extends JPanel{
                 vv.setGraphLayout(clusteringLayout);
             }
         }
+
+
+
+    public void zoomIn() {
+        setZoom(1);
+    }
+
+    public void zoomOut() {
+        setZoom(-1);
+    }
+
+    private void setZoom(int amount) {
+        scaler2.scale(vv, amount > 0 ? 1.1f : 1 / 1.1f, vv.getCenter());
+    }
 
 }

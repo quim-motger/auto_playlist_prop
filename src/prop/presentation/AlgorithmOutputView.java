@@ -53,7 +53,7 @@ public class AlgorithmOutputView extends JPanel {
         textPanel.setEditable(false);
         textPanel.setLineWrap(true);
         textPanel.setWrapStyleWord(true);
-        textPanel.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vel sollicitudin sem, quis lobortis urna. Vivamus massa massa, ultricies vitae diam fermentum, bibendum vestibulum nisi. Aliquam sodales risus quis commodo hendrerit. Nulla pulvinar ligula non viverra fermentum. Ut viverra ac mauris at iaculis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in interdum urna. Nam facilisis finibus justo, eget congue dolor consectetur at. Nunc sed laoreet nisl.");
+        textPanel.setText("aqui ve el log");
 
         rightScrollPanel = new JScrollPane();
         rightScrollPanel.setViewportView(graphPanel);
