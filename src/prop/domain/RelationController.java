@@ -40,6 +40,7 @@ public class RelationController {
      * @return graph with all relations
      */
     public Graph getGraph() {
+        playbackRelations(userController);
         return graph;
     }
 

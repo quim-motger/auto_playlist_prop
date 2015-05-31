@@ -267,7 +267,7 @@ public class UserController {
             u.setBirthdate(getCalendarFromLong(Long.valueOf(attributes[3])));
             int nPlaybacks = Integer.valueOf(attributes[4]);
             for (int i = 0; i < nPlaybacks; i += 9) {
-                u.add(playbackValueOf(attributes, 4 + i, sc));
+                u.add(playbackValueOf(attributes, 5 + i, sc));
             }
             int index = 5 + nPlaybacks * 9;
             int nLists = Integer.valueOf(attributes[index]);

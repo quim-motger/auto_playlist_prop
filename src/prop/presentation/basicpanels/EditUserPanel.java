@@ -88,7 +88,7 @@ public class EditUserPanel extends UserPanel {
             }
         });
         
-        playEdit = new JButton("Show playbacks");
+        playEdit = new JButton("Played Songs");
         playEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

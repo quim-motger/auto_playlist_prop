@@ -7,6 +7,7 @@ import prop.presentation.UserTabView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -42,7 +43,7 @@ public class PlaySongPanel extends PropPanel {
         name = userName;
         setTitleText("Play song for "+name);
         
-        create = new JButton("Create");
+        create = new JButton("Play");
         create.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -132,6 +133,11 @@ public class PlaySongPanel extends PropPanel {
         dateLabel.setText("Day:");
 
         dateSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
+
+        SimpleDateFormat format = ((JSpinner.DateEditor) dateSpinner.getEditor()).getFormat();
+        format.applyPattern("yyyy-MM-dd HH:mm:ss");
+
+        
         
         GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
