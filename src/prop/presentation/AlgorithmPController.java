@@ -91,7 +91,7 @@ public class AlgorithmPController {
        relationController.initGraph(songController, userController);
     }
 
-    public void execute(String title, int algorithm, int k, ListController lc, RelationController rc) throws PropException {
+    public void execute(String title, int algorithm, int k, ListController lc, RelationController rc) throws Exception {
         log = algorithmController.execute(title, algorithm, k, lc, rc);
     }
 }

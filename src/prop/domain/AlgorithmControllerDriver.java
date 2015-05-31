@@ -1,7 +1,6 @@
 package prop.domain;
 
 import prop.ErrorString;
-import prop.PropException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -46,7 +45,7 @@ public class AlgorithmControllerDriver {
                         log = ac.execute(title, algorithm, k, listController, relationController);
                         System.out.println(log.get(log.size() - 1));
                     }
-                    catch (PropException|NullPointerException e) {
+                    catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;

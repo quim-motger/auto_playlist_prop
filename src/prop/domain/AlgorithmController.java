@@ -1,6 +1,5 @@
 package prop.domain;
 
-import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import prop.ErrorString;
 import prop.PropException;
 
@@ -38,7 +37,7 @@ public class AlgorithmController {
      * @param relationController    an instance of the Relation Controller
      * @return                      a log of the algorithm execution
      */
-    public ArrayList<String> execute(String title, int algorithm, int k, ListController listController, RelationController relationController) throws PropException {
+    public ArrayList<String> execute(String title, int algorithm, int k, ListController listController, RelationController relationController) throws Exception {
         log = new ArrayList<String>();
         originalGraph = createInputGraph(algorithm,relationController);
         log.add("Input graph:\n" + writeGraph(originalGraph));
@@ -64,6 +63,9 @@ public class AlgorithmController {
         Graph<Song> selectedCommunity = ao.densestGraph();
         // ...and generate a new list with the songs in the community
         List list = new List(title);
+        if(selectedCommunity==null) {
+            throw new PropException(ErrorString.ALGORITHM_COULD_NOT_BE_EXECUTED);
+        }
         for (Song s : selectedCommunity.getOriginalVertices()) {
             list.addSong(s);
         }

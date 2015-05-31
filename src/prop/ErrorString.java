@@ -40,4 +40,6 @@ public class ErrorString {
     public static final String NAME_INCORRECT_FORMAT = "Incorrect name, spaces are not accepted for a name";
     public static final String EDIT_LIST_SAME_TITLE = "The new title must be different from the old one";
     public static final String ILLEGAL_CHARACTER = "'|' is not a legal character";
+    public static final String NO_ITEM_SELECTED = "No item selected";
+    public static final String ALGORITHM_COULD_NOT_BE_EXECUTED = "There's no song to apply algorithm";
 }

@@ -211,7 +211,7 @@ public class UserTabView extends TabView {
     }
 
     public void editAssociatedLists(String name) {
-        setRightPanel(new AddNewAssociatedList(name,mController,this));
+        setRightPanel(new AssociateListToUserPanel(name,mController,this));
     }
 
     public void showList(String list) {

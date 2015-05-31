@@ -46,7 +46,7 @@ public class ShowAssociatedLists extends PropPanel {
         });
         addButton(back);
         
-        JButton associate = new JButton("Add more Lists");
+        JButton associate = new JButton("Edit");
         associate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -74,7 +74,7 @@ public class ShowAssociatedLists extends PropPanel {
                 dissasociateList(list);
             }
         });
-        addButton(dissasociate);
+        //addButton(dissasociate);
         dissasociate.setVisible(false);
         
         listOfLists.addListSelectionListener(new ListSelectionListener() {

@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.management.ManagementFactory;
-import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 
 public class AlgorithmInputView extends JPanel {
@@ -382,16 +380,8 @@ public class AlgorithmInputView extends JPanel {
 
     private void execute(java.awt.event.ActionEvent evt) {
         if (listTitleField.getText().length() < 1) {
-            errorLabel.setText("List title cannot be empty");
-            errorLabel.setVisible(true);
-            ActionListener listener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    errorLabel.setVisible(false);
-                }
-            };
-            Timer timer = new Timer(3000, listener);
-            timer.start();
+            throwError("List title cannot be empty");
+            return;
         }
         else {
             algorithmPController.initGraph();
@@ -405,22 +395,13 @@ public class AlgorithmInputView extends JPanel {
                 }
             }
         }
-        try {
-            double start = getCpuTime();
-            algorithmPController.execute(listTitleField.getText().trim(), algorithmComboBox.getSelectedIndex(), (Integer) numberOfCommunities.getValue(), listPController.getListController(), algorithmPController.getRelationController());
-            double time = (getCpuTime() - start) / 1e9;
-            System.out.println("Execution time: " + time + " s");
-            algorithmTabView.setOutputPanel(listTitleField.getText().trim());
-        } catch (PropException e) {
-            throwError(e.getMessage());
-        }
+        String title = listTitleField.getText().trim();
+        int algorithmIndex = algorithmComboBox.getSelectedIndex();
+        Integer nCommunities = (Integer) numberOfCommunities.getValue();
+        algorithmTabView.execute(title, algorithmIndex,nCommunities);
     }
 
-    private double getCpuTime( ) {
-        ThreadMXBean bean = ManagementFactory.getThreadMXBean();
-        return bean.isCurrentThreadCpuTimeSupported( ) ?
-                bean.getCurrentThreadCpuTime( ) : 0L;
-    }
+    
 
     private void jComboBox1ActionPerformed(ActionEvent evt) {
         if (jComboBox1.getSelectedIndex() == 0 ||
