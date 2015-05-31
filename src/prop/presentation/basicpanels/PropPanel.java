@@ -116,4 +116,13 @@ public abstract class PropPanel extends JPanel {
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.X_AXIS));
     }
+
+
+    protected boolean isStringValid(String parameter, String s) {
+        if(s==null || s.equals("")) {
+            throwError(parameter+ " is empty");
+            return false;
+        }
+        return true;
+    }
 }

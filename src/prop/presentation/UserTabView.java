@@ -217,4 +217,13 @@ public class UserTabView extends TabView {
     public void showList(String list) {
         mView.showList(list);
     }
+    
+    public void showPlays(String username) {
+        setRightPanel(new ShowPlayedSongs(this,username,mController));
+        
+    }
+
+    public void showAddPlayback(String name) {
+        setRightPanel(new PlaySongPanel(name,mController,this));
+    }
 }

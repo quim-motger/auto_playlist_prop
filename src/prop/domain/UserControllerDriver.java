@@ -84,7 +84,7 @@ public class UserControllerDriver {
                     break;
                 case 9:
                     try {
-                        userController.playSong(in.next(), in.next(), in.next(), songController);
+                        userController.playSong(in.next(), in.next(), in.next(),in.next(), songController);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }

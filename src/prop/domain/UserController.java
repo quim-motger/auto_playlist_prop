@@ -221,10 +221,12 @@ public class UserController {
      * @param songController Main SongController
      * @see prop.domain.SongController                       
      */
-    public void playSong(String title, String artist, String userName, SongController songController) throws PropException {
+    public void playSong(String title, String artist, String userName, String date, SongController songController) throws PropException, ParseException {
         User user = userSet.getUserByName(userName);
         Song song = songController.getSong(title,artist);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
         Calendar time = Calendar.getInstance();
+        time.setTime(format.parse(date));
         Playback playback = new Playback(song,time);
         user.add(playback);
     }
