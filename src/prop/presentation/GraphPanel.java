@@ -29,29 +29,28 @@ import java.util.*;
 
 public class GraphPanel extends JPanel{
         //the visual component and renderer for the graph
-        private VisualizationViewer<String, Double> vv;
+        private VisualizationViewer<String, JungEdge> vv;
 
-        private AggregateLayout<String,Double> clusteringLayout;
+        private AggregateLayout<String,JungEdge> clusteringLayout;
         private Class subLayoutType = CircleLayout.class;
         private Dimension subLayoutSize;
 
         ScalingControl scaler2 = new CrossoverScalingControl(); //not necessary at this moment
 
-        public GraphPanel(final UndirectedSparseGraph<String,Double> originalGraph, ArrayList<UndirectedSparseGraph<String,Double>> communities) {
-            System.err.println(originalGraph.getVertexCount());
-            clusteringLayout = new AggregateLayout<String,Double>(new KKLayout<String, Double>(originalGraph));
+        public GraphPanel(final UndirectedSparseGraph<String,JungEdge> originalGraph, ArrayList<UndirectedSparseGraph<String,JungEdge>> communities) {
+            clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<String, JungEdge>(originalGraph));
             // circle layout i fr no es modifiquen al fer uncluster
             subLayoutSize = new Dimension(100,100);
             Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
 
-            final VisualizationModel<String,Double> visualizationModel =
-                    new DefaultVisualizationModel<String,Double>(clusteringLayout, visualizationModelSize);
-            vv =  new VisualizationViewer<String,Double>(visualizationModel, preferredSize);
+            final VisualizationModel<String,JungEdge> visualizationModel =
+                    new DefaultVisualizationModel<String,JungEdge>(clusteringLayout, visualizationModelSize);
+            vv =  new VisualizationViewer<String,JungEdge>(visualizationModel, preferredSize);
 
 
           /*  //possible layouts: ISOMLayout, KKLayout, FRLayout
-            Layout<String, Double> layout = new CircleLayout<>(graph);
+            Layout<String, JungEdge> layout = new CircleLayout<>(graph);
             // layout size should scale with number of vertices
             layout.setSize(new Dimension(1000,1000));
             */
@@ -59,7 +58,7 @@ public class GraphPanel extends JPanel{
                 layout.lock("V" + i, true);
             }*/
            /* for(String v : graph.getVertices()) {
-                transparency.put(v, new Double(0.9));
+                transparency.put(v, new JungEdge(0.9));
             }
 */
             vv.setBackground(Color.white);
@@ -79,22 +78,22 @@ public class GraphPanel extends JPanel{
                 }
             };
 
-            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<Double, Paint>() {
-                public Paint transform(Double e) {
-                    if (e == 10.5) return Color.RED;
+            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
+                public Paint transform(JungEdge e) {
+                    if (e.getWeight() == 10.5) return Color.RED;
                     return Color.blue;
                 }
             });
 
-            vv.getRenderContext().setEdgeStrokeTransformer(new Transformer<Double, Stroke>() {
+            vv.getRenderContext().setEdgeStrokeTransformer(new Transformer<JungEdge, Stroke>() {
                 protected final Stroke THIN = new BasicStroke(1);
                 protected final Stroke THICK = new BasicStroke(4);
 
-                public Stroke transform(Double e) {
-                    if (e == 10.5)
+                public Stroke transform(JungEdge e) {
+                    //if (e.getWeight() == 10.5)
                         return THIN;
-                    else
-                        return THICK;
+                    //else
+                    //    return THICK;
                 }
             });
 
@@ -104,8 +103,8 @@ public class GraphPanel extends JPanel{
 
             // add my listeners for ToolTips
             vv.setVertexToolTipTransformer(new ToStringLabeller<String>());
-            vv.setEdgeToolTipTransformer(new Transformer<Double, String>() {
-                public String transform(Double edge) {
+            vv.setEdgeToolTipTransformer(new Transformer<JungEdge, String>() {
+                public String transform(JungEdge edge) {
                     return "E" + originalGraph.getEndpoints(edge).toString();
                 }
             });
@@ -122,7 +121,7 @@ public class GraphPanel extends JPanel{
             add(panel);
 
             /** MOUSE **/
-            final AbstractModalGraphMouse graphMouse = new DefaultModalGraphMouse<String,Double>();
+            final AbstractModalGraphMouse graphMouse = new DefaultModalGraphMouse<String,JungEdge>();
             vv.setGraphMouse(graphMouse);
             vv.addKeyListener(graphMouse.getModeKeyListener());
 
@@ -184,7 +183,7 @@ public class GraphPanel extends JPanel{
         }
 
         // aqui, per cada vertex de comunitat en comptes de picked
-        private void cluster(UndirectedSparseGraph<String,Double> graph, boolean state) {
+        private void cluster(UndirectedSparseGraph<String,JungEdge> graph, boolean state) {
             if(state) {
                 // put the picked vertices into a new sublayout
                 Collection<String> picked = new HashSet<String>();
@@ -204,14 +203,14 @@ public class GraphPanel extends JPanel{
                 y /= picked.size();
                 center.setLocation(x,y);
 
-                //UndirectedSparseGraph<String, Double> subGraph = new UndirectedSparseGraph<>();
-                Graph<String, Double> subGraph;
+                //UndirectedSparseGraph<String, JungEdge> subGraph = new UndirectedSparseGraph<>();
+                Graph<String, JungEdge> subGraph;
                     try {
                         subGraph = graph.getClass().newInstance();
                         for(String vertex : picked) {
                             subGraph.addVertex(vertex);
-                            Collection<Double> incidentEdges = graph.getIncidentEdges(vertex);
-                            for(Double edge : incidentEdges) {
+                            Collection<JungEdge> incidentEdges = graph.getIncidentEdges(vertex);
+                            for(JungEdge edge : incidentEdges) {
                                 Pair<String> endpoints = graph.getEndpoints(edge);
                                 if(picked.containsAll(endpoints)) {
                                     // put this edge into the subgraph
@@ -220,7 +219,7 @@ public class GraphPanel extends JPanel{
                             }
                         }
 
-                        Layout<String,Double> subLayout = getLayoutFor(subLayoutType, subGraph);
+                        Layout<String,JungEdge> subLayout = getLayoutFor(subLayoutType, subGraph);
                         subLayout.setInitializer(vv.getGraphLayout());
                         subLayout.setSize(subLayoutSize);
                         clusteringLayout.put(subLayout,center);

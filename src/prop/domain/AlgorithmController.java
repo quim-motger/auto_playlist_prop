@@ -73,6 +73,7 @@ public class AlgorithmController {
         communities = ao.getCommunities();
         communities.remove(selectedCommunity);
         communities.add(selectedCommunity); // move selected community to the end
+        System.err.println("Communities: " + communities.size());
 
         log.addAll(ao.getLog());
         log.add("List created:\n" + list.obtainTitle() + "\n");
@@ -184,28 +185,19 @@ public class AlgorithmController {
         System.err.println("graphSongToString" + gr.numberOfVertices());
         StringBuilder sb = new StringBuilder();
         int i;
-        for (i = 0; i < gr.numberOfVertices()-1; ++i) {
+        for (i = 0; i < gr.numberOfVertices(); ++i) {
+            sb.append(gr.getVertexT(i).getTitle() + "-" + gr.getVertexT(i).getArtist());
+            sb.append(delimiter);
+            sb.append(gr.adjacentVertices(i).size());
+            sb.append(delimiter);
             for (Integer j : gr.adjacentVertices(i)) {
-                sb.append(gr.getVertexT(i).getTitle());
-                sb.append(" (" + gr.getVertexT(i).getArtist() + ")");
+                sb.append(gr.getVertexT(j).getTitle() + "-" + gr.getVertexT(j).getArtist());
                 sb.append(delimiter);
-                sb.append(gr.getVertexT(j).getTitle());
-                sb.append(" (" + gr.getVertexT(j).getArtist() + ")");
-                sb.append(delimiter);
-                sb.append(gr.weight(i,j));
+                sb.append(gr.weight(j, i));
                 sb.append(delimiter);
             }
         }
-        for (Integer j : gr.adjacentVertices(i)) {
-            sb.append(gr.getVertexT(i).getTitle());
-            sb.append(" (" + gr.getVertexT(i).getArtist() + ")");
-            sb.append(delimiter);
-            sb.append(gr.getVertexT(j).getTitle());
-            sb.append(" (" + gr.getVertexT(j).getArtist() + ")");
-            sb.append(delimiter);
-            sb.append(gr.weight(i,j));
-        }
-        System.err.println(sb.toString());
+        System.err.println(sb.toString()+ " fi");
         return sb.toString();
     }
 }

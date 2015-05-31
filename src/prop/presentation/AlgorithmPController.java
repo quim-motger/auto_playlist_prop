@@ -15,7 +15,7 @@ public class AlgorithmPController {
     private UserController userController;
 
     private ArrayList<String> log;
-    static final String delimiter = "\n";
+    private static final String delimiter = "\n";
 
 
     public AlgorithmPController(SongController sc, UserController uc) {
@@ -44,17 +44,16 @@ public class AlgorithmPController {
     }
 
 
-    public UndirectedSparseGraph<String,Double> getOriginalGraph() {
-        String s = algorithmController.getOriginalGraph();
-        System.err.println(s);
+    public UndirectedSparseGraph<String, JungEdge> getOriginalGraph() {
+       String s = algorithmController.getOriginalGraph();
        return createGraph(s);
     }
 
     /* OTHER METHODS */
 
     /** Gets the String communities from the algorithmController and converts each one to graph */
-    public ArrayList<UndirectedSparseGraph<String,Double>> getCommunities() {
-        ArrayList<UndirectedSparseGraph<String,Double>> communities = new ArrayList<>();
+    public ArrayList<UndirectedSparseGraph<String, JungEdge>> getCommunities() {
+        ArrayList<UndirectedSparseGraph<String, JungEdge>> communities = new ArrayList<>();
         String[] cs = algorithmController.getCommunities();
         for (String s : cs) {
             communities.add(createGraph(s));
@@ -67,13 +66,20 @@ public class AlgorithmPController {
      * @param graph
      * @return
      */
-    private UndirectedSparseGraph<String,Double> createGraph(String graph) {
-        UndirectedSparseGraph<String,Double> gr = new UndirectedSparseGraph<>();
+    private UndirectedSparseGraph<String, JungEdge> createGraph(String graph) {
+        UndirectedSparseGraph<String, JungEdge> gr = new UndirectedSparseGraph<>();
         String[] vertices = graph.split(Pattern.quote(delimiter));
-        for (int i = 0; i < vertices.length-2; i += 3) {
+        System.err.println("vertices length " + vertices.length);
+        for (int i = 0; i < vertices.length-1;) {
             gr.addVertex(vertices[i]);
-            gr.addVertex(vertices[i+1]);
-            gr.addEdge(Double.parseDouble(vertices[i+2]),vertices[i],vertices[i+1]);
+            int degree = Integer.parseInt(vertices[i+1]);
+            int j = i+2;
+            for (; j < j+degree*2; j+=2) {
+                if (j >= vertices.length-1) break;
+                gr.addVertex(vertices[j]);
+                gr.addEdge(new JungEdge(Double.parseDouble(vertices[j+1])), vertices[i], vertices[j]);
+            }
+            i = j;
         }
         return gr;
     }
