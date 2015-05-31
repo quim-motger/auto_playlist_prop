@@ -47,8 +47,9 @@ public class AlgorithmTabView extends JPanel {
             algorithmPController.execute(title, algorithmIndex, nCom, listPController.getListController(), algorithmPController.getRelationController());
             double time = (getCpuTime() - start) / 1e9;
             System.out.println("Execution time: " + time + " s");
-            setOutputPanel(title+ "(Execution time: "+time+" s)");
-        } catch (Exception e) {
+            setOutputPanel(title);
+        }
+        catch (Exception e) {
             e.printStackTrace();
             setInputPanel();
             algorithmInputView.throwError(e.getMessage());
@@ -56,13 +57,14 @@ public class AlgorithmTabView extends JPanel {
     }
 
     private void setExecutingPanel() {
-            removeAll();
+        removeAll();
         add(new LoadingPanel("Executing Algorithm"));
     }
 
     private double getCpuTime( ) {
-        ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+        /*ThreadMXBean bean = ManagementFactory.getThreadMXBean();
         return bean.isCurrentThreadCpuTimeSupported( ) ?
-                bean.getCurrentThreadCpuTime( ) : 0L;
+                bean.getCurrentThreadCpuTime( ) : 0L;*/
+        return System.nanoTime();
     }
 }

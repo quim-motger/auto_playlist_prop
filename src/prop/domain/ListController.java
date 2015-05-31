@@ -71,6 +71,9 @@ public class ListController {
         listSet.remove(name);
     }
 
+    /**
+     * Remove all lists from the set.
+     */
     public void removeAll() {
         listSet = new ListSet();
     }
