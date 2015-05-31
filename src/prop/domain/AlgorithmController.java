@@ -71,9 +71,10 @@ public class AlgorithmController {
 
         // save all communities
         communities = ao.getCommunities();
+        System.err.println("Communities: " + communities.size());
+
         communities.remove(selectedCommunity);
         communities.add(selectedCommunity); // move selected community to the end
-        System.err.println("Communities: " + communities.size());
 
         log.addAll(ao.getLog());
         log.add("List created:\n" + list.obtainTitle() + "\n");
