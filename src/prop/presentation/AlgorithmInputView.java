@@ -6,6 +6,8 @@ import prop.domain.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 
 public class AlgorithmInputView extends JPanel {
@@ -352,10 +354,19 @@ public class AlgorithmInputView extends JPanel {
             }
         }
         try {
+            double start = getCpuTime();
             algorithmPController.execute(jTextField1.getText().trim(), jComboBox2.getSelectedIndex(), (Integer) jSpinner3.getValue(), listPController.getListController(), algorithmPController.getRelationController());
+            double time = (getCpuTime() - start) / 1e9;
+            System.out.println("Execution time: " + time + " s");
             algorithmTabView.setOutputPanel(jTextField1.getText().trim());
         } catch (PropException e) {
         }
+    }
+
+    private double getCpuTime( ) {
+        ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+        return bean.isCurrentThreadCpuTimeSupported( ) ?
+                bean.getCurrentThreadCpuTime( ) : 0L;
     }
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
