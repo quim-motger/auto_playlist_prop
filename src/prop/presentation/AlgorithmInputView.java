@@ -336,6 +336,7 @@ public class AlgorithmInputView extends JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO remove selected element of list1
+
     }
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {

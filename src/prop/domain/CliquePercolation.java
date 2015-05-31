@@ -165,7 +165,7 @@ public class CliquePercolation extends Algorithm {
         double meanWeight = 0;
         for (int j : l) {
             for (int k : l) {
-                if (j != k) {
+                if (j != k && graph.areAdjacent(j,k)) {
                     meanWeight += graph.weight(j,k);
                 }
             }
