@@ -15,7 +15,7 @@ public class AlgorithmPController {
     private UserController userController;
 
     private ArrayList<String> log;
-    private static final String delimiter = "\n";
+    private static final char delimiter ='\n';
 
 
     public AlgorithmPController(SongController sc, UserController uc) {
@@ -68,16 +68,15 @@ public class AlgorithmPController {
      */
     private UndirectedSparseGraph<String, JungEdge> createGraph(String graph) {
         UndirectedSparseGraph<String, JungEdge> gr = new UndirectedSparseGraph<>();
-        String[] vertices = graph.split(Pattern.quote(delimiter));
-        System.err.println("vertices length " + vertices.length);
-        for (int i = 0; i < vertices.length-1;) {
+        String[] vertices = graph.split(Pattern.quote(String.valueOf(delimiter)));
+        int i = 0;
+        for (; i < vertices.length-1;) {
             gr.addVertex(vertices[i]);
             int degree = Integer.parseInt(vertices[i+1]);
             int j = i+2;
-            for (; j < j+degree*2; j+=2) {
-                if (j >= vertices.length-1) break;
+            for (; j < i+2+degree*2; j+=2) {
                 gr.addVertex(vertices[j]);
-                gr.addEdge(new JungEdge(Double.parseDouble(vertices[j+1])), vertices[i], vertices[j]);
+                gr.addEdge(new JungEdge(Double.parseDouble(vertices[j+1])), vertices[j], vertices[i]);
             }
             i = j;
         }

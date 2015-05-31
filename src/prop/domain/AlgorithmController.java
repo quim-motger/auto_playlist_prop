@@ -19,7 +19,7 @@ import java.util.Locale;
 public class AlgorithmController {
 
     private ArrayList<String> log;
-    private static final String delimiter = "\n";
+    private static final char delimiter = '\n';
     ArrayList<Graph> communities;
     Graph originalGraph;
 
@@ -71,8 +71,6 @@ public class AlgorithmController {
 
         // save all communities
         communities = ao.getCommunities();
-        System.err.println("Communities: " + communities.size());
-
         communities.remove(selectedCommunity);
         communities.add(selectedCommunity); // move selected community to the end
 
@@ -178,12 +176,6 @@ public class AlgorithmController {
     }
 
     public static String graphSongToString(Graph<Song> gr) {
-        /*
-        El problema es que no afegeix els vertexs que no tenen arestes.
-        S'ha de refer.
-        Posar string de cada vertex [i], posar nombre d'ajacents [i+1], posar vertexs adjacents amb pes
-         */
-        System.err.println("graphSongToString" + gr.numberOfVertices());
         StringBuilder sb = new StringBuilder();
         int i;
         for (i = 0; i < gr.numberOfVertices(); ++i) {
@@ -198,7 +190,6 @@ public class AlgorithmController {
                 sb.append(delimiter);
             }
         }
-        System.err.println(sb.toString()+ " fi");
         return sb.toString();
     }
 }
