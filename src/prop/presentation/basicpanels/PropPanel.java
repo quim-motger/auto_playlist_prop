@@ -7,6 +7,8 @@ package prop.presentation.basicpanels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -22,6 +24,7 @@ public abstract class PropPanel extends JPanel {
     private JLabel titleField;
     private JLabel fileLabel;
     private JTextField path;
+    private Timer timer;
 
     /**
      * Creates new form FilePanel
@@ -94,6 +97,18 @@ public abstract class PropPanel extends JPanel {
         errorText.setText(error);
         errorText.setVisible(true);
         errorText.setForeground(Color.red);
+        ActionListener listener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                errorText.setVisible(false);
+            }
+        };
+        if(timer!=null)
+            timer.stop();
+        else {
+            timer = new Timer(3000, listener);
+        }
+        timer.start();
     }
     
     protected void showInfo(String info) {
@@ -115,5 +130,14 @@ public abstract class PropPanel extends JPanel {
     public void clearButtons() {
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.X_AXIS));
+    }
+
+
+    protected boolean isStringValid(String parameter, String s) {
+        if(s==null || s.equals("")) {
+            throwError(parameter+ " is empty");
+            return false;
+        }
+        return true;
     }
 }

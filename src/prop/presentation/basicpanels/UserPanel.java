@@ -44,31 +44,32 @@ public class UserPanel extends PropPanel {
         nameField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent documentEvent) {
-                checkSpaces();
+                checkIllegal();
             }
 
             @Override
             public void removeUpdate(DocumentEvent documentEvent) {
-                checkSpaces();
+                checkIllegal();
             }
 
             @Override
             public void changedUpdate(DocumentEvent documentEvent) {
-                checkSpaces();
+                checkIllegal();
             }
         });
     }
 
-    private void checkSpaces() {
-        if(nameField.getText().contains(" ")) {
-            throwError(ErrorString.NAME_SPACES);
+    public boolean checkIllegal() {
+        if(nameField.getText().contains("|")) {
+            throwError(ErrorString.ILLEGAL_CHARACTER);
+            return true;
         }
+        return false;
     }
 
     protected void updatePanel() {
         genderSelector.setModel(new DefaultComboBoxModel(controller.getGenres()));
         nameField.addActionListener(defaultActionListener);
-        genderSelector.addActionListener(defaultActionListener);
     }
     
     @Override

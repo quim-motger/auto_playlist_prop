@@ -11,7 +11,7 @@ import java.util.TreeSet;
  */
 public class User implements Comparable<User> {
     public static final String USER_STRING_ID = "USER_STRING_ID";
-    private static final String USER_DELIMITER = " ";
+    private static final String USER_DELIMITER = "|";
     private String name;
     private Gender gender;
     private Calendar birthdate;

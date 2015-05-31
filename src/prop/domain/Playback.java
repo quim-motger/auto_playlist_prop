@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class Playback implements Comparable<Playback>{
 
     public static final String PLAYBACK_STRING_ID = "PLAYBACK_STRING";
-    private static final String PLAYBACK_DELIMITER = " ";
+    private static final String PLAYBACK_DELIMITER = "|";
     private Song song;
     private Calendar date;
 

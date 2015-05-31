@@ -63,9 +63,11 @@ public class AddUserPanel  extends UserPanel {
             return;
         }
         if(name.contains(" ")){
-            throwError(ErrorString.NAME_SPACES);
+            throwError(ErrorString.NAME_INCORRECT_FORMAT);
             return;
         }
+        if(checkIllegal())
+            return;
         String gender = getGenderSelector();
         int day = getDaySpinner();
         int month = getMonthSpinner();

@@ -10,10 +10,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
@@ -261,7 +258,24 @@ public class ListTabView extends TabView {
             jLabel1 = new JLabel();
             jSeparator1 = new JSeparator();
             jLabel2 = new JLabel();
+
             jTextField1 = new JTextField();
+            jTextField1.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if (e.getKeyChar() == '|')
+                        e.consume();
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                }
+            });
+
             addButton = new JButton();
             jLabel3 = new JLabel();
 
@@ -779,7 +793,24 @@ public class ListTabView extends TabView {
             jLabel1 = new JLabel();
             jSeparator1 = new JSeparator();
             jLabel2 = new JLabel();
+
             jTextField1 = new JTextField();
+            jTextField1.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if (e.getKeyChar() == '|')
+                        e.consume();
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                }
+            });
+
             addButton = new JButton();
             jLabel3 = new JLabel();
             jSpinner1 = new JSpinner();
