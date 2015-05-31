@@ -176,6 +176,7 @@ public class AlgorithmController {
     }
 
     public static String graphSongToString(Graph<Song> gr) {
+        System.err.println("graphSongToString" + gr.numberOfVertices());
         StringBuilder sb = new StringBuilder();
         int i;
         for (i = 0; i < gr.numberOfVertices()-1; ++i) {
@@ -199,6 +200,7 @@ public class AlgorithmController {
             sb.append(delimiter);
             sb.append(gr.weight(i,j));
         }
+        System.err.println(sb.toString());
         return sb.toString();
     }
 }

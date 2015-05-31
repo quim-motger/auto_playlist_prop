@@ -25,11 +25,9 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
-import java.security.cert.CollectionCertStoreParameters;
 import java.util.*;
 
 public class GraphPanel extends JPanel{
-        private UndirectedSparseGraph<String, Double> graph;
         //the visual component and renderer for the graph
         private VisualizationViewer<String, Double> vv;
 
@@ -39,11 +37,10 @@ public class GraphPanel extends JPanel{
 
         ScalingControl scaler2 = new CrossoverScalingControl(); //not necessary at this moment
 
-        public GraphPanel(UndirectedSparseGraph originalGraph, ArrayList<UndirectedSparseGraph<String,Double>> communities) {
-            graph = new UndirectedSparseGraph<String, Double>();
-
-            clusteringLayout = new AggregateLayout<String,Double>(new KKLayout<String, Double>(graph));
-            // circle layout i fr no es mofiquen al fer uncluster
+        public GraphPanel(final UndirectedSparseGraph<String,Double> originalGraph, ArrayList<UndirectedSparseGraph<String,Double>> communities) {
+            System.err.println(originalGraph.getVertexCount());
+            clusteringLayout = new AggregateLayout<String,Double>(new KKLayout<String, Double>(originalGraph));
+            // circle layout i fr no es modifiquen al fer uncluster
             subLayoutSize = new Dimension(100,100);
             Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
@@ -109,7 +106,7 @@ public class GraphPanel extends JPanel{
             vv.setVertexToolTipTransformer(new ToStringLabeller<String>());
             vv.setEdgeToolTipTransformer(new Transformer<Double, String>() {
                 public String transform(Double edge) {
-                    return "E" + graph.getEndpoints(edge).toString();
+                    return "E" + originalGraph.getEndpoints(edge).toString();
                 }
             });
 
@@ -149,14 +146,14 @@ public class GraphPanel extends JPanel{
             JButton cluster = new JButton("cluster");
             cluster.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    cluster(true);
+                    cluster(originalGraph,true);
                 }
             });
 
             JButton uncluster = new JButton("uncluster");
             uncluster.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    cluster(false);
+                    cluster(originalGraph,false);
                 }
             });
 
@@ -179,27 +176,6 @@ public class GraphPanel extends JPanel{
 
 
         }
-        private void createVertices(int count) {
-            for (int i = 0; i < count; i++) {
-                graph.addVertex("V"+i);
-            }
-            graph.addVertex("Highway to hell (ACDC)");
-        }
-
-        private void createEdges() {
-            graph.addEdge(10.5, "V0", "V1");
-            graph.addEdge(14.5, "V1", "V3");
-            graph.addEdge(313.5, "V6", "V3");
-            graph.addEdge(11.5, "V0", "V12");
-            graph.addEdge(9.5, "V15", "V9");
-            graph.addEdge(13.5, "V0", "V11");
-            graph.addEdge(1.5, "V5", "V1");
-            graph.addEdge(3.5, "V10", "V19");
-            graph.addEdge(121.5, "V6", "V8");
-            graph.addEdge(10.25, "V2", "V7");
-        }
-
-
 
         private Layout getLayoutFor(Class layoutClass, Graph graph) throws Exception {
             Object[] args = new Object[]{graph};
@@ -208,7 +184,7 @@ public class GraphPanel extends JPanel{
         }
 
         // aqui, per cada vertex de comunitat en comptes de picked
-        private void cluster(boolean state) {
+        private void cluster(UndirectedSparseGraph<String,Double> graph, boolean state) {
             if(state) {
                 // put the picked vertices into a new sublayout
                 Collection<String> picked = new HashSet<String>();

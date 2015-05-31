@@ -5,6 +5,7 @@ import prop.PropException;
 import prop.domain.*;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class AlgorithmPController {
 
@@ -44,7 +45,9 @@ public class AlgorithmPController {
 
 
     public UndirectedSparseGraph<String,Double> getOriginalGraph() {
-       return createGraph(algorithmController.getOriginalGraph());
+        String s = algorithmController.getOriginalGraph();
+        System.err.println(s);
+       return createGraph(s);
     }
 
     /* OTHER METHODS */
@@ -66,8 +69,8 @@ public class AlgorithmPController {
      */
     private UndirectedSparseGraph<String,Double> createGraph(String graph) {
         UndirectedSparseGraph<String,Double> gr = new UndirectedSparseGraph<>();
-        String[] vertices = graph.split(delimiter);
-        for (int i = 0; i < vertices.length; i += 3) {
+        String[] vertices = graph.split(Pattern.quote(delimiter));
+        for (int i = 0; i < vertices.length-2; i += 3) {
             gr.addVertex(vertices[i]);
             gr.addVertex(vertices[i+1]);
             gr.addEdge(Double.parseDouble(vertices[i+2]),vertices[i],vertices[i+1]);
