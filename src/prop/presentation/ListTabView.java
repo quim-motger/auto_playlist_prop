@@ -269,12 +269,10 @@ public class ListTabView extends TabView {
 
                 @Override
                 public void keyPressed(KeyEvent e) {
-
                 }
 
                 @Override
                 public void keyReleased(KeyEvent e) {
-
                 }
             });
 
@@ -795,7 +793,24 @@ public class ListTabView extends TabView {
             jLabel1 = new JLabel();
             jSeparator1 = new JSeparator();
             jLabel2 = new JLabel();
+
             jTextField1 = new JTextField();
+            jTextField1.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    if (e.getKeyChar() == '|')
+                        e.consume();
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                }
+            });
+
             addButton = new JButton();
             jLabel3 = new JLabel();
             jSpinner1 = new JSpinner();
