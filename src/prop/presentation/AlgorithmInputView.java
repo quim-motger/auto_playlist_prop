@@ -351,12 +351,44 @@ public class AlgorithmInputView extends JPanel {
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-        algorithmPController.initGraph();
-        String[] simpRel = new String[simpleRelations.size()];
-        simpRel = simpleRelations.toArray(simpRel);
-        for (String s : complexRelations) {
+        if (listTitleField.getText().length() < 1) {
+            errorLabel.setText("List title cannot be empty");
+            errorLabel.setVisible(true);
+            ActionListener listener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    errorLabel.setVisible(false);
+                }
+            };
+            Timer timer = new Timer(3000, listener);
+            timer.start();
+        }
+        else {
+            algorithmPController.initGraph();
+            String[] simpRel = new String[simpleRelations.size()];
+            simpRel = simpleRelations.toArray(simpRel);
+            for (String s : complexRelations) {
+                try {
+                    algorithmPController.addRelation(simpRel, s, simpleRelations.size());
+                } catch (PropException e) {
+                    errorLabel.setText(e.getMessage());
+                    errorLabel.setVisible(true);
+                    ActionListener listener = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            errorLabel.setVisible(false);
+                        }
+                    };
+                    Timer timer = new Timer(3000, listener);
+                    timer.start();
+                }
+            }
             try {
-                algorithmPController.addRelation(simpRel,s,simpleRelations.size());
+                double start = getCpuTime();
+                algorithmPController.execute(listTitleField.getText().trim(), algorithmComboBox.getSelectedIndex(), (Integer) numberOfCommunities.getValue(), listPController.getListController(), algorithmPController.getRelationController());
+                double time = (getCpuTime() - start) / 1e9;
+                System.out.println("Execution time: " + time + " s");
+                algorithmTabView.setOutputPanel(listTitleField.getText().trim());
             } catch (PropException e) {
                 errorLabel.setText(e.getMessage());
                 errorLabel.setVisible(true);
@@ -369,24 +401,6 @@ public class AlgorithmInputView extends JPanel {
                 Timer timer = new Timer(3000, listener);
                 timer.start();
             }
-        }
-        try {
-            double start = getCpuTime();
-            algorithmPController.execute(listTitleField.getText().trim(), algorithmComboBox.getSelectedIndex(), (Integer) numberOfCommunities.getValue(), listPController.getListController(), algorithmPController.getRelationController());
-            double time = (getCpuTime() - start) / 1e9;
-            System.out.println("Execution time: " + time + " s");
-            algorithmTabView.setOutputPanel(listTitleField.getText().trim());
-        } catch (PropException e) {
-            errorLabel.setText(e.getMessage());
-            errorLabel.setVisible(true);
-            ActionListener listener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    errorLabel.setVisible(false);
-                }
-            };
-            Timer timer = new Timer(3000, listener);
-            timer.start();
         }
     }
 
