@@ -176,6 +176,11 @@ public class AlgorithmController {
     }
 
     public static String graphSongToString(Graph<Song> gr) {
+        /*
+        El problema es que no afegeix els vertexs que no tenen arestes.
+        S'ha de refer.
+        Posar string de cada vertex [i], posar nombre d'ajacents [i+1], posar vertexs adjacents amb pes
+         */
         System.err.println("graphSongToString" + gr.numberOfVertices());
         StringBuilder sb = new StringBuilder();
         int i;
