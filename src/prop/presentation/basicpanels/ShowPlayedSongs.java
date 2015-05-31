@@ -5,7 +5,6 @@ import prop.presentation.UserPController;
 import prop.presentation.UserTabView;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,9 +22,10 @@ public class ShowPlayedSongs extends PropPanel {
     private final JButton back;
     private final String name;
     private final UserPController controller;
+    private final JButton newPlay;
     private JScrollPane listWrapper;
-    private DefaultTableModel listOfListsModel;
-    private JTable listOfLists;
+    private DefaultListModel<String> listOfListsModel;
+    private JList listOfLists;
     
     public ShowPlayedSongs(UserTabView userTabView, String userName, UserPController userPController) {
         super();
@@ -34,6 +34,8 @@ public class ShowPlayedSongs extends PropPanel {
         controller = userPController;
         
         updatePanel();
+
+        setTitleText(name+"'s playbacks");
         
         back = new JButton("< Back");
         back.addActionListener(new ActionListener() {
@@ -43,33 +45,39 @@ public class ShowPlayedSongs extends PropPanel {
             }
         });
         addButton(back);
-        
+
+        newPlay = new JButton("Play song");
+        newPlay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                tab.showAddPlayback(name);
+            }
+        });
+        addButton(newPlay);
+
         
     }
 
     private void updatePanel() {
 
         try {
-            listOfListsModel.setRowCount(0);
+            listOfListsModel.clear();
             String[] plays = controller.getUserPlays(name);
-            String[] titles = new String[plays.length];
-            String[] artists = new String[plays.length];
-            String[] date = new String[plays.length];
-            for(int i=0; i<plays.length; ++i){
-                String[] tokens = plays[i].split(" ");
-                titles[i] = tokens[1];
-                artists[i] = tokens[2];
-                date[i] = tokens[5] + "/";
-                date[i] += tokens[4] + "/";
-                date[i] += tokens[3];
-                date[i] += " ";
-                date[i] += tokens[6]+":";
-                date[i] += tokens[7]+":";
-                date[i] += tokens[8];
+            for(String play : plays){
+                String[] tokens = play.split(" ");
+                
+                String ret = tokens[1];
+                ret += " " + tokens[2];
+                ret += " " + tokens[5] + "/";
+                ret += tokens[4] + "/";
+                ret += tokens[3];
+                ret += " ";
+                ret += tokens[6]+":";
+                ret += tokens[7]+":";
+                ret += tokens[8];
+                listOfListsModel.addElement(ret);
             }
-            listOfListsModel.addColumn("Title",titles);
-            listOfListsModel.addColumn("Artist",artists);
-            listOfListsModel.addColumn("Date",date);
+            listOfLists.setModel(listOfListsModel);
 
         } catch (PropException e) {
             e.printStackTrace();
@@ -82,8 +90,8 @@ public class ShowPlayedSongs extends PropPanel {
     protected JPanel createFormPanel() {
         JPanel panel = new JPanel();
         listWrapper = new JScrollPane();
-        listOfLists = new JTable();
-        listOfListsModel = new DefaultTableModel();
+        listOfLists = new JList();
+        listOfListsModel = new DefaultListModel<String>();
         listWrapper.setViewportView(listOfLists);
 
         GroupLayout layout = new GroupLayout(panel);

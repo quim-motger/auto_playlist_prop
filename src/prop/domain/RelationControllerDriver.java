@@ -120,8 +120,8 @@ public class RelationControllerDriver {
                     break;
                 case 11:
                     try {
-                        uc.playSong(in.next(), in.next(), in.next(), sc);
-                    } catch (PropException e) {
+                        uc.playSong(in.next(), in.next(), in.next(),in.next(), sc);
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                     break;

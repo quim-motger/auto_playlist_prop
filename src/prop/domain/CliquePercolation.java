@@ -219,7 +219,7 @@ public class CliquePercolation extends Algorithm {
                 //For every clique the vertex is in
                 for (int m : vertexInCliques[l]) {
                     //If the clique is not the same
-                    if (m != j && cliqueInCommunity[m] != cliqueInCommunity[j]) {
+                    if (m != j && m < cliqueInCommunity.length && cliqueInCommunity[m] != cliqueInCommunity[j]) {
                         sb.append("This vertex is also in clique " + m + "\n");
                         sb.append("Let's add this clique in the same community\n");
                         //We add to the community of the initial clique the clique shared by the vertex

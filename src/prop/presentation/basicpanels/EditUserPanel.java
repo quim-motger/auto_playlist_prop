@@ -21,6 +21,7 @@ import java.util.Date;
 public class EditUserPanel extends UserPanel {
     private final JButton delete;
     private final JButton listEdit;
+    private final JButton playEdit;
     private JButton save;
     private UserTabView tab;
     private String name;
@@ -85,11 +86,20 @@ public class EditUserPanel extends UserPanel {
             }
         });
         
+        playEdit = new JButton("Show playbacks");
+        playEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                tab.showPlays(name);
+            }
+        });
+        
         addButton(cancelEdit);
         addButton(save);
         addButton(edit);
         addButton(delete);
         addButton(listEdit);
+        addButton(playEdit);
 
         
         disableEdit();

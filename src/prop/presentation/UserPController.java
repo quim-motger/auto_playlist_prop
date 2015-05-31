@@ -6,8 +6,11 @@ import prop.domain.SongController;
 import prop.domain.UserController;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class UserPController {
 
@@ -101,5 +104,19 @@ public class UserPController {
 
     public String[] getUserPlays(String name) throws PropException {
         return userController.obtainPlaybacks(name);
+    }
+
+    public void playNewSong(String title, String artist, String userName, Date date) throws PropException, ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd  HH:mm:ss");
+        String sDate = dateFormat.format(date);
+        userController.playSong(title,artist,userName,sDate, songController);
+    }
+
+    public ArrayList<String> getArtists() {
+        return songController.getArtists();
+    }
+
+    public ArrayList<String> getArtistSongs(String artist) throws PropException {
+        return songController.getTitlesFromArtist(artist);
     }
 }
