@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * EditUserPanel in prop.presentation.basicpanels
@@ -19,6 +20,7 @@ import java.util.Date;
  *          Creation Date: 24/05/15
  */
 public class EditUserPanel extends UserPanel {
+    public static final String DELIMITER = "|";
     private final JButton delete;
     private final JButton listEdit;
     private final JButton playEdit;
@@ -142,7 +144,7 @@ public class EditUserPanel extends UserPanel {
 
         try {
             String user = controller.getUser(name);
-            String tokens[] = user.split(" ");
+            String tokens[] = user.split(Pattern.quote(DELIMITER));
             setNameField(tokens[1]);
             setGenderSelector(tokens[2]);
             Date date = new Date(Long.valueOf(tokens[3]));

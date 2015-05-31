@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 /**
  * UserController in prop.domain
@@ -26,7 +27,7 @@ public class UserController {
     public static final String NAME="name";
     public static final String GENDER="gender";
     public static final String BIRTHDAY="birthday";
-    private static final String elemDelimiter = " ";
+    private static final String elemDelimiter = "|";
     private static final String setDelimiter = "\n";
 
     private UserSet userSet;
@@ -59,6 +60,7 @@ public class UserController {
      * @see prop.domain.User
      */
     public void addUser(String name, String gender, int year, int month, int date) throws Exception {
+        name.replace('|','/');
         Gender userGender = Gender.valueOf(gender.trim());
         Calendar userBirthday = Calendar.getInstance();
         checkDate(year+"-"+month+"-"+date);
@@ -256,7 +258,7 @@ public class UserController {
         String[] users = data.split(setDelimiter);
         UserSet set = new UserSet();
         for (String user : users) {
-            String[] attributes = user.split(elemDelimiter);
+            String[] attributes = user.split(Pattern.quote(elemDelimiter));
             if (!attributes[0].equals(User.USER_STRING_ID))
                 throw new PropException(ErrorString.INCORRECT_FORMAT);
             User u = new User();
@@ -323,6 +325,7 @@ public class UserController {
 
     public void updateUser(String id, String name, String gender, int day, int month, int year) throws Exception {
         checkDate(year+"-"+month+"-"+day);
+        name.replace('|','/');
         User user = userSet.getUserByName(id);
         userSet.removeUser(id);
         Calendar cal = Calendar.getInstance();

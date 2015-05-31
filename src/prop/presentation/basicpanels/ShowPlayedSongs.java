@@ -7,6 +7,7 @@ import prop.presentation.UserTabView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 /**
  * ShowPlayedSongs in prop.presentation.basicpanels
@@ -64,10 +65,10 @@ public class ShowPlayedSongs extends PropPanel {
             listOfListsModel.clear();
             String[] plays = controller.getUserPlays(name);
             for(String play : plays){
-                String[] tokens = play.split(" ");
-                
+                String[] tokens = play.split(Pattern.quote("|"));
+
                 String ret = tokens[1];
-                ret += " " + tokens[2];
+                ret += "-" + tokens[2];
                 ret += " " + tokens[5] + "/";
                 ret += tokens[4] + "/";
                 ret += tokens[3];
