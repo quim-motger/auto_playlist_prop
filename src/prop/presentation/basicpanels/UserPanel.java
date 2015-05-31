@@ -68,7 +68,6 @@ public class UserPanel extends PropPanel {
     protected void updatePanel() {
         genderSelector.setModel(new DefaultComboBoxModel(controller.getGenres()));
         nameField.addActionListener(defaultActionListener);
-        genderSelector.addActionListener(defaultActionListener);
     }
     
     @Override
