@@ -42,15 +42,14 @@ public class AlgorithmOutputView extends JPanel {
         listModel = new DefaultListModel();
         leftList.setModel(listModel);
         leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        leftList.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        leftList.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         leftListView.setViewportView(leftList);
         leftListView.setPreferredSize(new Dimension(195, 200));
 
-        // TODO: initialize graphPanel with required arguments
-        graphPanel = new GraphPanel();
+        graphPanel = new GraphPanel(algorithmPController.getOriginalGraph(), algorithmPController.getCommunities());
 
         textPanel = new JTextArea();
-        textPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        textPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         textPanel.setEditable(false);
         textPanel.setLineWrap(true);
         textPanel.setWrapStyleWord(true);
@@ -65,7 +64,7 @@ public class AlgorithmOutputView extends JPanel {
         actionBar.setRollover(true);
 
         listTitle = new JLabel();
-        listTitle.setText("List title");
+        listTitle.setText("title");
         listTitle.setMaximumSize(new Dimension(194, 200));
         actionBar.add(Box.createHorizontalStrut(3));
         actionBar.add(listTitle);
@@ -133,10 +132,7 @@ public class AlgorithmOutputView extends JPanel {
 
     public void updateListModel(String title) {
         listModel.clear();
-        //String list[] = listPController.getListStringArray(title);
-        // Only for testing purposes - delete when finish and uncomment above ****************
-        String list[] = {"title","aaa","bbb","ccc","ddd"};
-        // ***********************************************************************************
+        String list[] = listPController.getListStringArray(title);
         listTitle.setText(list[0]);
         for (int i = 1; i < list.length; ++i) {
             listModel.addElement(list[i]);

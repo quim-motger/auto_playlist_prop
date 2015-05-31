@@ -1,5 +1,6 @@
 package prop.domain;
 
+import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import prop.ErrorString;
 import prop.PropException;
 
@@ -20,6 +21,7 @@ public class AlgorithmController {
     private ArrayList<String> log;
     private static final String delimiter = "\n";
     ArrayList<Graph> communities;
+    Graph originalGraph;
 
     /**
      * Executes the selected algorithm for generating a song list that will be added to the set.
@@ -38,8 +40,8 @@ public class AlgorithmController {
      */
     public ArrayList<String> execute(String title, int algorithm, int k, ListController listController, RelationController relationController) throws PropException {
         log = new ArrayList<String>();
-        Graph<Song> graph = createInputGraph(algorithm,relationController);
-        log.add("Input graph:\n" + writeGraph(graph));
+        originalGraph = createInputGraph(algorithm,relationController);
+        log.add("Input graph:\n" + writeGraph(originalGraph));
         Algorithm a;
 
         // We execute the selected algorithm and get the output
@@ -56,7 +58,7 @@ public class AlgorithmController {
             default:
                 throw new PropException(ErrorString.UNEXISTING_ALGORITHM);
         }
-        AlgorithmOutput ao = a.execute(graph,k);
+        AlgorithmOutput ao = a.execute(originalGraph,k);
 
         // From the given communities, we select the densest one...
         Graph<Song> selectedCommunity = ao.densestGraph();
@@ -85,11 +87,14 @@ public class AlgorithmController {
     public String[] getCommunities() {
         ArrayList<String> communitiesString = new ArrayList<>();
         for (Graph<Song> g : communities) {
-            communitiesString.add(GraphSongToString(g));
+            communitiesString.add(graphSongToString(g));
         }
         return communitiesString.toArray(new String[communitiesString.size()]);
     }
 
+    public String getOriginalGraph() {
+        return graphSongToString(originalGraph);
+    }
 
     /**
      * Converts a multigraph into the graph that will be the input of the algorithm.
@@ -170,7 +175,7 @@ public class AlgorithmController {
         return sb.toString();
     }
 
-    public static String GraphSongToString(Graph<Song> gr) {
+    public static String graphSongToString(Graph<Song> gr) {
         StringBuilder sb = new StringBuilder();
         int i;
         for (i = 0; i < gr.numberOfVertices()-1; ++i) {

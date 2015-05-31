@@ -12,11 +12,19 @@ public class AlgorithmPController {
     private RelationController relationController;
     private SongController songController;
     private UserController userController;
-    private ArrayList<UndirectedSparseGraph<String,Double>> communities;
+
     private ArrayList<String> log;
     static final String delimiter = "\n";
 
 
+    public AlgorithmPController(SongController sc, UserController uc) {
+        algorithmController = new AlgorithmController();
+        relationController = new RelationController();
+        songController = sc;
+        userController = uc;
+    }
+
+    /* GETTERS */
     public AlgorithmController getAlgorithmController() {
         return algorithmController;
     }
@@ -34,24 +42,21 @@ public class AlgorithmPController {
         return sb.toString();
     }
 
-    public AlgorithmPController(SongController sc, UserController uc) {
-        algorithmController = new AlgorithmController();
-        relationController = new RelationController();
-        songController = sc;
-        userController = uc;
-        communities = new ArrayList<>();
+
+    public UndirectedSparseGraph<String,Double> getOriginalGraph() {
+       return createGraph(algorithmController.getOriginalGraph());
     }
 
-    public ArrayList<UndirectedSparseGraph<String,Double>> getCommunities() {
-        return communities;
-    }
+    /* OTHER METHODS */
 
     /** Gets the String communities from the algorithmController and converts each one to graph */
-    private void createCommunities() {
+    public ArrayList<UndirectedSparseGraph<String,Double>> getCommunities() {
+        ArrayList<UndirectedSparseGraph<String,Double>> communities = new ArrayList<>();
         String[] cs = algorithmController.getCommunities();
         for (String s : cs) {
             communities.add(createGraph(s));
         }
+        return communities;
     }
 
     /**

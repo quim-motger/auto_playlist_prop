@@ -32,15 +32,16 @@ public class GraphPanel extends JPanel{
         private UndirectedSparseGraph<String, Double> graph;
         //the visual component and renderer for the graph
         private VisualizationViewer<String, Double> vv;
-        private int numberOfVertices = 20;
+
         private AggregateLayout<String,Double> clusteringLayout;
         private Class subLayoutType = CircleLayout.class;
         private Dimension subLayoutSize;
-    ScalingControl scaler2 = new CrossoverScalingControl();
-        public GraphPanel() {
+
+        ScalingControl scaler2 = new CrossoverScalingControl(); //not necessary at this moment
+
+        public GraphPanel(UndirectedSparseGraph originalGraph, ArrayList<UndirectedSparseGraph<String,Double>> communities) {
             graph = new UndirectedSparseGraph<String, Double>();
-            createVertices(numberOfVertices);
-            createEdges();
+
             clusteringLayout = new AggregateLayout<String,Double>(new KKLayout<String, Double>(graph));
             // circle layout i fr no es mofiquen al fer uncluster
             subLayoutSize = new Dimension(100,100);

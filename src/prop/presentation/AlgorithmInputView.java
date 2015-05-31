@@ -351,7 +351,7 @@ public class AlgorithmInputView extends JPanel {
             }
         }
         try {
-            algorithmPController.execute(jTextField1.getText().trim(), jComboBox2.getSelectedIndex(), (Integer) jSpinner3.getValue(),listPController.getListController(), algorithmPController.getRelationController());
+            algorithmPController.execute(jTextField1.getText().trim(), jComboBox2.getSelectedIndex(), (Integer) jSpinner3.getValue(), listPController.getListController(), algorithmPController.getRelationController());
             algorithmTabView.setOutputPanel(jTextField1.getText().trim());
         } catch (PropException e) {
         }
