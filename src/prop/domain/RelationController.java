@@ -124,18 +124,22 @@ public class RelationController {
             if(expression.contains("&")){
                 int idxRel1 = (int) expression.charAt(1) - '0';
                 int idxRel2 = (int) expression.charAt(3) - '0';
+                if (idxRel1 >= simpleRelations.length || idxRel2 >= simpleRelations.length) throw new PropException(ErrorString.WRONG_EXPRESSION);
                 return new AND(simpleRelations[idxRel1],simpleRelations[idxRel2]);
             } else if (expression.contains("|")) {
                 int idxRel1 = (int) expression.charAt(1) - '0';
                 int idxRel2 = (int) expression.charAt(3) - '0';
+                if (idxRel1 >= simpleRelations.length || idxRel2 >= simpleRelations.length) throw new PropException(ErrorString.WRONG_EXPRESSION);
                 return new OR(simpleRelations[idxRel1], simpleRelations[idxRel2]);
             } else if (expression.contains("!")) {
                 if (expression.length() > 2) throw new PropException(ErrorString.WRONG_EXPRESSION);
                 int idxRel = (int) expression.charAt(1) - '0';
+                if (idxRel >= simpleRelations.length) throw new PropException(ErrorString.WRONG_EXPRESSION);
                 return new NOT(simpleRelations[idxRel],songController.getSongSet());
             } else {
                 if (expression.length() > 1) throw new PropException(ErrorString.WRONG_EXPRESSION);
                 int idxRel = (int) expression.charAt(0) - '0';
+                if (idxRel >= simpleRelations.length) throw new PropException(ErrorString.WRONG_EXPRESSION);
                 return simpleRelations[idxRel];
             }
         }
