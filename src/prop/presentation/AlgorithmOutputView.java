@@ -25,14 +25,17 @@ public class AlgorithmOutputView extends JPanel {
     /**
      * Creates new form MainPanel
      */
-    public AlgorithmOutputView(AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv, String title) {
+    public AlgorithmOutputView(AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv, String title, double time) {
         algorithmPController = apc;
         listPController = lpc;
         algorithmTabView = atv;
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         initComponents();
         updateListModel(title);
-
+        listTitle.setText(title);
+        
+        JLabel timeLabel = new JLabel("Time = "+time+" s");
+        actionBar.add(timeLabel);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -133,7 +136,6 @@ public class AlgorithmOutputView extends JPanel {
     public void updateListModel(String title) {
         listModel.clear();
         String list[] = listPController.getListStringArray(title);
-        listTitle.setText(list[0]);
         for (int i = 1; i < list.length; ++i) {
             listModel.addElement(list[i]);
         }

@@ -1,7 +1,5 @@
 package prop.presentation;
 
-import prop.PropException;
-
 import javax.swing.*;
 
 public class MainPController {
@@ -20,7 +18,7 @@ public class MainPController {
                 listPController.getListController(),
                 songPController.getSongController()
                 );
-        algorithmPController = new AlgorithmPController(songPController.getSongController(),userPController.getUserController());
+        algorithmPController = new AlgorithmPController(songPController.getSongController(),userPController.getUserController(), listPController.getListController());
 
         /* Set the Windows look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

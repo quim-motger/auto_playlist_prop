@@ -12,17 +12,19 @@ public class AlgorithmPController {
     private AlgorithmController algorithmController;
     private RelationController relationController;
     private SongController songController;
+    private ListController listController;
     private UserController userController;
 
     private ArrayList<String> log;
     private static final char delimiter ='\n';
 
 
-    public AlgorithmPController(SongController sc, UserController uc) {
+    public AlgorithmPController(SongController sc, UserController uc, ListController lc) {
         algorithmController = new AlgorithmController();
         relationController = new RelationController();
         songController = sc;
         userController = uc;
+        listController = lc;
     }
 
     /* GETTERS */
@@ -91,7 +93,7 @@ public class AlgorithmPController {
        relationController.initGraph(songController, userController);
     }
 
-    public void execute(String title, int algorithm, int k, ListController lc, RelationController rc) throws Exception {
-        log = algorithmController.execute(title, algorithm, k, lc, rc);
+    public void execute(String title, int algorithm, int k) throws Exception {
+        log = algorithmController.execute(title, algorithm, k, listController, relationController);
     }
 }
