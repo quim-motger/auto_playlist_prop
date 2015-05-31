@@ -62,37 +62,26 @@ public class Louvain extends Algorithm {
     private int[] executeLouvain(Graph<Song> graph) {
         //Base Case
         if (graph.numberOfVertices() <= maxComm) {
-            log.add("\nEnd of Algorithm: More vertices (" + graph.numberOfVertices() +
-                    ") than desirable communities (" + maxComm + ")\n\n");
             return initSingletonCommunities(graph);
         }
 
         //Initializing Communities
-        log.add("\nInitializing new Round\n");
         int[] comms = initSingletonCommunities(graph);
 
         //Modularity Optimization
-        log.add("\nModularityOptimization\n");
         boolean moved = modularityOptimization(graph, comms);
 
         //If communities were optimized
         if (moved && nCommunities>maxComm) {
-            log.add("\nNormalizing community numbers\n\n");
+            ;
             comms = normalizeComms(comms);
 
-            log.add("CommunityAggregation\n\n");
             int[] comms2 = executeLouvain(communityAggregation(graph, comms));
 
-            log.add("Joining communities\n\n");
             for (int i = 0; i < comms2.length; ++i) {
                 changeComm(i, comms2[i], comms);
             }
-        } else if (!moved){
-            log.add("\nEnd of Algorithm: No more communities to be created\n\n");
-        }else {
-            log.add("\nEnd of Algorithm: Reached maximum number of communites " + nCommunities + "\n\n");
         }
-        log.add("\nNormalizing community numbers\n\n");
         comms = normalizeComms(comms);
         return comms;
     }
@@ -154,7 +143,6 @@ public class Louvain extends Algorithm {
             //Returns the node and move the node if there's a possible change
             comms[idNode] = tmp;
             if (comDest != comms[idNode]) {
-                log.add("Moving node " + idNode + " from " + comms[idNode] + " to " + comDest + " : " + maxModGain + "\n");
                 moveMode(idNode, comms[idNode], comDest, comms);
                 roundMoved = true;
                 moved = true;
@@ -178,7 +166,7 @@ public class Louvain extends Algorithm {
      */
     private void changeComm(int from, int to, int[] comms) {
         if (from != to) {
-            log.add("Changing Community: " + from + " to " + to + "\n");
+            log.add("comm <" + from + " -> " + to + ">");
             for (int i = 0; i < comms.length; ++i) {
                 if (comms[i] == from)
                     comms[i] = to;
@@ -204,7 +192,8 @@ public class Louvain extends Algorithm {
         //Translates communities in lowest numbers
         for (int i = 0; i < comms.length; ++i) {
             if (commTranslator[comms[i]] == -1) {
-                log.add("Normalizing community " + comms[i] + " into " + currentComm + "\n");
+                if(comms[i]!=currentComm) 
+                    log.add("comm <" + comms[i] + " -> " + currentComm + ">");
                 commTranslator[comms[i]] = currentComm;
                 ++currentComm;
             }
@@ -223,11 +212,14 @@ public class Louvain extends Algorithm {
      */
     private void moveMode(int idNode, int comOrig, int comDest, int[] comm) {
         comm[idNode] = comDest;
-
+        log.add("node <" + idNode + " : " + comOrig + " -> " + comDest + ">");
+        
         //Checks if there's an empty community
-        boolean destroyCom = true;
-        for (int i : comm) {
-            if (i == comOrig) destroyCom = false;
+        boolean destroyCom = comOrig>=0;
+        int i=0;
+        while(destroyCom && i<comm.length) {
+            if (comm[i] == comOrig) destroyCom = false;
+            ++i;
         }
         if (destroyCom) --nCommunities;
     }
@@ -243,9 +235,8 @@ public class Louvain extends Algorithm {
         int[] comms = new int[graph.numberOfVertices()];
         int n = graph.numberOfVertices();
         nCommunities = n;
-        log.add("Initial Communities = " + nCommunities + " 1 for node in graph");
         for (int i = 0; i < n; ++i) {
-            comms[i] = i;
+            moveMode(i,-1,i,comms);
         }
         return comms;
     }
@@ -297,9 +288,11 @@ public class Louvain extends Algorithm {
         ArrayList<Song> songs = graph.getOriginalVertices();
 
         //Add Vertices to Graph
-        for (int i = 0; i < nCommunities; ++i)
+        for (int i = 0; i < nCommunities; ++i) {
             agGraph.addVertex(songs.get(i));
-
+            log.add("comm -> node <" + i + ">");
+        }
+            
         //Add Edges to Graph
         for (int i = 0; i < nCommunities; ++i) {
             for (int j = 0; j < nCommunities; ++j) {
