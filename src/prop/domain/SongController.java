@@ -263,6 +263,7 @@ public class SongController {
      */
     public void load(String path) throws Exception {
         String s = DataController.load(path);
+        s = s.replace("\r","");
         songSet = new SongSet();
         String[] songs = s.split(Pattern.quote(delimiter1));
         for (String p : songs) {

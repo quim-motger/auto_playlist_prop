@@ -28,6 +28,7 @@ public class ListTabView extends TabView {
     private JTextField searchField;
     private JButton addListButton;
     private JButton removeListButton;
+    private JButton removeAllButton;
     private JButton saveButton;
     private JButton loadButton;
     private JButton randomButton;
@@ -109,6 +110,16 @@ public class ListTabView extends TabView {
         });
         buttons.add(removeListButton);
 
+        removeAllButton = new JButton("Remove All");
+        removeAllButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        removeAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeAllActionPerformed(e);
+            }
+        });
+        buttons.add(removeAllButton);
+
         editButton = new JButton("Edit List");
         editButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         editButton.addActionListener(new ActionListener() {
@@ -164,6 +175,11 @@ public class ListTabView extends TabView {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void removeAllActionPerformed(ActionEvent evt) {
+        listPController.removeAll();
+        updateListSetModel();
     }
 
     private void saveButtonActionPerformed(ActionEvent evt) {

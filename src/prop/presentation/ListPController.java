@@ -29,6 +29,10 @@ public class ListPController {
         listController.removeList(title);
     }
 
+    public void removeAll() {
+        listController.removeAll();
+    }
+
     public String[] getListStringArray(String title) {
         return listController.getListStringArray(title);
     }
