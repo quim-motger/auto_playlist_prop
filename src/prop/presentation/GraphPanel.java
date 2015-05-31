@@ -37,10 +37,12 @@ public class GraphPanel extends JPanel{
 
         ScalingControl scaler2 = new CrossoverScalingControl(); //not necessary at this moment
 
-        public GraphPanel(final UndirectedSparseGraph<String,JungEdge> originalGraph, ArrayList<UndirectedSparseGraph<String,JungEdge>> communities) {
+        public GraphPanel(final UndirectedSparseGraph<String,JungEdge> originalGraph, final ArrayList<UndirectedSparseGraph<String,JungEdge>> communities) {
+            final UndirectedSparseGraph<String,JungEdge> selectedCommunity = communities.get(communities.size()-1);
+
             clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<String, JungEdge>(originalGraph));
             // circle layout i fr no es modifiquen al fer uncluster
-            subLayoutSize = new Dimension(100,100);
+            subLayoutSize = new Dimension(50,50);
             Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
 
@@ -65,7 +67,7 @@ public class GraphPanel extends JPanel{
 
             Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
                 public Paint transform(String i) {
-                    if(i.equals("V0")) return Color.GREEN;
+                    if(selectedCommunity.containsVertex(i)) return Color.GREEN;
                     return Color.MAGENTA;
                 }
             };
@@ -80,8 +82,10 @@ public class GraphPanel extends JPanel{
 
             vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
                 public Paint transform(JungEdge e) {
-                    if (e.getWeight() == 10.5) return Color.RED;
-                    return Color.blue;
+                    Pair<String> p = originalGraph.getEndpoints(e);
+                    if (selectedCommunity.containsVertex(p.getFirst()) && selectedCommunity.containsVertex(p.getSecond()))
+                        return Color.green;
+                    return Color.black;
                 }
             });
 
@@ -90,10 +94,10 @@ public class GraphPanel extends JPanel{
                 protected final Stroke THICK = new BasicStroke(4);
 
                 public Stroke transform(JungEdge e) {
-                    //if (e.getWeight() == 10.5)
-                        return THIN;
-                    //else
-                    //    return THICK;
+                    Pair<String> p = originalGraph.getEndpoints(e);
+                    if (selectedCommunity.containsVertex(p.getFirst()) && selectedCommunity.containsVertex(p.getSecond()))
+                        return THICK;
+                    return THIN;
                 }
             });
 
@@ -105,7 +109,7 @@ public class GraphPanel extends JPanel{
             vv.setVertexToolTipTransformer(new ToStringLabeller<String>());
             vv.setEdgeToolTipTransformer(new Transformer<JungEdge, String>() {
                 public String transform(JungEdge edge) {
-                    return "E" + originalGraph.getEndpoints(edge).toString();
+                    return edge.toString();
                 }
             });
 
@@ -145,7 +149,7 @@ public class GraphPanel extends JPanel{
             JButton cluster = new JButton("cluster");
             cluster.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    cluster(originalGraph,true);
+                    cluster(communities.get(communities.size()-1),true);
                 }
             });
 
@@ -187,9 +191,7 @@ public class GraphPanel extends JPanel{
             if(state) {
                 // put the picked vertices into a new sublayout
                 Collection<String> picked = new HashSet<String>();
-                String[] cv = new String[] { "V0", "V1", "V2", "V3", "V4", "V5", "V6" }; // example vertices
-                ArrayList<String> acv = new ArrayList<String>(Arrays.asList(cv));
-                picked.addAll(acv);
+                picked.addAll(graph.getVertices());
 
                 Point2D center = new Point2D.Double();
                 double x = 0;
