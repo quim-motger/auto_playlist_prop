@@ -30,14 +30,14 @@ public class GirvanNewman extends Algorithm {
         n = graph.numberOfVertices();
         ArrayList<String> log = new ArrayList<>();
         components = calculateComponents();
-        if (components >= k) log.add("There are " + components + " components already!\n\n");
+        //if (components >= k) log.add("There are " + components + " components already!\n\n");
 
         parents = floydWarshall();
         int i = 0;
         while (components < k && components < n) {
             StringBuilder entry = new StringBuilder();
-            if (i == 0) entry.append("Initial components: " + components + "\n\n");
-            entry.append("-- Round " + i + "\n");
+            //if (i == 0) entry.append("Initial components: " + components + "\n\n");
+            //entry.append("-- Round " + i + "\n");
 
             removeNext(entry);
 
@@ -54,44 +54,44 @@ public class GirvanNewman extends Algorithm {
      * @param entry an entry of the execution log
      */
     private void removeNext(StringBuilder entry) {
-        entry.append("Predecessor Matrix:\n");
+        /*entry.append("Predecessor Matrix:\n");
         for (int[] p : parents) {
             for (int i : p)
                 entry.append(i + " ");
             entry.append("\n");
         }
-        entry.append("\n");
+        entry.append("\n");*/
 
         edges = 0;
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j <= i; ++j) {
                 ArrayList<Integer> path = new ArrayList<>();
                 path(i, j, path);
-                entry.append("Path from " + i + " to " + j + ":\n");
+                /*entry.append("Path from " + i + " to " + j + ":\n");
                 if (path.size() == 0)
                     entry.append("N/A\n");
                 else {
                     for (int k : path)
                         entry.append(k + " ");
                     entry.append("\n");
-                }
+                }*/
             }
         }
-        entry.append("\n");
+        //entry.append("\n");
 
-        entry.append("Sum of all minimum path edges: " + edges + "\n");
-        entry.append("\n");
+        //entry.append("Sum of all minimum path edges: " + edges + "\n");
+        //entry.append("\n");
 
         calculateEdgeBetweenness();
-        entry.append("Edge scores:\n");
+        /*entry.append("Edge scores:\n");
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j)
                 entry.append(edgeScores[i][j] + " ");
             entry.append("\n");
         }
-        entry.append("\n");
+        entry.append("\n");*/
 
-        entry.append("Edge removed: (" + mbEdge.first() + "," + mbEdge.second() + ")\n");
+        entry.append("-- edge <" + mbEdge.first() + "," + mbEdge.second() + ">\n");
         graph.removeEdge(mbEdge.first(),mbEdge.second());
 
         parents = floydWarshall();
@@ -99,7 +99,7 @@ public class GirvanNewman extends Algorithm {
         // then there's one more connected component
         if (parents[mbEdge.first()][mbEdge.second()] == -1)
             ++components;
-        entry.append("Components: " + components + "\n");
+        entry.append("communities <" + components + ">\n");
     }
 
     /**
