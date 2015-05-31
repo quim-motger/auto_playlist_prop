@@ -71,6 +71,10 @@ public class ListController {
         listSet.remove(name);
     }
 
+    public void removeAll() {
+        listSet = new ListSet();
+    }
+
     /**
      * Generate a random song list.
      * @param title             the title of the list
