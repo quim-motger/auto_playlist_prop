@@ -103,8 +103,7 @@ public class AlgorithmTabView extends JPanel {
        private double getCpuTime( ) {
            ThreadMXBean bean = ManagementFactory.getThreadMXBean();
            return bean.isCurrentThreadCpuTimeSupported( ) ?
-                   bean.getCurrentThreadCpuTime( ) : 0L;
-           //return System.nanoTime();
+                   bean.getCurrentThreadCpuTime( ) : System.nanoTime();
        }
     }
 }

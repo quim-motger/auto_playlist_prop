@@ -54,6 +54,16 @@ public class Song {
         }
     }
 
+    public Song clone() {
+        try {
+            return (Song) super.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String getTitle() {
         return title;
     }
