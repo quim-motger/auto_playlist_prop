@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 
 public class SongController {
 
-    private final static String delimiter1 = "\n";
+    private final static String set_delimiter = "\n";
     private final static String delimiter2 = "|";
     SongSet songSet;
 
@@ -171,14 +171,6 @@ public class SongController {
         return songSet.getSong(title, artist);
     }
 
-    public String getSongString(String title, String artist) throws PropException {
-        Song song = songSet.getSong(title, artist);
-        String s = song.getTitle() + "|" + song.getArtist() + "|" + song.getAlbum() + "|"
-                + song.getYear() + "|" + song.getGenre().getId() + "|" + song.getSubgenre().getId() + "|"
-                + song.getDuration();
-        return s;
-    }
-
     /**
      * Search songs with the defined values for specified attributes
      * @param criteria    list with pairs of attributes and value to define search
@@ -254,7 +246,15 @@ public class SongController {
      * @param path      path to save the songSet
      */
     public void save(String path) throws Exception {
-        DataController.save(getSongSetString(), path);
+        DataController dc = new DataController();
+        dc.open(path);
+        dc.deleteContent();
+        ArrayList<Song> songs = songSet.getSongSet();
+        for(Song song: songs) {
+            String s = song.toString();
+            s += set_delimiter;
+            dc.append(s);
+        }
     }
 
     /**
@@ -262,20 +262,33 @@ public class SongController {
      * @param path      path to load the songSet
      */
     public void load(String path) throws Exception {
-        String s = DataController.load(path);
-        s = s.replace("\r","");
-        songSet = new SongSet();
-        String[] songs = s.split(Pattern.quote(delimiter1));
-        for (String p : songs) {
-            String[] tokens = p.split(Pattern.quote(delimiter2));
-            if (tokens.length != 7) throw new PropException(ErrorString.CORRUPT_FILE);
-            Song song = new Song(tokens[0],tokens[1],tokens[2],
-                    Integer.parseInt(tokens[3]),
-                    Genre.getGenreById(Integer.parseInt(tokens[4])),
-                    Genre.getGenreById(Integer.parseInt(tokens[5])),
-                    Integer.parseInt(tokens[6]));
-            songSet.addSong(song);
+        DataController dc = new DataController();
+        dc.open(path);
+        dc.openToRead();
+        removeAllSongs();
+        String songString = dc.readLine();
+        while(songString != null) {
+            songSet.addSong(valueOfSong(songString));
+            songString = dc.readLine();
         }
+    }
+
+    private Song valueOfSong(String p) throws PropException {
+        String[] tokens = p.split(Pattern.quote(delimiter2));
+        if (tokens.length != 7) throw new PropException(ErrorString.CORRUPT_FILE);
+        return new Song(tokens[0],tokens[1],tokens[2],
+                Integer.parseInt(tokens[3]),
+                Genre.getGenreById(Integer.parseInt(tokens[4])),
+                Genre.getGenreById(Integer.parseInt(tokens[5])),
+                Integer.parseInt(tokens[6]));
+    }
+
+    public String getSongString(String title, String artist) throws PropException {
+        Song song = songSet.getSong(title, artist);
+        String s = song.getTitle() + "|" + song.getArtist() + "|" + song.getAlbum() + "|"
+                + song.getYear() + "|" + song.getGenre().getId() + "|" + song.getSubgenre().getId() + "|"
+                + song.getDuration();
+        return s;
     }
 }
 

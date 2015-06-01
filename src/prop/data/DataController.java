@@ -37,14 +37,17 @@ public class DataController {
         return new String(encoded, Charset.defaultCharset());
     }
     
-    public void open(String path) throws FileNotFoundException {
-        file = new File(path);
+    public void open(String path) {
+        file = new File(path);        
+    }
+    
+    public void openToRead() throws FileNotFoundException {
         InputStream fis = new FileInputStream(file);
         br = new BufferedReader(new InputStreamReader(fis));
     }
     
     public void append(String data) throws IOException {
-        FileWriter fileWriter = new FileWriter(file.getName(),true);
+        FileWriter fileWriter = new FileWriter(file,true);
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         bufferedWriter.write(data);
         bufferedWriter.close();
@@ -52,5 +55,10 @@ public class DataController {
     
     public String readLine() throws IOException {
         return br.readLine();
+    }
+    
+    public void deleteContent() throws FileNotFoundException {
+        FileOutputStream writer = new FileOutputStream(file);
+
     }
 }

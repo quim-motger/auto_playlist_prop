@@ -243,6 +243,7 @@ public class UserController {
         int usersSaved = 0;
         DataController dataController = new DataController();
         dataController.open(path);
+        dataController.deleteContent();
         ArrayList<User> users = userSet.getUsers();
         while (usersSaved<userSet.getSize()){
             String cached = "";
@@ -264,6 +265,8 @@ public class UserController {
     public void load(String path, ListController lc, SongController sc) throws Exception {
         DataController dc = new DataController();
         dc.open(path);
+        dc.openToRead();
+        removeAll();
         String userString = dc.readLine();
         while (userString != null) {
             userSet.addUser(userValueOf(lc,sc,userString));
