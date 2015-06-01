@@ -11,9 +11,8 @@ import java.awt.event.ActionListener;
 
 public class MainView extends JFrame {
 
-    public static final String USERS_FILE = "users.users";
-    public static final String FILE_EXTENSION = ".state";
-    public static final String FILE_EXT_NAME = "state";
+    public static final String FILE_EXTENSION = ".prop";
+    public static final String FILE_EXT_NAME = "prop";
     private final MainPController mainPController;
     private UserPController userPController;
     private SongPController songPController;
