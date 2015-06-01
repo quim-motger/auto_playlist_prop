@@ -26,7 +26,7 @@ public class GirvanNewman extends Algorithm {
      * @return      an {@code AlgorithmOutput} object, including a list with communities and an execution log
      */
     public AlgorithmOutput execute(Graph _graph, int k) {
-        graph = new Graph<>(_graph);
+        graph = _graph;
         n = graph.numberOfVertices();
         ArrayList<String> log = new ArrayList<>();
         components = calculateComponents();
