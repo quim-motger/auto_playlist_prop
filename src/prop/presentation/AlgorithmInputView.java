@@ -334,6 +334,7 @@ public class AlgorithmInputView extends JPanel {
                                 .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
     }
+
     private void addSimpleRelation(ActionEvent evt) {
         int i = jComboBox1.getSelectedIndex();
         String s;
@@ -400,8 +401,6 @@ public class AlgorithmInputView extends JPanel {
         Integer nCommunities = (Integer) numberOfCommunities.getValue();
         algorithmTabView.execute(title, algorithmIndex,nCommunities);
     }
-
-    
 
     private void jComboBox1ActionPerformed(ActionEvent evt) {
         if (jComboBox1.getSelectedIndex() == 0 ||

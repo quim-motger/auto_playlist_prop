@@ -35,6 +35,7 @@ public class AlgorithmOutputView extends JPanel {
         listTitle.setText(title);
         
         JLabel timeLabel = new JLabel("Time = "+time+" s");
+        actionBar.add(Box.createHorizontalGlue());
         actionBar.add(timeLabel);
     }
 
@@ -68,7 +69,7 @@ public class AlgorithmOutputView extends JPanel {
 
         listTitle = new JLabel();
         listTitle.setText("title");
-        listTitle.setMaximumSize(new Dimension(194, 200));
+        listTitle.setPreferredSize(new Dimension(194, 200));
         actionBar.add(Box.createHorizontalStrut(3));
         actionBar.add(listTitle);
         actionBar.add(Box.createHorizontalStrut(6));

@@ -4,6 +4,8 @@ import prop.presentation.basicpanels.LoadingPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.concurrent.ExecutionException;
 
 public class AlgorithmTabView extends JPanel {
@@ -37,11 +39,11 @@ public class AlgorithmTabView extends JPanel {
     public void setOutputPanel(String title, double time) {
         removeAll();
         add(new AlgorithmOutputView(algorithmPController,listPController,this,title, time),BorderLayout.CENTER);
+        revalidate();
     }
 
     public void execute(String title, final int algorithmIndex, final int nCom) {
 
-        
         SwingWorker <Double,Void> worker = new AlgorithmWorker(title,algorithmIndex,nCom);
         try {
             worker.execute();
@@ -58,7 +60,7 @@ public class AlgorithmTabView extends JPanel {
         add(new LoadingPanel("Executing Algorithm"));
     }
 
-   class AlgorithmWorker extends SwingWorker<Double, Void> {
+   private class AlgorithmWorker extends SwingWorker<Double, Void> {
 
        private final int nCom;
        private final int algorithmIndex;
@@ -70,12 +72,13 @@ public class AlgorithmTabView extends JPanel {
            nCom = nCommunities;
        }
        
-       
         @Override
         protected Double doInBackground() throws Exception {
             double start = getCpuTime();
             algorithmPController.execute(title, algorithmIndex, nCom);
-            return  (getCpuTime() - start) / 1e9;
+            double time = (getCpuTime() - start) / 1e9;
+            System.out.println("Execution time: " + time + " s");
+            return time;
         }
 
         @Override
@@ -98,7 +101,10 @@ public class AlgorithmTabView extends JPanel {
         }
 
        private double getCpuTime( ) {
-           return System.nanoTime();
+           ThreadMXBean bean = ManagementFactory.getThreadMXBean();
+           return bean.isCurrentThreadCpuTimeSupported( ) ?
+                   bean.getCurrentThreadCpuTime( ) : 0L;
+           //return System.nanoTime();
        }
     }
 }
