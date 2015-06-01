@@ -144,7 +144,17 @@ public class ShowSongPanel extends JPanel {
             saveButton.setEnabled(false);
             cancelButton.setEnabled(false);
         } catch (PropException e) {
-
+            e.printStackTrace();
+            errorText.setText(e.getMessage());
+            errorText.setVisible(true);
+            ActionListener listener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    errorText.setVisible(false);
+                }
+            };
+            Timer timer = new Timer(4000, listener);
+            timer.start();
         }
 
 
@@ -299,6 +309,7 @@ public class ShowSongPanel extends JPanel {
             cancelButton.setEnabled(false);
             songTabView.updateSongSetModel();
         } catch (PropException e) {
+            e.printStackTrace();
             errorText.setText(e.getMessage());
             errorText.setVisible(true);
             ActionListener listener = new ActionListener() {
@@ -334,6 +345,7 @@ public class ShowSongPanel extends JPanel {
             saveButton.setEnabled(false);
             cancelButton.setEnabled(false);
         } catch (PropException e) {
+            e.printStackTrace();
             errorText.setText(e.getMessage());
             errorText.setVisible(true);
             ActionListener listener = new ActionListener() {
@@ -353,7 +365,7 @@ public class ShowSongPanel extends JPanel {
             songTabView.updateSongSetModel();
             songTabView.setRightPanel(emptyPanel);
         } catch (PropException e) {
-
+            e.printStackTrace();
         }
 
     }

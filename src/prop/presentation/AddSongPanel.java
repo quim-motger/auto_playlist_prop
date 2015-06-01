@@ -210,6 +210,7 @@ public class AddSongPanel extends javax.swing.JPanel {
             songTabView.updateSongSetModel();
             songTabView.setShowSongPanel(title,artist);
         } catch (PropException e) {
+            e.printStackTrace();
             jLabel9.setText(e.getMessage());
             jLabel9.setVisible(true);
             ActionListener listener = new ActionListener() {
