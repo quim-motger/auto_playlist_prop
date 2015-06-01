@@ -68,7 +68,7 @@ public class GraphPanel extends JPanel{
             Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
                 public Paint transform(String i) {
                     if(selectedCommunity.containsVertex(i)) return Color.GREEN;
-                    return Color.MAGENTA;
+                    return Color.red;
                 }
             };
             Transformer<String, Shape> vertexSize = new Transformer<String, Shape>(){
@@ -133,34 +133,38 @@ public class GraphPanel extends JPanel{
 
             final ScalingControl scaler = new CrossoverScalingControl();
 
-            JButton plus = new JButton("+");
+            JButton plus = new JButton("Zoom in");
             plus.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     scaler.scale(vv, 1.1f, vv.getCenter());
                 }
             });
-            JButton minus = new JButton("-");
+            JButton minus = new JButton("Zoom out");
             minus.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     scaler.scale(vv, 1 / 1.1f, vv.getCenter());
                 }
             });
 
-            JButton cluster = new JButton("cluster");
+            final JButton cluster = new JButton("Cluster");
+            final JButton uncluster = new JButton("Undo cluster");
             cluster.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    cluster.setEnabled(false);
+                    uncluster.setEnabled(true);
                     cluster(communities.get(communities.size()-1),true);
                 }
             });
-
-            JButton uncluster = new JButton("uncluster");
             uncluster.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    cluster(originalGraph,false);
+                    cluster.setEnabled(true);
+                    uncluster.setEnabled(false);
+                    cluster(originalGraph, false);
                 }
             });
 
-            JButton reset = new JButton("reset");
+
+            JButton reset = new JButton("Reset");
             reset.addActionListener(new ActionListener() {
 
                 public void actionPerformed(ActionEvent e) {
@@ -173,8 +177,9 @@ public class GraphPanel extends JPanel{
             controls.add(plus);
             controls.add(minus);
             controls.add(reset);
-            controls.add(uncluster);
             controls.add(cluster);
+            controls.add(uncluster);
+            uncluster.setEnabled(false);
             add(controls, BorderLayout.SOUTH);
 
 
@@ -189,53 +194,53 @@ public class GraphPanel extends JPanel{
         // aqui, per cada vertex de comunitat en comptes de picked
         private void cluster(UndirectedSparseGraph<String,JungEdge> graph, boolean state) {
             if(state) {
-                // put the picked vertices into a new sublayout
-                Collection<String> picked = new HashSet<String>();
-                picked.addAll(graph.getVertices());
+                if (graph.getVertexCount() > 1) {
+                    // put the picked vertices into a new sublayout
+                    Collection<String> picked = new HashSet<String>();
+                    picked.addAll(graph.getVertices());
 
-                Point2D center = new Point2D.Double();
-                double x = 0;
-                double y = 0;
-                for(String vertex : picked) {
-                    Point2D p = clusteringLayout.transform(vertex); // gets location of the vertex
-                    x += p.getX();
-                    y += p.getY();
-                }
-                x /= picked.size();
-                y /= picked.size();
-                center.setLocation(x,y);
+                    Point2D center = new Point2D.Double();
+                    double x = 0;
+                    double y = 0;
+                    for (String vertex : picked) {
+                        Point2D p = clusteringLayout.transform(vertex); // gets location of the vertex
+                        x += p.getX();
+                        y += p.getY();
+                    }
+                    x /= picked.size();
+                    y /= picked.size();
+                    center.setLocation(x, y);
 
-                //UndirectedSparseGraph<String, JungEdge> subGraph = new UndirectedSparseGraph<>();
-                Graph<String, JungEdge> subGraph;
+                    //UndirectedSparseGraph<String, JungEdge> subGraph = new UndirectedSparseGraph<>();
+                    Graph<String, JungEdge> subGraph;
                     try {
                         subGraph = graph.getClass().newInstance();
-                        for(String vertex : picked) {
+                        for (String vertex : picked) {
                             subGraph.addVertex(vertex);
                             Collection<JungEdge> incidentEdges = graph.getIncidentEdges(vertex);
-                            for(JungEdge edge : incidentEdges) {
+                            for (JungEdge edge : incidentEdges) {
                                 Pair<String> endpoints = graph.getEndpoints(edge);
-                                if(picked.containsAll(endpoints)) {
+                                if (picked.containsAll(endpoints)) {
                                     // put this edge into the subgraph
                                     subGraph.addEdge(edge, endpoints.getFirst(), endpoints.getSecond());
                                 }
                             }
                         }
 
-                        Layout<String,JungEdge> subLayout = getLayoutFor(subLayoutType, subGraph);
+                        Layout<String, JungEdge> subLayout = getLayoutFor(subLayoutType, subGraph);
                         subLayout.setInitializer(vv.getGraphLayout());
                         subLayout.setSize(subLayoutSize);
-                        clusteringLayout.put(subLayout,center);
+                        clusteringLayout.put(subLayout, center);
                         vv.setGraphLayout(clusteringLayout);
 
-                    }
-                    catch (NullPointerException ne) {
+                    } catch (NullPointerException ne) {
                         System.out.println("nullexc");
                         ne.printStackTrace();
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+            }
             else {
                 // remove all sublayouts
                 this.clusteringLayout.removeAll();
