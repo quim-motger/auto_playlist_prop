@@ -29,6 +29,7 @@ public class UserController {
     public static final String BIRTHDAY="birthday";
     private static final String elemDelimiter = "|";
     private static final String setDelimiter = "\n";
+    public static final int SAVING_BLOCK = 20;
 
     private UserSet userSet;
 
@@ -239,7 +240,19 @@ public class UserController {
      * @see prop.data.DataController             
      */
     public void save(String path) throws IOException {
-        DataController.save(userSet.toString(), path);
+        int usersSaved = 0;
+        DataController dataController = new DataController();
+        dataController.open(path);
+        ArrayList<User> users = userSet.getUsers();
+        while (usersSaved<userSet.getSize()){
+            String cached = "";
+            while(usersSaved<userSet.getSize() && usersSaved%SAVING_BLOCK!=SAVING_BLOCK-1) {
+                cached =cached + users.get(usersSaved).toString();
+                cached = cached + setDelimiter;
+                ++usersSaved;
+            }
+            dataController.append(cached);
+        }
     }
 
     /**
@@ -249,35 +262,34 @@ public class UserController {
      * @see prop.data.DataController
      */
     public void load(String path, ListController lc, SongController sc) throws Exception {
-        String data;
-        data = DataController.load(path);
-        userSet = valueOf(data, lc, sc);
+        DataController dc = new DataController();
+        dc.open(path);
+        String userString = dc.readLine();
+        while (userString != null) {
+            userSet.addUser(userValueOf(lc,sc,userString));
+            userString = dc.readLine();
+        }
     }
 
-    private UserSet valueOf(String data, ListController lc, SongController sc) throws PropException {
-        String[] users = data.split(setDelimiter);
-        UserSet set = new UserSet();
-        for (String user : users) {
-            String[] attributes = user.split(Pattern.quote(elemDelimiter));
-            if (!attributes[0].equals(User.USER_STRING_ID))
-                throw new PropException(ErrorString.INCORRECT_FORMAT);
-            User u = new User();
-            u.setName(attributes[1]);
-            u.setGender(Gender.valueOf(attributes[2]));
-            u.setBirthdate(getCalendarFromLong(Long.valueOf(attributes[3])));
-            int nPlaybacks = Integer.valueOf(attributes[4]);
-            for (int i = 0; i < nPlaybacks; i += 9) {
-                u.add(playbackValueOf(attributes, 5 + i, sc));
-            }
-            int index = 5 + nPlaybacks * 9;
-            int nLists = Integer.valueOf(attributes[index]);
-            ++index;
-            for (int i = 0; i < nLists; ++i) {
-                u.associate(lc.getList(attributes[index + i]));
-            }
-            set.addUser(u);
+    private User userValueOf(ListController lc, SongController sc, String user) throws PropException {
+        String[] attributes = user.split(Pattern.quote(elemDelimiter));
+        if (!attributes[0].equals(User.USER_STRING_ID))
+            throw new PropException(ErrorString.INCORRECT_FORMAT);
+        User u = new User();
+        u.setName(attributes[1]);
+        u.setGender(Gender.valueOf(attributes[2]));
+        u.setBirthdate(getCalendarFromLong(Long.valueOf(attributes[3])));
+        int nPlaybacks = Integer.valueOf(attributes[4]);
+        for (int i = 0; i < nPlaybacks; i += 9) {
+            u.add(playbackValueOf(attributes, 5 + i, sc));
         }
-        return set;
+        int index = 5 + nPlaybacks * 9;
+        int nLists = Integer.valueOf(attributes[index]);
+        ++index;
+        for (int i = 0; i < nLists; ++i) {
+            u.associate(lc.getList(attributes[index + i]));
+        }
+        return u;
     }
 
     private Playback playbackValueOf(String[] attributes, int i, SongController sc) throws PropException {

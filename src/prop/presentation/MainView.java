@@ -3,14 +3,13 @@ package prop.presentation;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 public class MainView extends JFrame {
 
+    public static final String USERS_FILE = "users.users";
     private UserPController userPController;
     private SongPController songPController;
     private ListPController listPController;
@@ -77,7 +76,7 @@ public class MainView extends JFrame {
         SaveMenuItem.setText("Save");
         SaveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                saveData(evt);
             }
         });
         FileMenu.add(SaveMenuItem);
@@ -130,9 +129,31 @@ public class MainView extends JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void saveData(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JFileChooser c = new JFileChooser();
+       // c.set
+        
+        // Demonstrate "Open" dialog:
+        int rVal = c.showSaveDialog(this);
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            
+            String dir = c.getCurrentDirectory().toString();
+            try {
+                String path = dir+"/"+ USERS_FILE;
+                userPController.save(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /*private boolean correctFolder(JFileChooser c) {
+        String directory = c.getCurrentDirectory().toString();
+        File folder = new File(directory);
+        File[] dir_contents =  folder.listFiles();
+        //String temp = file + ".MOD";
+        boolean check = new File(temp).exists();
+    }*/
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:

@@ -22,6 +22,7 @@ public class DataControllerDriver {
 
             Scanner in = new Scanner(System.in);
             String data, path, res;
+            DataController dataC = new DataController();
             int i = -1;
             while (i != 0) {
                 res = br.readLine();
@@ -42,6 +43,14 @@ public class DataControllerDriver {
                         path = parts[2];
                         DataController.save(data, path);
                         break;
+                    case 4:
+                        path = parts[1];
+                        dataC.open(path);
+                        break; 
+                    case 5:
+                        data = parts[1];
+                        dataC.append(data);
+                        break;
                     default:
                         printInfo();
                 }
@@ -57,6 +66,8 @@ public class DataControllerDriver {
         sb.append("1:  info\n");
         sb.append("2:  static void save(String data, String path) throws IOException\n");
         sb.append("3:  static String load(String path) throws IOException\n");
+        sb.append("4:  void open(String path)\n");
+        sb.append("5:  void append(String data)\n");
         System.err.print(sb.toString());
         System.err.println("Separate parameters with '|' \n" +
                 "Example: 2|Hello World!|hello.txt");
