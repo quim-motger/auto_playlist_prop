@@ -1,11 +1,7 @@
 package prop.presentation;
 
 import prop.PropException;
-import prop.domain.Genre;
 import prop.domain.SongController;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class SongPController {
 
@@ -64,4 +60,7 @@ public class SongPController {
         songController.removeAllSongs();
     }
 
+    public int load(String path, int line) throws Exception {
+        return songController.load(path,line);
+    }
 }

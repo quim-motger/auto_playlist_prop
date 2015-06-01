@@ -119,4 +119,12 @@ public class UserPController {
     public ArrayList<String> getArtistSongs(String artist) throws PropException {
         return songController.getTitlesFromArtist(artist);
     }
+
+    public void saveAppend(String path) throws IOException {
+        userController.save(path,true);
+    }
+
+    public int load(String path, int currentLine) throws Exception {
+        return userController.load(path,currentLine,listController,songController);
+    }
 }

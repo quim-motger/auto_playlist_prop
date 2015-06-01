@@ -122,6 +122,7 @@ public class UserTabView extends TabView {
             public void actionPerformed(ActionEvent actionEvent) {
                 mController.removeAll();
                 updateList();
+                showMainPanel();
             }
         });
         buttons.add(removeAll);

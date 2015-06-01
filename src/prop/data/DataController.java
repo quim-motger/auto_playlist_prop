@@ -53,6 +53,13 @@ public class DataController {
         bufferedWriter.close();
     }
     
+    public void write(String data) throws IOException {
+        FileWriter fileWriter = new FileWriter(file,false);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(data);
+        bufferedWriter.close();
+    }
+    
     public String readLine() throws IOException {
         return br.readLine();
     }

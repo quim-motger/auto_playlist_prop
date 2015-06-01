@@ -1,15 +1,20 @@
 package prop.presentation;
 
+import prop.ErrorString;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class MainView extends JFrame {
 
     public static final String USERS_FILE = "users.users";
+    public static final String FILE_EXTENSION = ".state";
+    public static final String FILE_EXT_NAME = "state";
+    private final MainPController mainPController;
     private UserPController userPController;
     private SongPController songPController;
     private ListPController listPController;
@@ -21,26 +26,27 @@ public class MainView extends JFrame {
     private JMenuItem ExitMenuItem;
     private JMenuItem SaveMenuItem;
     private JMenuItem LoadMenuItem;
-    private UserTabView UserPanel;
-    private SongTabView SongPanel;
-    private ListTabView ListPanel;
+    private UserTabView userPanel;
+    private SongTabView songPanel;
+    private ListTabView listPanel;
     private JPanel AlgorithmPanel;
     private JTabbedPane TabbedPane;
 
-    public MainView(UserPController upc, SongPController spc, ListPController lpc, AlgorithmPController apc) {
+    public MainView(UserPController upc, SongPController spc, ListPController lpc, AlgorithmPController apc,MainPController mpc) {
         userPController = upc;
         songPController = spc;
         listPController = lpc;
         algorithmPController = apc;
+        mainPController = mpc;
         initComponents();
     }
     
     private void initComponents() {
 
         TabbedPane = new JTabbedPane();
-        UserPanel = new UserTabView(userPController,this);
-        SongPanel = new SongTabView(songPController);
-        ListPanel = new ListTabView(listPController,SongPanel,TabbedPane);
+        userPanel = new UserTabView(userPController,this);
+        songPanel = new SongTabView(songPController);
+        listPanel = new ListTabView(listPController, songPanel,TabbedPane);
         AlgorithmPanel = new AlgorithmTabView(algorithmPController,listPController,songPController,userPController);
         MenuBar = new JMenuBar();
         FileMenu = new JMenu();
@@ -52,11 +58,11 @@ public class MainView extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
 
-        TabbedPane.addTab("Users", UserPanel);
+        TabbedPane.addTab("Users", userPanel);
 
-        TabbedPane.addTab("Songs", SongPanel);
+        TabbedPane.addTab("Songs", songPanel);
 
-        TabbedPane.addTab("Lists", ListPanel);
+        TabbedPane.addTab("Lists", listPanel);
 
         TabbedPane.addTab("Algorithms", AlgorithmPanel);
 
@@ -66,7 +72,7 @@ public class MainView extends JFrame {
                 int index = TabbedPane.getSelectedIndex();
                 switch (index) {
                     case 2:
-                        ListPanel.updateListSetModel();
+                        listPanel.updateListSetModel();
                 }
             }
         });
@@ -76,7 +82,7 @@ public class MainView extends JFrame {
         SaveMenuItem.setText("Save");
         SaveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveData(evt);
+                saveData();
             }
         });
         FileMenu.add(SaveMenuItem);
@@ -84,7 +90,7 @@ public class MainView extends JFrame {
         LoadMenuItem.setText("Load");
         LoadMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                loadData();
             }
         });
         FileMenu.add(LoadMenuItem);
@@ -93,7 +99,7 @@ public class MainView extends JFrame {
         ExitMenuItem.setIconTextGap(15);
         ExitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onCloseOptionSelected(evt);
+                exit();
             }
         });
         FileMenu.add(ExitMenuItem);
@@ -125,43 +131,65 @@ public class MainView extends JFrame {
         pack();
     }
 
-    private void onCloseOptionSelected(java.awt.event.ActionEvent evt) {
+    private void exit() {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void saveData(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void saveData() {
         JFileChooser c = new JFileChooser();
-       // c.set
-        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(FILE_EXTENSION, FILE_EXT_NAME);
+        c.setFileFilter(filter);
         // Demonstrate "Open" dialog:
         int rVal = c.showSaveDialog(this);
         if (rVal == JFileChooser.APPROVE_OPTION) {
-            
+            String file = c.getSelectedFile().getName();
             String dir = c.getCurrentDirectory().toString();
             try {
-                String path = dir+"/"+ USERS_FILE;
-                userPController.save(path);
-            } catch (IOException e) {
+                String path = dir+"/"+file+FILE_EXTENSION;
+                if(file.endsWith(FILE_EXTENSION))
+                    path=dir+"/"+file;
+                mainPController.save(path);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    /*private boolean correctFolder(JFileChooser c) {
-        String directory = c.getCurrentDirectory().toString();
-        File folder = new File(directory);
-        File[] dir_contents =  folder.listFiles();
-        //String temp = file + ".MOD";
-        boolean check = new File(temp).exists();
-    }*/
+    private void loadData() {
+        JFileChooser c = new JFileChooser(){
+            @Override
+            public void approveSelection() {
+                String file = getSelectedFile().getName();
+                String dir = getCurrentDirectory().toString();
+                try {
+                    mainPController.load(dir + "/" + file);
+                    updateAllTabs();
+                    super.approveSelection();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if(e.getMessage().equals(ErrorString.INCORRECT_FORMAT)) {
+                        JOptionPane.showMessageDialog(this, ErrorString.CORRUPT_FILE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, ErrorString.LOAD_OTHERS);
+                    }
+                }
+            }
+        };
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(FILE_EXTENSION, FILE_EXT_NAME);
+        c.setFileFilter(filter);
+        // Demonstrate "Open" dialog:
+        c.showOpenDialog(this);
+    }
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void updateAllTabs() {
+        userPanel.updateList();
+        listPanel.updateListSetModel();
+        songPanel.updateSongSetModel();
+    }
 
     public void showList(String list) {
         TabbedPane.setSelectedIndex(2);
-        ListPanel.showList(list);
+        listPanel.showList(list);
     }
 }
 

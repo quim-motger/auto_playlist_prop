@@ -240,37 +240,55 @@ public class SongController {
         }
         return genres;
     }
+    
+    public void save(String path) throws Exception {
+        save(path,false);
+    }
 
     /**
      * Save the songSet in the specified path
      * @param path      path to save the songSet
      */
-    public void save(String path) throws Exception {
+    public void save(String path, boolean append) throws Exception {
         DataController dc = new DataController();
         dc.open(path);
-        dc.deleteContent();
+        if(!append)
+            dc.deleteContent();
         ArrayList<Song> songs = songSet.getSongSet();
         for(Song song: songs) {
             String s = song.toString();
             s += set_delimiter;
             dc.append(s);
         }
+        dc.append("\n");
+    }
+    
+    public void load (String path) throws Exception {
+        load(path,0);
     }
 
     /**
      * Load the songSet in the specified path
      * @param path      path to load the songSet
      */
-    public void load(String path) throws Exception {
+    public int load(String path, int line) throws Exception {
         DataController dc = new DataController();
         dc.open(path);
         dc.openToRead();
         removeAllSongs();
+        int currentLine = 0;
+        while (currentLine<line) {
+            dc.readLine();
+            ++currentLine;
+        }
+        ++currentLine;
         String songString = dc.readLine();
-        while(songString != null) {
+        while(songString != null && !songString.equals("")) {
             songSet.addSong(valueOfSong(songString));
             songString = dc.readLine();
+            ++currentLine;
         }
+        return currentLine;
     }
 
     private Song valueOfSong(String p) throws PropException {

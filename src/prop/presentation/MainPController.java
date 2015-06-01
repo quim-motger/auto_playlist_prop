@@ -19,12 +19,7 @@ public class MainPController {
                 songPController.getSongController()
                 );
         algorithmPController = new AlgorithmPController(songPController.getSongController(),userPController.getUserController(), listPController.getListController());
-
-        /* Set the Windows look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Windows is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+        
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -41,9 +36,8 @@ public class MainPController {
         } catch (UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        mainView = new MainView(userPController,songPController,listPController,algorithmPController);
+        mainView = new MainView(userPController,songPController,listPController,algorithmPController, this);
 
     }
 
@@ -51,6 +45,18 @@ public class MainPController {
         mainView.setTitle("YouTubeMix");
         mainView.setLocationRelativeTo(null);
         mainView.setVisible(true);
+    }
+    
+    public void save(String path) throws Exception {
+        songPController.save(path);
+        listPController.saveAppend(path);
+        userPController.saveAppend(path);
+    }
+    
+    public void load(String path) throws Exception {
+        int currentLine = songPController.load(path, 0);
+        currentLine = listPController.load(path, currentLine);
+        userPController.load(path, currentLine);
     }
 
 }

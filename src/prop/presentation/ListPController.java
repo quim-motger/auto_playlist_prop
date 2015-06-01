@@ -89,4 +89,11 @@ public class ListPController {
         return listController.getSongId(listIndex,songIndex);
     }
 
+    public void saveAppend(String path) throws IOException {
+        listController.save(path,true);
+    }
+
+    public int load(String path, int currentLine) throws IOException, PropException {
+        return listController.load(path,currentLine,songController);
+    }
 }

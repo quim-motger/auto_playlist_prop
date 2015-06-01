@@ -21,6 +21,7 @@ public class ListController {
 
     private static final char elemDelimiter = '|';
     private static final char setDelimiter = '\n';
+    private static final int SAVING_BLOCK = 20;
     private ListSet listSet;
 
     /**
@@ -288,16 +289,56 @@ public class ListController {
      * @param path  the path where save the list set to
      */
     public void save(String path) throws IOException {
-        DataController.save(listSet.toString(),path);
+        save(path,false);
+    }
+    
+    public void save(String path, boolean append) throws IOException {
+        int listsSaved = 0;
+        DataController dataController = new DataController();
+        dataController.open(path);
+        if(!append)
+            dataController.deleteContent();
+        ArrayList<List> lists = listSet.getLists();
+        dataController.append(lists.size() + String.valueOf(setDelimiter));
+        while (listsSaved<listSet.size()){
+            String cached = "";
+            while(listsSaved<listSet.size() && listsSaved%SAVING_BLOCK!=SAVING_BLOCK-1) {
+                cached =cached + lists.get(listsSaved).toString();
+                cached = cached + setDelimiter;
+                ++listsSaved;
+            }
+            dataController.append(cached);
+        }
+        dataController.append("\n");
+    }
+    
+    public void load(String path, SongController songController) throws IOException, PropException {
+        load(path,0,songController);
     }
 
     /**
      * Load the list set from the specified path.
      * @param path  the path where load the list set from
      */
-    public void load(String path, SongController songController) throws PropException, IOException {
-        String serialized = DataController.load(path);
-        listSet = valueOf(serialized,songController);
+    public int load(String path, int startLine, SongController songController) throws PropException, IOException {
+        DataController dc = new DataController();
+        dc.open(path);
+        removeAll();
+        dc.openToRead();
+        int currentLine = 0;
+        ++startLine;
+        while(currentLine<startLine){
+            ++currentLine;
+            dc.readLine();
+        }
+        String listString = dc.readLine();
+        ++currentLine;
+        while (listString != null && !listString.equals("")) {
+            listSet.add(valueOfList(songController, listString));
+            listString = dc.readLine();
+            ++currentLine;
+        }
+        return currentLine;
     }
 
     /**
@@ -311,15 +352,20 @@ public class ListController {
         String[] lists = str.split(Pattern.quote(String.valueOf(setDelimiter)));
         ListSet listSet = new ListSet();
         for (int i = 1; i < Integer.parseInt(lists[0])+1; ++i) {
-            String[] songs = lists[i].split(Pattern.quote(String.valueOf(elemDelimiter)));
-            List list = new List(songs[0]);
-            for (int j = 2; j < Integer.parseInt(songs[1])*2+2; j += 2) {
-                Song s = songController.getSong(songs[j], songs[j+1]);
-                list.addSong(s);
-            }
+            List list = valueOfList(songController, lists[i]);
             listSet.add(list);
         }
         return listSet;
+    }
+
+    private List valueOfList(SongController songController, String listString) throws PropException {
+        String[] songs = listString.split(Pattern.quote(String.valueOf(elemDelimiter)));
+        List list = new List(songs[0]);
+        for (int j = 2; j < Integer.parseInt(songs[1])*2+2; j += 2) {
+            Song s = songController.getSong(songs[j], songs[j+1]);
+            list.addSong(s);
+        }
+        return list;
     }
 
 }

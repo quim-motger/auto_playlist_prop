@@ -233,17 +233,22 @@ public class UserController {
         Playback playback = new Playback(song,time);
         user.add(playback);
     }
+    
+    public void save(String path) throws IOException {
+        save(path,false);
+    }
 
     /**
      * Saves to disk the users contained in the class
      * @param path Path to the file to be saved to
      * @see prop.data.DataController             
      */
-    public void save(String path) throws IOException {
+    public void save(String path, boolean append) throws IOException {
         int usersSaved = 0;
         DataController dataController = new DataController();
         dataController.open(path);
-        dataController.deleteContent();
+        if(!append)
+            dataController.deleteContent();
         ArrayList<User> users = userSet.getUsers();
         while (usersSaved<userSet.getSize()){
             String cached = "";
@@ -254,6 +259,11 @@ public class UserController {
             }
             dataController.append(cached);
         }
+        dataController.append("\n");
+    }
+    
+    public void load(String path, ListController lc, SongController sc) throws Exception {
+        load(path,0,lc,sc);
     }
 
     /**
@@ -262,16 +272,24 @@ public class UserController {
      * @see prop.domain.UserSet 
      * @see prop.data.DataController
      */
-    public void load(String path, ListController lc, SongController sc) throws Exception {
+    public int load(String path, int startLine, ListController lc, SongController sc) throws Exception {
         DataController dc = new DataController();
         dc.open(path);
         dc.openToRead();
         removeAll();
+        int currentLine = 0;
+        while(currentLine<startLine){
+            ++currentLine;
+            dc.readLine();
+        }
         String userString = dc.readLine();
-        while (userString != null) {
+        ++currentLine;
+        while (userString != null && !userString.equals("")) {
             userSet.addUser(userValueOf(lc,sc,userString));
             userString = dc.readLine();
+            ++currentLine;
         }
+        return currentLine;
     }
 
     private User userValueOf(ListController lc, SongController sc, String user) throws PropException {
