@@ -15,6 +15,7 @@ public abstract class TabView extends JPanel {
     private JToolBar actionBar;
     private JTextField searchField;
     private JList leftList;
+    private JSplitPane splitPanel;
 
     /**
      * Creates new form MainPanel
@@ -47,6 +48,7 @@ public abstract class TabView extends JPanel {
     private void initComponents() {
         leftListView = new JScrollPane();
         leftList = new JList();
+        splitPanel = new JSplitPane();
         leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         leftList.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         leftListView.setViewportView(leftList);
@@ -72,24 +74,22 @@ public abstract class TabView extends JPanel {
             actionBar.add(Box.createHorizontalStrut(5));
         }
 
-        GroupLayout layout = new GroupLayout(this);
+        splitPanel.setLeftComponent(leftListView);
+        splitPanel.setRightComponent(rightScrollPanel);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(leftListView, GroupLayout.DEFAULT_SIZE, leftListView.getPreferredSize().width, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rightScrollPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(actionBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(actionBar, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                        .addComponent(splitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(actionBar, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(leftListView, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
-                                        .addComponent(rightScrollPanel)))
+                                .addComponent(actionBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(splitPanel))
         );
     }
 

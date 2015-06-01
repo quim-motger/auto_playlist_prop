@@ -4,8 +4,6 @@ import prop.presentation.basicpanels.LoadingPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.management.ManagementFactory;
-import java.lang.management.ThreadMXBean;
 import java.util.concurrent.ExecutionException;
 
 public class AlgorithmTabView extends JPanel {
@@ -42,11 +40,12 @@ public class AlgorithmTabView extends JPanel {
     }
 
     public void execute(String title, final int algorithmIndex, final int nCom) {
-        setExecutingPanel();
+
         
-        SwingWorker <Double,Object> worker = new AlgorithmWorker(title,algorithmIndex,nCom);
+        SwingWorker <Double,Void> worker = new AlgorithmWorker(title,algorithmIndex,nCom);
         try {
             worker.execute();
+            setExecutingPanel();
         } catch (Exception e) {
             e.printStackTrace();
             setInputPanel();
@@ -59,7 +58,7 @@ public class AlgorithmTabView extends JPanel {
         add(new LoadingPanel("Executing Algorithm"));
     }
 
-   class AlgorithmWorker extends SwingWorker<Double, Object> {
+   class AlgorithmWorker extends SwingWorker<Double, Void> {
 
        private final int nCom;
        private final int algorithmIndex;
@@ -81,13 +80,21 @@ public class AlgorithmTabView extends JPanel {
 
         @Override
         protected void done() {
+            double time;
             try {
-                setOutputPanel(title,get());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                time = get();
             } catch (ExecutionException e) {
                 e.printStackTrace();
+                setInputPanel();
+                algorithmInputView.throwError(e.getCause().getMessage());
+                return;
+            }  catch (Exception e) {
+                e.printStackTrace();
+                setInputPanel();
+                algorithmInputView.throwError(e.getMessage());
+                return;
             }
+            setOutputPanel(title,time);
         }
 
        private double getCpuTime( ) {
