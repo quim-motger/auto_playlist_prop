@@ -346,6 +346,7 @@ public class SearchSongsPanel extends JPanel{
                 SongListPanel songListPanel = new SongListPanel(songs,songTabView);
                 songTabView.setRightPanel(songListPanel);
             } catch (PropException e) {
+                e.printStackTrace();
             }
         }
     }
