@@ -15,6 +15,7 @@ public class CliquePercolation extends Algorithm {
     ArrayList<Integer>[] cliques;       //list of maximal cliques
     ArrayList<Integer>[] vertexInCliques;   //lists of cliques which contains the index vertex
     ArrayList<Integer>[] communities;
+    ArrayList<Integer>[] neighbours;
 
     private Graph<Song> graph; // Undirected, weighted graph
 
@@ -50,24 +51,18 @@ public class CliquePercolation extends Algorithm {
         //half of the meanWeight in order to consider about the 75% higher intensities a clique
         lWeight = meanTotalWeight()/2;
         //Executes the clique percolation algorithm
-        log.add("### Finding maximal cliques\n");
         //Find maximal cliques in graph
+        neighbours();
         findCliques(R, P, X, log);
-        log.add("### Cliques found\n");
-        //Show the maximal cliques found
-        for (l = 0; l < i; ++l) printClique(cliques[l], log);
-        log.add("### Filter maximal cliques with a low intensity\n");
         //Removes all cliques under the lWeight
         filtCliques(log);
-        log.add("### Cliques filtered\n");
         //Show the maximal cliques filtered
-        for (l = 0; l < i; ++l) printClique(cliques[l], log);
-        log.add("### Merging cliques to find " + k + " communities\n");
+        for (l = 0; l < i; ++l) printClique(cliques[l], log, l);
         //Merge cliques to form communities
         percolateCliques(k, log);
+        for (l = 0; l < i; ++l) if (communities[l].size() > 0) printCommunity(communities[l], log, l);
         //Pars communities (lists of integers) into graph
         ArrayList<Graph> com = parseCommunitiesToGraphs();
-        log.add("### Communities found\n");
         //Return all communities found
         return new AlgorithmOutput(com, log);
     }
@@ -80,29 +75,10 @@ public class CliquePercolation extends Algorithm {
      * @param log   log of the Algorithm execution
      */
     private void findCliques(ArrayList<Integer> R, ArrayList<Integer> P, ArrayList<Integer> X, ArrayList<String> log) {
-        StringBuilder sb = new StringBuilder();
-        //Information with the provisional clique found
-        sb.append("Provisional clique:");
-        for (int r : R) sb.append(" " + r);
-        log.add(sb.toString());
-        sb = new StringBuilder();
-        //Information with the remaining candidates to be added at the maximal clique
-        sb.append("\nCandidates:");
-        for (int p : P) sb.append(" " + p);
-        log.add(sb.toString());
-        sb = new StringBuilder();
-        //Information with the rejected candidates that could be added in the clique
-        sb.append("\nRejected:");
-        for (int x : X) sb.append(" " + x);
-        sb.append("\n");
-        log.add(sb.toString());
-        sb = new StringBuilder();
         //If there are no more candidates to be add to the clique (P is empty) and
         //there aren't any other vertices connected with all of those in R who have
         //been rejected (X is empty), then R contains a maximal clique
         if (P.isEmpty() && X.isEmpty()) {
-            log.add("New clique found:");
-            printClique(R, log);
             cliques[i] = new ArrayList<>();
             //R is added to array of maximal cliques
             cliques[i] = R;
@@ -110,19 +86,18 @@ public class CliquePercolation extends Algorithm {
                 vertexInCliques[r].add(i);
             }
             i = i+1;
-            log.add(sb.toString() + "\n");
         }
         ArrayList<Integer> P1 = new ArrayList<>(P);
         //Expand of every vertex in P
         for (int v : P) {
-            sb.append("\nExpand on " + v + "\n");
+            //sb.append("\nExpand on " + v + "\n");
             //R U v (add v to list of vertices that may compose a clique)
             if (!R.contains(v)) R.add(v);
             //Remove non-neighbours of v from candidates to be added to clique (P) and from
             //rejected who could be added to the clique, then backtrack
-            log.add(sb.toString());
-            findCliques(R, intersection(P1, neighbours(v)), intersection(X, neighbours(v)), log);
-            sb = new StringBuilder();
+            //log.add(sb.toString());
+            findCliques(R, intersection(P1, neighbours[v]), intersection(X, neighbours[v]), log);
+            //sb = new StringBuilder();
             //Remove v from vertices that may compose a clique (R)
             R = remove(R,v);
             //Remove v from candidates to be added (P1)
@@ -140,11 +115,11 @@ public class CliquePercolation extends Algorithm {
         ArrayList<Integer>[] filtedCliques = (ArrayList<Integer>[])new ArrayList[n];
         int k, j;
         j = 0;
-        log.add("Limit intensity to consider a clique: " + lWeight + "\n");
+        //log.add("Limit intensity to consider a clique: " + lWeight + "\n");
         for (k = 0; k < i; ++k) {
             //Calculates the meanWeight of the k clique
             double mw = meanWeight(cliques[k]);
-            log.add("Evaluate clique " + k + " : mean weight " + mw + "\n");
+            //log.add("Evaluate clique " + k + " : mean weight " + mw + "\n");
             //If the clique's intensity is under lWeight, we don't add it to the new list
             if (mw >= lWeight) {
                 filtedCliques[j] = cliques[k];
@@ -210,18 +185,18 @@ public class CliquePercolation extends Algorithm {
         //For every clique found
         for (j = 0; j < i; ++j) {
             StringBuilder sb = new StringBuilder();
-            sb.append("Let's work in the " + j + " clique\n");
             //For every vertex in the clique
             int s;
             for (s = 0; s < communities[j].size(); ++s) {
                 int l = communities[j].get(s);
-                sb.append("Let's work with vertex " + l + "\n");
+                //sb.append("Let's work with vertex " + l + "\n");
                 //For every clique the vertex is in
                 for (int m : vertexInCliques[l]) {
                     //If the clique is not the same
                     if (m != j && m < cliqueInCommunity.length && cliqueInCommunity[m] != cliqueInCommunity[j]) {
-                        sb.append("This vertex is also in clique " + m + "\n");
-                        sb.append("Let's add this clique in the same community\n");
+                        sb.append("add clique [" + m + "] in community [" + j + "]");
+                        log.add(sb.toString());
+                       //sb.append("Let's add this clique in the same community\n");
                         //We add to the community of the initial clique the clique shared by the vertex
                         int q;
                         for (q = 0; q < communities[m].size(); ++q) {
@@ -236,14 +211,13 @@ public class CliquePercolation extends Algorithm {
                         cliqueInCommunity[m] = j;
                         //Update the number of cliques
                         com = getNumCom();
-                        sb.append("Now we have " + com + " communities\n");
-                        log.add(sb.toString() + "\n");
+                        //sb.append("Now we have " + com + " communities\n");
                         sb = new StringBuilder();
                         if (com <= k) return;
                     }
                 }
             }
-            log.add(sb.toString() + "\n");
+            //log.add(sb.toString() + "\n");
         }
     }
 
@@ -325,17 +299,39 @@ public class CliquePercolation extends Algorithm {
         return n;
     }
 
+    private void neighbours() {
+        neighbours = (ArrayList<Integer>[])new ArrayList[n];
+        int i;
+        for (i = 0; i < n; ++i) {
+            ArrayList<Integer> l = new ArrayList<>();
+            LinkedHashSet<Integer> m = graph.adjacentVertices(i);
+            for (int p : m) {
+                l.add(p);
+            }
+            neighbours[i] = l;
+        }
+    }
+
     /**
      * adds to log the index vertices a clique contains
      * @param l     the clique - a list of integers
      * @param log   log of the Algorithm execution
      */
-    private void printClique(ArrayList<Integer> l, ArrayList<String> log) {
+    private void printClique(ArrayList<Integer> l, ArrayList<String> log, int k) {
         StringBuilder sb = new StringBuilder();
+        sb.append("[" + k + "] maximal clique:");
         for (int i : l) {
             sb.append(" " + i);
         }
-        sb.append("\n");
+        log.add(sb.toString());
+    }
+
+    private void printCommunity(ArrayList<Integer> l, ArrayList<String> log, int k) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[" + k + "] community:");
+        for (int i : l) {
+            sb.append(" " + i);
+        }
         log.add(sb.toString());
     }
 
