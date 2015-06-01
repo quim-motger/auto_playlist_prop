@@ -24,8 +24,36 @@ public class Graph<T> {
         edgeCount = 0;
     }
 
+    /**
+     * Copy constructor
+     * @param g
+     */
+    public Graph(Graph<T> g) {
+        T_to_Int = g.getT_to_Int();
+        Int_to_T = g.Int_to_T;
+        vertices = g.vertices;
+        defaultWeight = g.getDefaultWeight();
+        edgeCount = g.getEdgeCount();
+    }
+
     /* GETTERS */
     public double getDefaultWeight() { return defaultWeight; }
+
+    public HashMap<T,Integer> getT_to_Int() {
+        return T_to_Int;
+    }
+
+    public ArrayList<T> getInt_to_T() {
+        return Int_to_T;
+    }
+
+    public ArrayList<EdgeList> getVertices() {
+        return vertices;
+    }
+
+    public int getEdgeCount() {
+        return edgeCount;
+    }
 
     /* SETTERS */
     public void setDefaultWeight(double w) { defaultWeight = w; }
