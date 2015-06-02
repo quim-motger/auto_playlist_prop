@@ -69,14 +69,13 @@ public class UserSetDriver {
                     break;
                 case 6:
                     String name2 = in.next();
-                    /*try {
+                    try {
                         user = userSet.getUserByName(name2);
                         System.out.print(user.getName() + " " + user.getGender() + " " + user.getBirthdate().get(Calendar.DAY_OF_MONTH) +
-                                "/" + user.getBirthdate().get(Calendar.MONTH) + "/" + user.getBirthdate().get(Calendar.YEAR) + " " +
-                                user.getCountry().toString() + "\n");
+                                "/" + user.getBirthdate().get(Calendar.MONTH) + "/" + user.getBirthdate().get(Calendar.YEAR) + "\n");
                     } catch (PropException e) {
                         System.err.println(e.getMessage());
-                    }*/
+                    }
                     break;
                 case 7:
                     s = userSet.toString();

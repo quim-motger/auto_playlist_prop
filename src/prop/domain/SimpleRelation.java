@@ -31,7 +31,7 @@ public class SimpleRelation extends Relation {
     //Attributes of user relations
     private static final String USER_NAME = "user_name";
     private static final String USER_GENDER = "user_gender";
-    private static final String USER_AGE = "user_age_equal";
+    private static final String USER_AGE = "user_age";
 
     /**
      * Simple class constructor

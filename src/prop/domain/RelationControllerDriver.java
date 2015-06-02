@@ -41,29 +41,20 @@ public class RelationControllerDriver {
                     writeGraph(rc.getGraph());
                     break;
                 case 4:
-                    System.out.println("How to introduce relations:");
-                    System.out.println("1. Introduce the number of SimpleRelations you are going to work with: n_relations");
-                    System.out.println("2. Introduce n_relations sequences describing the relations): attribute value");
-                    System.out.println("2. Introduce the boolean expression using the indexs of simple relations considering their order" +
-                            "(indicate end with a ';')");
-                    System.out.println("    for AND relations:  0 and 1");
-                    System.out.println("    for OR relations:   0 or 1");
-                    System.out.println("    for NOT relation:   not0");
-                    System.out.println("    Example: not0 and 1 or 0 and not2 and 3 or 4 ;");
-                    StringBuilder sb = new StringBuilder();
                     int n = in.nextInt();
+                    String[] sb = new String[n];
                     int m = 0;
                     while (m < n) {
-                        sb.append(in.next() + " " + in.next() + "\n");
+                        sb[m] = in.next() + " " + in.next();
                         ++m;
                     }
 
                     String p = in.next();
-                    /*try {
-                        rc.addRelation(sb.toString(),p,n);
+                    try {
+                        rc.addRelation(sb,p,n);
                     } catch (PropException e) {
-                        System.err.println(e.getMessage());
-                    }*/
+                        e.printStackTrace();
+                    }
                     break;
                 case 5:
                     rc.playbackRelations(uc);

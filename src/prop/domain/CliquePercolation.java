@@ -214,7 +214,6 @@ public class CliquePercolation extends Algorithm {
         if (i <= k) return;
         //For every clique found
         for (j = 0; j < i; ++j) {
-            System.out.println(com);
             StringBuilder sb = new StringBuilder();
             //For every vertex in the clique
             int s;
@@ -265,10 +264,12 @@ public class CliquePercolation extends Algorithm {
             if (!l.isEmpty()) {
                 Graph g = new Graph();
                 for (int i : l) {
-                    g.addVertex(graph.getVertexT(i));
-                    for (int m : graph.adjacentVertices(i)) {
-                        if (g.contains(graph.getVertexT(m)) && l.contains(m)) {
-                            g.addEdgeT(graph.getVertexT(i), graph.getVertexT(m), graph.weight(i, m));
+                    if (graph.adjacentVertices(i).size() > 0) {
+                        g.addVertex(graph.getVertexT(i));
+                        for (int m : graph.adjacentVertices(i)) {
+                            if (g.contains(graph.getVertexT(m)) && l.contains(m)) {
+                                g.addEdgeT(graph.getVertexT(i), graph.getVertexT(m), graph.weight(i, m));
+                            }
                         }
                     }
                 }
