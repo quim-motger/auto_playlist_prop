@@ -9,6 +9,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author oscar.manas
+ */
 public class MainView extends JFrame {
 
     public static final String FILE_EXTENSION = ".prop";

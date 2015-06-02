@@ -7,6 +7,12 @@ import prop.domain.SongController;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The presentation controller for the lists.
+ * @author oscar.manas
+ * @see ListController
+ * @see SongController
+ */
 public class ListPController {
 
     private ListController listController;
