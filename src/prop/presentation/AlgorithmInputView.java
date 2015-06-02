@@ -52,6 +52,14 @@ public class AlgorithmInputView extends JPanel {
     private JLabel communitiesLabel;
     private JSpinner numberOfCommunities;
 
+    /**
+     * Creates a new AlgorithmInputView
+     * @param spc   the SongPController
+     * @param upc   the UserPController
+     * @param apc   the AlgorithmPController
+     * @param lpc   the ListPController
+     * @param atv   the AlgorithmTabView
+     */
     public AlgorithmInputView(SongPController spc, UserPController upc, AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv) {
         songPController = spc;
         userPController = upc;

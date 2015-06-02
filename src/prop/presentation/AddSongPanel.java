@@ -17,7 +17,9 @@ public class AddSongPanel extends javax.swing.JPanel {
     private SongTabView songTabView;
 
     /**
-     * Creates new form NewJPanel
+     * Creates new form AddSongPanel
+     * @param spc   the SongPController
+     * @param stv   the SongTabView
      */
     public AddSongPanel(SongPController spc, SongTabView stv) {
         songPController = spc;
