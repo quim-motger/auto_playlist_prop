@@ -14,6 +14,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
+/**
+ * @author oscar.manas
+ */
 public class ListTabView extends TabView {
 
     private ListPController listPController;

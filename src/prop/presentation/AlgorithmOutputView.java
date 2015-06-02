@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author oscar.manas
+ */
 public class AlgorithmOutputView extends JPanel {
 
     private AlgorithmPController algorithmPController;
