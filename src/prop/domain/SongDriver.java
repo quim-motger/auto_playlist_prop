@@ -45,12 +45,8 @@ public class SongDriver {
                     album = in.next();
                     year = in.nextInt();
                     try {
-                        genreId = in.nextInt();
-                        if (genreId < 0 || genreId > 131) throw new PropException(ErrorString.UNEXISTING_GENRE);
-                        genre = Genre.getGenreById(genreId);
-                        subgenreId = in.nextInt();
-                        if (subgenreId < 0 || subgenreId > 131) throw new PropException(ErrorString.UNEXISTING_GENRE);
-                        subgenre = Genre.getGenreById(subgenreId);
+                        genre = Genre.getGenreById(in.nextInt());
+                        subgenre = Genre.getGenreById(in.nextInt());
                         duration = in.nextInt();
                         song = new Song(title, artist, album, year, genre, subgenre, duration);
                     }
@@ -135,7 +131,7 @@ public class SongDriver {
         sb.append("0:  terminate program\n");
         sb.append("1:  info\n");
         sb.append("2:  Song()\n");
-        sb.append("3:  Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
+        sb.append("3:  Song(String title, String artist, String album, int year, int genre, int subgenre, int duration)\n");
         sb.append("4:  String getListTitle()\n");
         sb.append("5:  String getArtist()\n");
         sb.append("6:  String getAlbum()\n");
@@ -147,8 +143,8 @@ public class SongDriver {
         sb.append("12: String setArtist(String artist)\n");
         sb.append("13: String setAlbum(String album)\n");
         sb.append("14: int setYear(int year)\n");
-        sb.append("15: Genre setGenre(Genre genre)\n");
-        sb.append("16: Genre setSubgenre(Genre subgenre)\n");
+        sb.append("15: Genre setGenre(int genre)\n");
+        sb.append("16: Genre setSubgenre(int subgenre)\n");
         sb.append("17: int setDuration(int duration)\n");
         sb.append("18: public String toString()\n");
         sb.append("\n");

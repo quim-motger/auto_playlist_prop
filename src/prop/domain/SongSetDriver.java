@@ -81,16 +81,11 @@ public class SongSetDriver {
                     artist = in.next();
                     album = in.next();
                     year = in.nextInt();
-                    genre = Genre.getGenreById(in.nextInt());
-                    subgenre = Genre.getGenreById(in.nextInt());
-                    duration = in.nextInt();
-                    Song song = null;
                     try {
-                        song = new Song(title, artist, album, year, genre, subgenre, duration);
-                    } catch (PropException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    try {
+                        genre = Genre.getGenreById(in.nextInt());
+                        subgenre = Genre.getGenreById(in.nextInt());
+                        duration = in.nextInt();
+                        Song song = new Song(title, artist, album, year, genre, subgenre, duration);
                         songSet.addSong(song);
                     }
                     catch (PropException e) {
@@ -154,7 +149,7 @@ public class SongSetDriver {
         sb.append("4:  ArrayList<Song> getSongSet()\n");
         sb.append("5:  Song getSong(String title, String artist)\n");
         sb.append("6:  ArrayList<Song> getSongs(ArrayList<Pair<String,String>> ids)\n");
-        sb.append("7:  void addSong(Song song)\n");
+        sb.append("7:  void addSong(String title, String artist, String album, int year, int genre, int subgenre, int duration)\n");
         sb.append("8:  void removeSong(String title, String artist)\n");
         sb.append("9: boolean contains(String title, String artist)\n");
         sb.append("10: int getTotalDuration()\n");
