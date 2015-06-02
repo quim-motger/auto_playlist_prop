@@ -77,16 +77,12 @@ public class UserTabView extends TabView {
         
         updateList();
     }
-
-    public void showUserInRightPanel(String value) {
-        setRightPanel(new EditUserPanel(mController,this,value));
-    }
-
+    
     public void updateList() {
         userListModel.clear();
         ArrayList<String> users;
         String search = getSearchField().getText();
-        
+
         if(search.equals("")) {
             users = mController.getUsers();
         } else {
@@ -174,9 +170,6 @@ public class UserTabView extends TabView {
         c.showOpenDialog(this);
     }
 
-    private void showErrorPanel() {
-
-    }
 
     private void showSavePanel() {
         JFileChooser c = new JFileChooser();
@@ -199,10 +192,13 @@ public class UserTabView extends TabView {
     }
 
     public void showAddUserInRightPanel() {
-        UserPanel u = new AddUserPanel(mController, this);
-        setRightPanel(u);
+        setRightPanel(new AddUserPanel(mController, this));
     }
-    
+
+    public void showUserInRightPanel(String value) {
+        setRightPanel(new EditUserPanel(mController,this,value));
+    }
+
     public void showMainPanel() {
         setRightPanel(new JPanel());
     }

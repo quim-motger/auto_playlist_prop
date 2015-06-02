@@ -26,7 +26,7 @@ public class AlgorithmTabView extends JPanel {
     }
 
     private void initComponents() {
-        algorithmInputView = new AlgorithmInputView(songPController,userPController, algorithmPController, listPController, this);
+        algorithmInputView = new AlgorithmInputView(algorithmPController, this);
         setInputPanel();
     }
 

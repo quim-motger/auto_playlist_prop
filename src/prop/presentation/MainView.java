@@ -31,7 +31,7 @@ public class MainView extends JFrame {
     private UserTabView userPanel;
     private SongTabView songPanel;
     private ListTabView listPanel;
-    private JPanel AlgorithmPanel;
+    private AlgorithmTabView AlgorithmPanel;
     private JTabbedPane TabbedPane;
 
     public MainView(UserPController upc, SongPController spc, ListPController lpc, AlgorithmPController apc,MainPController mpc) {
