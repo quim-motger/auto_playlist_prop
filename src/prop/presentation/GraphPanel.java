@@ -56,13 +56,8 @@ public class GraphPanel extends JPanel{
             // layout size should scale with number of vertices
             layout.setSize(new Dimension(1000,1000));
             */
-            /*for (int i = 0; i < numberOfVertices; i++) {
-                layout.lock("V" + i, true);
-            }*/
-           /* for(String v : graph.getVertices()) {
-                transparency.put(v, new JungEdge(0.9));
-            }
-*/
+
+
             vv.setBackground(Color.white);
 
             Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
@@ -182,6 +177,7 @@ public class GraphPanel extends JPanel{
             uncluster.setEnabled(false);
             add(controls, BorderLayout.SOUTH);
 
+            lock(originalGraph, clusteringLayout);
 
         }
 
@@ -248,7 +244,11 @@ public class GraphPanel extends JPanel{
             }
         }
 
-
+    private void lock(UndirectedSparseGraph<String,JungEdge> g, AggregateLayout<String,JungEdge> alayout) {
+        for (String s : g.getVertices()) {
+            alayout.lock(s,true);
+        }
+    }
 
     public void zoomIn() {
         setZoom(1);
