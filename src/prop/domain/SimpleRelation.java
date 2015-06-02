@@ -62,22 +62,6 @@ public class SimpleRelation extends Relation {
     }
 
     /**
-     * Get the songSet of the relation
-     * @return the songSet
-     */
-    public SongSet getSongSet() {
-        return songSet;
-    }
-
-    /**
-     * Get the userSet of the relation
-     * @return the userSet
-     */
-    public UserSet getUserSet() {
-        return userSet;
-    }
-
-    /**
      * Evaluates the relation
      * @return      An ArrayList with all songs that match the relation
      */

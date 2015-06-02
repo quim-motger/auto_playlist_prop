@@ -240,7 +240,12 @@ public class SongController {
         }
         return genres;
     }
-    
+
+    /**
+     * saves in a textfile the songSet of the implicit SongController
+     * @param path  the path to save the SongSet content
+     * @throws Exception if path is not correct
+     */
     public void save(String path) throws Exception {
         save(path,false);
     }
@@ -262,7 +267,11 @@ public class SongController {
         }
         dc.append("\n");
     }
-    
+
+    /**
+     * Load the songSet in the specified path
+     * @param path      path to load the songSet
+     */
     public void load (String path) throws Exception {
         load(path,0);
     }
@@ -301,6 +310,13 @@ public class SongController {
                 Integer.parseInt(tokens[6]));
     }
 
+    /**
+     * obtains a String with the Song defined by title and artist
+     * @param title     song title
+     * @param artist    song artist
+     * @return          a String with all attributes of the song
+     * @throws PropException
+     */
     public String getSongString(String title, String artist) throws PropException {
         Song song = songSet.getSong(title, artist);
         String s = song.getTitle() + "|" + song.getArtist() + "|" + song.getAlbum() + "|"
