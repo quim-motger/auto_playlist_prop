@@ -1,5 +1,6 @@
 package prop.domain;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
@@ -88,6 +89,12 @@ public class CliquePercolation extends Algorithm {
             i = i+1;
         }
         ArrayList<Integer> P1 = new ArrayList<>(P);
+        ArrayList<Integer> union = union(P,X);
+        if (!union.isEmpty()) {
+            int pivot = getPivot(union);
+            P = removeNeighbours(P,pivot);
+        }
+
         //Expand of every vertex in P
         for (int v : P) {
             //sb.append("\nExpand on " + v + "\n");
@@ -167,6 +174,29 @@ public class CliquePercolation extends Algorithm {
         return meanWeight;
     }
 
+    private ArrayList<Integer> removeNeighbours(ArrayList<Integer> A, int v) {
+        ArrayList<Integer> l = new ArrayList<>(A);
+        l.removeAll(neighbours[v]);
+        return l;
+    }
+
+    private ArrayList<Integer> union(ArrayList<Integer> A, ArrayList<Integer> B) {
+        ArrayList<Integer> l = new ArrayList<>(A);
+        for (int b : B) {
+            if (!l.contains(b)) l.add(b);
+        }
+        return l;
+    }
+
+    private int getPivot(ArrayList<Integer> A) {
+        int k = A.get(0);
+        int s;
+        for (s = 1; s < A.size(); ++s) {
+            if (neighbours[A.get(s)].size() > neighbours[k].size()) k = A.get(s);
+        }
+        return k;
+    }
+
     /**
      * Merges the maximal cliques found in <code>cliques</code> until there ara k or less communities
      * @param k     number of maximal communities
@@ -193,10 +223,11 @@ public class CliquePercolation extends Algorithm {
                 //For every clique the vertex is in
                 for (int m : vertexInCliques[l]) {
                     //If the clique is not the same
+
                     if (m != j && m < cliqueInCommunity.length && cliqueInCommunity[m] != cliqueInCommunity[j]) {
                         sb.append("add clique [" + m + "] in community [" + j + "]");
                         log.add(sb.toString());
-                       //sb.append("Let's add this clique in the same community\n");
+                        //sb.append("Let's add this clique in the same community\n");
                         //We add to the community of the initial clique the clique shared by the vertex
                         int q;
                         for (q = 0; q < communities[m].size(); ++q) {
