@@ -1,0 +1,36 @@
+YouTubeMix
+
+How to save users, songs and lists:
+To save everything go to File->Save. The state of the program will be saved in .prop format. 
+To save only Users go to Users tab and click "Save" at the top bar. It will be saved in .users format.
+To save only Songs go to Songs tab and click "Save" at the top bar. It will be saved in .songs format.
+To save only Lists go to Lists tab and click "Save" at the top bar. It will be saved in .lists format.
+
+Users tab:
+
+How to create a user:
+Click "Add User" at the top bar and fill the form. Note that the username must be unique. 
+
+How to associate lists to a user:
+Select a user of the list in the left and click "Associated Lists". Then click "edit" and select the lists to associate or disassociate.
+
+How to play a song:
+Select a user of the list in the left and click "Played". Then click "Play song" and select the song to play.
+
+Songs tab:
+
+How to add a new song:
+Click "Add Song" at the top bar and fill the form. Note that the combination Title - Artist must be unique. 
+
+How to search songs:
+Click "Search Songs" at the top bar. Click the checkboxes of the fields you want the program to consider when performing the search. Fiill the selected fields and click "Search".
+
+Lists tab:
+How to change the order of songs in a list:
+Select a list. CTRL+Click two songs of the list and click "Swap Songs".
+
+Algorithms tab:
+To generate a list first you have to enter the relations. 
+
+The graph represents all the songs and the selected community (in green).
+
