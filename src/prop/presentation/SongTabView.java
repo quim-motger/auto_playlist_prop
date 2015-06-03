@@ -1,18 +1,13 @@
 package prop.presentation;
 
-import prop.ErrorString;
-import prop.PropException;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -207,17 +202,29 @@ public class SongTabView extends TabView{
      * Updates the song List
      */
     public void updateSongSetModel() {
-        songSetModel.clear();
+        songSet.setPrototypeCellValue("title" + Short.MAX_VALUE);
+        songSet.setModel(new AbstractListModel() {
+            @Override
+            public int getSize() {
+                return getSongString().length;
+            }
+
+            @Override
+            public Object getElementAt(int i) {
+                System.out.println("ELEMENT "+i);
+                return getSongString()[i];
+            }
+        });
+    }
+
+    private String[] getSongString() {
         String songs;
         String prefix = getSearchField().getText();
         if (prefix.equals("")) {
             songs = songPController.findSongs();
         }
         else songs = songPController.findSongsByName(prefix);
-        String[] listSongs = songs.split(Pattern.quote("\n"));
-        for (String s : listSongs) {
-           if (s.length() != 0) songSetModel.addElement(s);
-        }
+        return songs.split(Pattern.quote("\n"));
     }
 
     /**
