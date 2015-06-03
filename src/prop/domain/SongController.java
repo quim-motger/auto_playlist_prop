@@ -18,6 +18,7 @@ public class SongController {
 
     private final static String set_delimiter = "\n";
     private final static String delimiter2 = "|";
+    private static final int SAVING_BLOCK = 20;
     SongSet songSet;
 
     /**
@@ -264,10 +265,18 @@ public class SongController {
         if(!append)
             dc.deleteContent();
         ArrayList<Song> songs = songSet.getSongSet();
-        for(Song song: songs) {
-            String s = song.toString();
-            s += set_delimiter;
-            dc.append(s);
+        boolean saved = false;
+        int usersSaved = 0;
+        while (usersSaved<songSet.size()){
+            String cached = "";
+            while(usersSaved<songSet.size() && (usersSaved%SAVING_BLOCK!=SAVING_BLOCK-1 || saved)) {
+                cached =cached + songs.get(usersSaved).toString();
+                cached = cached + set_delimiter;
+                ++usersSaved;
+                saved = false;
+            }
+            dc.append(cached);
+            saved = true;
         }
         dc.append("\n");
     }

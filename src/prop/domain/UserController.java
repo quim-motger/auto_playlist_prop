@@ -250,14 +250,17 @@ public class UserController {
         if(!append)
             dataController.deleteContent();
         ArrayList<User> users = userSet.getUsers();
+        boolean saved = false;
         while (usersSaved<userSet.getSize()){
             String cached = "";
-            while(usersSaved<userSet.getSize() && usersSaved%SAVING_BLOCK!=SAVING_BLOCK-1) {
+            while(usersSaved<userSet.getSize() && (usersSaved%SAVING_BLOCK!=SAVING_BLOCK-1 || saved)) {
                 cached =cached + users.get(usersSaved).toString();
                 cached = cached + setDelimiter;
                 ++usersSaved;
+                saved = false;
             }
             dataController.append(cached);
+            saved = true;
         }
         dataController.append("\n");
     }
