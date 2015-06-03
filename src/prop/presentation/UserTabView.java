@@ -73,13 +73,27 @@ public class UserTabView extends TabView {
                 updateList();
             }
         });
-        
-        
+
         updateList();
     }
     
     public void updateList() {
-        userListModel.clear();
+        leftList.setPrototypeCellValue("title" + Short.MAX_VALUE);
+
+        leftList.setModel(new AbstractListModel() {
+            @Override
+            public int getSize() {
+                return getUserStrings().size();
+            }
+
+            @Override
+            public Object getElementAt(int i) {
+                return getUserStrings().get(i);
+            }
+        });
+    }
+
+    private ArrayList<String> getUserStrings() {
         ArrayList<String> users;
         String search = getSearchField().getText();
 
@@ -88,10 +102,7 @@ public class UserTabView extends TabView {
         } else {
             users = mController.getMatch(search);
         }
-        
-        for(String user : users) {
-            userListModel.addElement(user);
-        }
+        return users;
     }
 
     @Override

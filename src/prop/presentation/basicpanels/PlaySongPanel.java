@@ -34,6 +34,9 @@ public class PlaySongPanel extends PropPanel {
     private DefaultComboBoxModel<Object> modelTitle;
 
 
+    /**
+     * Creates a new Panel to play a new song for the specified user
+     */
     public PlaySongPanel(String userName, UserPController userPController, UserTabView userTabView) {
         super();
         tab = userTabView;

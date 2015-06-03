@@ -35,13 +35,10 @@ public class GraphPanel extends JPanel{
         private Class subLayoutType = CircleLayout.class;
         private Dimension subLayoutSize;
 
-        ScalingControl scaler2 = new CrossoverScalingControl(); //not necessary at this moment
-
         public GraphPanel(final UndirectedSparseGraph<String,JungEdge> originalGraph, final ArrayList<UndirectedSparseGraph<String,JungEdge>> communities) {
             final UndirectedSparseGraph<String,JungEdge> selectedCommunity = communities.get(communities.size()-1);
 
             clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<String, JungEdge>(originalGraph));
-            // circle layout i fr no es modifiquen al fer uncluster
             subLayoutSize = new Dimension(50,50);
             Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
@@ -50,22 +47,17 @@ public class GraphPanel extends JPanel{
                     new DefaultVisualizationModel<String,JungEdge>(clusteringLayout, visualizationModelSize);
             vv =  new VisualizationViewer<String,JungEdge>(visualizationModel, preferredSize);
 
-
-          /*  //possible layouts: ISOMLayout, KKLayout, FRLayout
-            Layout<String, JungEdge> layout = new CircleLayout<>(graph);
-            // layout size should scale with number of vertices
-            layout.setSize(new Dimension(1000,1000));
-            */
-
-
             vv.setBackground(Color.white);
 
+            // Vertices' color
             Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
                 public Paint transform(String i) {
                     if(selectedCommunity.containsVertex(i)) return Color.GREEN;
                     return Color.red;
                 }
             };
+
+            // Vertices' size
             Transformer<String, Shape> vertexSize = new Transformer<String, Shape>(){
                 public Shape transform(String i){
                     Ellipse2D circle = new Ellipse2D.Double(-10,-10, 20, 20);
@@ -75,6 +67,7 @@ public class GraphPanel extends JPanel{
                 }
             };
 
+            // Edges' color
             vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
                 public Paint transform(JungEdge e) {
                     Pair<String> p = originalGraph.getEndpoints(e);
@@ -84,6 +77,7 @@ public class GraphPanel extends JPanel{
                 }
             });
 
+            // Edges' thickness
             vv.getRenderContext().setEdgeStrokeTransformer(new Transformer<JungEdge, Stroke>() {
                 protected final Stroke THIN = new BasicStroke(1);
                 protected final Stroke THICK = new BasicStroke(4);
@@ -99,8 +93,7 @@ public class GraphPanel extends JPanel{
             vv.getRenderContext().setVertexFillPaintTransformer(vertexColor);
             vv.getRenderContext().setVertexShapeTransformer(vertexSize);
 
-
-            // add my listeners for ToolTips
+            // Edge weight tooltip
             vv.setVertexToolTipTransformer(new ToStringLabeller<String>());
             vv.setEdgeToolTipTransformer(new Transformer<JungEdge, String>() {
                 public String transform(JungEdge edge) {
@@ -113,7 +106,6 @@ public class GraphPanel extends JPanel{
             vv.getRenderer().getVertexLabelRenderer().setPositioner(new InsidePositioner());
             vv.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.AUTO);
             vv.setForeground(Color.black); //label color
-
 
             this.setLayout(new BorderLayout(5, 5));
             final GraphZoomScrollPane panel = new GraphZoomScrollPane(vv);
@@ -177,6 +169,7 @@ public class GraphPanel extends JPanel{
             uncluster.setEnabled(false);
             add(controls, BorderLayout.SOUTH);
 
+            // Lock vertices to avoid movement
             lock(originalGraph, clusteringLayout);
 
         }
@@ -187,7 +180,6 @@ public class GraphPanel extends JPanel{
             return  (Layout)constructor.newInstance(args);
         }
 
-        // aqui, per cada vertex de comunitat en comptes de picked
         private void cluster(UndirectedSparseGraph<String,JungEdge> graph, boolean state) {
             if(state) {
                 if (graph.getVertexCount() > 1) {
@@ -207,7 +199,6 @@ public class GraphPanel extends JPanel{
                     y /= picked.size();
                     center.setLocation(x, y);
 
-                    //UndirectedSparseGraph<String, JungEdge> subGraph = new UndirectedSparseGraph<>();
                     Graph<String, JungEdge> subGraph;
                     try {
                         subGraph = graph.getClass().newInstance();
@@ -248,18 +239,6 @@ public class GraphPanel extends JPanel{
         for (String s : g.getVertices()) {
             alayout.lock(s,true);
         }
-    }
-
-    public void zoomIn() {
-        setZoom(1);
-    }
-
-    public void zoomOut() {
-        setZoom(-1);
-    }
-
-    private void setZoom(int amount) {
-        scaler2.scale(vv, amount > 0 ? 1.1f : 1 / 1.1f, vv.getCenter());
     }
 
 }

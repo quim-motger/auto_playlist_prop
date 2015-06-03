@@ -196,7 +196,11 @@ public class UserController {
     public String obtainUserSetToString() {
         return userSet.toString();
     }
-    
+
+    /**
+     * Gets all usernames in the userset
+     * @return usernames for all users
+     */
     public String[] obtainUserSetTitles() {
         ArrayList<User> users = userSet.getUsers();
         String[] userTitles = new String[users.size()];
@@ -214,6 +218,10 @@ public class UserController {
         return userSet;
     }
 
+    /**
+     * Get all users from userset 
+     * @return
+     */
     public ArrayList<User> obtainUsers() { return userSet.getUsers();}
         
     /**
@@ -234,6 +242,11 @@ public class UserController {
         user.add(playback);
     }
     
+    /**
+     * Saves to disk the users contained in the class
+     * @param path Path to the file to be saved to
+     * @see prop.data.DataController
+     */    
     public void save(String path) throws IOException {
         save(path,false);
     }
@@ -265,6 +278,12 @@ public class UserController {
         dataController.append("\n");
     }
     
+    /**
+     * Loads from the disk a UserSet 
+     * @param path Path to the file to be load from
+     * @see prop.domain.UserSet
+     * @see prop.data.DataController
+     */
     public void load(String path, ListController lc, SongController sc) throws Exception {
         load(path,0,lc,sc);
     }
@@ -333,6 +352,11 @@ public class UserController {
         return new Playback(song, cal);
     }
 
+    /**
+     * Finds users starting with the desired prefix
+     * @param prefix desired prefix
+     * @return Usernames starting with the desired prefix
+     */
     public String[] findUsers(String prefix) {
         ArrayList<User> l = userSet.findUsers(prefix);
         String[] ret = new String[l.size()];
@@ -350,6 +374,10 @@ public class UserController {
         return  cal;
     }
 
+    /**
+     * Obtain all genders into string 
+     * @return
+     */
     public String[] obtainGenders() {
         Gender[] genders = Gender.values();
         String[] ret = new String[genders.length];
@@ -359,6 +387,16 @@ public class UserController {
         return ret;
     }
 
+    /**
+     * Updates user identified by id
+     * @param id old user id
+     * @param name new user id
+     * @param gender gender
+     * @param day day of birth
+     * @param month month of birth
+     * @param year year of birth
+     * @throws Exception
+     */
     public void updateUser(String id, String name, String gender, int day, int month, int year) throws Exception {
         checkDate(year+"-"+month+"-"+day);
         name.replace('|','/');
@@ -376,7 +414,13 @@ public class UserController {
             throw e;
         }
     }
-    
+
+    /**
+     * Obtains playbacks from a user 
+     * @param name username
+     * @return Array of strings representing the playbacks of the indicated user
+     * @throws PropException
+     */
     public String[] obtainPlaybacks(String name) throws PropException {
         User user = userSet.getUserByName(name);
         TreeSet<Playback> playbacks = user.getPlaybackRegister();
@@ -387,6 +431,9 @@ public class UserController {
         return ret.toArray(new String[ret.size()]);
     }
 
+    /**
+     * Deletes all users stored
+     */
     public void removeAll() {
         userSet = new UserSet();
     }

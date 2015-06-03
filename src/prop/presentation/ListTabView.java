@@ -252,16 +252,28 @@ public class ListTabView extends TabView {
      * Update the JList which contains the set of lists.
      */
     public void updateListSetModel() {
-        listSetModel.clear();
+        listSet.setPrototypeCellValue("title" + Short.MAX_VALUE);
+        listSet.setModel(new AbstractListModel() {
+            @Override
+            public int getSize() {
+                return getListStrings().length;
+            }
+
+            @Override
+            public Object getElementAt(int i) {
+                return getListStrings()[i];
+            }
+        });
+    }
+
+    private String[] getListStrings() {
         String lists[];
         String prefix = searchField.getText();
         if (prefix.equals(""))
             lists = listPController.getListSetStringArray();
         else
             lists = listPController.findLists(prefix);
-        for (String s : lists) {
-            listSetModel.addElement(s);
-        }
+        return lists;
     }
 
     /**

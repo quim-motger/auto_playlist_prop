@@ -19,7 +19,10 @@ public class RelationController {
     SongController songController;
     UserController userController;
     Graph<Song> graph;
-    
+
+    /**
+     * Default contructor
+     */
     public RelationController() {
         graph = new Graph();
     }

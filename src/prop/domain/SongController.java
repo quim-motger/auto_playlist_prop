@@ -193,10 +193,11 @@ public class SongController {
         return s;
     }
 
-    public ArrayList<Song> searchSongsList(ArrayList<Pair<String, String>> l) throws PropException {
-        return songSet.searchSongs(l);
-    }
-
+    /**
+     * Finds songs by name
+     * @param prefix prefix to be searched
+     * @return Songs starting with prefix
+     */
     public String findSongsByName(String prefix) {
         ArrayList<Song> songs = songSet.findSongs(prefix);
         String p = "";
@@ -206,10 +207,18 @@ public class SongController {
         return p;
     }
 
+    /**
+     * get Song List 
+     * @return String with all the songs to string
+     */
     public String getList() {
         return songSet.getSongList();
     }
 
+    /**
+     * get artists 
+     * @return array of artists
+     */
     public ArrayList<String> getArtists() {
         ArrayList<String> artists = new ArrayList<String>();
         for (Song s : songSet.getSongSet())
@@ -217,6 +226,12 @@ public class SongController {
         return artists;
     }
 
+    /**
+     * Get song titles from artists
+     * @param artist artist to be searched
+     * @return
+     * @throws PropException
+     */
     public ArrayList<String> getTitlesFromArtist(String artist) throws PropException {
         ArrayList<String> titles = new ArrayList<String>();
         Pair<String,String> cond = new Pair<>("song_artist",artist);

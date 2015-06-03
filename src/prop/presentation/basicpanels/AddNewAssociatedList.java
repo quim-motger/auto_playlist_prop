@@ -26,7 +26,10 @@ public class AddNewAssociatedList extends PropPanel {
     private JScrollPane listWrapper;
     private JList listOfLists;
     private DefaultListModel<String> listOfListsModel;
-    
+
+    /**
+     * Constructor
+     */
     public AddNewAssociatedList (String userName, UserPController userPController, UserTabView userTabView) {
         super();
         controller = userPController;
