@@ -96,4 +96,12 @@ public class AlgorithmPController {
     public void execute(String title, int algorithm, int k) throws Exception {
         log = algorithmController.execute(title, algorithm, k, listController, relationController);
     }
+    
+    public String[] getUserGenres() {
+        return userController.obtainGenders();
+    }
+    
+    public String[] listSongGenres() {
+        return songController.listGenres();
+    }
 }

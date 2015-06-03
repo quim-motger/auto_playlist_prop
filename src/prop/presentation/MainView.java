@@ -6,8 +6,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * @author oscar.manas
@@ -23,7 +21,7 @@ public class MainView extends JFrame {
     private AlgorithmPController algorithmPController;
 
     private JMenu FileMenu;
-    private JMenu HelpMenu;
+    private JMenuItem HelpMenu;
     private JMenuBar MenuBar;
     private JMenuItem ExitMenuItem;
     private JMenuItem SaveMenuItem;
@@ -31,7 +29,7 @@ public class MainView extends JFrame {
     private UserTabView userPanel;
     private SongTabView songPanel;
     private ListTabView listPanel;
-    private JPanel AlgorithmPanel;
+    private AlgorithmTabView AlgorithmPanel;
     private JTabbedPane TabbedPane;
 
     public MainView(UserPController upc, SongPController spc, ListPController lpc, AlgorithmPController apc,MainPController mpc) {
@@ -44,7 +42,6 @@ public class MainView extends JFrame {
     }
     
     private void initComponents() {
-
         TabbedPane = new JTabbedPane();
         userPanel = new UserTabView(userPController,this);
         songPanel = new SongTabView(songPController);
@@ -55,18 +52,12 @@ public class MainView extends JFrame {
         SaveMenuItem = new JMenuItem();
         LoadMenuItem = new JMenuItem();
         ExitMenuItem = new JMenuItem();
-        HelpMenu = new JMenu();
+        HelpMenu = new JMenuItem();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
 
-        TabbedPane.addTab("Users", userPanel);
-
-        TabbedPane.addTab("Songs", songPanel);
-
-        TabbedPane.addTab("Lists", listPanel);
-
-        TabbedPane.addTab("Algorithms", AlgorithmPanel);
+        addTabs();
 
         TabbedPane.addChangeListener(new ChangeListener() {
             @Override
@@ -108,30 +99,39 @@ public class MainView extends JFrame {
 
         MenuBar.add(FileMenu);
 
-        HelpMenu.setText("Help");
+        /*HelpMenu.setText("Help");
         HelpMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                showHelp();
             }
         });
-        MenuBar.add(HelpMenu);
+        HelpMenu.setPreferredSize(new Dimension(10, HelpMenu.getPreferredSize().height));
+        MenuBar.add(HelpMenu);*/
 
         setJMenuBar(MenuBar);
 
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(TabbedPane)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(TabbedPane)
-        );
+        getContentPane().add(TabbedPane);
 
         pack();
     }
+
+    private void addTabs() {
+        TabbedPane.addTab("Users", userPanel);
+
+        TabbedPane.addTab("Songs", songPanel);
+
+        TabbedPane.addTab("Lists", listPanel);
+
+        TabbedPane.addTab("Algorithms", AlgorithmPanel);
+        
+        TabbedPane.addTab("Help", new HelpPanel());
+    }
+
+    public void showHelp() {
+        TabbedPane.setSelectedIndex(4);
+    }
+
 
     private void exit() {
         System.exit(0);
