@@ -37,6 +37,10 @@ public class DataController {
         return new String(encoded, Charset.defaultCharset());
     }
     
+    /**
+     * Opens a file in path
+     * 
+     * /
     public void open(String path) {
         file = new File(path);        
     }
@@ -46,6 +50,7 @@ public class DataController {
         br = new BufferedReader(new InputStreamReader(fis));
     }
     
+    /** Appends a string to the file previously opened */
     public void append(String data) throws IOException {
         FileWriter fileWriter = new FileWriter(file,true);
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -53,6 +58,7 @@ public class DataController {
         bufferedWriter.close();
     }
     
+    /** Writes a string to the file previously opened (overwrites content */
     public void write(String data) throws IOException {
         FileWriter fileWriter = new FileWriter(file,false);
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -60,10 +66,12 @@ public class DataController {
         bufferedWriter.close();
     }
     
+    /** Return a line from the file previously opened */
     public String readLine() throws IOException {
         return br.readLine();
     }
     
+    /** Deletes content from the file previously opened */
     public void deleteContent() throws FileNotFoundException {
         FileOutputStream writer = new FileOutputStream(file);
 
