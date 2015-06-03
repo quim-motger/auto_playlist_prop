@@ -37,6 +37,12 @@ public class ListTabView extends TabView {
     private JButton randomButton;
     private JButton editButton;
 
+    /**
+     * Constructor with arguments.
+     * @param lpc   an instance of {@code ListPController}
+     * @param stv   an instance of {@code SongTabView}
+     * @param tp    the {@code JTabbedPane} where the ListTabView is contained
+     */
     public ListTabView(ListPController lpc, SongTabView stv, JTabbedPane tp) {
         super();
         listPController = lpc;
@@ -45,6 +51,9 @@ public class ListTabView extends TabView {
         initListComponents();
     }
 
+    /**
+     * Initialize the view.
+     */
     private void initListComponents() {
         emptyPanel = new JPanel();
         listSetModel = new DefaultListModel();
@@ -239,6 +248,9 @@ public class ListTabView extends TabView {
         }
     }
 
+    /**
+     * Update the JList which contains the set of lists.
+     */
     public void updateListSetModel() {
         listSetModel.clear();
         String lists[];
@@ -252,6 +264,10 @@ public class ListTabView extends TabView {
         }
     }
 
+    /**
+     * Make the List {@code list} visible.
+     * @param list  the list to show
+     */
     public void showList(String list) {
         setRightPanel(new ShowList(list));
     }

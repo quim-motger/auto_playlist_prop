@@ -137,6 +137,10 @@ public class AlgorithmOutputView extends JPanel {
         algorithmTabView.setInputPanel();
     }
 
+    /**
+     * Update the JList which contains the list of songs.
+     * @param title
+     */
     public void updateListModel(String title) {
         listModel.clear();
         String list[] = listPController.getListStringArray(title);
