@@ -332,9 +332,18 @@ public class ListController {
      * @param path  the path where load the list set from
      */
     public void load(String path, SongController songController) throws IOException, PropException {
-        load(path,0,songController);
+        load(path, 0, songController);
     }
 
+    /**
+     * Load the list set from the specified path, starting in startLine
+     * @param path path to the file
+     * @param startLine startLine of the file to start reading
+     * @param songController songController
+     * @return last line readen
+     * @throws PropException
+     * @throws IOException
+     */
     public int load(String path, int startLine, SongController songController) throws PropException, IOException {
         DataController dc = new DataController();
         dc.open(path);

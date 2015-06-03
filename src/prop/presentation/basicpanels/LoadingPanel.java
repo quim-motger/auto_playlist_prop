@@ -12,7 +12,10 @@ import javax.swing.*;
 public class LoadingPanel extends PropPanel{
     
     private JProgressBar progressBar;
-    
+
+    /**
+     * Creates a loading panel
+     */
     public LoadingPanel(String title) {
         super();
         setTitleText(title);

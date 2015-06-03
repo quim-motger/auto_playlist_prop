@@ -20,8 +20,8 @@ public class AlgorithmOutput {
 
     /**
      * Constructor with parameters
-     * @param communities
-     * @param log
+     * @param communities1
+     * @param log1
      */
     public AlgorithmOutput(ArrayList<Graph> communities1, ArrayList<String> log1) {
         communities = communities1;

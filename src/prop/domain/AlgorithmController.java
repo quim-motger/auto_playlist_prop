@@ -177,6 +177,11 @@ public class AlgorithmController {
         return sb.toString();
     }
 
+    /**
+     * Returns graph to string
+     * @param gr Graph to be written
+     * @return written graph
+     */
     public static String graphSongToString(Graph<Song> gr) {
         StringBuilder sb = new StringBuilder();
         int i;
