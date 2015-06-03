@@ -173,10 +173,9 @@ public enum Genre {
      * @param id    the genre ID
      * @return      the genre
      */
-    public static Genre getGenreById(int id) /*throws PropException*/ {
+    public static Genre getGenreById(int id) throws PropException {
         if (id < 0 || id >= values().length) {
-            // throw new PropException(ErrorString.UNEXISTING_GENRE);
-            return null;
+            throw new PropException(ErrorString.UNEXISTING_GENRE);
         } else {
             return values()[id];
         }

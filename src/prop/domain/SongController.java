@@ -236,7 +236,11 @@ public class SongController {
         String[] genres = new String[m];
         int i;
         for (i = 0; i < m; ++i) {
-            genres[i] = Genre.getGenreById(i).getName();
+            try {
+                genres[i] = Genre.getGenreById(i).getName();
+            } catch (PropException e) {
+                e.printStackTrace();
+            }
         }
         return genres;
     }

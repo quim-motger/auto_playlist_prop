@@ -65,8 +65,13 @@ public class ANDDriver {
                     r2 = new SimpleRelation(ss,us,attribute2, value2);
                     break;
                 case 6:
-                    ss.addSong(new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),
-                            Genre.getGenreById(in.nextInt()), in.nextInt()));
+                    try {
+                        ss.addSong(new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),
+                                Genre.getGenreById(in.nextInt()), in.nextInt()));
+                    }
+                    catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 7:
                     us.addUser(new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt())));

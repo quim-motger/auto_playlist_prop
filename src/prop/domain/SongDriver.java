@@ -95,7 +95,6 @@ public class SongDriver {
                 case 15:
                     try {
                         genreId = in.nextInt();
-                        if (genreId < 0 || genreId > 131) throw new PropException(ErrorString.UNEXISTING_GENRE);
                         song.setGenre(Genre.getGenreById(genreId));
                     }
                     catch (PropException e) {
@@ -105,7 +104,6 @@ public class SongDriver {
                 case 16:
                     try {
                         subgenreId = in.nextInt();
-                        if (subgenreId < 0 || subgenreId > 131) throw new PropException(ErrorString.UNEXISTING_GENRE);
                         song.setSubgenre(Genre.getGenreById(subgenreId));
                     }
                     catch (PropException e) {
