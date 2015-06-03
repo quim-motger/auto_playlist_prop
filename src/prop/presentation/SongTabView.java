@@ -211,7 +211,6 @@ public class SongTabView extends TabView{
 
             @Override
             public Object getElementAt(int i) {
-                System.out.println("ELEMENT "+i);
                 return getSongString()[i];
             }
         });

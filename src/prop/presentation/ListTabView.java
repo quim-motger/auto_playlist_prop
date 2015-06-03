@@ -261,7 +261,6 @@ public class ListTabView extends TabView {
 
             @Override
             public Object getElementAt(int i) {
-                System.out.println("ELEMENT "+i);
                 return getListStrings()[i];
             }
         });

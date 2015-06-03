@@ -88,7 +88,6 @@ public class UserTabView extends TabView {
 
             @Override
             public Object getElementAt(int i) {
-                System.out.println("ELEMENT "+i);
                 return getUserStrings().get(i);
             }
         });

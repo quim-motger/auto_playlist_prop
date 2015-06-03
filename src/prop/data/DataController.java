@@ -40,7 +40,7 @@ public class DataController {
     /**
      * Opens a file in path
      * 
-     * /
+     */
     public void open(String path) {
         file = new File(path);        
     }
