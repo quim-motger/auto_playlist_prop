@@ -59,6 +59,10 @@ public class UserPanel extends PropPanel {
         });
     }
 
+    /**
+     * Checks the input with the name 
+     * @return true if name is illegal
+     */
     public boolean checkIllegal() {
         if(nameField.getText().contains("|")) {
             throwError(ErrorString.ILLEGAL_CHARACTER);
@@ -181,14 +185,28 @@ public class UserPanel extends PropPanel {
         return panel;
     }
 
+    /**
+     * Sets name 
+     * @param name 
+     */
     protected void setNameField(String name) {
         nameField.setText(name);
     }
 
+    /**
+     * set gender 
+     * @param gender
+     */
     protected void setGenderSelector(String gender) {
         genderSelector.setSelectedItem(gender);
     }
-    
+
+    /**
+     * Set birthday date 
+     * @param year
+     * @param month
+     * @param day
+     */
     protected void setBirthday(int year,int month, int day) {
         daySpinner.setValue(day);
         yearSpinner.setValue(year);
@@ -196,14 +214,26 @@ public class UserPanel extends PropPanel {
         
     }
 
+    /**
+     * get name 
+     * @return
+     */
     protected String getNameField() {
         return nameField.getText();
     }
-    
+
+    /**
+     * get day 
+     * @return
+     */
     protected int getDaySpinner(){
         return (Integer) daySpinner.getValue();
     }
 
+    /**
+     * get month 
+     * @return
+     */
     protected int getMonthSpinner(){
         return (Integer) monthSpinner.getValue();
     }
@@ -211,16 +241,28 @@ public class UserPanel extends PropPanel {
     protected int getYearSpinner(){
         return (Integer) yearSpinner.getValue();
     }
-    
+
+    /**
+     * get gender 
+     * @return
+     */
     protected String getGenderSelector() {
         return (String) genderSelector.getSelectedItem();
     }
-    
+
+    /**
+     * set defaultActionListener 
+     * @param actionListener
+     */
     protected void setDefaultActionListener(ActionListener actionListener) {
         defaultActionListener = actionListener;
         
     }
-    
+
+    /**
+     * enable field edition
+     * @param enable if true -> edition is enabled
+     */
     protected void enableFieldEdition(boolean enable){
         genderSelector.setEditable(enable);
         genderSelector.setEnabled(enable);

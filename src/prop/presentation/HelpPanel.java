@@ -12,7 +12,10 @@ import javax.swing.*;
  *          Creation Date: 03/06/15
  */
 public class HelpPanel extends PropPanel{
-    
+
+    /**
+     * Default constructor
+     */
     public HelpPanel() {
         super();
         setTitleText("Help Text");
@@ -82,7 +85,11 @@ public class HelpPanel extends PropPanel{
             "Select a list. CTRL+Click two songs of the list and click \"Swap Songs\".\n" +
             "\n" +
             "Algorithms tab:\n" +
-            "To generate a list first you have to enter the relations. \n" +
+            "First you will be asked to introduce the relations.\n \n" +
+            "\n" +
+            "Define the simple relations. \n" +
+            "Add the complex relation using indexes of simple relations and logic operators. \n" +
+            "Choose the algorithm you want to be executed and the number of communities that you want to split all the songs. The bigger the number the shorter the list and therefore more accurate.\n" +
             "\n" +
             "The graph represents all the songs and the selected community (in green).";
 }
