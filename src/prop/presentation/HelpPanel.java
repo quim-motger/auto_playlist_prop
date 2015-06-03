@@ -29,6 +29,7 @@ public class HelpPanel extends PropPanel{
         scroll.setViewportView(textArea);
         
         textArea.setText(HELP_TXT);
+        textArea.setEditable(false);
 
         GroupLayout layout = new GroupLayout(mainPanel);
         mainPanel.setLayout(layout);
