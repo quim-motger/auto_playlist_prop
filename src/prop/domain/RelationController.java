@@ -19,11 +19,19 @@ public class RelationController {
     SongController songController;
     UserController userController;
     Graph<Song> graph;
-    
+
+    /**
+     * Default contructor
+     */
     public RelationController() {
         graph = new Graph();
     }
 
+    /**
+     * initializes the grapg with songs in SongController and the specified UserController
+     * @param sc    the SongController
+     * @param uc    the UserController
+     */
     public void initGraph(SongController sc, UserController uc) {
         songController = sc;
         userController = uc;

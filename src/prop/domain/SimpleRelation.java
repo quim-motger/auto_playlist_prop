@@ -31,7 +31,7 @@ public class SimpleRelation extends Relation {
     //Attributes of user relations
     private static final String USER_NAME = "user_name";
     private static final String USER_GENDER = "user_gender";
-    private static final String USER_AGE = "user_age_equal";
+    private static final String USER_AGE = "user_age";
 
     /**
      * Simple class constructor
@@ -59,22 +59,6 @@ public class SimpleRelation extends Relation {
      */
     public String getValue() {
         return value;
-    }
-
-    /**
-     * Get the songSet of the relation
-     * @return the songSet
-     */
-    public SongSet getSongSet() {
-        return songSet;
-    }
-
-    /**
-     * Get the userSet of the relation
-     * @return the userSet
-     */
-    public UserSet getUserSet() {
-        return userSet;
     }
 
     /**

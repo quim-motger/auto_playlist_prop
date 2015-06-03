@@ -42,6 +42,9 @@ public class AssociateListToUserPanel extends PropPanel {
     private DefaultListModel<String> restModel;
 
 
+    /**
+     * Creates a new Associative Panel for list of the specified user
+     */
     public AssociateListToUserPanel(String username, UserPController userPController, UserTabView userTabView) {
         super();
         name = username;

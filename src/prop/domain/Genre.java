@@ -1,5 +1,8 @@
 package prop.domain;
 
+import prop.ErrorString;
+import prop.PropException;
+
 import java.util.HashMap;
 
 /**
@@ -170,9 +173,9 @@ public enum Genre {
      * @param id    the genre ID
      * @return      the genre
      */
-    public static Genre getGenreById(int id) {
+    public static Genre getGenreById(int id) throws PropException {
         if (id < 0 || id >= values().length) {
-            return null;
+            throw new PropException(ErrorString.UNEXISTING_GENRE);
         } else {
             return values()[id];
         }

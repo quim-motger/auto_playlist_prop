@@ -19,6 +19,13 @@ public class ShowSongPanel extends JPanel {
     private String title;
     private String artist;
 
+    /**
+     * Creates a new ShowSongPanel
+     * @param scp   the SongPController
+     * @param stv   the SongTabView
+     * @param t     the title of the song
+     * @param a     the artist of the song
+     */
     public ShowSongPanel(SongPController scp, SongTabView stv, String t, String a) {
         songPController = scp;
         songTabView = stv;

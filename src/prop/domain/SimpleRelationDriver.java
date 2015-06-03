@@ -25,6 +25,8 @@ public class SimpleRelationDriver {
         ArrayList<Song> songs;
         UserSet us = new UserSet();
         SongSet ss = new SongSet();
+        ListSet ls = new ListSet();
+        List l = new List();
 
         int i = -1;
         printInfoComplete();
@@ -46,76 +48,65 @@ public class SimpleRelationDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 3:/*
-                    try {
-                        if (r.evaluateUser(u)) System.out.print("true\n");
-                        else System.out.print("false\n");
-                    } catch (PropException e) {
-                        System.err.println(e.getMessage());
-                    }*/
+                case 3:
+                    r = new SimpleRelation(ss, us, in.next(), in.next());
                     break;
                 case 4:
-                    String type = in.next();
-                    String attribute = in.next();
-                    String value = in.next();
-                    r = new SimpleRelation(ss,us,attribute, value);
+                    try {
+                        ss.addSong(new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.getGenreById(in.nextInt()),
+                                Genre.getGenreById(in.nextInt()), in.nextInt()));
+                    } catch (PropException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case 5:
-                    String title = in.next();
-                    String artist = in.next();
-                    String album = in.next();
-                    int y = in.nextInt();
-                    Genre genre = Genre.getGenreById(in.nextInt());
-                    Genre subgenre = Genre.getGenreById(in.nextInt());
-                    int duration = in.nextInt();
                     try {
-                        s1 = new Song(title, artist, album, y, genre, subgenre, duration);
+                        us.addUser(new User(in.next(), Gender.valueOf(in.next()), new GregorianCalendar(in.nextInt(),in.nextInt(),in.nextInt())));
                     } catch (PropException e) {
-                        System.out.println(e.getMessage());
+                        e.printStackTrace();
                     }
                     break;
                 case 6:
-                    String title2 = in.next();
-                    String artist2 = in.next();
-                    String album2 = in.next();
-                    int y2 = in.nextInt();
-                    Genre genre2 = Genre.getGenreById(in.nextInt());
-                    Genre subgenre2 = Genre.getGenreById(in.nextInt());
-                    int duration2 = in.nextInt();
                     try {
-                        s2 = new Song(title2, artist2, album2, y2, genre2, subgenre2, duration2);
+                        ls.add(new List(in.next()));
                     } catch (PropException e) {
-                        System.out.println(e.getMessage());
+                        e.printStackTrace();
                     }
                     break;
                 case 7:
-                    String name = in.next();
-                    Gender gender = Gender.valueOf(in.next());
-                    int day = in.nextInt();
-                    int month = in.nextInt();
-                    int year = in.nextInt();
-                    GregorianCalendar date = new GregorianCalendar(year, month, day);
-                    u = new User(name, gender, date);
+                    Song song = null;
+                    try {
+                        song = ss.getSong(in.next(), in.next());
+                    } catch (PropException e) {
+                        e.printStackTrace();
+                    }
+                    ls.getList(in.next()).addSong(song);
+                    break;
+                case 8:
+                    List l2 = ls.getList(in.next());
+                    try {
+                        us.getUserByName(in.next()).associate(l2);
+                    } catch (PropException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 default:
                     printInfoComplete();
             }
-            if (i > 0 && i < 8) printInfoBrief();
+            //if (i > 0 && i < 9) printInfoBrief();
         }
     }
 
     private static void printInfoComplete() {
         System.out.print("0:    terminate program\n");
         System.out.print("1:    printInfoComplete()\n");
-        System.out.print("2:    evaluateSongs(Song s1, Song s2)\n");
-        System.out.print("3:    evaluateUser(User u)\n");
-        System.out.print("4:    r = new SimpleRelation(String type, String attribute, String value): SONG/USER attribute value\n");
-        System.out.print("5:    s1 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)" +
-                ": title artist album YYYY id_genre id_subgenre duration(seconds)\n");
-        System.out.print("6:    s2 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)" +
-                ": title artist album YYYY id_genre id_subgenre duration(seconds)\n");
-        System.out.print("7:    u = new User(String name, Gender gender, Calendar birthdate, CountryCode country)" +
-                ": name MALE/FEMALE/OTHER DD MM YYYY country_code\n");
+        System.out.print("2:    evaluate()\n");
+        System.out.print("3:    r = new SimpleRelation(String attribute, String value): attribute value\n");
+        System.out.print("4:    ss.addSong(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration): title artist album YYYY id_genre id_subgenre duration\n");
+        System.out.print("5:    us.addUser(String name, Gender gender, int year, int month, int day)\n");
+        System.out.print("6:    ls.addList(Stirng name): title\n");
+        System.out.print("7:    l.addSong(String title, String artist): title artist\n");
+        System.out.print("8:   u.associate(List l): username\n");
     }
 
     private static void printInfoBrief() {

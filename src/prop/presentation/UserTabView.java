@@ -73,29 +73,36 @@ public class UserTabView extends TabView {
                 updateList();
             }
         });
-        
-        
+
         updateList();
     }
+    
+    public void updateList() {
+        leftList.setPrototypeCellValue("title" + Short.MAX_VALUE);
 
-    public void showUserInRightPanel(String value) {
-        setRightPanel(new EditUserPanel(mController,this,value));
+        leftList.setModel(new AbstractListModel() {
+            @Override
+            public int getSize() {
+                return getUserStrings().size();
+            }
+
+            @Override
+            public Object getElementAt(int i) {
+                return getUserStrings().get(i);
+            }
+        });
     }
 
-    public void updateList() {
-        userListModel.clear();
+    private ArrayList<String> getUserStrings() {
         ArrayList<String> users;
         String search = getSearchField().getText();
-        
+
         if(search.equals("")) {
             users = mController.getUsers();
         } else {
             users = mController.getMatch(search);
         }
-        
-        for(String user : users) {
-            userListModel.addElement(user);
-        }
+        return users;
     }
 
     @Override
@@ -174,9 +181,6 @@ public class UserTabView extends TabView {
         c.showOpenDialog(this);
     }
 
-    private void showErrorPanel() {
-
-    }
 
     private void showSavePanel() {
         JFileChooser c = new JFileChooser();
@@ -199,10 +203,13 @@ public class UserTabView extends TabView {
     }
 
     public void showAddUserInRightPanel() {
-        UserPanel u = new AddUserPanel(mController, this);
-        setRightPanel(u);
+        setRightPanel(new AddUserPanel(mController, this));
     }
-    
+
+    public void showUserInRightPanel(String value) {
+        setRightPanel(new EditUserPanel(mController,this,value));
+    }
+
     public void showMainPanel() {
         setRightPanel(new JPanel());
     }

@@ -13,6 +13,11 @@ public class SongListPanel extends JPanel {
     private String list;
     private SongTabView songTabView;
 
+    /**
+     * Creates a new SongListPanel
+     * @param l     the list of songs
+     * @param stv   the SongTabView
+     */
     public SongListPanel(String l, SongTabView stv) {
         list = l;
         songTabView = stv;

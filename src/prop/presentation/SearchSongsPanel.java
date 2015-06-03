@@ -12,6 +12,11 @@ public class SearchSongsPanel extends JPanel{
     SongPController songPController;
     SongTabView songTabView;
 
+    /**
+     * Creates a new SearchSongsPanel
+     * @param spc   the SongPController
+     * @param stv   the SongTabView
+     */
     public SearchSongsPanel(SongPController spc, SongTabView stv) {
         songPController = spc;
         songTabView = stv;

@@ -49,17 +49,16 @@ public class GirvanNewmanDriver {
                         String artist = in.next();
                         String album = in.next();
                         int year = in.nextInt();
-                        Genre genre = Genre.getGenreById(in.nextInt());
-                        Genre subgenre = Genre.getGenreById(in.nextInt());
-                        int duration = in.nextInt();
-                        Song s = null;
                         try {
-                            s = new Song(title, artist, album, year, genre, subgenre, duration);
+                            Genre genre = Genre.getGenreById(in.nextInt());
+                            Genre subgenre = Genre.getGenreById(in.nextInt());
+                            int duration = in.nextInt();
+                            Song s = new Song(title, artist, album, year, genre, subgenre, duration);
+                            songs.add(s);
+                            graph.addVertex(s);
                         } catch (PropException e) {
                             System.out.println(e.getMessage());
                         }
-                        songs.add(s);
-                        graph.addVertex(s);
                     }
                     for (int j = 0; j < m; ++j) {
                         int s1 = in.nextInt();

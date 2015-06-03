@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author oscar.manas
+ */
 public class AlgorithmOutputView extends JPanel {
 
     private AlgorithmPController algorithmPController;
@@ -134,6 +137,10 @@ public class AlgorithmOutputView extends JPanel {
         algorithmTabView.setInputPanel();
     }
 
+    /**
+     * Update the JList which contains the list of songs.
+     * @param title
+     */
     public void updateListModel(String title) {
         listModel.clear();
         String list[] = listPController.getListStringArray(title);

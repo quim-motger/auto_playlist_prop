@@ -22,10 +22,7 @@ public class AddUserPanel  extends UserPanel {
     private JButton add;
 
     /**
-     * Creates new form AddSongPanel
-     *
-     * @param userController
-     * @param userTabView
+     * Creates new form AddUserPanel
      */
     public AddUserPanel(UserPController userController, UserTabView userTabView) {
         super(userController);

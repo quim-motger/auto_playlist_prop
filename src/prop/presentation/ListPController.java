@@ -7,6 +7,12 @@ import prop.domain.SongController;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The presentation controller for the lists.
+ * @author oscar.manas
+ * @see ListController
+ * @see SongController
+ */
 public class ListPController {
 
     private ListController listController;
@@ -15,6 +21,10 @@ public class ListPController {
     public ListPController(SongController sc) {
         listController = new ListController();
         songController = sc;
+    }
+
+    public ListController getListController() {
+        return listController;
     }
 
     public void addList(String title) throws PropException {
@@ -49,24 +59,12 @@ public class ListPController {
         listController.removeSong(title,pos);
     }
 
-    public ListController getListController() {
-        return listController;
-    }
-
     public ArrayList<String> getArtists() {
         return songController.getArtists();
     }
 
     public ArrayList<String> getTitlesFromArtists(String artist) throws PropException {
         return songController.getTitlesFromArtist(artist);
-    }
-
-    public void save(String path) throws IOException {
-        listController.save(path);
-    }
-
-    public void load(String path) throws IOException, PropException {
-        listController.load(path,songController);
     }
 
     public void createRandomList(String title, int n) throws PropException {
@@ -87,6 +85,14 @@ public class ListPController {
 
     public String[] getSongId(int listIndex, int songIndex) {
         return listController.getSongId(listIndex,songIndex);
+    }
+
+    public void save(String path) throws IOException {
+        listController.save(path);
+    }
+
+    public void load(String path) throws IOException, PropException {
+        listController.load(path,songController);
     }
 
     public void saveAppend(String path) throws IOException {

@@ -1,18 +1,13 @@
 package prop.presentation;
 
-import prop.ErrorString;
-import prop.PropException;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -35,6 +30,10 @@ public class SongTabView extends TabView{
     private JButton loadSongSet;
     private JButton saveSongSet;
 
+    /**
+     * Creates a new SongTabView
+     * @param spc   the SongPController
+     */
     public SongTabView(SongPController spc) {
         super();
         songPController = spc;
@@ -44,11 +43,17 @@ public class SongTabView extends TabView{
     }
 
     @Override
+    /**
+     * creates an emptyPanel in the rightPanel of the SongTabView
+     */
     protected JPanel createRightPanel() {
         return emptyPanel;
     }
 
     @Override
+    /**
+     * Set the action bar buttons of the TabView
+     */
     protected ArrayList<JButton> setActionBarButtons() {
         ArrayList<JButton> buttons = new ArrayList<>();
 
@@ -142,6 +147,11 @@ public class SongTabView extends TabView{
         });
     }
 
+    /**
+     * creates a new ShowSongPanel
+     * @param a     the title of the song
+     * @param b     the artist of the song
+     */
     public void setShowSongPanel(String a, String b) {
         setRightPanel(new ShowSongPanel(songPController, this, a, b));
     }
@@ -188,20 +198,39 @@ public class SongTabView extends TabView{
         }
     }
 
+    /**
+     * Updates the song List
+     */
     public void updateSongSetModel() {
-        songSetModel.clear();
+        songSet.setPrototypeCellValue("title" + Short.MAX_VALUE);
+        songSet.setModel(new AbstractListModel() {
+            @Override
+            public int getSize() {
+                return getSongString().length;
+            }
+
+            @Override
+            public Object getElementAt(int i) {
+                return getSongString()[i];
+            }
+        });
+    }
+
+    private String[] getSongString() {
         String songs;
         String prefix = getSearchField().getText();
         if (prefix.equals("")) {
             songs = songPController.findSongs();
         }
         else songs = songPController.findSongsByName(prefix);
-        String[] listSongs = songs.split(Pattern.quote("\n"));
-        for (String s : listSongs) {
-           if (s.length() != 0) songSetModel.addElement(s);
-        }
+        return songs.split(Pattern.quote("\n"));
     }
 
+    /**
+     * creates a new ShowSongPanel
+     * @param title     the title of the song
+     * @param artist    the artist of the song
+     */
     public void showSong(String title, String artist) {
         setShowSongPanel(title, artist);
     }

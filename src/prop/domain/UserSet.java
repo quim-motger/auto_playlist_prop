@@ -71,10 +71,21 @@ public class UserSet {
         else throw new PropException(ErrorString.UNEXISTING_USER);
     }
 
+    /**
+     * obtains users which initial name letters match with prefix
+     * @param prefix    the substring used to find users
+     * @return          an arrayList that contains the users
+     */
     public ArrayList<User> findUsers(String prefix) {
         return users.matchPrefix(prefix);
     }
 
+    /**
+     * Search users under a series of conditions, based on their attributes
+     * @param conditions    an arrayList of pairs, in which is pair contains an attribute and a value
+     * @return              an arrayList with all users that match the search
+     * @throws PropException
+     */
     public ArrayList<User> searchUsers(ArrayList<Pair<String,String>> conditions) throws PropException {
         ArrayList<User> userSet = new ArrayList<>();
         for (User user : users.getList()) {
@@ -127,51 +138,5 @@ public class UserSet {
         }
         return s;
     }
-    /*
-    public Iterator<User> iterator() {
-        return new userIterator();
-    }
-    
-    public class userIterator implements Iterator<User> {
 
-        private int i;
-        
-        public userIterator() {
-            i=0;
-        }
-        
-        @Override
-        public boolean hasNext() {
-            return i<(users.size()-1);
-        }
-
-        @Override
-        public User next() {
-            ++i;
-            return users.get(i-1);
-        }
-
-        @Override
-        public void remove() {
-            users.remove(i);
-        }
-        
-            /**
-     * Get the value of the String <code>s</code> that contains a UserSet in the specified format
-     * @param s     the String that contains the UserSet
-     * @return a UserSet
-     * @throws Exception
-     *
-    public static UserSet valueOf(String s, ListController lc, SongController sc) throws Exception {
-        if (s == null) throw new Exception(ErrorString.NULL);
-        else {
-            String[] users = s.split(Pattern.quote(delimiter));
-            UserSet us = new UserSet();
-            for (String r : users) {
-                us.addUser(User.valueOf(r, lc, sc));
-            }
-            return us;
-        }
-    }
-    }*/
 }

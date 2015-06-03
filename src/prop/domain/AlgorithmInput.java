@@ -24,7 +24,7 @@ public class AlgorithmInput {
     /**
      * Sets main mGraph that will be treated in the Algorithm
      *
-     * @param mGraph input mGraph
+     * @param graph input mGraph
      */
     public void setGraph(Graph<Song> graph) {
         mGraph = graph;
@@ -42,7 +42,7 @@ public class AlgorithmInput {
     /**
      * Sets number of maximum communities that the algorithm can output
      *
-     * @param nCom maximum communities that the algorithm can output
+     * @param nCommunities maximum communities that the algorithm can output
      */
     public void setNumberComunities(int nCommunities) {
         nCom = nCommunities;

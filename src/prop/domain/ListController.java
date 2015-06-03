@@ -154,6 +154,11 @@ public class ListController {
         listSet.getList(name).removeSong(pos);
     }
 
+    /**
+     * Returns true if the list set contains the specified list.
+     * @param name  the name of the list
+     * @return      true if the list set contains the specified list, false otherwise
+     */
     public boolean contains(String name) {
         return listSet.contains(name);
     }
@@ -280,6 +285,13 @@ public class ListController {
         return result;
     }
 
+    /**
+     * Get the {@code title} and {@code artist} of the song in the position {@code songIndex} of the list in the
+     * position {@code listIndex}.
+     * @param listIndex     the position of the list
+     * @param songIndex     the position of the song
+     * @return              an array of 2 elements containing the title and artist of the specified song
+     */
     public String[] getSongId(int listIndex, int songIndex) {
         return listSet.getSongId(listIndex,songIndex);
     }
@@ -300,25 +312,37 @@ public class ListController {
             dataController.deleteContent();
         ArrayList<List> lists = listSet.getLists();
         dataController.append(lists.size() + String.valueOf(setDelimiter));
+        boolean saved = false;
         while (listsSaved<listSet.size()){
             String cached = "";
-            while(listsSaved<listSet.size() && listsSaved%SAVING_BLOCK!=SAVING_BLOCK-1) {
+            while(listsSaved<listSet.size() && (listsSaved%SAVING_BLOCK!=SAVING_BLOCK-1 || saved)) {
                 cached =cached + lists.get(listsSaved).toString();
                 cached = cached + setDelimiter;
                 ++listsSaved;
+                saved = false;
             }
             dataController.append(cached);
+            saved = true;
         }
         dataController.append("\n");
-    }
-    
-    public void load(String path, SongController songController) throws IOException, PropException {
-        load(path,0,songController);
     }
 
     /**
      * Load the list set from the specified path.
      * @param path  the path where load the list set from
+     */
+    public void load(String path, SongController songController) throws IOException, PropException {
+        load(path, 0, songController);
+    }
+
+    /**
+     * Load the list set from the specified path, starting in startLine
+     * @param path path to the file
+     * @param startLine startLine of the file to start reading
+     * @param songController songController
+     * @return last line readen
+     * @throws PropException
+     * @throws IOException
      */
     public int load(String path, int startLine, SongController songController) throws PropException, IOException {
         DataController dc = new DataController();
@@ -344,7 +368,7 @@ public class ListController {
     /**
      * Parse a string to a {@code ListSet} object.
      * @param str               the string representing the list set
-     * @param songController    a songController instance
+     * @param songController    a SongController instance
      * @return                  the {@code ListSet} object created from the string
      * @throws PropException
      */
@@ -358,6 +382,13 @@ public class ListController {
         return listSet;
     }
 
+    /**
+     * Parse a string to a {@code List} object.
+     * @param songController    a SongController instance
+     * @param listString        the string representing the list
+     * @return                  the {@code List} object created from the string
+     * @throws PropException
+     */
     private List valueOfList(SongController songController, String listString) throws PropException {
         String[] songs = listString.split(Pattern.quote(String.valueOf(elemDelimiter)));
         List list = new List(songs[0]);

@@ -10,9 +10,6 @@ import java.util.ArrayList;
 
 public class AlgorithmInputView extends JPanel {
 
-    private SongPController songPController;
-    private UserPController userPController;
-    private ListPController listPController;
     private AlgorithmPController algorithmPController;
     private ArrayList<String> simpleRelations;
     private ArrayList<String> complexRelations;
@@ -52,11 +49,16 @@ public class AlgorithmInputView extends JPanel {
     private JLabel communitiesLabel;
     private JSpinner numberOfCommunities;
 
-    public AlgorithmInputView(SongPController spc, UserPController upc, AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv) {
-        songPController = spc;
-        userPController = upc;
+    /**
+     * Creates a new AlgorithmInputView
+     * @param spc   the SongPController
+     * @param upc   the UserPController
+     * @param apc   the AlgorithmPController
+     * @param lpc   the ListPController
+     * @param atv   the AlgorithmTabView
+     */
+    public AlgorithmInputView(AlgorithmPController apc, AlgorithmTabView atv) {
         algorithmPController = apc;
-        listPController = lpc;
         algorithmTabView = atv;
         simpleRelations = new ArrayList<>();
         complexRelations = new ArrayList<>();
@@ -418,9 +420,9 @@ public class AlgorithmInputView extends JPanel {
             jComboBox3.setVisible(true);
             jSpinner2.setVisible(false);
             if (jComboBox1.getSelectedIndex() == 9) {
-                jComboBox3.setModel(new DefaultComboBoxModel(userPController.getGenres()));
+                jComboBox3.setModel(new DefaultComboBoxModel(algorithmPController.getUserGenres()));
             } else {
-                jComboBox3.setModel(new DefaultComboBoxModel(songPController.listGenres()));
+                jComboBox3.setModel(new DefaultComboBoxModel(algorithmPController.listSongGenres()));
             }
         }
         else {

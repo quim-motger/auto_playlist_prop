@@ -18,6 +18,7 @@ public class SongController {
 
     private final static String set_delimiter = "\n";
     private final static String delimiter2 = "|";
+    private static final int SAVING_BLOCK = 20;
     SongSet songSet;
 
     /**
@@ -192,10 +193,11 @@ public class SongController {
         return s;
     }
 
-    public ArrayList<Song> searchSongsList(ArrayList<Pair<String, String>> l) throws PropException {
-        return songSet.searchSongs(l);
-    }
-
+    /**
+     * Finds songs by name
+     * @param prefix prefix to be searched
+     * @return Songs starting with prefix
+     */
     public String findSongsByName(String prefix) {
         ArrayList<Song> songs = songSet.findSongs(prefix);
         String p = "";
@@ -205,10 +207,18 @@ public class SongController {
         return p;
     }
 
+    /**
+     * get Song List 
+     * @return String with all the songs to string
+     */
     public String getList() {
         return songSet.getSongList();
     }
 
+    /**
+     * get artists 
+     * @return array of artists
+     */
     public ArrayList<String> getArtists() {
         ArrayList<String> artists = new ArrayList<String>();
         for (Song s : songSet.getSongSet())
@@ -216,6 +226,12 @@ public class SongController {
         return artists;
     }
 
+    /**
+     * Get song titles from artists
+     * @param artist artist to be searched
+     * @return
+     * @throws PropException
+     */
     public ArrayList<String> getTitlesFromArtist(String artist) throws PropException {
         ArrayList<String> titles = new ArrayList<String>();
         Pair<String,String> cond = new Pair<>("song_artist",artist);
@@ -236,11 +252,20 @@ public class SongController {
         String[] genres = new String[m];
         int i;
         for (i = 0; i < m; ++i) {
-            genres[i] = Genre.getGenreById(i).getName();
+            try {
+                genres[i] = Genre.getGenreById(i).getName();
+            } catch (PropException e) {
+                e.printStackTrace();
+            }
         }
         return genres;
     }
-    
+
+    /**
+     * saves in a textfile the songSet of the implicit SongController
+     * @param path  the path to save the SongSet content
+     * @throws Exception if path is not correct
+     */
     public void save(String path) throws Exception {
         save(path,false);
     }
@@ -255,14 +280,26 @@ public class SongController {
         if(!append)
             dc.deleteContent();
         ArrayList<Song> songs = songSet.getSongSet();
-        for(Song song: songs) {
-            String s = song.toString();
-            s += set_delimiter;
-            dc.append(s);
+        boolean saved = false;
+        int usersSaved = 0;
+        while (usersSaved<songSet.size()){
+            String cached = "";
+            while(usersSaved<songSet.size() && (usersSaved%SAVING_BLOCK!=SAVING_BLOCK-1 || saved)) {
+                cached =cached + songs.get(usersSaved).toString();
+                cached = cached + set_delimiter;
+                ++usersSaved;
+                saved = false;
+            }
+            dc.append(cached);
+            saved = true;
         }
         dc.append("\n");
     }
-    
+
+    /**
+     * Load the songSet in the specified path
+     * @param path      path to load the songSet
+     */
     public void load (String path) throws Exception {
         load(path,0);
     }
@@ -301,6 +338,13 @@ public class SongController {
                 Integer.parseInt(tokens[6]));
     }
 
+    /**
+     * obtains a String with the Song defined by title and artist
+     * @param title     song title
+     * @param artist    song artist
+     * @return          a String with all attributes of the song
+     * @throws PropException
+     */
     public String getSongString(String title, String artist) throws PropException {
         Song song = songSet.getSong(title, artist);
         String s = song.getTitle() + "|" + song.getArtist() + "|" + song.getAlbum() + "|"
