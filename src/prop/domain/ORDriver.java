@@ -2,7 +2,6 @@ package prop.domain;
 
 import prop.PropException;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -43,9 +42,11 @@ public class ORDriver {
                 case 0:
                     break;
                 case 1:
-                    r = new OR(r1,r2);
                     break;
                 case 2:
+                    r = new OR(r1,r2);
+                    break;
+                case 3:
                     try {
                         songs = r.evaluate();
                         for (Song song : songs) {
@@ -55,13 +56,6 @@ public class ORDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 3:/*
-                    try {
-                        System.out.println(r.evaluateUser(u));
-                    } catch (PropException e) {
-                        System.out.println(e.getMessage());
-                    }*/
-                    break;
                 case 4:
                     r1 = new SimpleRelation(ss,us,in.next(), in.next());
                     break;
@@ -70,24 +64,20 @@ public class ORDriver {
                     break;
                 case 6:
                     try {
-                        s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
-                                Genre.valueOf(in.next()), in.nextInt());
+                        ss.addSong(new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
+                                Genre.valueOf(in.next()), in.nextInt()));
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 7:
                     try {
-                        s2 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
-                                Genre.valueOf(in.next()), in.nextInt());
+                        us.addUser(new User(in.next(), Gender.valueOf(in.next()), birthday));
                     } catch (PropException e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case 8:
-                    u = new User(in.next(), Gender.valueOf(in.next()), birthday);
-                    break;
-                case 9:
                     birthday.set(in.nextInt(), in.nextInt(), in.nextInt());
                     break;
                 default:
@@ -98,14 +88,13 @@ public class ORDriver {
 
     private static void printInfo() {
         System.out.print("0:    terminate program\n");
-        System.out.print("1:    OR(Relation r1, Relation r2)\n");
-        System.out.print("2:    boolean evaluateSongs(Song s1, Song s2)\n");
-        System.out.print("3:    boolean evaluateUser(User u)\n");
-        System.out.print("4:    r1 = SimpleRelation(String type, String attribute, String value)\n");
-        System.out.print("5:    r2 = SimpleRelation(String type, String attribute, String value)\n");
-        System.out.print("6 :   s1 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        System.out.print("7:    s2 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        System.out.print("8:    u = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
-        System.out.print("9:   birthday.set(int year,int month,int date)\n");
+        System.out.print("1:    info\n");
+        System.out.print("2:    OR(Relation r1, Relation r2)\n");
+        System.out.print("3:    boolean evaluateSongs(Song s1, Song s2)\n");
+        System.out.print("4:    r1 = SimpleRelation(SongSet ss, UserSet us, String attribute, String value)\n");
+        System.out.print("5:    r2 = SimpleRelation(SongSet ss, UserSet us, String attribute, String value)\n");
+        System.out.print("6 :   ss.addSong(new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration))\n");
+        System.out.print("7:    us.addUser(new User(String name, Gender gender, Calendar birthdate, CountryCode country))\n");
+        System.out.print("8:    birthday.set(int year,int month,int date)\n");
     }
 }

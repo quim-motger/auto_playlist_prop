@@ -1,6 +1,5 @@
-package prop.domain;
-
 import prop.PropException;
+import prop.domain.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,10 +24,6 @@ public class NOTDriver {
         UserSet us = new UserSet();
         ComplexRelation r = null;
         SimpleRelation r1 = null;
-        SimpleRelation r2 = null;
-        Song s1 = null;
-        Song s2 = null;
-        User u = null;
         Calendar birthday = Calendar.getInstance();
         ArrayList<Song> songs;
 
@@ -42,9 +37,12 @@ public class NOTDriver {
                 case 0:
                     break;
                 case 1:
-                    r = new NOT(r1,ss);
+                    printInfo();
                     break;
                 case 2:
+                    r = new NOT(r1,ss);
+                    break;
+                case 3:
                     try {
                         songs = r.evaluate();
                         for (Song song : songs) {
@@ -54,36 +52,25 @@ public class NOTDriver {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 3:/*
-                    try {
-                        System.out.println(r.evaluateUser(u));
-                    } catch (PropException e) {
-                        System.out.println(e.getMessage());
-                    }*/
-                    break;
                 case 4:
                     r1 = new SimpleRelation(ss, us, in.next(), in.next());
                     break;
                 case 5:
                     try {
-                        s1 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
-                                Genre.valueOf(in.next()), in.nextInt());
+                        ss.addSong(new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
+                                Genre.valueOf(in.next()), in.nextInt()));
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 6:
                     try {
-                        s2 = new Song(in.next(), in.next(), in.next(), in.nextInt(), Genre.valueOf(in.next()),
-                                Genre.valueOf(in.next()), in.nextInt());
+                        us.addUser(new User(in.next(), Gender.valueOf(in.next()), birthday));
                     } catch (PropException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case 7:
-                    u = new User(in.next(), Gender.valueOf(in.next()), birthday);
-                    break;
-                case 8:
                     birthday.set(in.nextInt(), in.nextInt(), in.nextInt());
                     break;
                 default:
@@ -94,13 +81,12 @@ public class NOTDriver {
 
     private static void printInfo() {
         System.out.print("0:    terminate program\n");
-        System.out.print("1:    NOT(Relation r1)\n");
-        System.out.print("2:    boolean evaluateSongs(Song s1, Song s2)\n");
-        System.out.print("3:    boolean evaluateUser(User u)\n");
-        System.out.print("4:    r1 = SimpleRelation(String type, String attribute, String value)\n");
-        System.out.print("5:    s1 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        System.out.print("6:    s2 = new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration)\n");
-        System.out.print("7:    u = new User(String name, Gender gender, Calendar birthdate, CountryCode country)\n");
-        System.out.print("8:    birthday.set(int year,int month,int date)\n");
+        System.out.print("1:    info\n");
+        System.out.print("2:    NOT(Relation r1, SongSet ss)\n");
+        System.out.print("3:    Song[] evaluate()\n");
+        System.out.print("4:    r1 = SimpleRelation(SongSet ss, UserSet us, String attribute, String value)\n");
+        System.out.print("5:    ss.addSong(new Song(String title, String artist, String album, int year, Genre genre, Genre subgenre, int duration))\n");
+        System.out.print("6:    us.addUser(new User(String name, Gender gender, Calendar birthdate, CountryCode country))\n");
+        System.out.print("7:    birthday.set(int year,int month,int date)\n");
     }
 }
