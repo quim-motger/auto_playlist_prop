@@ -312,14 +312,17 @@ public class ListController {
             dataController.deleteContent();
         ArrayList<List> lists = listSet.getLists();
         dataController.append(lists.size() + String.valueOf(setDelimiter));
+        boolean saved = false;
         while (listsSaved<listSet.size()){
             String cached = "";
-            while(listsSaved<listSet.size() && listsSaved%SAVING_BLOCK!=SAVING_BLOCK-1) {
+            while(listsSaved<listSet.size() && (listsSaved%SAVING_BLOCK!=SAVING_BLOCK-1 || saved)) {
                 cached =cached + lists.get(listsSaved).toString();
                 cached = cached + setDelimiter;
                 ++listsSaved;
+                saved = false;
             }
             dataController.append(cached);
+            saved = true;
         }
         dataController.append("\n");
     }
