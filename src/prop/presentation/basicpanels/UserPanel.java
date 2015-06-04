@@ -96,7 +96,7 @@ public class UserPanel extends PropPanel {
         daySpinner = new JSpinner(dayModel);
         SpinnerNumberModel monthModel = new SpinnerNumberModel(cal.get(Calendar.MONTH),1,12,1);
         monthSpinner = new JSpinner(monthModel);
-        SpinnerNumberModel yearModel = new SpinnerNumberModel(cal.get(Calendar.YEAR),1,999999999,1);
+        SpinnerNumberModel yearModel = new SpinnerNumberModel(cal.get(Calendar.YEAR),1,cal.get(Calendar.YEAR),1);
         yearSpinner = new JSpinner(yearModel);
 
         nameLabel.setFont(new Font("Noto Sans", 1, 12)); // NOI18N
