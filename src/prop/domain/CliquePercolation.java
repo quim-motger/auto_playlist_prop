@@ -58,7 +58,7 @@ public class CliquePercolation extends Algorithm {
         aloneVertices(P);
         findCliques(R, P, X, log);
         //Removes all cliques under the lWeight
-        //filtCliques(log);
+        filtCliques(log);
         //Show the maximal cliques filtered
         for (l = 0; l < i; ++l) printClique(cliques[l], log, l);
         //Merge cliques to form communities
@@ -104,20 +104,16 @@ public class CliquePercolation extends Algorithm {
             return;
         }
         ArrayList<Integer> P1 = new ArrayList<>(P);
-        ArrayList<Integer> union = union(P,X);
-        int pivot = getPivot(union);
-        P = removeNeighbours(P,pivot);
-
+        int pivot = getPivot(union(P,X));
+        P = removeNeighbours(P,neighbours[pivot]);
         //Expand of every vertex in P
         for (int v : P) {
-            if (!aloneVertices.contains(v)) {//sb.append("\nExpand on " + v + "\n");
+            if (!aloneVertices.contains(v)) {
                 //R U v (add v to list of vertices that may compose a clique)
-                if (!R.contains(v)) R.add(v);
+                R.add(v);
                 //Remove non-neighbours of v from candidates to be added to clique (P) and from
                 //rejected who could be added to the clique, then backtrack
-                //log.add(sb.toString());
                 findCliques(R, intersection(P1, neighbours[v]), intersection(X, neighbours[v]), log);
-                //sb = new StringBuilder();
                 //Remove v from vertices that may compose a clique (R)
                 R = remove(R, v);
                 //Remove v from candidates to be added (P1)
@@ -133,7 +129,7 @@ public class CliquePercolation extends Algorithm {
      * @param log   log of the Algorithm execution
      */
     private void filtCliques(ArrayList<String> log) {
-        ArrayList<Integer>[] filtedCliques = (ArrayList<Integer>[])new ArrayList[n];
+        /*ArrayList<Integer>[] filtedCliques = (ArrayList<Integer>[])new ArrayList[n];
         int k, j;
         j = 0;
         //log.add("Limit intensity to consider a clique: " + lWeight + "\n");
@@ -149,7 +145,17 @@ public class CliquePercolation extends Algorithm {
         }
         i = j;
         //cliques now contains the filtered cliques
-        cliques = filtedCliques;
+        cliques = filtedCliques;*/
+        int r,s,t;
+        for (r = 0; r < i; ++r) {
+            for (s = 0; s < cliques[r].size(); ++s) {
+                if (neighbours[cliques[r].get(s)].size() < cliques[r].size()-1) {
+                    ArrayList<Integer> l = new ArrayList<>();
+                    l.add(cliques[r].get(s));
+                    cliques[r].removeAll(l);
+                }
+            }
+        }
     }
 
     /**
@@ -188,9 +194,9 @@ public class CliquePercolation extends Algorithm {
         return meanWeight;
     }
 
-    private ArrayList<Integer> removeNeighbours(ArrayList<Integer> A, int v) {
+    private ArrayList<Integer> removeNeighbours(ArrayList<Integer> A, ArrayList<Integer> B) {
         ArrayList<Integer> l = new ArrayList<>(A);
-        l.removeAll(neighbours[v]);
+        l.removeAll(B);
         return l;
     }
 
@@ -332,20 +338,6 @@ public class CliquePercolation extends Algorithm {
         ArrayList<Integer> difference = new ArrayList<>(A);
         difference.removeAll(B);
         return difference;
-    }
-
-    /**
-     * returns a list of all neighbours of <code>v</code>
-     * @param v     the vertex
-     * @return      a list with all neihbours of <code>v</code>
-     */
-    private ArrayList<Integer> neighbours(int v) {
-        ArrayList<Integer> n = new ArrayList<>();
-        LinkedHashSet<Integer> m = graph.adjacentVertices(v);
-        for (int p : m) {
-            n.add(p);
-        }
-        return n;
     }
 
     private void neighbours() {
