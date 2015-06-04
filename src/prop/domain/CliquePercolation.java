@@ -17,6 +17,7 @@ public class CliquePercolation extends Algorithm {
     ArrayList<Integer>[] vertexInCliques;   //lists of cliques which contains the index vertex
     ArrayList<Integer>[] communities;
     ArrayList<Integer>[] neighbours;
+    ArrayList<Integer> aloneVertices;
 
     private Graph<Song> graph; // Undirected, weighted graph
 
@@ -54,9 +55,10 @@ public class CliquePercolation extends Algorithm {
         //Executes the clique percolation algorithm
         //Find maximal cliques in graph
         neighbours();
+        aloneVertices(P);
         findCliques(R, P, X, log);
         //Removes all cliques under the lWeight
-        filtCliques(log);
+        //filtCliques(log);
         //Show the maximal cliques filtered
         for (l = 0; l < i; ++l) printClique(cliques[l], log, l);
         //Merge cliques to form communities
@@ -66,6 +68,18 @@ public class CliquePercolation extends Algorithm {
         ArrayList<Graph> com = parseCommunitiesToGraphs();
         //Return all communities found
         return new AlgorithmOutput(com, log);
+    }
+
+    private void aloneVertices(ArrayList<Integer> P) {
+        aloneVertices = new ArrayList<>();
+        for (int p : P) {
+            if (neighbours[p].size() == 0) {
+                cliques[i] = new ArrayList<>();
+                cliques[i].add(p);
+                aloneVertices.add(p);
+                i = i+1;
+            }
+        }
     }
 
     /**
@@ -87,30 +101,30 @@ public class CliquePercolation extends Algorithm {
                 vertexInCliques[r].add(i);
             }
             i = i+1;
+            return;
         }
         ArrayList<Integer> P1 = new ArrayList<>(P);
         ArrayList<Integer> union = union(P,X);
-        if (!union.isEmpty()) {
-            int pivot = getPivot(union);
-            P = removeNeighbours(P,pivot);
-        }
+        int pivot = getPivot(union);
+        P = removeNeighbours(P,pivot);
 
         //Expand of every vertex in P
         for (int v : P) {
-            //sb.append("\nExpand on " + v + "\n");
-            //R U v (add v to list of vertices that may compose a clique)
-            if (!R.contains(v)) R.add(v);
-            //Remove non-neighbours of v from candidates to be added to clique (P) and from
-            //rejected who could be added to the clique, then backtrack
-            //log.add(sb.toString());
-            findCliques(R, intersection(P1, neighbours[v]), intersection(X, neighbours[v]), log);
-            //sb = new StringBuilder();
-            //Remove v from vertices that may compose a clique (R)
-            R = remove(R,v);
-            //Remove v from candidates to be added (P1)
-            P1 = remove(P1,v);
-            //Add v to the rejected candidates
-            X.add(v);
+            if (!aloneVertices.contains(v)) {//sb.append("\nExpand on " + v + "\n");
+                //R U v (add v to list of vertices that may compose a clique)
+                if (!R.contains(v)) R.add(v);
+                //Remove non-neighbours of v from candidates to be added to clique (P) and from
+                //rejected who could be added to the clique, then backtrack
+                //log.add(sb.toString());
+                findCliques(R, intersection(P1, neighbours[v]), intersection(X, neighbours[v]), log);
+                //sb = new StringBuilder();
+                //Remove v from vertices that may compose a clique (R)
+                R = remove(R, v);
+                //Remove v from candidates to be added (P1)
+                P1 = remove(P1, v);
+                //Add v to the rejected candidates
+                X.add(v);
+            }
         }
     }
 
@@ -214,41 +228,43 @@ public class CliquePercolation extends Algorithm {
         if (i <= k) return;
         //For every clique found
         for (j = 0; j < i; ++j) {
-            StringBuilder sb = new StringBuilder();
-            //For every vertex in the clique
-            int s;
-            for (s = 0; s < communities[j].size(); ++s) {
-                int l = communities[j].get(s);
-                //sb.append("Let's work with vertex " + l + "\n");
-                //For every clique the vertex is in
-                for (int m : vertexInCliques[l]) {
-                    //If the clique is not the same
+            if (communities[j].size() > 1) {
+                StringBuilder sb = new StringBuilder();
+                //For every vertex in the clique
+                int s;
+                for (s = 0; s < communities[j].size(); ++s) {
+                    int l = communities[j].get(s);
+                    //sb.append("Let's work with vertex " + l + "\n");
+                    //For every clique the vertex is in
+                    for (int m : vertexInCliques[l]) {
+                        //If the clique is not the same
 
-                    if (m != j && m < cliqueInCommunity.length && cliqueInCommunity[m] != cliqueInCommunity[j]) {
-                        sb.append("add clique [" + m + "] in community [" + j + "]");
-                        log.add(sb.toString());
-                        //sb.append("Let's add this clique in the same community\n");
-                        //We add to the community of the initial clique the clique shared by the vertex
-                        int q;
-                        for (q = 0; q < communities[m].size(); ++q) {
-                            int p = communities[m].get(q);
-                            if (!communities[cliqueInCommunity[j]].contains(p)) {
-                                communities[cliqueInCommunity[j]].add(p);
+                        if (m != j && m < cliqueInCommunity.length && cliqueInCommunity[m] != cliqueInCommunity[j]) {
+                            sb.append("clique [" + m + "] -> community [" + j + "]");
+                            log.add(sb.toString());
+                            //sb.append("Let's add this clique in the same community\n");
+                            //We add to the community of the initial clique the clique shared by the vertex
+                            int q;
+                            for (q = 0; q < communities[m].size(); ++q) {
+                                int p = communities[m].get(q);
+                                if (!communities[cliqueInCommunity[j]].contains(p)) {
+                                    communities[cliqueInCommunity[j]].add(p);
+                                }
                             }
+                            //We stop considering the clique as an independent community
+                            communities[m].clear();
+                            //Update the community that the clique is in
+                            cliqueInCommunity[m] = j;
+                            //Update the number of cliques
+                            com = getNumCom();
+                            //sb.append("Now we have " + com + " communities\n");
+                            sb = new StringBuilder();
+                            if (com <= k) return;
                         }
-                        //We stop considering the clique as an independent community
-                        communities[m].clear();
-                        //Update the community that the clique is in
-                        cliqueInCommunity[m] = j;
-                        //Update the number of cliques
-                        com = getNumCom();
-                        //sb.append("Now we have " + com + " communities\n");
-                        sb = new StringBuilder();
-                        if (com <= k) return;
                     }
                 }
+                //log.add(sb.toString() + "\n");
             }
-            //log.add(sb.toString() + "\n");
         }
     }
 
@@ -352,7 +368,7 @@ public class CliquePercolation extends Algorithm {
      */
     private void printClique(ArrayList<Integer> l, ArrayList<String> log, int k) {
         StringBuilder sb = new StringBuilder();
-        sb.append("[" + k + "] maximal clique:");
+        sb.append("[" + k + "] maximal_clique:");
         for (int i : l) {
             sb.append(" " + i);
         }
