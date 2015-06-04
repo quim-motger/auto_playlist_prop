@@ -56,7 +56,7 @@ public class AddSongPanel extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
 
         Calendar cal = Calendar.getInstance();
-        SpinnerNumberModel yearModel = new SpinnerNumberModel(cal.get(Calendar.YEAR),1,999999999,1);
+        SpinnerNumberModel yearModel = new SpinnerNumberModel(cal.get(Calendar.YEAR),1,cal.get(Calendar.YEAR),1);
         jSpinner1 = new JSpinner(yearModel);
 
         SpinnerNumberModel durationModel = new SpinnerNumberModel(1,1,999999,1);

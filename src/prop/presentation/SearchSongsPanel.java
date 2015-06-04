@@ -3,6 +3,7 @@ package prop.presentation;
 import prop.PropException;
 
 import javax.swing.*;
+import java.util.Calendar;
 
 /**
  * Created by quim_motger on 26/05/15.
@@ -56,6 +57,13 @@ public class SearchSongsPanel extends JPanel{
         jCheckBox7 = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
         jCheckBox8 = new javax.swing.JCheckBox();
+
+        Calendar cal = Calendar.getInstance();
+        SpinnerNumberModel yearModel = new SpinnerNumberModel(cal.get(Calendar.YEAR),1,cal.get(Calendar.YEAR),1);
+        jSpinner1 = new JSpinner(yearModel);
+
+        SpinnerNumberModel durationModel = new SpinnerNumberModel(1,1,999999,1);
+        jSpinner2 = new javax.swing.JSpinner(durationModel);
 
         jLabel1.setText("Search Songs");
 
