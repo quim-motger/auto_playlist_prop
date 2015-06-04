@@ -58,7 +58,7 @@ public class CliquePercolation extends Algorithm {
         aloneVertices(P);
         findCliques(R, P, X, log);
         //Removes all cliques under the lWeight
-        filtCliques(log);
+        //filtCliques(log);
         //Show the maximal cliques filtered
         for (l = 0; l < i; ++l) printClique(cliques[l], log, l);
         //Merge cliques to form communities
@@ -105,12 +105,14 @@ public class CliquePercolation extends Algorithm {
         }
         ArrayList<Integer> P1 = new ArrayList<>(P);
         int pivot = getPivot(union(P,X));
-        P = removeNeighbours(P,neighbours[pivot]);
+        //P = removeNeighbours(P,neighbours[pivot]);
         //Expand of every vertex in P
         for (int v : P) {
             if (!aloneVertices.contains(v)) {
                 //R U v (add v to list of vertices that may compose a clique)
-                R.add(v);
+                if (!R.contains(v)) {
+                    R.add(v);
+                }
                 //Remove non-neighbours of v from candidates to be added to clique (P) and from
                 //rejected who could be added to the clique, then backtrack
                 findCliques(R, intersection(P1, neighbours[v]), intersection(X, neighbours[v]), log);
