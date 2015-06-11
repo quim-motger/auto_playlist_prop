@@ -77,7 +77,6 @@ public class AlgorithmController {
         communities.add(selectedCommunity); // move selected community to the end
 
         log.addAll(ao.getLog());
-        log.add("List created:\n" + list.obtainTitle() + "\n");
 
         return log;
     }

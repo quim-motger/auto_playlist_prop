@@ -63,7 +63,7 @@ public class CliquePercolation extends Algorithm {
         for (l = 0; l < i; ++l) printClique(cliques[l], log, l);
         //Merge cliques to form communities
         percolateCliques(k, log);
-        for (l = 0; l < i; ++l) if (communities[l].size() > 0) printCommunity(communities[l], log, l);
+        //for (l = 0; l < i; ++l) if (communities[l].size() > 0) printCommunity(communities[l], log, l);
         //Pars communities (lists of integers) into graph
         ArrayList<Graph> com = parseCommunitiesToGraphs();
         //Return all communities found
@@ -248,7 +248,7 @@ public class CliquePercolation extends Algorithm {
                         //If the clique is not the same
 
                         if (m != j && m < cliqueInCommunity.length && cliqueInCommunity[m] != cliqueInCommunity[j]) {
-                            sb.append("clique [" + m + "] -> community [" + j + "]");
+                            sb.append("1|" + m + "|" + j);
                             log.add(sb.toString());
                             //sb.append("Let's add this clique in the same community\n");
                             //We add to the community of the initial clique the clique shared by the vertex
@@ -362,9 +362,10 @@ public class CliquePercolation extends Algorithm {
      */
     private void printClique(ArrayList<Integer> l, ArrayList<String> log, int k) {
         StringBuilder sb = new StringBuilder();
-        sb.append("[" + k + "] maximal_clique:");
-        for (int i : l) {
-            sb.append(" " + i);
+        int s;
+        sb.append("0|" + k);
+        for (s = 0; s < l.size(); ++s) {
+            sb.append("|" + l.get(s));
         }
         log.add(sb.toString());
     }
