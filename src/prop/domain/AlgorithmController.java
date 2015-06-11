@@ -20,7 +20,8 @@ public class AlgorithmController {
     private ArrayList<String> log;
     private static final char delimiter = '\n';
     ArrayList<Graph> communities;
-    Graph originalGraph;
+    Graph graph;
+    String originalGraph;
 
     /**
      * Executes the selected algorithm for generating a song list that will be added to the set.
@@ -39,8 +40,9 @@ public class AlgorithmController {
      */
     public ArrayList<String> execute(String title, int algorithm, int k, ListController listController, RelationController relationController) throws Exception {
         log = new ArrayList<String>();
-        originalGraph = createInputGraph(algorithm,relationController);
-        log.add("Input graph:\n" + writeGraph(originalGraph));
+        graph = createInputGraph(algorithm,relationController);
+        originalGraph = graphSongToString(graph);
+        log.add("Input graph:\n" + writeGraph(graph));
         Algorithm a;
 
         // We execute the selected algorithm and get the output
@@ -57,7 +59,7 @@ public class AlgorithmController {
             default:
                 throw new PropException(ErrorString.UNEXISTING_ALGORITHM);
         }
-        AlgorithmOutput ao = a.execute(originalGraph,k);
+        AlgorithmOutput ao = a.execute(graph,k);
 
         // From the given communities, we select the densest one...
         Graph<Song> selectedCommunity = ao.densestGraph();
@@ -94,7 +96,7 @@ public class AlgorithmController {
     }
 
     public String getOriginalGraph() {
-        return graphSongToString(originalGraph);
+        return originalGraph;
     }
 
     /**
