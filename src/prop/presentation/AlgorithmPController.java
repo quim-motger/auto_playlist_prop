@@ -109,7 +109,7 @@ public class AlgorithmPController {
         return songController.listGenres();
     }
 
-    public String[] getSongId(int i) {
+    public String getSongId(int i) {
         return algorithmController.getSongId(i);
     }
 }
