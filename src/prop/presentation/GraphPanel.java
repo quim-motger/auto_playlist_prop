@@ -97,7 +97,9 @@ public class GraphPanel extends JPanel{
             // Vertices' color
             final Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
                 public Paint transform(String i) {
-                    return colors.get(findCommunity(communities, i));
+                   for (int j = 0; j < communities.size(); ++j)
+                       if (communities.get(j).containsVertex(i)) return colors.get(j);
+                   return Color.white;
                 }
             };
 
@@ -281,21 +283,6 @@ public class GraphPanel extends JPanel{
         for (String s : g.getVertices()) {
             alayout.lock(s,true);
         }
-    }
-
-    private void setColors(ArrayList<Color> colors, int size) {
-        colors = new ArrayList<>(size);
-        Random rand = new Random();
-        for (Color c : colors) {
-            c = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-        }
-    }
-
-    private int findCommunity(ArrayList<UndirectedSparseGraph<String,JungEdge>> com, String i) {
-        for (int j = 0; j < com.size(); ++j) {
-            if (com.get(j).containsVertex(i)) return j;
-        }
-        return -1; //error
     }
 
     public static class ExecutionPanel extends GraphPanel {
