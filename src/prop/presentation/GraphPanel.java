@@ -1,9 +1,11 @@
 package prop.presentation;
 
-import edu.uci.ics.jung.algorithms.layout.*;
+import edu.uci.ics.jung.algorithms.layout.AggregateLayout;
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.KKLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
-import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.graph.util.Pair;
 import edu.uci.ics.jung.visualization.*;
 import edu.uci.ics.jung.visualization.control.AbstractModalGraphMouse;
@@ -12,21 +14,44 @@ import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ScalingControl;
 import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.renderers.BasicVertexLabelRenderer.InsidePositioner;
-import edu.uci.ics.jung.visualization.renderers.GradientVertexRenderer;
 import edu.uci.ics.jung.visualization.renderers.Renderer;
 import org.apache.commons.collections15.Transformer;
-import org.apache.commons.collections15.functors.ConstantTransformer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.security.cert.CollectionCertStoreParameters;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Random;
 import java.util.regex.Pattern;
+
+/*
+Then create a random generator:
+
+        Random rand = new Random();
+
+        Color randomColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+// Will produce a random colour with more red in it (usually "pink-ish")
+        float r = rand.nextFloat();
+        float g = rand.nextFloat(0.5);
+        float b = rand.nextFloat(0.5);
+
+// Will produce only bright / light colours:
+        float r = rand.nextFloat(0.5) + 0.5;
+        float g = rand.nextFloat(0.5) + 0.5;
+        float b = rand.nextFloat(0.5) + 0.5;
+
+        There are various other colour functions that can be used with the Color class, such as making the colour brighter:
+        randomColor.brighter();
+*/
+
 
 public class GraphPanel extends JPanel{
 
@@ -40,6 +65,7 @@ public class GraphPanel extends JPanel{
         private AggregateLayout<String,JungEdge> clusteringLayout;
         private Class subLayoutType = CircleLayout.class;
         private Dimension subLayoutSize;
+        private ArrayList<Color> colors;
 
         protected JPanel controls;
 
@@ -47,6 +73,12 @@ public class GraphPanel extends JPanel{
             algorithmPController = apc;
             originalGraph = algorithmPController.getOriginalGraph();
             communities = algorithmPController.getCommunities();
+
+            colors = new ArrayList<>(communities.size());
+            Random rand = new Random();
+            for (Color c : colors) {
+                c = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+            }
 
             final UndirectedSparseGraph<String,JungEdge> selectedCommunity = communities.get(communities.size()-1);
 
@@ -62,10 +94,9 @@ public class GraphPanel extends JPanel{
             vv.setBackground(Color.white);
 
             // Vertices' color
-            Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
+            final Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
                 public Paint transform(String i) {
-                    if(selectedCommunity.containsVertex(i)) return Color.GREEN;
-                    return Color.red;
+                    return colors.get(findCommunity(communities, i));
                 }
             };
 
@@ -232,10 +263,8 @@ public class GraphPanel extends JPanel{
                         clusteringLayout.put(subLayout, center);
                         vv.setGraphLayout(clusteringLayout);
 
-                    } catch (NullPointerException ne) {
-                        System.out.println("nullexc");
-                        ne.printStackTrace();
-                    } catch (Exception e) {
+                    }
+                    catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -251,6 +280,21 @@ public class GraphPanel extends JPanel{
         for (String s : g.getVertices()) {
             alayout.lock(s,true);
         }
+    }
+
+    private void setColors(ArrayList<Color> colors, int size) {
+        colors = new ArrayList<>(size);
+        Random rand = new Random();
+        for (Color c : colors) {
+            c = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+        }
+    }
+
+    private int findCommunity(ArrayList<UndirectedSparseGraph<String,JungEdge>> com, String i) {
+        for (int j = 0; j < com.size(); ++j) {
+            if (com.get(j).containsVertex(i)) return j;
+        }
+        return -1; //error
     }
 
     public static class ExecutionPanel extends GraphPanel {
