@@ -74,10 +74,10 @@ public class GraphPanel extends JPanel{
             originalGraph = algorithmPController.getOriginalGraph();
             communities = algorithmPController.getCommunities();
 
-            colors = new ArrayList<>(communities.size());
+            colors = new ArrayList<>();
             Random rand = new Random();
-            for (Color c : colors) {
-                c = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+            for (int x = 0; x < communities.size(); ++x) {
+                colors.add(new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
             }
 
             final UndirectedSparseGraph<String,JungEdge> selectedCommunity = communities.get(communities.size()-1);
