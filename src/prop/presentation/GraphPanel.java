@@ -291,6 +291,7 @@ public class GraphPanel extends JPanel{
         private int step;
         private ArrayList<String> log;
         private static final char delimiter = '|';
+        private ArrayList<Pair<String>> hiddenEdges;
 
         public ExecutionPanel(AlgorithmPController apc) {
             super(apc);
@@ -373,11 +374,15 @@ public class GraphPanel extends JPanel{
         }
 
         private void removeEdge(int u, int v) {
-            System.out.println("remove edge (" + u + "," + v + ")");
+            hiddenEdges.add(new Pair<String>(algorithmPController.getSongId(u),algorithmPController.getSongId(u)));
         }
 
         private void addEdge(int u, int v) {
-            System.out.println("add edge (" + u + "," + v + ")");
+            for (Pair<String> p : hiddenEdges) {
+                if ((p.getFirst().equals(algorithmPController.getSongId(u)) && p.getSecond().equals(algorithmPController.getSongId(v)))
+                    || (p.getFirst().equals(algorithmPController.getSongId(v)) && p.getSecond().equals(algorithmPController.getSongId(u))))
+                    hiddenEdges.remove(p);
+            }
         }
 
     }
