@@ -42,7 +42,7 @@ public class AlgorithmController {
         log = new ArrayList<String>();
         graph = createInputGraph(algorithm,relationController);
         originalGraph = graphSongToString(graph);
-        log.add("Input graph:\n" + writeGraph(graph));
+        //log.add("Input graph:\n" + writeGraph(graph));
         Algorithm a;
 
         // We execute the selected algorithm and get the output
@@ -79,7 +79,7 @@ public class AlgorithmController {
         communities.add(selectedCommunity); // move selected community to the end
 
         log.addAll(ao.getLog());
-        log.add("List created:\n" + list.obtainTitle() + "\n");
+        //log.add("List created:\n" + list.obtainTitle() + "\n");
 
         return log;
     }
@@ -113,7 +113,7 @@ public class AlgorithmController {
         Graph<Song> graph = new Graph<Song>();
         Graph<Song> G = relationController.getGraph();
         if (G == null) throw new NullPointerException(ErrorString.NULL_GRAPH);
-        log.add("Original graph:\n" + writeGraph(G));
+        //log.add("Original graph:\n" + writeGraph(G));
 
         int n = G.numberOfVertices();
         for (Song s : G.getOriginalVertices())

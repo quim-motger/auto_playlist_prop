@@ -17,6 +17,7 @@ public class GirvanNewman extends Algorithm {
     private int[][] edgeScores;
     private int edges;
     private Pair<Integer,Integer> mbEdge;
+    private static final char delimiter = '|';
 
     /**
      * Executes the Girvan-Newman algorithm.
@@ -91,7 +92,7 @@ public class GirvanNewman extends Algorithm {
         }
         entry.append("\n");*/
 
-        entry.append("-- edge <" + mbEdge.first() + "," + mbEdge.second() + ">\n");
+        entry.append("2" + delimiter + mbEdge.first() + delimiter + mbEdge.second());
         graph.removeEdge(mbEdge.first(),mbEdge.second());
 
         parents = floydWarshall();
@@ -99,7 +100,7 @@ public class GirvanNewman extends Algorithm {
         // then there's one more connected component
         if (parents[mbEdge.first()][mbEdge.second()] == -1)
             ++components;
-        entry.append("communities <" + components + ">\n");
+        //entry.append("communities <" + components + ">\n");
     }
 
     /**
