@@ -185,14 +185,14 @@ public class GraphPanel extends JPanel{
                 public void actionPerformed(ActionEvent e) {
                     cluster.setEnabled(false);
                     uncluster.setEnabled(true);
-                    cluster(communities.get(communities.size()-1),true);
+                    cluster(communities,true);
                 }
             });
             uncluster.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     cluster.setEnabled(true);
                     uncluster.setEnabled(false);
-                    cluster(originalGraph, false);
+                    cluster(communities, false);
                 }
             });
 
@@ -226,49 +226,50 @@ public class GraphPanel extends JPanel{
             return  (Layout)constructor.newInstance(args);
         }
 
-        private void cluster(UndirectedSparseGraph<String,JungEdge> graph, boolean state) {
+        private void cluster(ArrayList<UndirectedSparseGraph<String,JungEdge>> graphs, boolean state) {
             if(state) {
-                if (graph.getVertexCount() > 1) {
-                    // put the picked vertices into a new sublayout
-                    Collection<String> picked = new HashSet<String>();
-                    picked.addAll(graph.getVertices());
+                for (UndirectedSparseGraph graph : graphs) {
+                    if (graph.getVertexCount() > 1) {
+                        // put the picked vertices into a new sublayout
+                        Collection<String> picked = new HashSet<String>();
+                        picked.addAll(graph.getVertices());
 
-                    Point2D center = new Point2D.Double();
-                    double x = 0;
-                    double y = 0;
-                    for (String vertex : picked) {
-                        Point2D p = clusteringLayout.transform(vertex); // gets location of the vertex
-                        x += p.getX();
-                        y += p.getY();
-                    }
-                    x /= picked.size();
-                    y /= picked.size();
-                    center.setLocation(x, y);
-
-                    Graph<String, JungEdge> subGraph;
-                    try {
-                        subGraph = graph.getClass().newInstance();
+                        Point2D center = new Point2D.Double();
+                        double x = 0;
+                        double y = 0;
                         for (String vertex : picked) {
-                            subGraph.addVertex(vertex);
-                            Collection<JungEdge> incidentEdges = graph.getIncidentEdges(vertex);
-                            for (JungEdge edge : incidentEdges) {
-                                Pair<String> endpoints = graph.getEndpoints(edge);
-                                if (picked.containsAll(endpoints)) {
-                                    // put this edge into the subgraph
-                                    subGraph.addEdge(edge, endpoints.getFirst(), endpoints.getSecond());
+                            Point2D p = clusteringLayout.transform(vertex); // gets location of the vertex
+                            x += p.getX();
+                            y += p.getY();
+                        }
+                        x /= picked.size();
+                        y /= picked.size();
+                        center.setLocation(x, y);
+
+                        Graph<String, JungEdge> subGraph;
+                        try {
+                            subGraph = graph.getClass().newInstance();
+                            for (String vertex : picked) {
+                                subGraph.addVertex(vertex);
+                                Collection<JungEdge> incidentEdges = graph.getIncidentEdges(vertex);
+                                for (JungEdge edge : incidentEdges) {
+                                    Pair<String> endpoints = graph.getEndpoints(edge);
+                                    if (picked.containsAll(endpoints)) {
+                                        // put this edge into the subgraph
+                                        subGraph.addEdge(edge, endpoints.getFirst(), endpoints.getSecond());
+                                    }
                                 }
                             }
+
+                            Layout<String, JungEdge> subLayout = getLayoutFor(subLayoutType, subGraph);
+                            subLayout.setInitializer(vv.getGraphLayout());
+                            subLayout.setSize(subLayoutSize);
+                            clusteringLayout.put(subLayout, center);
+                            vv.setGraphLayout(clusteringLayout);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
-                        Layout<String, JungEdge> subLayout = getLayoutFor(subLayoutType, subGraph);
-                        subLayout.setInitializer(vv.getGraphLayout());
-                        subLayout.setSize(subLayoutSize);
-                        clusteringLayout.put(subLayout, center);
-                        vv.setGraphLayout(clusteringLayout);
-
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
                     }
                 }
             }
