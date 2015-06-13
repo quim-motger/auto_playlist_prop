@@ -74,6 +74,7 @@ public class GraphPanel extends JPanel{
             originalGraph = algorithmPController.getOriginalGraph();
             communities = algorithmPController.getCommunities();
 
+            //initialize colors
             colors = new ArrayList<>();
             Random rand = new Random();
             for (int x = 0; x < communities.size(); ++x) {
@@ -104,8 +105,6 @@ public class GraphPanel extends JPanel{
             Transformer<String, Shape> vertexSize = new Transformer<String, Shape>(){
                 public Shape transform(String i){
                     Ellipse2D circle = new Ellipse2D.Double(-10,-10, 20, 20);
-                    // in this case, the vertex is twice as large
-                    //if(i == 2) return AffineTransform.getScaleInstance(2, 2).createTransformedShape(circle);
                     return circle;
                 }
             };
@@ -114,21 +113,23 @@ public class GraphPanel extends JPanel{
             vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
                 public Paint transform(JungEdge e) {
                     Pair<String> p = originalGraph.getEndpoints(e);
-                    if (selectedCommunity.containsVertex(p.getFirst()) && selectedCommunity.containsVertex(p.getSecond()))
-                        return Color.green;
+                    for (int j = 0; j < communities.size(); ++j) {
+                        if (communities.get(j).containsVertex(p.getFirst()) && communities.get(j).containsVertex(p.getSecond()))
+                            return colors.get(j);
+                    }
                     return Color.black;
-                }
+                 }
             });
 
             // Edges' thickness
             vv.getRenderContext().setEdgeStrokeTransformer(new Transformer<JungEdge, Stroke>() {
-                protected final Stroke THIN = new BasicStroke(1);
+                protected final Stroke THIN = new BasicStroke(2);
                 protected final Stroke THICK = new BasicStroke(4);
 
                 public Stroke transform(JungEdge e) {
-                    Pair<String> p = originalGraph.getEndpoints(e);
+                 /*   Pair<String> p = originalGraph.getEndpoints(e);
                     if (selectedCommunity.containsVertex(p.getFirst()) && selectedCommunity.containsVertex(p.getSecond()))
-                        return THICK;
+                        return THICK;*/
                     return THIN;
                 }
             });
