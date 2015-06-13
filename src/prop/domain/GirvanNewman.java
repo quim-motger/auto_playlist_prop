@@ -31,7 +31,7 @@ public class GirvanNewman extends Algorithm {
         n = graph.numberOfVertices();
         ArrayList<String> log = new ArrayList<>();
         components = calculateComponents();
-        if (components >= k) log.add("There are " + components + " components already!");
+        //if (components >= k) log.add("There are " + components + " components already!");
 
         parents = floydWarshall();
         int i = 0;

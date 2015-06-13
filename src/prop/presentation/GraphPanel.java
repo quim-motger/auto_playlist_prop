@@ -26,6 +26,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class GraphPanel extends JPanel{
 
@@ -256,11 +257,12 @@ public class GraphPanel extends JPanel{
 
         private int step;
         private ArrayList<String> log;
+        private static final char delimiter = '|';
 
         public ExecutionPanel(AlgorithmPController apc) {
             super(apc);
 
-            step = 0;
+            step = -1;
             log = algorithmPController.getLogArray();
 
             controls.removeAll();
@@ -284,13 +286,65 @@ public class GraphPanel extends JPanel{
         }
 
         private void backButtonActionPerformed(ActionEvent evt) {
-            ++step;
-            System.out.println("step: " + step);
+            if (step > -1) {
+                String op[] = log.get(step).split(Pattern.quote(String.valueOf(delimiter)));
+                int code = Integer.parseInt(op[0]);
+                switch (code) {
+                    case 0:
+                        removeVertexFromCommunity();
+                        break;
+                    case 1:
+                        removeCommunityFromCommunity();
+                        break;
+                    case 2:
+                        addEdge(Integer.parseInt(op[1]), Integer.parseInt(op[2]));
+                        break;
+                }
+                --step;
+            }
         }
 
         private void nextButtonActionPerformed(ActionEvent evt) {
-            --step;
-            System.out.println("step: " + step);
+            if (step < log.size()-1) {
+                ++step;
+                String op[] = log.get(step).split(Pattern.quote(String.valueOf(delimiter)));
+                int code = Integer.parseInt(op[0]);
+                switch (code) {
+                    case 0:
+                        addVertexToCommunity();
+                        break;
+                    case 1:
+                        addCommunityToCommunity();
+                        break;
+                    case 2:
+                        removeEdge(Integer.parseInt(op[1]), Integer.parseInt(op[2]));
+                        break;
+                }
+            }
+        }
+
+        private void addVertexToCommunity() {
+
+        }
+
+        private void removeVertexFromCommunity() {
+
+        }
+
+        private void addCommunityToCommunity() {
+
+        }
+
+        private void removeCommunityFromCommunity() {
+
+        }
+
+        private void removeEdge(int u, int v) {
+            System.out.println("remove edge (" + u + "," + v + ")");
+        }
+
+        private void addEdge(int u, int v) {
+            System.out.println("add edge (" + u + "," + v + ")");
         }
 
     }
