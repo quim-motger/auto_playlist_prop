@@ -20,10 +20,10 @@ public class AlgorithmOutputView extends JPanel {
     private JToolBar actionBar;
     private JLabel listTitle;
     private JList leftList;
-    private JButton SwitchButton;
     private JButton newInputButton;
+    private JButton graphButton;
+    private JButton logButton;
     private DefaultListModel listModel;
-    private Boolean isGraphVisible;
     private JButton executionButton;
     private GraphPanel.ExecutionPanel executionPanel;
 
@@ -68,7 +68,6 @@ public class AlgorithmOutputView extends JPanel {
 
         rightScrollPanel = new JScrollPane();
         rightScrollPanel.setViewportView(graphPanel);
-        isGraphVisible = true;
 
         actionBar = new JToolBar();
         actionBar.setFloatable(false);
@@ -81,17 +80,6 @@ public class AlgorithmOutputView extends JPanel {
         actionBar.add(listTitle);
         actionBar.add(Box.createHorizontalStrut(6));
 
-        SwitchButton = new JButton("Algorithm Log");
-        SwitchButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
-        SwitchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                switchButtonActionPerformed(e);
-            }
-        });
-        actionBar.add(SwitchButton);
-        actionBar.add(Box.createHorizontalStrut(5));
-
         newInputButton = new JButton("New input");
         newInputButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         newInputButton.addActionListener(new ActionListener() {
@@ -103,12 +91,35 @@ public class AlgorithmOutputView extends JPanel {
         actionBar.add(newInputButton);
         actionBar.add(Box.createHorizontalStrut(5));
 
+        graphButton = new JButton("Graph");
+        graphButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        graphButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                graphButtonActionPerformed(e);
+            }
+        });
+        graphButton.setEnabled(false);
+        actionBar.add(graphButton);
+        actionBar.add(Box.createHorizontalStrut(5));
+
+        logButton = new JButton("Log");
+        logButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        logButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logButtonActionPerformed(e);
+            }
+        });
+        actionBar.add(logButton);
+        actionBar.add(Box.createHorizontalStrut(5));
+
         executionButton = new JButton("Step-by-step");
         executionButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
         executionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                executionActionPerformed(e);
+                executionButtonActionPerformed(e);
             }
         });
         actionBar.add(executionButton);
@@ -135,25 +146,29 @@ public class AlgorithmOutputView extends JPanel {
         );
     }// </editor-fold>
 
-    private void switchButtonActionPerformed(ActionEvent evt) {
-        if (isGraphVisible) {
-            SwitchButton.setText("Graph");
-            rightScrollPanel.setViewportView(textPanel);
-            isGraphVisible = false;
-        }
-        else {
-            SwitchButton.setText("Algorithm Log");
-            rightScrollPanel.setViewportView(graphPanel);
-            isGraphVisible = true;
-        }
+    private void graphButtonActionPerformed(ActionEvent evt) {
+        rightScrollPanel.setViewportView(graphPanel);
+        graphButton.setEnabled(false);
+        logButton.setEnabled(true);
+        executionButton.setEnabled(true);
+    }
+
+    private void logButtonActionPerformed(ActionEvent evt) {
+        rightScrollPanel.setViewportView(textPanel);
+        logButton.setEnabled(false);
+        graphButton.setEnabled(true);
+        executionButton.setEnabled(true);
+    }
+
+    private void executionButtonActionPerformed(ActionEvent evt) {
+        rightScrollPanel.setViewportView(executionPanel);
+        executionButton.setEnabled(false);
+        logButton.setEnabled(true);
+        graphButton.setEnabled(true);
     }
 
     private void newInputButtonActionPerformed(ActionEvent evt) {
         algorithmTabView.setInputPanel();
-    }
-
-    private void executionActionPerformed(ActionEvent evt) {
-        rightScrollPanel.setViewportView(executionPanel);
     }
 
     /**
