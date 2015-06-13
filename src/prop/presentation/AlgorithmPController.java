@@ -45,6 +45,10 @@ public class AlgorithmPController {
         return sb.toString();
     }
 
+    public ArrayList<String> getLogArray() {
+        return log;
+    }
+
 
     public UndirectedSparseGraph<String, JungEdge> getOriginalGraph() {
        String s = algorithmController.getOriginalGraph();
@@ -103,5 +107,9 @@ public class AlgorithmPController {
     
     public String[] listSongGenres() {
         return songController.listGenres();
+    }
+
+    public String[] getSongId(int i) {
+        return algorithmController.getSongId(i);
     }
 }

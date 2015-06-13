@@ -28,6 +28,11 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class GraphPanel extends JPanel{
+
+        protected AlgorithmPController algorithmPController;
+        private UndirectedSparseGraph<String,JungEdge> originalGraph;
+        private ArrayList<UndirectedSparseGraph<String,JungEdge>> communities;
+
         //the visual component and renderer for the graph
         private VisualizationViewer<String, JungEdge> vv;
 
@@ -35,7 +40,13 @@ public class GraphPanel extends JPanel{
         private Class subLayoutType = CircleLayout.class;
         private Dimension subLayoutSize;
 
-        public GraphPanel(final UndirectedSparseGraph<String,JungEdge> originalGraph, final ArrayList<UndirectedSparseGraph<String,JungEdge>> communities) {
+        protected JPanel controls;
+
+        public GraphPanel(AlgorithmPController apc) {
+            algorithmPController = apc;
+            originalGraph = algorithmPController.getOriginalGraph();
+            communities = algorithmPController.getCommunities();
+
             final UndirectedSparseGraph<String,JungEdge> selectedCommunity = communities.get(communities.size()-1);
 
             clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<String, JungEdge>(originalGraph));
@@ -160,7 +171,7 @@ public class GraphPanel extends JPanel{
                 }
             });
 
-            JPanel controls = new JPanel();
+            controls = new JPanel();
             controls.add(plus);
             controls.add(minus);
             controls.add(reset);
@@ -239,6 +250,49 @@ public class GraphPanel extends JPanel{
         for (String s : g.getVertices()) {
             alayout.lock(s,true);
         }
+    }
+
+    public static class ExecutionPanel extends GraphPanel {
+
+        private int step;
+        private ArrayList<String> log;
+
+        public ExecutionPanel(AlgorithmPController apc) {
+            super(apc);
+
+            step = 0;
+            log = algorithmPController.getLogArray();
+
+            controls.removeAll();
+            final JButton backButton = new JButton("<-");
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    backButtonActionPerformed(e);
+                }
+            });
+            controls.add(backButton);
+
+            JButton nextButton = new JButton("->");
+            nextButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    nextButtonActionPerformed(e);
+                }
+            });
+            controls.add(nextButton);
+        }
+
+        private void backButtonActionPerformed(ActionEvent evt) {
+            ++step;
+            System.out.println("step: " + step);
+        }
+
+        private void nextButtonActionPerformed(ActionEvent evt) {
+            --step;
+            System.out.println("step: " + step);
+        }
+
     }
 
 }

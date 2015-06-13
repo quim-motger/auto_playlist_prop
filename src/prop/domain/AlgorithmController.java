@@ -201,4 +201,12 @@ public class AlgorithmController {
         }
         return sb.toString();
     }
+
+    public String[] getSongId(int i) {
+        Song s = (Song) graph.getVertexT(i);
+        String id[] = new String[2];
+        id[0] = s.getTitle();
+        id[1] = s.getArtist();
+        return id;
+    }
 }

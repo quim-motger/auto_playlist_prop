@@ -24,6 +24,8 @@ public class AlgorithmOutputView extends JPanel {
     private JButton newInputButton;
     private DefaultListModel listModel;
     private Boolean isGraphVisible;
+    private JButton executionButton;
+    private GraphPanel.ExecutionPanel executionPanel;
 
     /**
      * Creates new form MainPanel
@@ -53,7 +55,9 @@ public class AlgorithmOutputView extends JPanel {
         leftListView.setViewportView(leftList);
         leftListView.setPreferredSize(new Dimension(195, 200));
 
-        graphPanel = new GraphPanel(algorithmPController.getOriginalGraph(), algorithmPController.getCommunities());
+        graphPanel = new GraphPanel(algorithmPController);
+
+        executionPanel = new GraphPanel.ExecutionPanel(algorithmPController);
 
         textPanel = new JTextArea();
         textPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -99,6 +103,17 @@ public class AlgorithmOutputView extends JPanel {
         actionBar.add(newInputButton);
         actionBar.add(Box.createHorizontalStrut(5));
 
+        executionButton = new JButton("Step-by-step");
+        executionButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
+        executionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                executionActionPerformed(e);
+            }
+        });
+        actionBar.add(executionButton);
+        actionBar.add(Box.createHorizontalStrut(5));
+
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,6 +150,10 @@ public class AlgorithmOutputView extends JPanel {
 
     private void newInputButtonActionPerformed(ActionEvent evt) {
         algorithmTabView.setInputPanel();
+    }
+
+    private void executionActionPerformed(ActionEvent evt) {
+        rightScrollPanel.setViewportView(executionPanel);
     }
 
     /**
