@@ -324,6 +324,20 @@ public class GraphPanel extends JPanel{
                 }
             });
             controls.add(nextButton);
+
+
+            final Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
+                public Paint transform(String i) {
+                    return Color.white;
+                }
+            };
+            vv.getRenderContext().setVertexFillPaintTransformer(vertexColor);
+            // Edges' color
+            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
+                public Paint transform(JungEdge e) {
+                    return Color.black;
+                }
+            });
         }
 
         private void backButtonActionPerformed(ActionEvent evt) {
