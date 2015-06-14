@@ -1,6 +1,9 @@
 package prop.presentation;
 
-import edu.uci.ics.jung.algorithms.layout.*;
+import edu.uci.ics.jung.algorithms.layout.AggregateLayout;
+import edu.uci.ics.jung.algorithms.layout.CircleLayout;
+import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
+import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.Pair;
@@ -20,9 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
-import java.security.cert.CollectionCertStoreParameters;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -324,7 +325,10 @@ public class GraphPanel extends JPanel{
                 int code = Integer.parseInt(op[0]);
                 switch (code) {
                     case 0:
-                        removeVertexFromCommunity();
+                        ArrayList<Integer> removedVertexs  = new ArrayList<>();
+                        for(int i = 3; i<op.length;++i)
+                            removedVertexs.add(Integer.parseInt(op[i]));
+                        moveVertexsBetweenCommunities(Integer.parseInt(op[1]), removedVertexs);
                         break;
                     case 1:
                         removeCommunityFromCommunity();
@@ -344,12 +348,10 @@ public class GraphPanel extends JPanel{
                 int code = Integer.parseInt(op[0]);
                 switch (code) {
                     case 0:
-                        ArrayList<Integer> vertexs = new ArrayList<>();
-                        int k;
-                        for (k = 3; k < op.length; ++k) {
-                            vertexs.add(Integer.parseInt(op[k]));
-                        }
-                        addVertexToCommunity(Integer.parseInt(op[1]),Integer.parseInt(op[2]),vertexs);
+                        ArrayList<Integer> addedVertexs  = new ArrayList<>();
+                        for(int i = 3; i<op.length;++i) 
+                            addedVertexs.add(Integer.parseInt(op[i]));
+                        moveVertexsBetweenCommunities(Integer.parseInt(op[2]), addedVertexs);
                         break;
                     case 1:
                         addCommunityToCommunity();
@@ -361,18 +363,17 @@ public class GraphPanel extends JPanel{
             }
         }
 
-        private void addVertexToCommunity(int color_origen, int color_desti, ArrayList<Integer> vertexs) {
+        private void moveVertexsBetweenCommunities(int color, ArrayList<Integer> vertexsToPaint) {
 
         }
+        
 
-        private void removeVertexFromCommunity() {
-
-        }
-
+        @Deprecated
         private void addCommunityToCommunity() {
 
         }
 
+        @Deprecated
         private void removeCommunityFromCommunity() {
 
         }
