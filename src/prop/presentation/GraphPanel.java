@@ -16,6 +16,7 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.renderers.BasicVertexLabelRenderer.InsidePositioner;
 import edu.uci.ics.jung.visualization.renderers.Renderer;
 import org.apache.commons.collections15.Transformer;
+import sun.plugin2.applet.JNLP2ClassLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -140,7 +141,14 @@ public class GraphPanel extends JPanel{
             vv.getRenderContext().setVertexShapeTransformer(vertexSize);
 
             // Edge weight tooltip
-            vv.setVertexToolTipTransformer(new ToStringLabeller<String>());
+            vv.setVertexToolTipTransformer(new Transformer<String, String>() {
+                public String transform(String s) {
+                    for (int i = 0; i < communities.size(); ++i) {
+                            if (communities.get(i).containsVertex(s)) return "Community " + i;
+                    }
+                    return null;
+                }
+            });
             vv.setEdgeToolTipTransformer(new Transformer<JungEdge, String>() {
                 public String transform(JungEdge edge) {
                     return edge.toString();
