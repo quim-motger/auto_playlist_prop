@@ -170,15 +170,15 @@ public class Louvain extends Algorithm {
      */
     private void changeComm(int from, int to, int[] comms) {
         if (from != to) {
-            if(iterations==0) {
-                int nodeFrom = findNodeComm(comms,from);
-                int nodeTo = findNodeComm(comms,to);
-                log.add("1|"+nodeFrom+"|"+nodeTo);
-                
-            }
+            String ret = "0|"+from+"|"+to;
             for (int i = 0; i < comms.length; ++i) {
-                if (comms[i] == from)
+                if (comms[i] == from) {
                     comms[i] = to;
+                    ret+="|"+i;
+                }
+            }
+            if(iterations==0) {
+                log.add(ret);
             }
         }
     }
@@ -230,7 +230,7 @@ public class Louvain extends Algorithm {
     private void moveMode(int idNode, int comOrig, int comDest, int[] comm) {
         comm[idNode] = comDest;
         if(iterations==0)
-            log.add("0|" +comDest + "|" + idNode);
+            log.add("0|" +comOrig + "|" +comDest + "|" + idNode);
         
         //Checks if there's an empty community
         boolean destroyCom = comOrig>=0;
