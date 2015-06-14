@@ -1,9 +1,6 @@
 package prop.presentation;
 
-import edu.uci.ics.jung.algorithms.layout.AggregateLayout;
-import edu.uci.ics.jung.algorithms.layout.CircleLayout;
-import edu.uci.ics.jung.algorithms.layout.KKLayout;
-import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.*;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.Pair;
@@ -56,11 +53,11 @@ Then create a random generator:
 public class GraphPanel extends JPanel{
 
         protected AlgorithmPController algorithmPController;
-        private UndirectedSparseGraph<String,JungEdge> originalGraph;
+        protected UndirectedSparseGraph<String,JungEdge> originalGraph;
         private ArrayList<UndirectedSparseGraph<String,JungEdge>> communities;
 
         //the visual component and renderer for the graph
-        private VisualizationViewer<String, JungEdge> vv;
+        protected VisualizationViewer<String, JungEdge> vv;
 
         private AggregateLayout<String,JungEdge> clusteringLayout;
         private Class subLayoutType = CircleLayout.class;
@@ -83,7 +80,7 @@ public class GraphPanel extends JPanel{
 
             final UndirectedSparseGraph<String,JungEdge> selectedCommunity = communities.get(communities.size()-1);
 
-            clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<String, JungEdge>(originalGraph));
+            clusteringLayout = new AggregateLayout<String,JungEdge>(new ISOMLayout<>(originalGraph));
             subLayoutSize = new Dimension(50,50);
             Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
@@ -116,8 +113,10 @@ public class GraphPanel extends JPanel{
                 public Paint transform(JungEdge e) {
                     Pair<String> p = originalGraph.getEndpoints(e);
                     for (int j = 0; j < communities.size(); ++j) {
-                        if (communities.get(j).containsVertex(p.getFirst()) && communities.get(j).containsVertex(p.getSecond()))
+                        if (communities.get(j).containsVertex(p.getFirst()) && communities.get(j).containsVertex(p.getSecond())) {
+                            e.setColor(colors.get(j));
                             return colors.get(j);
+                        }
                     }
                     return Color.black;
                  }
@@ -375,15 +374,40 @@ public class GraphPanel extends JPanel{
 
         private void removeEdge(int u, int v) {
             hiddenEdges.add(new Pair<String>(algorithmPController.getSongId(u),algorithmPController.getSongId(u)));
+            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
+                public Paint transform(JungEdge e) {
+                    Pair<String> p = originalGraph.getEndpoints(e);
+                    Color col = e.getColor();
+                    for (Pair<String> ps : hiddenEdges) {
+                        if ((p.getFirst().equals(ps.getFirst()) && p.getSecond().equals(ps.getSecond()))
+                                || (p.getFirst().equals(ps.getSecond()) && p.getSecond().equals(ps.getFirst())))
+                            col = new Color(col.getRed(), col.getGreen(), col.getBlue(), 1);
+                    }
+                    return col;
+                }
+            });
         }
 
         private void addEdge(int u, int v) {
             for (Pair<String> p : hiddenEdges) {
                 if ((p.getFirst().equals(algorithmPController.getSongId(u)) && p.getSecond().equals(algorithmPController.getSongId(v)))
-                    || (p.getFirst().equals(algorithmPController.getSongId(v)) && p.getSecond().equals(algorithmPController.getSongId(u))))
+                        || (p.getFirst().equals(algorithmPController.getSongId(v)) && p.getSecond().equals(algorithmPController.getSongId(u))))
                     hiddenEdges.remove(p);
             }
+            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
+                public Paint transform(JungEdge e) {
+                    Pair<String> p = originalGraph.getEndpoints(e);
+                    Color col = e.getColor();
+                    for (Pair<String> ps : hiddenEdges) {
+                        if ((p.getFirst().equals(ps.getFirst()) && p.getSecond().equals(ps.getSecond()))
+                                || (p.getFirst().equals(ps.getSecond()) && p.getSecond().equals(ps.getFirst())))
+                            col = new Color(col.getRed(), col.getGreen(), col.getBlue(), 1);
+                    }
+                    return col;
+                }
+            });
         }
+
 
     }
 
