@@ -16,7 +16,6 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 import edu.uci.ics.jung.visualization.renderers.BasicVertexLabelRenderer.InsidePositioner;
 import edu.uci.ics.jung.visualization.renderers.Renderer;
 import org.apache.commons.collections15.Transformer;
-import sun.plugin2.applet.JNLP2ClassLoader;
 
 import javax.swing.*;
 import java.awt.*;
