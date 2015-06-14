@@ -328,7 +328,7 @@ public class GraphPanel extends JPanel{
                         ArrayList<Integer> removedVertexs  = new ArrayList<>();
                         for(int i = 3; i<op.length;++i)
                             removedVertexs.add(Integer.parseInt(op[i]));
-                        moveVertexsBetweenCommunities(Integer.parseInt(op[1]), removedVertexs);
+                        paintVertexsIntoColor(Integer.parseInt(op[1]), removedVertexs);
                         break;
                     case 1:
                         removeCommunityFromCommunity();
@@ -351,7 +351,7 @@ public class GraphPanel extends JPanel{
                         ArrayList<Integer> addedVertexs  = new ArrayList<>();
                         for(int i = 3; i<op.length;++i) 
                             addedVertexs.add(Integer.parseInt(op[i]));
-                        moveVertexsBetweenCommunities(Integer.parseInt(op[2]), addedVertexs);
+                        paintVertexsIntoColor(Integer.parseInt(op[2]), addedVertexs);
                         break;
                     case 1:
                         addCommunityToCommunity();
@@ -363,7 +363,7 @@ public class GraphPanel extends JPanel{
             }
         }
 
-        private void moveVertexsBetweenCommunities(int color, ArrayList<Integer> vertexsToPaint) {
+        private void paintVertexsIntoColor(int color, ArrayList<Integer> vertexsToPaint) {
 
         }
         
