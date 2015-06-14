@@ -344,7 +344,12 @@ public class GraphPanel extends JPanel{
                 int code = Integer.parseInt(op[0]);
                 switch (code) {
                     case 0:
-                        addVertexToCommunity();
+                        ArrayList<Integer> vertexs = new ArrayList<>();
+                        int k;
+                        for (k = 3; k < op.length; ++k) {
+                            vertexs.add(Integer.parseInt(op[k]));
+                        }
+                        addVertexToCommunity(Integer.parseInt(op[1]),Integer.parseInt(op[2]),vertexs);
                         break;
                     case 1:
                         addCommunityToCommunity();
@@ -356,7 +361,7 @@ public class GraphPanel extends JPanel{
             }
         }
 
-        private void addVertexToCommunity() {
+        private void addVertexToCommunity(int color_origen, int color_desti, ArrayList<Integer> vertexs) {
 
         }
 
