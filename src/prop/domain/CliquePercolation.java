@@ -248,7 +248,8 @@ public class CliquePercolation extends Algorithm {
                         //If the clique is not the same
 
                         if (m != j && m < cliqueInCommunity.length && cliqueInCommunity[m] != cliqueInCommunity[j]) {
-                            sb.append("1|" + m + "|" + j);
+                            sb.append("0|" + m + "|" + j);
+                            for (int M : communities[m]) sb.append("|" + M);
                             log.add(sb.toString());
                             //sb.append("Let's add this clique in the same community\n");
                             //We add to the community of the initial clique the clique shared by the vertex
@@ -363,7 +364,7 @@ public class CliquePercolation extends Algorithm {
     private void printClique(ArrayList<Integer> l, ArrayList<String> log, int k) {
         StringBuilder sb = new StringBuilder();
         int s;
-        sb.append("0|" + k);
+        sb.append("0|-1|" + k);
         for (s = 0; s < l.size(); ++s) {
             sb.append("|" + l.get(s));
         }
