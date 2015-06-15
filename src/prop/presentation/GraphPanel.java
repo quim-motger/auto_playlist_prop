@@ -80,7 +80,7 @@ public class GraphPanel extends JPanel{
             Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
 
-            final VisualizationModel<String,JungEdge> visualizationModel =
+            VisualizationModel<String,JungEdge> visualizationModel =
                     new DefaultVisualizationModel<String,JungEdge>(clusteringLayout, visualizationModelSize);
             vv =  new VisualizationViewer<String,JungEdge>(visualizationModel, preferredSize);
 
@@ -297,12 +297,15 @@ public class GraphPanel extends JPanel{
         private HashMap<String, Integer> vColors;
 
         private void paint() {
-            final Transformer<String, Paint> vertexC = new Transformer<String, Paint>() {
+            Transformer<String, Paint> vertexC = new Transformer<String, Paint>() {
                 public Paint transform(String i) {
                     return hashColors.get(vColors.get(i));
                 }
             };
             vv.getRenderContext().setVertexFillPaintTransformer(vertexC);
+
+            vv.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.LAYOUT).setToIdentity();
+            vv.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.VIEW).setToIdentity();
         }
 
         public ExecutionPanel(AlgorithmPController apc) {
@@ -318,8 +321,8 @@ public class GraphPanel extends JPanel{
             //remove all edges
             for (JungEdge ed : originalGraph.getEdges()) {
                 hiddenEdges.add(originalGraph.getEndpoints(ed));
-                paintEdges();
             }
+            paintEdges();
 
             step = -1;
             log = algorithmPController.getLogArray();
