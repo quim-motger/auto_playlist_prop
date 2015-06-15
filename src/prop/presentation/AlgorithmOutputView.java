@@ -26,6 +26,8 @@ public class AlgorithmOutputView extends JPanel {
     private DefaultListModel listModel;
     private JButton executionButton;
     private GraphPanel.ExecutionPanel executionPanel;
+    private JPanel leftPanel;
+    private JButton generateListButton;
 
     /**
      * Creates new form MainPanel
@@ -46,6 +48,7 @@ public class AlgorithmOutputView extends JPanel {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
+        leftPanel = new JPanel(new BorderLayout());
         leftListView = new JScrollPane();
         leftList = new JList();
         listModel = new DefaultListModel();
@@ -53,7 +56,11 @@ public class AlgorithmOutputView extends JPanel {
         leftList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         leftList.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         leftListView.setViewportView(leftList);
+        leftPanel.setPreferredSize(new Dimension(195, 200));
         leftListView.setPreferredSize(new Dimension(195, 200));
+        leftPanel.add(leftList, BorderLayout.CENTER);
+        generateListButton = new JButton("TEST");
+        leftPanel.add(generateListButton, BorderLayout.SOUTH);
 
         graphPanel = new GraphPanel(algorithmPController);
 
@@ -130,7 +137,7 @@ public class AlgorithmOutputView extends JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(leftListView, leftListView.getPreferredSize().width, leftListView.getPreferredSize().width, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(leftPanel, leftPanel.getPreferredSize().width, leftPanel.getPreferredSize().width, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rightScrollPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addComponent(actionBar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -141,7 +148,7 @@ public class AlgorithmOutputView extends JPanel {
                                 .addComponent(actionBar, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                                 .addGap(5, 5, 5)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(leftListView, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                                        .addComponent(leftPanel, GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                                         .addComponent(rightScrollPanel)))
         );
     }// </editor-fold>
