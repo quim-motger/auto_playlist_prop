@@ -63,7 +63,7 @@ public class AlgorithmOutputView extends JPanel {
         leftListView.setViewportView(leftList);
         leftPanel.setPreferredSize(new Dimension(195, 200));
         leftListView.setPreferredSize(new Dimension(195, 200));
-        leftPanel.add(leftList, BorderLayout.CENTER);
+        leftPanel.add(leftListView, BorderLayout.CENTER);
 
         graphPanel = new GraphPanel(algorithmPController);
 
