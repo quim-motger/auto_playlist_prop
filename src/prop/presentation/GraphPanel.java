@@ -24,10 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /*
@@ -299,9 +296,27 @@ public class GraphPanel extends JPanel{
         private ArrayList<String> log;
         private static final char delimiter = '|';
         private ArrayList<Pair<String>> hiddenEdges;
+        private HashMap<Integer,Color> hashColors;
+        private HashMap<String, Integer> vColors;
+
+        private void paint() {
+            final Transformer<String, Paint> vertexC = new Transformer<String, Paint>() {
+                public Paint transform(String i) {
+                    return hashColors.get(vColors.get(i));
+                }
+            };
+            vv.getRenderContext().setVertexFillPaintTransformer(vertexC);
+        }
 
         public ExecutionPanel(AlgorithmPController apc) {
             super(apc);
+            hiddenEdges = new ArrayList<>();
+            hashColors = new HashMap<>();
+            hashColors.put(-1000, Color.white);
+            vColors = new HashMap<>();
+            for (String sv : originalGraph.getVertices()) {
+                vColors.put(sv, -1000);
+            }
 
             step = -1;
             log = algorithmPController.getLogArray();
@@ -326,12 +341,8 @@ public class GraphPanel extends JPanel{
             controls.add(nextButton);
 
 
-            final Transformer<String, Paint> vertexColor = new Transformer<String, Paint>() {
-                public Paint transform(String i) {
-                    return Color.white;
-                }
-            };
-            vv.getRenderContext().setVertexFillPaintTransformer(vertexColor);
+            // Vertices' color
+            paint();
             // Edges' color
             vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
                 public Paint transform(JungEdge e) {
@@ -385,6 +396,14 @@ public class GraphPanel extends JPanel{
         }
 
         private void paintVertexsIntoColor(int color, ArrayList<Integer> vertexsToPaint) {
+            if (!hashColors.containsKey(color)) {
+                Random rand2 = new Random();
+                hashColors.put(color, new Color(rand2.nextFloat(), rand2.nextFloat(), rand2.nextFloat()));
+            }
+            for (Integer in : vertexsToPaint) {
+                vColors.put(algorithmPController.getSongId(in), color);
+            }
+            paint();
 
         }
         
@@ -400,7 +419,7 @@ public class GraphPanel extends JPanel{
         }
 
         private void removeEdge(int u, int v) {
-            hiddenEdges.add(new Pair<String>(algorithmPController.getSongId(u),algorithmPController.getSongId(u)));
+            hiddenEdges.add(new Pair<String>(algorithmPController.getSongId(u),algorithmPController.getSongId(v)));
             vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
                 public Paint transform(JungEdge e) {
                     Pair<String> p = originalGraph.getEndpoints(e);
