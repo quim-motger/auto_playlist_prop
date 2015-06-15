@@ -337,7 +337,6 @@ public class GraphPanel extends JPanel{
             });
             controls.add(nextButton);
 
-
             // Vertices' color
             paint();
             // Edges' color
@@ -359,9 +358,6 @@ public class GraphPanel extends JPanel{
                             removedVertexs.add(Integer.parseInt(op[i]));
                         paintVertexsIntoColor(Integer.parseInt(op[1]), removedVertexs);
                         break;
-                    case 1:
-                        removeCommunityFromCommunity();
-                        break;
                     case 2:
                         addEdge(Integer.parseInt(op[1]), Integer.parseInt(op[2]));
                         break;
@@ -382,9 +378,6 @@ public class GraphPanel extends JPanel{
                             addedVertexs.add(Integer.parseInt(op[i]));
                         paintVertexsIntoColor(Integer.parseInt(op[2]), addedVertexs);
                         break;
-                    case 1:
-                        addCommunityToCommunity();
-                        break;
                     case 2:
                         removeEdge(Integer.parseInt(op[1]), Integer.parseInt(op[2]));
                         break;
@@ -403,32 +396,10 @@ public class GraphPanel extends JPanel{
             paint();
 
         }
-        
-
-        @Deprecated
-        private void addCommunityToCommunity() {
-
-        }
-
-        @Deprecated
-        private void removeCommunityFromCommunity() {
-
-        }
 
         private void removeEdge(int u, int v) {
             hiddenEdges.add(new Pair<String>(algorithmPController.getSongId(u),algorithmPController.getSongId(v)));
-            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
-                public Paint transform(JungEdge e) {
-                    Pair<String> p = originalGraph.getEndpoints(e);
-                    Color col = e.getColor();
-                    for (Pair<String> ps : hiddenEdges) {
-                        if ((p.getFirst().equals(ps.getFirst()) && p.getSecond().equals(ps.getSecond()))
-                                || (p.getFirst().equals(ps.getSecond()) && p.getSecond().equals(ps.getFirst())))
-                            col = new Color(col.getRed(), col.getGreen(), col.getBlue(), 1);
-                    }
-                    return col;
-                }
-            });
+            paintEdges();
         }
 
         private void addEdge(int u, int v) {
@@ -437,6 +408,10 @@ public class GraphPanel extends JPanel{
                         || (p.getFirst().equals(algorithmPController.getSongId(v)) && p.getSecond().equals(algorithmPController.getSongId(u))))
                     hiddenEdges.remove(p);
             }
+            paintEdges();
+        }
+
+        private void paintEdges() {
             vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
                 public Paint transform(JungEdge e) {
                     Pair<String> p = originalGraph.getEndpoints(e);
@@ -450,7 +425,6 @@ public class GraphPanel extends JPanel{
                 }
             });
         }
-
 
     }
 
