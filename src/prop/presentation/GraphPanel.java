@@ -347,6 +347,7 @@ public class GraphPanel extends JPanel{
         private HashMap<String, Integer> vColors;
         private JButton nextButton;
         private JButton backButton;
+        JLabel stepsLabel;
 
         public ExecutionPanel(AlgorithmPController apc) {
             super(apc);
@@ -367,6 +368,9 @@ public class GraphPanel extends JPanel{
             log = algorithmPController.getLogArray();
 
             controls.removeAll();
+
+            stepsLabel = new JLabel("0/" + log.size());
+            controls.add(stepsLabel, BorderLayout.WEST);
 
             backButton = new JButton("<-");
             backButton.addActionListener(new ActionListener() {
@@ -427,7 +431,6 @@ public class GraphPanel extends JPanel{
 
         private void backButtonActionPerformed(ActionEvent evt) {
             if (step > -1) {
-                System.out.println("step = " + step);
                 String op[] = log.get(step).split(Pattern.quote(String.valueOf(delimiter)));
                 int code = Integer.parseInt(op[0]);
                 switch (code) {
@@ -442,6 +445,7 @@ public class GraphPanel extends JPanel{
                         break;
                 }
                 --step;
+                stepsLabel.setText(step+1 + "/" + log.size());
                 if (step <= -1) backButton.setEnabled(false);
                 else nextButton.setEnabled(true);
             }
@@ -450,7 +454,7 @@ public class GraphPanel extends JPanel{
         private void nextButtonActionPerformed(ActionEvent evt) {
             if (step < log.size()-1) {
                 ++step;
-                System.out.println("step = " + step);
+                stepsLabel.setText(step+1 + "/" + log.size());
                 if (step >= log.size()-1) nextButton.setEnabled(false);
                 backButton.setEnabled(true);
 
