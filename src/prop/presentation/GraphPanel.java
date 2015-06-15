@@ -311,17 +311,26 @@ public class GraphPanel extends JPanel{
         }
     }
 
-    public void makeItBigger(final int big) {
+    public void makeItBigger(final int selected[]) {
         Transformer<String, Shape> vertexSize = new Transformer<String, Shape>() {
-            public Shape transform(String i) {
+            public Shape transform(String v) {
                 Ellipse2D circle;
-                if (communities.get(big).containsVertex(i)) {
+                if (containsVertex(selected,v)) {
                     circle = new Ellipse2D.Double(-20, -20, 30, 30);
                 } else {
                     circle = new Ellipse2D.Double(-10, -10, 20, 20);
                 }
                 return circle;
             }
+
+            private boolean containsVertex(int selected[], String v) {
+                for (int c : selected) {
+                    if (communities.get(c).containsVertex(v))
+                        return true;
+                }
+                return false;
+            }
+
         };
         vv.getRenderContext().setVertexShapeTransformer(vertexSize);
 

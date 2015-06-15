@@ -72,7 +72,7 @@ public class AlgorithmOutputView extends JPanel {
         leftList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
-                int comm = leftList.getSelectedIndex();
+                int comm[] = leftList.getSelectedIndices();
                 graphPanel.makeItBigger(comm);
             }
         });

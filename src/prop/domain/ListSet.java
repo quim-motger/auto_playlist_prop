@@ -95,7 +95,7 @@ public class ListSet {
 
     /**
      * Indicates if a list is contained in the set
-     * @param List to look up (not null)
+     * @param l list to look up (not null)
      * @return true if found, false otherwise
      */
     public boolean contains(List l) {
