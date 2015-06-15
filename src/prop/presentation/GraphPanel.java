@@ -295,6 +295,8 @@ public class GraphPanel extends JPanel{
         private ArrayList<Pair<String>> hiddenEdges;
         private HashMap<Integer,Color> hashColors;
         private HashMap<String, Integer> vColors;
+        private JButton nextButton;
+        private JButton backButton;
 
         private void paint() {
             Transformer<String, Paint> vertexC = new Transformer<String, Paint>() {
@@ -328,7 +330,8 @@ public class GraphPanel extends JPanel{
             log = algorithmPController.getLogArray();
 
             controls.removeAll();
-            final JButton backButton = new JButton("<-");
+
+            backButton = new JButton("<-");
             backButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -336,8 +339,9 @@ public class GraphPanel extends JPanel{
                 }
             });
             controls.add(backButton);
+            backButton.setEnabled(false);
 
-            JButton nextButton = new JButton("->");
+            nextButton = new JButton("->");
             nextButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -372,12 +376,17 @@ public class GraphPanel extends JPanel{
                         break;
                 }
                 --step;
+                if (step <= -1) backButton.setEnabled(false);
+                else nextButton.setEnabled(true);
             }
         }
 
         private void nextButtonActionPerformed(ActionEvent evt) {
             if (step < log.size()-1) {
                 ++step;
+                if (step >= log.size()-1) nextButton.setEnabled(false);
+                backButton.setEnabled(true);
+
                 String op[] = log.get(step).split(Pattern.quote(String.valueOf(delimiter)));
                 int code = Integer.parseInt(op[0]);
                 switch (code) {
