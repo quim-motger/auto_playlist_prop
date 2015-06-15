@@ -369,6 +369,7 @@ public class GraphPanel extends JPanel{
                 }
             });
             controls.add(nextButton);
+            if (log.isEmpty()) nextButton.setEnabled(false);
 
             // Vertices' color
             paint();
@@ -436,12 +437,7 @@ public class GraphPanel extends JPanel{
         }
 
         private void addEdge(int u, int v) {
-            for (Pair<String> p : hiddenEdges) {
-                if ((p.getFirst().equals(algorithmPController.getSongId(u)) && p.getSecond().equals(algorithmPController.getSongId(v)))
-                        || (p.getFirst().equals(algorithmPController.getSongId(v)) && p.getSecond().equals(algorithmPController.getSongId(u)))) {
-                    hiddenEdges.remove(p);
-                }
-            }
+            hiddenEdges.remove(new Pair<String>(algorithmPController.getSongId(u),algorithmPController.getSongId(v)));
             paintEdges();
         }
 
