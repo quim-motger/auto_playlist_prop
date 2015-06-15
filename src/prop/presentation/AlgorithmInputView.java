@@ -1,5 +1,6 @@
 package prop.presentation;
 
+import prop.ErrorString;
 import prop.PropException;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class AlgorithmInputView extends JPanel {
 
     private AlgorithmPController algorithmPController;
+    private ListPController listPController;
     private ArrayList<String> simpleRelations;
     private ArrayList<String> complexRelations;
     private DefaultListModel simpleRelationsModel;
@@ -57,8 +59,9 @@ public class AlgorithmInputView extends JPanel {
      * @param lpc   the ListPController
      * @param atv   the AlgorithmTabView
      */
-    public AlgorithmInputView(AlgorithmPController apc, AlgorithmTabView atv) {
+    public AlgorithmInputView(AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv) {
         algorithmPController = apc;
+        listPController = lpc;
         algorithmTabView = atv;
         simpleRelations = new ArrayList<>();
         complexRelations = new ArrayList<>();
@@ -399,6 +402,8 @@ public class AlgorithmInputView extends JPanel {
             }
         }
         String title = listTitleField.getText().trim();
+        if (listPController.contains(title))
+            throwError(ErrorString.EXISTING_LIST);
         int algorithmIndex = algorithmComboBox.getSelectedIndex();
         Integer nCommunities = (Integer) numberOfCommunities.getValue();
         algorithmTabView.execute(title, algorithmIndex,nCommunities);

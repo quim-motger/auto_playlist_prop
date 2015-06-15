@@ -102,4 +102,8 @@ public class ListPController {
     public int load(String path, int currentLine) throws IOException, PropException {
         return listController.load(path,currentLine,songController);
     }
+
+    public boolean contains(String title) {
+        return listController.contains(title);
+    }
 }
