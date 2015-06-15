@@ -293,7 +293,7 @@ public class GraphPanel extends JPanel{
         private int step;
         private ArrayList<String> log;
         private static final char delimiter = '|';
-        private ArrayList<Pair<String>> hiddenEdges;
+        private HashSet<Pair<String>> hiddenEdges;
         private HashMap<Integer,Color> hashColors;
         private HashMap<String, Integer> vColors;
         private JButton nextButton;
@@ -326,11 +326,14 @@ public class GraphPanel extends JPanel{
                 }
             };
             vv.getRenderContext().setEdgeDrawPaintTransformer(edgeC);
+
+            vv.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.LAYOUT).setToIdentity();
+            vv.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.VIEW).setToIdentity();
         }
 
         public ExecutionPanel(AlgorithmPController apc) {
             super(apc);
-            hiddenEdges = new ArrayList<>();
+            hiddenEdges = new HashSet<>();
             hashColors = new HashMap<>();
             hashColors.put(-1, Color.white);
             vColors = new HashMap<>();
@@ -339,15 +342,9 @@ public class GraphPanel extends JPanel{
             }
 
             for (JungEdge ed : originalGraph.getEdges()) {
-                //originalGraph.removeEdge(ed);
                 ed.setColor(Color.black);
             }
-
-            //remove all edges
-            for (JungEdge ed : originalGraph.getEdges()) {
-                hiddenEdges.add(originalGraph.getEndpoints(ed));
-            }
-           // paintEdges();
+            paintEdges();
 
             step = -1;
             log = algorithmPController.getLogArray();
@@ -375,12 +372,7 @@ public class GraphPanel extends JPanel{
 
             // Vertices' color
             paint();
-            // Edges' color
-            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
-                public Paint transform(JungEdge e) {
-                    return new Color(100,100,100,255);
-                }
-            });
+
         }
 
         private void backButtonActionPerformed(ActionEvent evt) {
@@ -446,8 +438,9 @@ public class GraphPanel extends JPanel{
         private void addEdge(int u, int v) {
             for (Pair<String> p : hiddenEdges) {
                 if ((p.getFirst().equals(algorithmPController.getSongId(u)) && p.getSecond().equals(algorithmPController.getSongId(v)))
-                        || (p.getFirst().equals(algorithmPController.getSongId(v)) && p.getSecond().equals(algorithmPController.getSongId(u))))
+                        || (p.getFirst().equals(algorithmPController.getSongId(v)) && p.getSecond().equals(algorithmPController.getSongId(u)))) {
                     hiddenEdges.remove(p);
+                }
             }
             paintEdges();
         }
