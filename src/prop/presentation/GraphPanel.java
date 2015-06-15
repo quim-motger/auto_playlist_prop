@@ -38,6 +38,52 @@ public class GraphPanel extends JPanel{
         private Dimension subLayoutSize;
         private ArrayList<Color> colors;
 
+        private Color materialColors[] = {
+                new Color(0xF44336),
+                new Color(0xE91E63),
+                new Color(0x9C27B0),
+                new Color(0x673AB7),
+                new Color(0x3F51B5),
+                new Color(0x2196F3),
+                new Color(0x03A9F4),
+                new Color(0x00BCD4),
+                new Color(0x009688),
+                new Color(0x4CAF50),
+                new Color(0x8BC34A),
+                new Color(0xCDDC39),
+                new Color(0xFFEB3B),
+                new Color(0xFFC107),
+                new Color(0xFF9800),
+                new Color(0xFF5722),
+                new Color(0x795548),
+                new Color(0x9E9E9E),
+                new Color(0x607D8B)
+        };
+
+        private Color[] getRandomColors(int n) {
+            Random rand = new Random();
+            // We use LinkedHashSet to maintain insertion order
+            Set<Integer> positionsSet = new LinkedHashSet<Integer>();
+            int m = materialColors.length;
+            // Generate m random integers with no duplicates
+            while (positionsSet.size() < m){
+                int r = rand.nextInt(m);
+                // As we're adding to a set, this will automatically do a containment check
+                positionsSet.add(r);
+            }
+
+            ArrayList<Integer> positionsArray = new ArrayList<Integer>(positionsSet);
+
+            Color colors[] = new Color[n];
+            for (int i = 0; i < n; ++i) {
+                if (i < m)
+                    colors[i] = materialColors[positionsArray.get(i)];
+                else
+                    colors[i] = materialColors[rand.nextInt(m)];
+            }
+            return colors;
+        }
+
         protected JPanel controls;
 
         public GraphPanel(AlgorithmPController apc) {
@@ -51,6 +97,7 @@ public class GraphPanel extends JPanel{
             for (int x = 0; x < communities.size(); ++x) {
                 colors.add(new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
             }
+            //colors = new ArrayList<>(Arrays.asList(getRandomColors(communities.size())));
 
             clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<>(originalGraph));
             subLayoutSize = new Dimension(50,50);
@@ -350,6 +397,7 @@ public class GraphPanel extends JPanel{
 
         private void backButtonActionPerformed(ActionEvent evt) {
             if (step > -1) {
+                System.out.println("step = " + step);
                 String op[] = log.get(step).split(Pattern.quote(String.valueOf(delimiter)));
                 int code = Integer.parseInt(op[0]);
                 switch (code) {
@@ -372,6 +420,7 @@ public class GraphPanel extends JPanel{
         private void nextButtonActionPerformed(ActionEvent evt) {
             if (step < log.size()-1) {
                 ++step;
+                System.out.println("step = " + step);
                 if (step >= log.size()-1) nextButton.setEnabled(false);
                 backButton.setEnabled(true);
 
