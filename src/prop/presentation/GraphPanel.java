@@ -1,9 +1,6 @@
 package prop.presentation;
 
-import edu.uci.ics.jung.algorithms.layout.AggregateLayout;
-import edu.uci.ics.jung.algorithms.layout.CircleLayout;
-import edu.uci.ics.jung.algorithms.layout.ISOMLayout;
-import edu.uci.ics.jung.algorithms.layout.Layout;
+import edu.uci.ics.jung.algorithms.layout.*;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.Pair;
@@ -78,7 +75,7 @@ public class GraphPanel extends JPanel{
 
             final UndirectedSparseGraph<String,JungEdge> selectedCommunity = communities.get(communities.size()-1);
 
-            clusteringLayout = new AggregateLayout<String,JungEdge>(new ISOMLayout<>(originalGraph));
+            clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<>(originalGraph));
             subLayoutSize = new Dimension(50,50);
             Dimension visualizationModelSize = new Dimension(550,420);
             Dimension preferredSize = getSize();
