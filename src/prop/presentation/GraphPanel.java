@@ -14,6 +14,7 @@ import edu.uci.ics.jung.visualization.renderers.BasicVertexLabelRenderer.InsideP
 import edu.uci.ics.jung.visualization.renderers.Renderer;
 import org.apache.commons.collections15.Transformer;
 
+import javax.jnlp.JNLPRandomAccessFile;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -155,11 +156,11 @@ public class GraphPanel extends JPanel{
             vv.setForeground(Color.black); //label color
 
             this.setLayout(new BorderLayout(5, 5));
-            final GraphZoomScrollPane panel = new GraphZoomScrollPane(vv);
+            GraphZoomScrollPane panel = new GraphZoomScrollPane(vv);
             add(panel);
 
             /** MOUSE **/
-            final AbstractModalGraphMouse graphMouse = new DefaultModalGraphMouse<String,JungEdge>();
+            AbstractModalGraphMouse graphMouse = new DefaultModalGraphMouse<String,JungEdge>();
             vv.setGraphMouse(graphMouse);
             vv.addKeyListener(graphMouse.getModeKeyListener());
 
@@ -310,6 +311,23 @@ public class GraphPanel extends JPanel{
             vv.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.VIEW).setToIdentity();
         }
 
+        private void paintEdges() {
+            Transformer<JungEdge,Paint> edgeC = new Transformer<JungEdge, Paint>() {
+                public Paint transform(JungEdge e) {
+                    Pair<String> p = originalGraph.getEndpoints(e);
+                    Color col = e.getColor();
+                    for (Pair<String> ps : hiddenEdges) {
+                        if ((p.getFirst().equals(ps.getFirst()) && p.getSecond().equals(ps.getSecond()))
+                                || (p.getFirst().equals(ps.getSecond()) && p.getSecond().equals(ps.getFirst()))) {
+                            col = new Color(col.getRed(), col.getGreen(), col.getBlue(), 0);
+                        }
+                    }
+                    return col;
+                }
+            };
+            vv.getRenderContext().setEdgeDrawPaintTransformer(edgeC);
+        }
+
         public ExecutionPanel(AlgorithmPController apc) {
             super(apc);
             hiddenEdges = new ArrayList<>();
@@ -320,11 +338,16 @@ public class GraphPanel extends JPanel{
                 vColors.put(sv, -1);
             }
 
+            for (JungEdge ed : originalGraph.getEdges()) {
+                //originalGraph.removeEdge(ed);
+                ed.setColor(Color.black);
+            }
+
             //remove all edges
             for (JungEdge ed : originalGraph.getEdges()) {
                 hiddenEdges.add(originalGraph.getEndpoints(ed));
             }
-            paintEdges();
+           // paintEdges();
 
             step = -1;
             log = algorithmPController.getLogArray();
@@ -355,7 +378,7 @@ public class GraphPanel extends JPanel{
             // Edges' color
             vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
                 public Paint transform(JungEdge e) {
-                    return Color.black;
+                    return new Color(100,100,100,255);
                 }
             });
         }
@@ -429,20 +452,7 @@ public class GraphPanel extends JPanel{
             paintEdges();
         }
 
-        private void paintEdges() {
-            vv.getRenderContext().setEdgeDrawPaintTransformer(new Transformer<JungEdge, Paint>() {
-                public Paint transform(JungEdge e) {
-                    Pair<String> p = originalGraph.getEndpoints(e);
-                    Color col = e.getColor();
-                    for (Pair<String> ps : hiddenEdges) {
-                        if ((p.getFirst().equals(ps.getFirst()) && p.getSecond().equals(ps.getSecond()))
-                                || (p.getFirst().equals(ps.getSecond()) && p.getSecond().equals(ps.getFirst())))
-                            col = new Color(col.getRed(), col.getGreen(), col.getBlue(), 0);
-                    }
-                    return col;
-                }
-            });
-        }
+
 
     }
 
