@@ -62,7 +62,7 @@ public class AlgorithmController {
         AlgorithmOutput ao = a.execute(graph,k);
 
         // From the given communities, we select the densest one...
-        Graph<Song> selectedCommunity = ao.densestGraph();
+        /*Graph<Song> selectedCommunity = ao.densestGraph();
         // ...and generate a new list with the songs in the community
         List list = new List(title);
         if(selectedCommunity==null) {
@@ -73,15 +73,26 @@ public class AlgorithmController {
         }
         listController.addList(list);
 
-        // save all communities
+        // save all communities*/
         communities = ao.getCommunities();
-        communities.remove(selectedCommunity);
-        communities.add(selectedCommunity); // move selected community to the end
+        /*communities.remove(selectedCommunity);
+        communities.add(selectedCommunity); // move selected community to the end*/
 
         log.addAll(ao.getLog());
         //log.add("List created:\n" + list.obtainTitle() + "\n");
 
         return log;
+    }
+
+    public void generateList(String title, ArrayList<Integer> com, ListController lc) throws PropException {
+        List list = new List(title);
+        for (int c : com) {
+            Graph<Song> songs = communities.get(c);
+            for (Song s : songs.getOriginalVertices()) {
+                list.addSong(s);
+            }
+        }
+        lc.addList(list);
     }
 
     /**
