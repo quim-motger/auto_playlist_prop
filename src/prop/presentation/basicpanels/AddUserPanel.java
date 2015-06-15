@@ -3,6 +3,7 @@ package prop.presentation.basicpanels;
 import prop.ErrorString;
 import prop.presentation.UserPController;
 import prop.presentation.UserTabView;
+import prop.presentation.generator.UserForm;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +16,7 @@ import java.awt.event.ActionListener;
  * @version 1.0
  *          Creation Date: 24/05/15
  */
-public class AddUserPanel  extends UserPanel {
+public class AddUserPanel extends UserForm {
 
     private final UserTabView tab;
     private UserPController controller;
@@ -28,13 +29,6 @@ public class AddUserPanel  extends UserPanel {
         super(userController);
         controller = userController;
         tab = userTabView;
-        
-        setDefaultActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                submitAction(actionEvent);
-            }
-        });
         
         updatePanel();
         
@@ -59,12 +53,10 @@ public class AddUserPanel  extends UserPanel {
             throwError(ErrorString.MISSING_NAME);
             return;
         }
-        if(name.contains(" ")){
+        if (checkIllegal()) {
             throwError(ErrorString.NAME_INCORRECT_FORMAT);
             return;
         }
-        if(checkIllegal())
-            return;
         String gender = getGenderSelector();
         int day = getDaySpinner();
         int month = getMonthSpinner();
