@@ -311,9 +311,21 @@ public class GraphPanel extends JPanel{
         }
     }
 
-    public void makeItBigger(int i) {
-        UndirectedSparseGraph<String, JungEdge> community = communities.get(i);
-        
+    public void makeItBigger(final int big) {
+        Transformer<String, Shape> vertexSize = new Transformer<String, Shape>() {
+            public Shape transform(String i) {
+                Ellipse2D circle;
+                if (communities.get(big).containsVertex(i)) {
+                    circle = new Ellipse2D.Double(-20, -20, 30, 30);
+                } else {
+                    circle = new Ellipse2D.Double(-10, -10, 20, 20);
+                }
+                return circle;
+            }
+        };
+        vv.getRenderContext().setVertexShapeTransformer(vertexSize);
+
+        vv.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.VIEW).setToIdentity();
     }
 
     public static class ExecutionPanel extends GraphPanel {

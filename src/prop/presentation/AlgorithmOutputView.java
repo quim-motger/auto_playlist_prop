@@ -3,6 +3,8 @@ package prop.presentation;
 import prop.PropException;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,6 +69,14 @@ public class AlgorithmOutputView extends JPanel {
 
         graphPanel = new GraphPanel(algorithmPController);
 
+        leftList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                int comm = leftList.getSelectedIndex();
+                graphPanel.makeItBigger(comm);
+            }
+        });
+        
         executionPanel = new GraphPanel.ExecutionPanel(algorithmPController);
 
         textPanel = new JTextArea();
