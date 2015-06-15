@@ -50,7 +50,7 @@ public class AlgorithmOutputView extends JPanel {
         leftList = new JList();
         listModel = new DefaultListModel();
         leftList.setModel(listModel);
-        leftList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        leftList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         leftList.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         leftListView.setViewportView(leftList);
         leftListView.setPreferredSize(new Dimension(195, 200));
