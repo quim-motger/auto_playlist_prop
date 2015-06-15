@@ -14,7 +14,6 @@ import edu.uci.ics.jung.visualization.renderers.BasicVertexLabelRenderer.InsideP
 import edu.uci.ics.jung.visualization.renderers.Renderer;
 import org.apache.commons.collections15.Transformer;
 
-import javax.jnlp.JNLPRandomAccessFile;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,27 +23,6 @@ import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.regex.Pattern;
-
-/*
-Then create a random generator:
-
-        Random rand = new Random();
-
-        Color randomColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
-// Will produce a random colour with more red in it (usually "pink-ish")
-        float r = rand.nextFloat();
-        float g = rand.nextFloat(0.5);
-        float b = rand.nextFloat(0.5);
-
-// Will produce only bright / light colours:
-        float r = rand.nextFloat(0.5) + 0.5;
-        float g = rand.nextFloat(0.5) + 0.5;
-        float b = rand.nextFloat(0.5) + 0.5;
-
-        There are various other colour functions that can be used with the Color class, such as making the colour brighter:
-        randomColor.brighter();
-*/
-
 
 public class GraphPanel extends JPanel{
 
@@ -73,8 +51,6 @@ public class GraphPanel extends JPanel{
             for (int x = 0; x < communities.size(); ++x) {
                 colors.add(new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
             }
-
-            final UndirectedSparseGraph<String,JungEdge> selectedCommunity = communities.get(communities.size()-1);
 
             clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<>(originalGraph));
             subLayoutSize = new Dimension(50,50);
@@ -122,11 +98,7 @@ public class GraphPanel extends JPanel{
             vv.getRenderContext().setEdgeStrokeTransformer(new Transformer<JungEdge, Stroke>() {
                 protected final Stroke THIN = new BasicStroke(2);
                 protected final Stroke THICK = new BasicStroke(4);
-
                 public Stroke transform(JungEdge e) {
-                 /*   Pair<String> p = originalGraph.getEndpoints(e);
-                    if (selectedCommunity.containsVertex(p.getFirst()) && selectedCommunity.containsVertex(p.getSecond()))
-                        return THICK;*/
                     return THIN;
                 }
             });
