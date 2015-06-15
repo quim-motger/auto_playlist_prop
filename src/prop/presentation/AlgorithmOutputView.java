@@ -1,5 +1,7 @@
 package prop.presentation;
 
+import prop.PropException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,18 +30,19 @@ public class AlgorithmOutputView extends JPanel {
     private GraphPanel.ExecutionPanel executionPanel;
     private JPanel leftPanel;
     private JButton generateListButton;
+    private String title;
 
     /**
      * Creates new form MainPanel
      */
-    public AlgorithmOutputView(AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv, String title, double time) {
+    public AlgorithmOutputView(AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv, String _title, double time) {
         algorithmPController = apc;
         listPController = lpc;
         algorithmTabView = atv;
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         initComponents();
-        updateListModel(title);
-        listTitle.setText(title);
+        updateListModel();
+        title = _title;
         
         JLabel timeLabel = new JLabel("Time = "+time+" s");
         actionBar.add(Box.createHorizontalGlue());
@@ -59,8 +62,6 @@ public class AlgorithmOutputView extends JPanel {
         leftPanel.setPreferredSize(new Dimension(195, 200));
         leftListView.setPreferredSize(new Dimension(195, 200));
         leftPanel.add(leftList, BorderLayout.CENTER);
-        generateListButton = new JButton("TEST");
-        leftPanel.add(generateListButton, BorderLayout.SOUTH);
 
         graphPanel = new GraphPanel(algorithmPController);
 
@@ -81,11 +82,20 @@ public class AlgorithmOutputView extends JPanel {
         actionBar.setRollover(true);
 
         listTitle = new JLabel();
-        listTitle.setText("title");
+        listTitle.setText("Communities:");
         listTitle.setPreferredSize(new Dimension(194, 200));
         actionBar.add(Box.createHorizontalStrut(3));
         actionBar.add(listTitle);
         actionBar.add(Box.createHorizontalStrut(6));
+
+        generateListButton = new JButton("Generate list");
+        generateListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                generateListButtonActionPerformed(e);
+            }
+        });
+        leftPanel.add(generateListButton, BorderLayout.SOUTH);
 
         newInputButton = new JButton("New input");
         newInputButton.setBorder(BorderFactory.createEmptyBorder(10, 3, 10, 3));
@@ -178,16 +188,21 @@ public class AlgorithmOutputView extends JPanel {
         algorithmTabView.setInputPanel();
     }
 
+    private void generateListButtonActionPerformed(ActionEvent evt) {
+        try {
+            algorithmPController.generateList(title,leftList.getSelectedIndices(),listPController.getListController());
+        } catch (PropException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Update the JList which contains the list of songs.
-     * @param title
      */
-    public void updateListModel(String title) {
+    public void updateListModel() {
         listModel.clear();
-        String list[] = listPController.getListStringArray(title);
-        for (int i = 1; i < list.length; ++i) {
-            listModel.addElement(list[i]);
-        }
+        for (int i = 0; i < algorithmPController.getNCommunities(); ++i)
+            listModel.addElement("Community " + i);
     }
 
 }

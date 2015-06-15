@@ -38,7 +38,7 @@ public class GraphPanel extends JPanel{
         private Dimension subLayoutSize;
         private ArrayList<Color> colors;
 
-        private Color materialColors[] = {
+        protected Color materialColors[] = {
                 new Color(0xF44336),
                 new Color(0xE91E63),
                 new Color(0x9C27B0),
@@ -93,11 +93,12 @@ public class GraphPanel extends JPanel{
 
             //initialize colors
             colors = new ArrayList<>();
-            Random rand = new Random();
+            /*Random rand = new Random();
             for (int x = 0; x < communities.size(); ++x) {
                 colors.add(new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
-            }
-            //colors = new ArrayList<>(Arrays.asList(getRandomColors(communities.size())));
+            }*/
+            for (int i = 0; i < communities.size(); ++i)
+                colors.add(materialColors[i%materialColors.length]);
 
             clusteringLayout = new AggregateLayout<String,JungEdge>(new KKLayout<>(originalGraph));
             subLayoutSize = new Dimension(50,50);
@@ -443,7 +444,8 @@ public class GraphPanel extends JPanel{
         private void paintVertexsIntoColor(int color, ArrayList<Integer> vertexsToPaint) {
             if (!hashColors.containsKey(color)) {
                 Random rand2 = new Random();
-                hashColors.put(color, new Color(rand2.nextFloat(), rand2.nextFloat(), rand2.nextFloat()));
+                //hashColors.put(color, new Color(rand2.nextFloat(), rand2.nextFloat(), rand2.nextFloat()));
+                hashColors.put(color, materialColors[color%materialColors.length]);
             }
             for (Integer in : vertexsToPaint) {
                 vColors.put(algorithmPController.getSongId(in), color);

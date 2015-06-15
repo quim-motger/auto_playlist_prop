@@ -67,6 +67,10 @@ public class AlgorithmPController {
         return communities;
     }
 
+    public int getNCommunities() {
+        return algorithmController.getCommunities().length;
+    }
+
     /**
      * Converts a string to a graph
      * @param graph
@@ -111,5 +115,9 @@ public class AlgorithmPController {
 
     public String getSongId(int i) {
         return algorithmController.getSongId(i);
+    }
+
+    public void generateList(String title, int[] com, ListController lc) throws PropException {
+        algorithmController.generateList(title,com,lc);
     }
 }
