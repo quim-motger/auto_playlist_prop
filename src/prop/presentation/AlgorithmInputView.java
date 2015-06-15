@@ -402,8 +402,10 @@ public class AlgorithmInputView extends JPanel {
             }
         }
         String title = listTitleField.getText().trim();
-        if (listPController.contains(title))
+        if (listPController.contains(title)) {
             throwError(ErrorString.EXISTING_LIST);
+            return;
+        }
         int algorithmIndex = algorithmComboBox.getSelectedIndex();
         Integer nCommunities = (Integer) numberOfCommunities.getValue();
         algorithmTabView.execute(title, algorithmIndex,nCommunities);
