@@ -15,6 +15,7 @@ public class AlgorithmOutputView extends JPanel {
     private AlgorithmPController algorithmPController;
     private ListPController listPController;
     private AlgorithmTabView algorithmTabView;
+    private MainView mainView;
     private JScrollPane rightScrollPanel;
     private GraphPanel graphPanel;
     private JTextArea textPanel;
@@ -35,10 +36,11 @@ public class AlgorithmOutputView extends JPanel {
     /**
      * Creates new form MainPanel
      */
-    public AlgorithmOutputView(AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv, String _title, double time) {
+    public AlgorithmOutputView(AlgorithmPController apc, ListPController lpc, AlgorithmTabView atv, MainView mv, String _title, double time) {
         algorithmPController = apc;
         listPController = lpc;
         algorithmTabView = atv;
+        mainView = mv;
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         initComponents();
         updateListModel();
@@ -194,6 +196,8 @@ public class AlgorithmOutputView extends JPanel {
         } catch (PropException e) {
             e.printStackTrace();
         }
+        mainView.showList(title);
+        algorithmTabView.setInputPanel();
     }
 
     /**

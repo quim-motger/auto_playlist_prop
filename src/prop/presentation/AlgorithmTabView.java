@@ -15,12 +15,14 @@ public class AlgorithmTabView extends JPanel {
     private SongPController songPController;
     private UserPController userPController;
     private AlgorithmInputView algorithmInputView;
+    private MainView mainView;
 
-    public AlgorithmTabView(AlgorithmPController apc, ListPController lpc, SongPController spc, UserPController upc) {
+    public AlgorithmTabView(AlgorithmPController apc, ListPController lpc, SongPController spc, UserPController upc, MainView mv) {
         algorithmPController = apc;
         listPController = lpc;
         songPController = spc;
         userPController = upc;
+        mainView = mv;
         setLayout(new BorderLayout());
         initComponents();
     }
@@ -38,7 +40,7 @@ public class AlgorithmTabView extends JPanel {
 
     public void setOutputPanel(String title, double time) {
         removeAll();
-        add(new AlgorithmOutputView(algorithmPController,listPController,this,title, time),BorderLayout.CENTER);
+        add(new AlgorithmOutputView(algorithmPController,listPController,this,mainView,title, time),BorderLayout.CENTER);
         revalidate();
     }
 
