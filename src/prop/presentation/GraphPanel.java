@@ -312,10 +312,10 @@ public class GraphPanel extends JPanel{
             super(apc);
             hiddenEdges = new ArrayList<>();
             hashColors = new HashMap<>();
-            hashColors.put(-1000, Color.white);
+            hashColors.put(-1, Color.white);
             vColors = new HashMap<>();
             for (String sv : originalGraph.getVertices()) {
-                vColors.put(sv, -1000);
+                vColors.put(sv, -1);
             }
 
             //remove all edges
