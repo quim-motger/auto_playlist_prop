@@ -315,6 +315,12 @@ public class GraphPanel extends JPanel{
                 vColors.put(sv, -1000);
             }
 
+            //remove all edges
+            for (JungEdge ed : originalGraph.getEdges()) {
+                hiddenEdges.add(originalGraph.getEndpoints(ed));
+                paintEdges();
+            }
+
             step = -1;
             log = algorithmPController.getLogArray();
 
@@ -419,7 +425,7 @@ public class GraphPanel extends JPanel{
                     for (Pair<String> ps : hiddenEdges) {
                         if ((p.getFirst().equals(ps.getFirst()) && p.getSecond().equals(ps.getSecond()))
                                 || (p.getFirst().equals(ps.getSecond()) && p.getSecond().equals(ps.getFirst())))
-                            col = new Color(col.getRed(), col.getGreen(), col.getBlue(), 1);
+                            col = new Color(col.getRed(), col.getGreen(), col.getBlue(), 0);
                     }
                     return col;
                 }

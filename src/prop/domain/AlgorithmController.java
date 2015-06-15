@@ -204,6 +204,6 @@ public class AlgorithmController {
 
     public String getSongId(int i) {
         Song s = (Song) graph.getVertexT(i);
-        return s.getTitle() + " - " + s.getArtist();
+        return s.getTitle() + "-" + s.getArtist();
     }
 }
