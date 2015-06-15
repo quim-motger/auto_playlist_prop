@@ -91,6 +91,7 @@ public class AddSongPanel extends FormGen {
 
         fields.add(new Pair<String, JComponent>("Title", titleField));
         fields.add(new Pair<String, JComponent>("Artist", artistField));
+        fields.add(new Pair<String, JComponent>("Album", albumField));
         fields.add(new Pair<String, JComponent>("Year", yearSpinner));
         fields.add(new Pair<String, JComponent>("Genre", genreComboBox));
         fields.add(new Pair<String, JComponent>("Subgenre", subgenreComboBox));

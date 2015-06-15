@@ -190,9 +190,9 @@ public class ShowSongPanel extends FormGen {
         fields.add(new Pair<String, JComponent>("Artist", artistField));
         fields.add(new Pair<String, JComponent>("Album", albumField));
         fields.add(new Pair<String, JComponent>("Year", yearSpinner));
-        fields.add(new Pair<String, JComponent>("Duration", durationSpinner));
         fields.add(new Pair<String, JComponent>("Genre", genreComboBox));
         fields.add(new Pair<String, JComponent>("Subgenre", subgenreComboBox));
+        fields.add(new Pair<String, JComponent>("Duration", durationSpinner));
 
         return fields;
     }
