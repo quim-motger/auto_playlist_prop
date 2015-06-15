@@ -18,6 +18,7 @@ public class GirvanNewman extends Algorithm {
     private int edges;
     private Pair<Integer,Integer> mbEdge;
     private static final char delimiter = '|';
+    ArrayList<String> log;
 
     /**
      * Executes the Girvan-Newman algorithm.
@@ -29,7 +30,7 @@ public class GirvanNewman extends Algorithm {
     public AlgorithmOutput execute(Graph _graph, int k) {
         graph = _graph;
         n = graph.numberOfVertices();
-        ArrayList<String> log = new ArrayList<>();
+        log = new ArrayList<>();
         components = calculateComponents();
         //if (components >= k) log.add("There are " + components + " components already!");
 
@@ -252,14 +253,17 @@ public class GirvanNewman extends Algorithm {
                 visEdges[i][j] = false;
         }
 
+        int c = 0;
         for (int u = 0; u < n; ++u) {
             if (!visVertices[u]) {
                 Graph G = new Graph<Song>();
+                String entry = "0" + delimiter + "-1" + delimiter + String.valueOf(c);
                 S.push(u);
                 G.addVertex(graph.getVertexT(u));
                 visVertices[u] = true;
                 while (!S.empty()) {
                     int v = S.pop();
+                    entry += delimiter + String.valueOf(v);
                     for (int w : graph.adjacentVertices(v)) {
                         if (!visVertices[w]) {
                             S.push(w);
@@ -275,6 +279,8 @@ public class GirvanNewman extends Algorithm {
                     }
                 }
                 communities.add(G);
+                log.add(entry);
+                ++c;
             }
         }
         return communities;
