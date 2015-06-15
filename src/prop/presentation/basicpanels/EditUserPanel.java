@@ -4,6 +4,7 @@ import prop.ErrorString;
 import prop.PropException;
 import prop.presentation.UserPController;
 import prop.presentation.UserTabView;
+import prop.presentation.generator.UserForm;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
  * @version 1.0
  *          Creation Date: 24/05/15
  */
-public class EditUserPanel extends UserPanel {
+public class EditUserPanel extends UserForm {
     public static final String DELIMITER = "|";
     private final JButton delete;
     private final JButton listEdit;
