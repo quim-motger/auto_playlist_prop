@@ -30,7 +30,7 @@ public class AlgorithmOutputView extends JPanel {
     private JButton logButton;
     private DefaultListModel listModel;
     private JButton executionButton;
-    private GraphPanel.ExecutionPanel executionPanel;
+    private ExecutionPanel executionPanel;
     private JPanel leftPanel;
     private JButton generateListButton;
     private String title;
@@ -77,7 +77,7 @@ public class AlgorithmOutputView extends JPanel {
             }
         });
         
-        executionPanel = new GraphPanel.ExecutionPanel(algorithmPController);
+        executionPanel = new ExecutionPanel(algorithmPController);
 
         textPanel = new JTextArea();
         textPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
