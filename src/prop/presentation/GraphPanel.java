@@ -71,12 +71,13 @@ public class GraphPanel extends JPanel{
 
         //initialize colors
         colors = new ArrayList<>();
-            /*Random rand = new Random();
-            for (int x = 0; x < communities.size(); ++x) {
+        Random rand = new Random();
+        for (int i = 0; i < communities.size(); ++i) {
+            if (i < materialColors.length)
+                colors.add(materialColors[i % materialColors.length]);
+            else
                 colors.add(new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
-            }*/
-        for (int i = 0; i < communities.size(); ++i)
-            colors.add(materialColors[i % materialColors.length]);
+        }
 
         clusteringLayout = new AggregateLayout<String, JungEdge>(new KKLayout<>(originalGraph));
         subLayoutSize = new Dimension(50, 50);
@@ -477,8 +478,10 @@ public class GraphPanel extends JPanel{
         private void paintVertexsIntoColor(int color, ArrayList<Integer> vertexsToPaint) {
             if (!hashColors.containsKey(color)) {
                 Random rand2 = new Random();
-                //hashColors.put(color, new Color(rand2.nextFloat(), rand2.nextFloat(), rand2.nextFloat()));
-                hashColors.put(color, materialColors[color%materialColors.length]);
+                if (color < materialColors.length)
+                    hashColors.put(color, materialColors[color % materialColors.length]);
+                else
+                    hashColors.put(color, new Color(rand2.nextFloat(), rand2.nextFloat(), rand2.nextFloat()));
             }
             for (Integer in : vertexsToPaint) {
                 vColors.put(algorithmPController.getSongId(in), color);
