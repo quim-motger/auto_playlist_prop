@@ -2,14 +2,16 @@ title0|artist0|album0|2015|0|0|100
 title1|artist0|album0|2015|2|2|120
 title1|artist1|album0|2015|40|28|100
 title1|artist8|album10|1996|0|0|90
-title1|artist9|album10|1996|0|0|70
+title1|artist9|album10|2015|0|0|70
 title2|artist0|album1|2010|42|35|150
 title3|artist1|album2|2014|0|2|120
-title3|artist3|album2|2015|42|2|160
-title4|artist4|album4|1990|57|30|190
+title3|artist3|album2|2014|42|2|160
+title4|artist4|album4|2015|57|30|190
 title5|artist5|album5|1990|57|30|190
 title5|artist6|album5|1990|57|30|190
-title6|artist5|album5|1990|57|30|190
+title5|artist8|album5|2000|0|0|1
+title5|artist9|album5|2000|0|0|1
+title6|artist7|album5|2015|57|30|190
 title8|artist7|album7|1996|74|23|200
 title9|artist7|album8|1996|74|23|210
 

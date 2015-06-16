@@ -289,14 +289,14 @@ public class CliquePercolation extends Algorithm {
             if (!l.isEmpty()) {
                 Graph g = new Graph();
                 for (int i : l) {
-                    //if (graph.adjacentVertices(i).size() > 0) {
+                    if (graph.adjacentVertices(i).size() > 0 || l.size() == 1) {
                         g.addVertex(graph.getVertexT(i));
                         for (int m : graph.adjacentVertices(i)) {
                             if (g.contains(graph.getVertexT(m)) && l.contains(m)) {
                                 g.addEdgeT(graph.getVertexT(i), graph.getVertexT(m), graph.weight(i, m));
                             }
                         }
-                    //}
+                    }
                 }
                 com.add(g);
             }
