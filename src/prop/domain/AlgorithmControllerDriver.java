@@ -53,7 +53,7 @@ public class AlgorithmControllerDriver {
                 case 4:
                     try {
                         for (String s : log)
-                            System.out.print(s);
+                            System.out.println(s);
                         System.out.print("\n");
                     }
                     catch (NullPointerException e) {
@@ -61,10 +61,21 @@ public class AlgorithmControllerDriver {
                     }
                     break;
                 case 5:
+                    String title3 = in.next();
+                    int com[] = new int[ac.getCommunities().length];
+                    for (int j = 0; j < com.length; ++j)
+                        com[j] = j;
+                    try {
+                        ac.generateList(title3,com,listController);
+                    } catch (PropException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 6:
                     String title2 = in.next();
                     System.out.println(listController.getListString(title2));
                     break;
-                case 6:
+                case 7:
                     System.out.println(listController.getListSetString());
                     break;
                 default:
@@ -81,8 +92,9 @@ public class AlgorithmControllerDriver {
         sb.append("2:  AlgorithmController()\n");
         sb.append("3:  ArrayList<String> execute(String title, int algorithm, int k)\n");
         sb.append("4:  void printLog()\n");
-        sb.append("5:  String getListString(int id)\n");
-        sb.append("6:  String getListSetString()\n");
+        sb.append("5:  void generateList(String title, int[] com)");
+        sb.append("6:  String getListString(int id)\n");
+        sb.append("7:  String getListSetString()\n");
         sb.append("\n");
         System.out.print(sb.toString());
     }
