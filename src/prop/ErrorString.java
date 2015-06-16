@@ -42,4 +42,5 @@ public class ErrorString {
     public static final String ILLEGAL_CHARACTER = "'|' is not a legal character";
     public static final String NO_ITEM_SELECTED = "No item selected";
     public static final String ALGORITHM_COULD_NOT_BE_EXECUTED = "There's no song to apply algorithm";
+    public static final String FUTURE_DATE = "Incorrect Date: future date";
 }

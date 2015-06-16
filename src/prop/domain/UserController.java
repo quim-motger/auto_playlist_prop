@@ -27,10 +27,9 @@ public class UserController {
     public static final String NAME="name";
     public static final String GENDER="gender";
     public static final String BIRTHDAY="birthday";
+    public static final int SAVING_BLOCK = 20;
     private static final String elemDelimiter = "|";
     private static final String setDelimiter = "\n";
-    public static final int SAVING_BLOCK = 20;
-
     private UserSet userSet;
 
     /**
@@ -74,7 +73,10 @@ public class UserController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         try {
-            dateFormat.parse(date);
+            Date d = dateFormat.parse(date);
+            Date now = new Date();
+            if (now.compareTo(d) < 0)
+                throw new PropException(ErrorString.FUTURE_DATE);
         } catch (ParseException e) {
             throw new PropException(ErrorString.INCORRECT_DATE);
         }
